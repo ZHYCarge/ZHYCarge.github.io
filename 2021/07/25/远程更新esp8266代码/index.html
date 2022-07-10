@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhycarge.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"manual"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言由于核心板与开发板不同，每一次烧录要进行步骤相当多。为了懒以及更加简化相关步骤，因此尝试使用OTA进行远程升级代码，此部分仅介绍arduino部分，OTA传输也可通过服务器进行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用arduino远程更新esp8266代码">
+<meta property="og:url" content="https://zhycarge.github.io/2021/07/25/%E8%BF%9C%E7%A8%8B%E6%9B%B4%E6%96%B0esp8266%E4%BB%A3%E7%A0%81/index.html">
+<meta property="og:site_name" content="ZHYCarge的博客">
+<meta property="og:description" content="前言由于核心板与开发板不同，每一次烧录要进行步骤相当多。为了懒以及更加简化相关步骤，因此尝试使用OTA进行远程升级代码，此部分仅介绍arduino部分，OTA传输也可通过服务器进行">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://user-images.githubusercontent.com/40520292/126886534-1b6a9ac7-4e0b-4989-ba22-a8e3f9aba6d3.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/40520292/126886612-854e0afa-024b-47f2-ab40-88da0cd9183f.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/40520292/126886638-90aa02b7-ee17-4089-986d-90c98ce12502.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/40520292/126886745-0dbad5ae-7537-41fb-9d9c-c5977645f597.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/40520292/126886751-9904e6fa-1e34-43dc-9471-c5f381e10fab.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/40520292/126886754-ba57f5c0-575e-464f-aae4-31527fdf9ecd.png">
+<meta property="article:published_time" content="2021-07-25T02:50:00.000Z">
+<meta property="article:modified_time" content="2022-07-10T16:37:15.099Z">
+<meta property="article:author" content="ZHYCarge">
+<meta property="article:tag" content="esp8266">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/40520292/126886534-1b6a9ac7-4e0b-4989-ba22-a8e3f9aba6d3.png">
+
+<link rel="canonical" href="https://zhycarge.github.io/2021/07/25/%E8%BF%9C%E7%A8%8B%E6%9B%B4%E6%96%B0esp8266%E4%BB%A3%E7%A0%81/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>使用arduino远程更新esp8266代码 | ZHYCarge的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="ZHYCarge的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ZHYCarge的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-必应一下">
+
+    <a href="/bings/" rel="section"><i class="fa fa-globe fa-fw"></i>必应一下</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhycarge.github.io/2021/07/25/%E8%BF%9C%E7%A8%8B%E6%9B%B4%E6%96%B0esp8266%E4%BB%A3%E7%A0%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.gif">
+      <meta itemprop="name" content="ZHYCarge">
+      <meta itemprop="description" content="在黑夜中，负重前行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZHYCarge的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用arduino远程更新esp8266代码<a href="https://github.com/ZHYCarge/notes/blob/master/source/_posts/%E8%BF%9C%E7%A8%8B%E6%9B%B4%E6%96%B0esp8266%E4%BB%A3%E7%A0%81.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-25 10:50:00" itemprop="dateCreated datePublished" datetime="2021-07-25T10:50:00+08:00">2021-07-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-11 00:37:15" itemprop="dateModified" datetime="2022-07-11T00:37:15+08:00">2022-07-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/study/" itemprop="url" rel="index"><span itemprop="name">study</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/study/%E7%A1%AC%E4%BB%B6/" itemprop="url" rel="index"><span itemprop="name">硬件</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/07/25/%E8%BF%9C%E7%A8%8B%E6%9B%B4%E6%96%B0esp8266%E4%BB%A3%E7%A0%81/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/25/%E8%BF%9C%E7%A8%8B%E6%9B%B4%E6%96%B0esp8266%E4%BB%A3%E7%A0%81/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于核心板与开发板不同，每一次烧录要进行步骤相当多。为了懒以及更加简化相关步骤，因此尝试使用OTA进行远程升级代码，此部分仅介绍arduino部分，OTA传输也可通过服务器进行</p>
+<span id="more"></span>
+<h1 id="借鉴"><a href="#借鉴" class="headerlink" title="借鉴"></a>借鉴</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://www.taichi-maker.com/homepage/esp8266-nodemcu-iot/iot-c/esp8266-tips/esp8266-ota/">太极创客的相关示例操作</a><h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1>第一次烧录的时候，需要使用tll或者相关方式去进行烧录，之后的话便可以通过网络来进行上传烧录<h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2>这里以太极创客的示例代码为例<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**********************************************************************</span></span><br><span class="line"><span class="comment">项目名称/Project          : 零基础入门学用物联网</span></span><br><span class="line"><span class="comment">程序名称/Program name     : OTA_Flash_Example</span></span><br><span class="line"><span class="comment">团队/Team                : 太极创客团队 / Taichi-Maker (www.taichi-maker.com)</span></span><br><span class="line"><span class="comment">作者/Author              : CYNO朔</span></span><br><span class="line"><span class="comment">日期/Date（YYYYMMDD）     : 20200713</span></span><br><span class="line"><span class="comment">程序目的/Purpose          : </span></span><br><span class="line"><span class="comment">本示例程序用于演示ESP8266的OTA功能。通过本程序，我们将启动ESP8266的OTA程序上传功能。</span></span><br><span class="line"><span class="comment">我们将无需使用连接线将ESP8266与电脑进行连接，而可以使用WiFi对ESP8266上传程序。</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">如需了解本程序的详细说明，请参考以下链接：</span></span><br><span class="line"><span class="comment">http://www.taichi-maker.com/homepage/esp8266-nodemcu-iot/iot-c/esp8266-tips/esp8266-ota/</span></span><br><span class="line"><span class="comment">-----------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">其它说明 / Other Description：</span></span><br><span class="line"><span class="comment">本程序为太极创客团队制作的免费视频教程《零基础入门学用物联网 》中一部分。该教程系统的</span></span><br><span class="line"><span class="comment">向您讲述ESP8266的物联网应用相关的软件和硬件知识。以下是该教程目录页：</span></span><br><span class="line"><span class="comment">http://www.taichi-maker.com/homepage/esp8266-nodemcu-iot/                    </span></span><br><span class="line"><span class="comment">***********************************************************************/</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ESP8266WiFi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ArduinoOTA.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Ticker.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 闪烁时间间隔(秒)</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> blinkInterval = <span class="number">2</span>; </span><br><span class="line"> </span><br><span class="line"><span class="comment">// 设置wifi接入信息(请根据您的WiFi信息进行修改)</span></span><br><span class="line"><span class="type">const</span> <span class="type">char</span>* ssid = <span class="string">&quot;taichimaker&quot;</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">char</span>* password = <span class="string">&quot;12345678&quot;</span>;</span><br><span class="line"> </span><br><span class="line">Ticker ticker;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">Serial</span>.<span class="built_in">begin</span>(<span class="number">9600</span>);            </span><br><span class="line">  <span class="built_in">Serial</span>.<span class="built_in">println</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line">  <span class="built_in">pinMode</span>(<span class="literal">LED_BUILTIN</span>, <span class="literal">OUTPUT</span>);</span><br><span class="line"> </span><br><span class="line">  ticker.<span class="built_in">attach</span>(blinkInterval, tickerCount);  <span class="comment">// 设置Ticker对象</span></span><br><span class="line">  </span><br><span class="line">  <span class="built_in">connectWifi</span>();</span><br><span class="line"> </span><br><span class="line">  <span class="comment">// OTA设置并启动</span></span><br><span class="line">  ArduinoOTA.<span class="built_in">setHostname</span>(<span class="string">&quot;ZHYCarge&quot;</span>);  <span class="comment">//进行OTA名称的设置</span></span><br><span class="line">  ArduinoOTA.<span class="built_in">setPassword</span>(<span class="string">&quot;12345678&quot;</span>); <span class="comment">//设置密码，上传代码的时候会需要</span></span><br><span class="line">  ArduinoOTA.<span class="built_in">begin</span>();</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">Serial</span>.<span class="built_in">println</span>(<span class="string">&quot;OTA ready&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  ArduinoOTA.<span class="built_in">handle</span>();</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 在Tinker对象控制下，此函数将会定时执行。</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">tickerCount</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">digitalWrite</span>(<span class="literal">LED_BUILTIN</span>, !<span class="built_in">digitalRead</span>(<span class="literal">LED_BUILTIN</span>));</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">connectWifi</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">//开始连接wifi</span></span><br><span class="line">  <span class="built_in">WiFi</span>.<span class="built_in">begin</span>(ssid, password);</span><br><span class="line"> </span><br><span class="line">  <span class="comment">//等待WiFi连接,连接成功打印IP</span></span><br><span class="line">  <span class="keyword">while</span> (<span class="built_in">WiFi</span>.<span class="built_in">status</span>() != WL_CONNECTED) &#123;</span><br><span class="line">    <span class="built_in">delay</span>(<span class="number">1000</span>);</span><br><span class="line">    <span class="built_in">Serial</span>.<span class="built_in">print</span>(<span class="string">&quot;.&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">Serial</span>.<span class="built_in">println</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line">  <span class="built_in">Serial</span>.<span class="built_in">println</span>(<span class="string">&quot;WiFi Connected!&quot;</span>);  </span><br><span class="line">  <span class="built_in">Serial</span>.<span class="built_in">print</span>(<span class="string">&quot;IP address:\t&quot;</span>);            </span><br><span class="line">  <span class="built_in">Serial</span>.<span class="built_in">println</span>(<span class="built_in">WiFi</span>.<span class="built_in">localIP</span>());          </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="将项目编译上传"><a href="#将项目编译上传" class="headerlink" title="将项目编译上传"></a>将项目编译上传</h2>与正常烧录一样，将esp8266连接到设备，选择好相关端口并进行烧录，等待上传完成<br><img src="https://user-images.githubusercontent.com/40520292/126886534-1b6a9ac7-4e0b-4989-ba22-a8e3f9aba6d3.png" alt="image"><br>上传完成之后，esp8266芯片会自动重启，并指示灯会进行闪烁，我们需要手动将esp8266进行重启<br>通过串口监视器，我们发现esp8266已经连接上wifi并且OTA运行正常<br><img src="https://user-images.githubusercontent.com/40520292/126886612-854e0afa-024b-47f2-ab40-88da0cd9183f.png" alt="image"><br>之后我们可以打开端口选择界面，之后我们会发现在串口中多了一个网络串口的位置<br><img src="https://user-images.githubusercontent.com/40520292/126886638-90aa02b7-ee17-4089-986d-90c98ce12502.png" alt="image"><br>点击它之后尝试更改一些信息，例如将OTA的名称更改为<code>ZHYCarge_esp8266</code>并将密码更改为<code>88888888</code>,之后点击上传代码，然后会弹出需要我们输入开发板的密码来进行代码上传<br><img src="https://user-images.githubusercontent.com/40520292/126886745-0dbad5ae-7537-41fb-9d9c-c5977645f597.png" alt="image"><br>之后便会进行代码的上传<br><img src="https://user-images.githubusercontent.com/40520292/126886751-9904e6fa-1e34-43dc-9471-c5f381e10fab.png" alt="image"><br><img src="https://user-images.githubusercontent.com/40520292/126886754-ba57f5c0-575e-464f-aae4-31527fdf9ecd.png" alt="image"><br>之后，我们会发现相关信息已经进行了更改  </li>
+</ul>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ul>
+<li>可以仅在供电情况下，直接对代码进行上传处理，而不必需要经过相关插拔来实现</li>
+<li>简化了上传过程</li>
+<li>对于一些无法取下的项目而言，更加有效方便的操作esp8266<h2 id="局限性"><a href="#局限性" class="headerlink" title="局限性"></a>局限性</h2></li>
+<li>如果项目代码过长，可能会导致相关程序卡死，造成不必要的影响</li>
+<li>升级代码的时候，需要主机和esp8266连接到同一wifi下，否则可能烧录不成功<h2 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h2></li>
+<li>由于使用了新的网络串口，因此之前的串口监视器已经失效了，但是我们可以使用putty来登录到开发板中进行查看相关输出  </li>
+<li>可以考虑将OTA升级编辑成为一个中断，当中断开启时，便进入OTA升级界面</li>
+</ul>
+
+    </div>
+
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------我也是有底线的哦<i class="fa fa-anchor"></i>如需更多，欢迎打赏-------------</div>
+    
+</div>
+
+
+  
+</div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>ZHYCarge
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://zhycarge.github.io/2021/07/25/%E8%BF%9C%E7%A8%8B%E6%9B%B4%E6%96%B0esp8266%E4%BB%A3%E7%A0%81/" title="使用arduino远程更新esp8266代码">https://zhycarge.github.io/2021/07/25/远程更新esp8266代码/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/esp8266/" rel="tag"><i class="fa fa-tag"></i> esp8266</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/21/%E5%A6%82%E4%BD%95%E7%AE%80%E5%8D%95%E7%9A%84%E5%AE%89%E8%A3%85arduino%E4%BB%A5%E5%8F%8Aesp8266%E7%9B%B8%E5%85%B3%E5%BA%93/" rel="prev" title="如何简单的安装arduino以及esp8266相关库">
+      <i class="fa fa-chevron-left"></i> 如何简单的安装arduino以及esp8266相关库
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/26/tf%E8%BF%9B%E8%A1%8C%E5%9F%BA%E6%9C%AC%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97/" rel="next" title="使用tf进行基本的矩阵运算">
+      使用tf进行基本的矩阵运算 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%80%9F%E9%89%B4"><span class="nav-number">2.</span> <span class="nav-text">借鉴</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="nav-number">3.1.</span> <span class="nav-text">示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86%E9%A1%B9%E7%9B%AE%E7%BC%96%E8%AF%91%E4%B8%8A%E4%BC%A0"><span class="nav-number">3.2.</span> <span class="nav-text">将项目编译上传</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">4.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E9%99%90%E6%80%A7"><span class="nav-number">4.2.</span> <span class="nav-text">局限性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96-1"><span class="nav-number">4.3.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZHYCarge"
+      src="/images/1.gif">
+  <p class="site-author-name" itemprop="name">ZHYCarge</p>
+  <div class="site-description" itemprop="description">在黑夜中，负重前行</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZHYCarge" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="ZHYCarge:ZHYCarge@163.com" title="E-Mail → ZHYCarge:ZHYCarge@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://raw.githubusercontent.com/ZHYCarge/photo/master/mm_reward_qrcode_1650029406131.png" title="打赏一下? → https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;ZHYCarge&#x2F;photo&#x2F;master&#x2F;mm_reward_qrcode_1650029406131.png" rel="noopener" target="_blank"><i class="fa fa-money fa-fw"></i>打赏一下?</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="tencent://message/?Site=baidu.com&uin=470157929&Menu=yes" title="QQ → tencent:&#x2F;&#x2F;message&#x2F;?Site&#x3D;baidu.com&amp;uin&#x3D;470157929&amp;Menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/ZHYCarge/notes/new/master/source/_posts" title="https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge&#x2F;notes&#x2F;new&#x2F;master&#x2F;source&#x2F;_posts" rel="noopener" target="_blank">新建一篇文章</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://zhycarge.gitee.io/" title="https:&#x2F;&#x2F;zhycarge.gitee.io" rel="noopener" target="_blank">其他途径访问(gitee)</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://zhycarge.github.io/" title="https:&#x2F;&#x2F;zhycarge.github.io">其他途径访问(github)</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZHYCarge</span>
+</div>
+
+
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span> Look up at the stars and keep your feet on the ground 
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("07/10/2021 21:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已陪伴博主 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//fastly.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//fastly.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'lMi75lqHa0Nh3Q1wOb7J1wFf-gzGzoHsz',
+      appKey     : 't8jjo2V1scEx9nzeNexS5VUG',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-CN' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

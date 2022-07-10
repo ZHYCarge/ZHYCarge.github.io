@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhycarge.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"manual"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言此内容为转载博客内容，转载信息如下：  版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。本文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u013546553&#x2F;article&#x2F;details&#x2F;122156127">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows安全中心打不开defender的完美解决方法">
+<meta property="og:url" content="https://zhycarge.github.io/2022/04/07/windows%E5%AE%89%E5%85%A8%E4%B8%AD%E5%BF%83%E6%89%93%E4%B8%8D%E5%BC%80defender%E7%9A%84%E5%AE%8C%E7%BE%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="ZHYCarge的博客">
+<meta property="og:description" content="前言此内容为转载博客内容，转载信息如下：  版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。本文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u013546553&#x2F;article&#x2F;details&#x2F;122156127">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e3cb77a573f245ec8506d5fd0005a75b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5rex5aSc5ZCs6KGo,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e802f887ac944a138b344da33f2102ad.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/fd5b02da020d419aaad6bc4a1751697f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5rex5aSc5ZCs6KGo,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/901502de759c4830b4ec7c193713ad03.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5rex5aSc5ZCs6KGo,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/c186f25047da4237bdfc0312f6f44ee4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5rex5aSc5ZCs6KGo,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f14332087ae247c991aceff39436cd91.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5rex5aSc5ZCs6KGo,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2f84e2294a294a2bb70cdd6ff5c47cc3.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5rex5aSc5ZCs6KGo,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="article:published_time" content="2022-04-07T05:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-10T16:37:15.099Z">
+<meta property="article:author" content="ZHYCarge">
+<meta property="article:tag" content="转载">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/e3cb77a573f245ec8506d5fd0005a75b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5rex5aSc5ZCs6KGo,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+
+<link rel="canonical" href="https://zhycarge.github.io/2022/04/07/windows%E5%AE%89%E5%85%A8%E4%B8%AD%E5%BF%83%E6%89%93%E4%B8%8D%E5%BC%80defender%E7%9A%84%E5%AE%8C%E7%BE%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>windows安全中心打不开defender的完美解决方法 | ZHYCarge的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="ZHYCarge的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ZHYCarge的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-必应一下">
+
+    <a href="/bings/" rel="section"><i class="fa fa-globe fa-fw"></i>必应一下</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhycarge.github.io/2022/04/07/windows%E5%AE%89%E5%85%A8%E4%B8%AD%E5%BF%83%E6%89%93%E4%B8%8D%E5%BC%80defender%E7%9A%84%E5%AE%8C%E7%BE%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.gif">
+      <meta itemprop="name" content="ZHYCarge">
+      <meta itemprop="description" content="在黑夜中，负重前行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZHYCarge的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          windows安全中心打不开defender的完美解决方法<a href="https://github.com/ZHYCarge/notes/blob/master/source/_posts/windows%E5%AE%89%E5%85%A8%E4%B8%AD%E5%BF%83%E6%89%93%E4%B8%8D%E5%BC%80defender%E7%9A%84%E5%AE%8C%E7%BE%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-07 13:00:00" itemprop="dateCreated datePublished" datetime="2022-04-07T13:00:00+08:00">2022-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-11 00:37:15" itemprop="dateModified" datetime="2022-07-11T00:37:15+08:00">2022-07-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%97%A5%E5%B8%B8/" itemprop="url" rel="index"><span itemprop="name">日常</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/04/07/windows%E5%AE%89%E5%85%A8%E4%B8%AD%E5%BF%83%E6%89%93%E4%B8%8D%E5%BC%80defender%E7%9A%84%E5%AE%8C%E7%BE%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/04/07/windows%E5%AE%89%E5%85%A8%E4%B8%AD%E5%BF%83%E6%89%93%E4%B8%8D%E5%BC%80defender%E7%9A%84%E5%AE%8C%E7%BE%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>此内容为转载博客内容，转载信息如下：</p>
+<blockquote>
+<p>版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。<br>本文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u013546553/article/details/122156127">https://blog.csdn.net/u013546553/article/details/122156127</a></p>
+</blockquote>
+<span id="more"></span>
+<p>博主仅仅使用到第一个问题便得到解决，后续命令真实性有待探究，在转载过程中，可能出现命令有误，因此推荐从原博客进行获取</p>
+<div id="content_views" class="markdown_views prism-atom-one-dark">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                        <path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+                    </svg>
+                    <h1><a name="t0"></a><a id="windowsdefenderwin11Windows_0"></a>windows安全中心打不开defender的解决方法，适用于win11，理论上你可以由此方法修复所有Windows自带应用</h1> 
+<h2><a name="t1"></a><a id="_1"></a>开端</h2> 
+<p>因为我之前是<a target="_blank" rel="noopener" href="https://blog.csdn.net/u013546553/article/details/121213366?spm=1001.2014.3001.5501">不重装系统修复的系统</a>方式恢复了我的用户文件，所以有点后遗症，一个表现就是<br> windows安全中心打不开，错误提示如下</p> 
+<p><img src="https://img-blog.csdnimg.cn/e3cb77a573f245ec8506d5fd0005a75b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5rex5aSc5ZCs6KGo,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center" alt="在这里插入图片描述">虽然我不用defender杀毒，但是他打不开UI界面，但是本体还在运行，所以造成我用不了一些比较不和谐的东西，每次用的时候都要用360接管defender关闭实时防护，就很麻烦，所以必须修复这个问题。</p> 
+<h2><a name="t2"></a><a id="_7"></a>解决方法</h2> 
+<p>因为我知道问题的原因，是我手动恢复原来账户文件，肯定哪里账户SID或者路径没对上。但是我并不知道哪里没对上，所以我需要黑盒的方式进行排除。<br> 以下是我的修复之旅，这些方式将解决你打不开defender的问题，请务必看完༼ つ ◕_◕ ༽つ</p> 
+<ol><li><strong>方法1 <em>首先当然是康康一般的修复方式，重装这个defender的UI程序</em></strong><br> 就很巧，搜索后发现这个安全中心打不开好像是个win11通病，很多人更新后也会打不开安全中心，其中这个UI管理程序的名字叫<strong>Microsoft.SecHealthUI</strong>，于是开始了修复<br> 右键开始菜单选择**Windows终端（管理员）**打开<br> <img src="https://img-blog.csdnimg.cn/e802f887ac944a138b344da33f2102ad.png" alt="在这里插入图片描述"><br> 其他方式也行，只要是powershell的管理员就行了，输入以下命令</li></ol> 
+<pre class="prettyprint"><code class="prism language-rust has-numbering" onclick="mdcp.copyCode(event)" style="position: unset;"><span class="token class-name">Get</span><span class="token operator">-</span><span class="token class-name">AppxPackage</span> <span class="token class-name">Microsoft</span><span class="token punctuation">.</span><span class="token class-name">SecHealthUI</span> <span class="token operator">-</span><span class="token class-name">AllUsers</span>
+<div class="hljs-button &#123;2&#125;" data-title="复制" data-report-click="&#123;&quot;spm&quot;:&quot;1001.2101.3001.4259&quot;&#125;"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li></ul></pre> 
+<p><img src="https://img-blog.csdnimg.cn/fd5b02da020d419aaad6bc4a1751697f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5rex5aSc5ZCs6KGo,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br> 获取到详细的安装路径之后复制这个红框路径<strong>xxxxx</strong>填入以下命令的xxxxx执行</p> 
+<pre class="prettyprint"><code class="prism language-rust has-numbering" onclick="mdcp.copyCode(event)" style="position: unset;"><span class="token class-name">Get</span><span class="token operator">-</span><span class="token class-name">AppXPackage</span> <span class="token operator">*</span><span class="token class-name">Microsoft</span><span class="token punctuation">.</span><span class="token class-name">SecHealthUI</span><span class="token operator">*</span> <span class="token operator">-</span><span class="token class-name">AllUsers</span> <span class="token operator">|</span> <span class="token class-name">Foreach</span> <span class="token punctuation">&#123;<!-- --></span><span class="token class-name">Add</span><span class="token operator">-</span><span class="token class-name">AppxPackage</span> <span class="token operator">-</span><span class="token class-name">DisableDevelopmentMode</span> <span class="token operator">-</span><span class="token class-name">Register</span> “xxxxx\<span class="token class-name">AppXManifest</span><span class="token punctuation">.</span>xml”<span class="token punctuation">&#125;</span>
+<div class="hljs-button &#123;2&#125;" data-title="复制" data-report-click="&#123;&quot;spm&quot;:&quot;1001.2101.3001.4259&quot;&#125;"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li></ul></pre> 
+<p>再执行</p> 
+<pre class="prettyprint"><code class="prism language-rust has-numbering" onclick="mdcp.copyCode(event)" style="position: unset;"><span class="token class-name">Get</span><span class="token operator">-</span><span class="token class-name">AppxPackage</span> <span class="token class-name">Microsoft</span><span class="token punctuation">.</span><span class="token class-name">SecHealthUI</span> <span class="token operator">-</span><span class="token class-name">AllUsers</span> <span class="token operator">|</span> <span class="token class-name">Reset</span><span class="token operator">-</span><span class="token class-name">AppxPackage</span>
+<div class="hljs-button &#123;2&#125;" data-title="复制" data-report-click="&#123;&quot;spm&quot;:&quot;1001.2101.3001.4259&quot;&#125;"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li></ul></pre> 
+<p>此时看看安全中心能不能打开，如果不能继续往下看，我就是不行的</p> 
+<ol start="2"><li><strong>方法2 <em>defender本体在运行，Microsoft.SecHealthUI也重装了，还有问题只能说明是哪里配置出问题了</em></strong><br> 首先打开win+R 输入gpedit.msc 打开组策略确保defender没被禁用，检查计算机配置-管理模板-Windows组件-Microsoft defender防病毒，如下图，红框内的内容都保证是未配置。<br> <img src="https://img-blog.csdnimg.cn/901502de759c4830b4ec7c193713ad03.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5rex5aSc5ZCs6KGo,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">确认组策略没问题后，我们需要排除注册表文件的配置是不是正确的，但是我没有微软的文档，也没有时间去看，那我们还是只能通过黑盒的方式进行排除，最简单的方式就是右键开始菜单，选择计算机管理，添加一个新的administrators组用户门之后登录该账户打开安全中心看看能不能正常打开，如果可以正常打开，直接跳过以下powershell命令：</li></ol> 
+<pre class="prettyprint"><code class="prism language-rust has-numbering" onclick="mdcp.copyCode(event)" style="position: unset;">依次执行
+sfc <span class="token operator">/</span>scannow
+<span class="token constant">DISM</span><span class="token punctuation">.</span>exe <span class="token operator">/</span><span class="token class-name">Online</span> <span class="token operator">/</span><span class="token class-name">Cleanup</span><span class="token operator">-</span>image <span class="token operator">/</span><span class="token class-name">Scanhealth</span>
+<span class="token constant">DISM</span><span class="token punctuation">.</span>exe <span class="token operator">/</span><span class="token class-name">Online</span> <span class="token operator">/</span><span class="token class-name">Cleanup</span><span class="token operator">-</span>image <span class="token operator">/</span><span class="token class-name">Restorehealth</span>
+sfc <span class="token operator">/</span>scannow
+<span class="token class-name">Get</span><span class="token operator">-</span><span class="token class-name">AppXPackage</span> <span class="token operator">-</span><span class="token class-name">AllUsers</span> <span class="token operator">|</span> <span class="token class-name">Foreach</span> <span class="token punctuation">&#123;<!-- --></span><span class="token class-name">Add</span><span class="token operator">-</span><span class="token class-name">AppxPackage</span> <span class="token operator">-</span><span class="token class-name">DisableDevelopmentMode</span> <span class="token operator">-</span><span class="token class-name">Register</span> “$<span class="token punctuation">(</span><span class="token variable">$_</span><span class="token punctuation">.</span><span class="token class-name">InstallLocation</span><span class="token punctuation">)</span>\<span class="token class-name">AppXManifest</span><span class="token punctuation">.</span>xml”<span class="token punctuation">&#125;</span>
+<span class="token class-name">Get</span><span class="token operator">-</span><span class="token class-name">AppxPackage</span> <span class="token class-name">Microsoft</span><span class="token punctuation">.</span><span class="token class-name">SecHealthUI</span> <span class="token operator">-</span><span class="token class-name">AllUsers</span> <span class="token operator">|</span> <span class="token class-name">Reset</span><span class="token operator">-</span><span class="token class-name">AppxPackage</span>
+<div class="hljs-button &#123;2&#125;" data-title="复制" data-report-click="&#123;&quot;spm&quot;:&quot;1001.2101.3001.4259&quot;&#125;"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li></ul></pre> 
+<p><em>或者执行命令后也无法正常打开，那么你需要重新再新建一个administrators组的用户，如果也不行，那么很不幸需要<a target="_blank" rel="noopener" href="https://blog.csdn.net/u013546553/article/details/121213366?spm=1001.2014.3001.5501">不重装系统修复的系统</a>了。。。</em></p> 
+<p>可以正常打开Windows安全中心后，就是改好我们原来用户的<a href="https://so.csdn.net/so/search?q=%E6%B3%A8%E5%86%8C%E8%A1%A8&amp;spm=1001.2101.3001.7020" target="_blank" class="hl hl-1" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.7020&quot;,&quot;dest&quot;:&quot;https://so.csdn.net/so/search?q=%E6%B3%A8%E5%86%8C%E8%A1%A8&amp;spm=1001.2101.3001.7020&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.7020&quot;,&quot;dest&quot;:&quot;https://so.csdn.net/so/search?q=%E6%B3%A8%E5%86%8C%E8%A1%A8&amp;spm=1001.2101.3001.7020&quot;}" data-tit="注册表" data-pretit="注册表">注册表</a>文件就行了，事实上这个时候我们已经修复好了打不开defender的的问题，但是我是想修复我原来的用户，所以继续</p> 
+<p>注册表文件我们用黑盒的方式，把你新建账户的与Microsoft.SecHealthUI有关的注册表信息临摹一遍<br> 到你原来的账户就行了，所以你需要改以下注册表内容，我并不知道是那条生效了，所以就将SID不一致的部分全改了，这里用RegWorkshop修改注册表会比较好操作<br> 搜索Microsoft.SecHealthUI<br> <img src="https://img-blog.csdnimg.cn/c186f25047da4237bdfc0312f6f44ee4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5rex5aSc5ZCs6KGo,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">然后就是临摹了，将搜索到的路径内包含SID最大值目录内的内容（也就是没问题的新用户的SID）不覆盖复制到你要修复的用户SID下（要修复的用户SID在HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList下查看，逐个查看ProfileImagePath内地址，与你要修复的用户名字对上了的就是了，如果是administrator就是500那个了），如果没有要修复的用户SID目录就手动新建，遇到权限问题更改所有者到当前用户就可以了，修改完之后再改回去。<br> <img src="https://img-blog.csdnimg.cn/f14332087ae247c991aceff39436cd91.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5rex5aSc5ZCs6KGo,size_20,color_FFFFFF,t_70,g_se,x_16" alt="红框内就是SID了"></p> 
+<p>这是我修复后搜索的，我记得我修复的时候好像就改了2，3个目录之后就可以了。应该工作量不大。<br> 修改完后重启，<br> 之后将C:\Users\新的用户名\AppData\Local\Packages\Microsoft.SecHealthUI_xxxxxx内容复制到要修复的对应用户目录下（不知道需不需要，应该会自动生成，但是我当时复制了）<br> 然后重复<strong>方法1</strong>的命令就可以打开了。<br> <img src="https://img-blog.csdnimg.cn/2f84e2294a294a2bb70cdd6ff5c47cc3.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5rex5aSc5ZCs6KGo,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+                </div>
+
+    </div>
+
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------我也是有底线的哦<i class="fa fa-anchor"></i>如需更多，欢迎打赏-------------</div>
+    
+</div>
+
+
+  
+</div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>ZHYCarge
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://zhycarge.github.io/2022/04/07/windows%E5%AE%89%E5%85%A8%E4%B8%AD%E5%BF%83%E6%89%93%E4%B8%8D%E5%BC%80defender%E7%9A%84%E5%AE%8C%E7%BE%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="windows安全中心打不开defender的完美解决方法">https://zhycarge.github.io/2022/04/07/windows安全中心打不开defender的完美解决方法/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E8%BD%AC%E8%BD%BD/" rel="tag"><i class="fa fa-tag"></i> 转载</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/30/%E5%B0%8F%E7%9F%A5%E8%AF%86%E5%90%88%E9%9B%86/" rel="prev" title="小知识合集">
+      <i class="fa fa-chevron-left"></i> 小知识合集
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/08/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%89/" rel="next" title="数字图像处理笔记——第一章">
+      数字图像处理笔记——第一章 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#content_views"><span class="nav-number">2.</span> <span class="nav-text">windows安全中心打不开defender的解决方法，适用于win11，理论上你可以由此方法修复所有Windows自带应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#content_views"><span class="nav-number">2.1.</span> <span class="nav-text">开端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#content_views"><span class="nav-number">2.2.</span> <span class="nav-text">解决方法</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZHYCarge"
+      src="/images/1.gif">
+  <p class="site-author-name" itemprop="name">ZHYCarge</p>
+  <div class="site-description" itemprop="description">在黑夜中，负重前行</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZHYCarge" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="ZHYCarge:ZHYCarge@163.com" title="E-Mail → ZHYCarge:ZHYCarge@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://raw.githubusercontent.com/ZHYCarge/photo/master/mm_reward_qrcode_1650029406131.png" title="打赏一下? → https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;ZHYCarge&#x2F;photo&#x2F;master&#x2F;mm_reward_qrcode_1650029406131.png" rel="noopener" target="_blank"><i class="fa fa-money fa-fw"></i>打赏一下?</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="tencent://message/?Site=baidu.com&uin=470157929&Menu=yes" title="QQ → tencent:&#x2F;&#x2F;message&#x2F;?Site&#x3D;baidu.com&amp;uin&#x3D;470157929&amp;Menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/ZHYCarge/notes/new/master/source/_posts" title="https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge&#x2F;notes&#x2F;new&#x2F;master&#x2F;source&#x2F;_posts" rel="noopener" target="_blank">新建一篇文章</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://zhycarge.gitee.io/" title="https:&#x2F;&#x2F;zhycarge.gitee.io" rel="noopener" target="_blank">其他途径访问(gitee)</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://zhycarge.github.io/" title="https:&#x2F;&#x2F;zhycarge.github.io">其他途径访问(github)</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZHYCarge</span>
+</div>
+
+
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span> Look up at the stars and keep your feet on the ground 
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("07/10/2021 21:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已陪伴博主 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//fastly.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//fastly.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'lMi75lqHa0Nh3Q1wOb7J1wFf-gzGzoHsz',
+      appKey     : 't8jjo2V1scEx9nzeNexS5VUG',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-CN' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

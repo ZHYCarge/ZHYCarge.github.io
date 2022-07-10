@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhycarge.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"manual"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="访客你好，这是一篇加密文章，其中内容可能关于个人隐私或者相关情感问题，如果确实想看，请联系我进行询问">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何撰写文献综述">
+<meta property="og:url" content="https://zhycarge.github.io/2022/05/07/%E5%A6%82%E4%BD%95%E6%92%B0%E5%86%99%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/index.html">
+<meta property="og:site_name" content="ZHYCarge的博客">
+<meta property="og:description" content="访客你好，这是一篇加密文章，其中内容可能关于个人隐私或者相关情感问题，如果确实想看，请联系我进行询问">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-07T02:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-10T16:37:15.099Z">
+<meta property="article:author" content="ZHYCarge">
+<meta property="article:tag" content="有密码">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://zhycarge.github.io/2022/05/07/%E5%A6%82%E4%BD%95%E6%92%B0%E5%86%99%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>如何撰写文献综述 | ZHYCarge的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="ZHYCarge的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ZHYCarge的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-必应一下">
+
+    <a href="/bings/" rel="section"><i class="fa fa-globe fa-fw"></i>必应一下</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhycarge.github.io/2022/05/07/%E5%A6%82%E4%BD%95%E6%92%B0%E5%86%99%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.gif">
+      <meta itemprop="name" content="ZHYCarge">
+      <meta itemprop="description" content="在黑夜中，负重前行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZHYCarge的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何撰写文献综述<a href="https://github.com/ZHYCarge/notes/blob/master/source/_posts/%E5%A6%82%E4%BD%95%E6%92%B0%E5%86%99%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-07 10:00:00" itemprop="dateCreated datePublished" datetime="2022-05-07T10:00:00+08:00">2022-05-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-11 00:37:15" itemprop="dateModified" datetime="2022-07-11T00:37:15+08:00">2022-07-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/study/" itemprop="url" rel="index"><span itemprop="name">study</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/05/07/%E5%A6%82%E4%BD%95%E6%92%B0%E5%86%99%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/05/07/%E5%A6%82%E4%BD%95%E6%92%B0%E5%86%99%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="好像密码不正确呢？再试试吧" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="ef57d1f2025b507f519375679325eb8b7a4e0beb1eaa726c7b4d99f060c223ed">c50e6c792fe5e9c244a0f537bbb111cc02b7c5fa63c6cc71a385a7139515442ef7d9d8f2642526b35c16c5981ddde2c9173b18e32906c9daf613743ab20c2366a9172809a2cad28c33646a2e7fa35a6459988036a939ecbbf571407e812568069fd645055dc297e0b958980a434f40072243c95a0ca8bbfa43a2bae6ae98055cff378ffe1ffc9943116784aba4d429f8e349bcc77280817488997cf44c044eec78f43f6dc36d5285815a339de45295eae56b7cfeb4c9bb7c0d095d4bb51543e29d774cd3a44cdf6935aeb4b2433508cdf36b06919593663bf460178cf885ce7cf63c4aca562ef7844e3a52fd360a5059952e28eba8a50f09387bf8048a58f37af548e19a83e89659f1b2f0d399a113e0584af44fdd063b663e217a8105f5d3954833cd50181c975be1404664cad0a60e268652d36ef532be98dc53ad5f9e22ee5fc66c17684b2764c6c03b0cabeb716e850b48b0c79d5aa5589940331261f0ad858983aa070b4516c49102d097f8c1c959e70780fe5aab8292e730c1da22fe24a71528b3f180e95d2a9b1218759c07d31546b8a5a5294f9d747541021e63ee67247af686247fa0212003808cd9dee0d61210977a9a3a5d61e6561658f6a6b74d94d14f309e08376d9bf941bf87abfd22f330f17fc8f1cf28eca3a0b167e83c7667a4b42b666718e4a6371c3f8bc42cbf54e53c8b8bfda669aaf6e0d77f4deeb6f0966e267e5bb5cf050a223c686d4363e461116f18b176d7fcad9524d8a3b0d6a8c5b0f57f11181f8c82ae9a2dafa6beabd2c6681d232f3881d0fcefd6ed6d3442ae058b6b34694f7f52f2f821f3e8691040b68970b298d4038e22513ae59e5b17b4cdc3f6442c5b970a07d9d5a903d182d70be903802a585ad3dd97a02c6944905d7e0689c96c253d671a5569ec7b34f71d404e2f0351de0f1b7528d660ddcd2d97250a5eef37296eac3cff27e8378b82f8e428831adbdeafd201cd1c61e0fb7a9c9bc6757a60fa9b2d5d5541a3391794e6d8e0676c596b6a760f833c92d4dbec87cc59134190142d12de9ff1c7f9bbb9fd8a20ffd646ed35df1d27991695bb09968f4696c8b01fecb74ca70d520d4232a5e109ad1eabca59e0596421898a531510612a5cc844b23f0c93fdcabf3bf482485d53097fef07aa98aaa3484c5dcbdc151292746d2185825e1575d3d673d91d5927160de32666e023f51f97f757a3ad423e79a85edd8094d4cfdc3f787cf4d377a8ff4482137dad5aa36f2899471d79f709fbd7d7e58e3f61d59c8cb21b240b80cfece05beef8fe936de9ab89a69057b900f3cbf38ea8bddc24dcba57f68044b1f1ac85b81843511f8ad7a333cf62f1706b5fc6c4171f8563f3bbda714ef74ce521322c064c9a82b1a01cee3a2375d0bb1c0c69951a7d0dae7dc03e540f43bb19787c5047802fa9e19b544157ead25ce6c709c753d35de8055be8e826a06d615cd2e6767b23f9603385e5333f9551438254258d36c4614be244683751c8c722c74e85b9c744224c7932d5ae682413f93d7d25496c3cd35cb1041d53275f6a36642ab0d552f64042afd12ec83fb9927adbe77d61c4f2a91f1fd7c60b84921f9341bf0c4f7ee5a5ccde8bc58f05ad0be79a2059a2ef0c58b3768fc9b653933900314dcf10ad9bd8343dcbeae7716ae190a284e7d9f98a6d74c49ee537a6e8e98de484c0dcb8990285a31b89c746df0d9666fb5b2039d8f551170f6195479bde7c39ca322ca014fa81fc917579e6c9e29b5a10cdae5df1c97a9705e7670961470adbfdd73535bfa97a2d29a95b68f46d2a964d0f15d5f214c413d6c110150b866bb34bd9fb71d3d9033fee7d59367924e261ab1d03bf5a84043332e2f87063a0f7fda3b1646aae43d66bc0e759d34ffec76a35f47e18e7f828ae102b9ee59f9b1d0a6659a362db5e6536b05dca99947cae71934108d8062e7188e2cf9953a59f4429c812de7bc1336026f2894808b043bb869ed98a9247c342f7d5ff186d467503a2b3e5916ddbae74c63cd5b1fe132934bf96c13aaba000468ed14cb8e0bab4c78ca0523d0c547f54653905511f87a295a5088b752d8574e84c112b4059e659642cdace9acce19c445e9b05980d6c0712b8246507aaaa225003ae28b42d657061c6a322654e67e1619e60790fcaa4e586d3f905afd5876182cbccd1cd94d1b079a7caed58ffd6f144aca50409f9847f5bd8b9a2f50735e2bd9bf86a79c4cd5f3985ce02e3a71e44a56ada426dc31f75633b090c11beb81f1234b2514c9c062dcbc71bf021cb638c57d6fa5817375149f13ce7c6c7d614d469d3a70a61b4182bef765a1d88d88560ef004b7f7c79c9f368180cfa8f9c4f5b5a39df0fff28a215076259e1c277c5f5d3b65b764d0429d650e7b5ef0d27463ef8816dc3c79ab89c04c13cbb0f7053167091f1e12901ce3ef3611b76277c09ccd918a1160604b1ab068e77701dfa4b97073b1d296069e9234a8788baa92bb2e3ffc51f870cc685d512344bd5b85d4fb74011890a5221f619f2b1211fbe9779a24d09589b4b56676f489b6d8373de85e1503e746edfc7a0cad012b1449fe630319515d860aba69f12ebb0962c9911796100baa31088afb9e5836e4e813c3db9e4e32667cacd528e855672eb8c975608d24e7c4d7ac6e57ea00c80cecdafda25785aed016f7cc9bc6e5d41e105326f6b20d1bc90fff2287afc1ae0f1d092894a89729185688e1795c17cd2d85d9bd1926a19fc56438fbc5f16178a9850d195ea45327d222599f915d8e79385e922aab149bc31695968deac5748a7166c7e8d001d56f8cc5ea614f256430b0526017e6c2e636961f9568083327cd82e2a9e8b7a73fa2ae61cc2aa37910e05769efd6aa8eee747e6f6d8538d2a24beaef0a6a21ce4794bb66fed278b85c9a98f239625d4ac546657538db8d80e70c618b75251237e5d47885e959e9c124df412c6c8f55615e94448bf5d479f515d9759fdcedc50d5d93073366c03793acd162a960f48c58e6dce3d33c7019ef6ac5db06051f4370805d35f0258134678a3dc38011b9427aa8753d2b0c4f147e8b160cf4ef355c50c39084c3b5c1ab78e3093e9c01546d41377eaa628ab25a72b48a81bb2a5537fc961e6337c0f7199fbf416b9fd14d1876b8879e2b62275c558b7063592f0dd856a9bdf385ad03c633fa8caeda8b0c08e8b6654a7a4994f9f8d7e4338ca3d12672ce0b5c0220da2835df523909129f3e47d8fce8e0d7faf0a56f1e2f0ef8b6b76ccd8086e9453dc108f4081996ca20392b5729bcca1297194084d0027f75ada14a6608fc5dd5166095654a6d41356f41e951a0683106edd690d9a6896b543b1670a79a5938606d78039322e12c964919b4a6e4d94925251a8939316be1a9454c38bc9e8247b145ecb0068e3bfb4179588425e2ec0bcf8ac74746020fbecaab7ca684bf633765e3117b22679bbcac461ddb637bb0169f929a03b6eeda891780ba1e366556d8318e854bab9e475af0a8565d30eef13e9fba7e62572731026ef08f6484b555ee73fab94209d5714a1a20b21a8dfc76e9fac848659a1cd3364fe724fbdde1ab46af2c3c046f8e9aa465479ed82e976228ebee9c614adc381057494efad340c209b0a1ff4f2b9634eff910b9459349238f5f00540257d97521988fa446485343a76ca45ad15444dd58e87b57e4702aa05663412e1bace151ca495aa5e032300098d0c5917556b3333f42abcc165de051fa6d64a18e9b913d9e32407ae027b049cf70e7bf8bc2af1128b418b1275f07328a77d5fc369a91d91b5b5af77bfeffed0fa56228971f2dcb929f3109911f127c33f465aa4d8950fb25ba7fe80dfda639d2654ce687a190c9f19a947ce791a469a5d412929891fed5deaac64a29390af6aabd15a4e8b6b7b42dd62e911720f1602a412aa2d18630d61677ee13821a53af43864b4a67d210e47bdccced041d8f748805aea16d2afaf40a3787f1f5446b9cc40dc882094071ec51201418a1927784353a7094c1791802705ff041a2f5bca6cdcfaf8f5d150b720b2928b91daaf876dc7c5c16b393104d5063f480297dd406d5587415d2b9de62c206330cc599be31878ee9f309c06e3fb68e8f771dcf32dbeb1a097df4ca9d9dbc41464f52aad76bd32694eb03e3f41daf3cf80ad3a459c2a97211faa1b37fa6be5831adb539ff3debfb29da5932de16bf6e60ea55f52ab2441115d748a7fd6cd3435c91651bbf95bb19201df1e4cc8660e842151884f451854eb68bf78a3e436d6d314a18f71cad22c53ee53373c7a2eaccb7763b53427c5254f270df66aef6582d585553a986214070dc59e3f20aa8985f4ae7c97dfccc115d2bc46dceb1e08d377cc5d8035834f247a64ec25ff1697f58fc16a0cade61489839dd63de9489a58b776e3cca6b03dd6747229cb2a0cb679d2805369ef5e661ce7970e2f46c75eed3aec675bbacea1085bf9b0d5fe92afaa17e055e813def64dd00056af3bad3d0d47c632edcedb85df6849b67299d52264480d3104a3353660dca2d829df53786ddab642beb86d7d7972fd5329e1506f586547988ec46f29f74194c4fd3583d76c6d5e9fa3a29ed19c75b760cc185343893f1021b214152f6bb163428d9b68357c6e3f1114ba35b277460f5589f0c8ada33b31122a451177aec025c6453b2fc97045aa6d922dd69af0500be757f551efa9dd2f74b62c605d708ab9d19dc28603b6b830d0a9f426bd0be607bbaeb7cd3b8c81ee51c284f1b0c463002912d88e90d18d5c7876699142dfd537204457a7864c4bbde3c622a9e00ecc03c5d5d919cd58ac3a4116d685c7c9cb331c3bcf0c4e091eb69642a8698765f631d70b62238f5cad37dd9a89144ee383da3b4e4ad4cdf5a63e33688de478e4910fa40d8b1649080c035a704c07585e92f96a6320c5b42c14f18d7ff23a1d8fbc8de71db274f8e2bc1af66df73ea7bd1a2aeb2f7c44cf55002fb1a8ba9e0dbb2f8facf8b94fdac10fe22bc591b3f2ff582beff2706cf6c7cda0b4c658458d8e8dd93db9ba0b57f2f0add48882bcc7159d851162ac96d15baf3a5c5148eb19864d50ce1cbb932282cf7a18f102c2144430b46dee7742cdb5bf4caa6f68ab6346b07991b38f83ffbb51ba43e5d412e1a35d521ae31f2661282fb835c5041959b38f4f558476978965a496975a7e49de4efb5f680c756209bd7fe2adcc3a38a9fd931c9fd615525c6c8f185134575def57a968d026ea854d2ccea01727d10e6358367dfff253ce1997dd68a08738fab7f775c84bc0127ccd5bacad32cfb0db3b9371663a6fc568abda7861370c61e86f332a55403f88e5d2172425a5e446ec06979a6b1e462b6b57fcef743a0574bb3bb6380819dea5edbe8b52c5995b01b78e745a6be8d20cf11aea3b8770eb89fd0956dc7678b34ec28734d1f2689ac0b50f41d3add094135f09b791fd672c9a4dd8a44d5f3fa5f88baddd7de323b2b500b1a61c2e45807ef8af355529f512fddb30e8bf5cc37f00b07ac530e80df5cb60cc71831a4ce187f138c53189de733dca2f63376fb9d40b9faffd45fd3d863f79df424919f1044e8d30c2a1f4d9d6d43ba79dfef796af8658b9107a2a6f019933b72975a0ffb2efbc965ec874e130f8a3bf6260692ea8004d2ff155a62fc9db5a74f46b9a4458fd2d7fdcf5828f14707ac76f22cc21396422521bda5f41396070ba4bc03b4a31c7ac2ee1b932ed244c7346238c46cbbd98a621af029e9ac2e4ee9a7444fa041db06f816a4d239840719bd24bbaeb9370f1d249d95c92e288821788e307a55fde2eb201cd308abeed7dda48ad4a30bac2c1fc56d008aceb7f329cfe234d73b4ca33e043e366d870000628803d06d547ad1603329bd47e6083e2a1ee66ba02b68b438921058355b6a79a7297c8ee23b307a4c3d8b7871a8e50fc79ed5f6132e27662674818830cd9c4160b205a9d341b094beea0618d26f19ab62cff0c953d5aed86c64c83e36bb14081ae28d2f0d82b20731279d32076df0da8c9d0fa2bb9220b15aff7eea798ea340027c7e8230f63a8bc420fe9e830156cb6c403f486a1ee078beee8dde044c5d8c797eec87510d24081666ae7b7f8b373518284c82d74ceec65c55d51265c459532f9117a4a9f2f72c85f666214755f8c226ea1d86c97b9526d92570446a4ebbb44c49c0fbc5f5e13</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-wave">
+      <input class="hbe hbe-input-field hbe-input-field-wave" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-wave" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-wave">输入正确密码查看正确文章</span>
+      </label>
+      <svg class="hbe hbe-graphic hbe-graphic-wave" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+        <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>
+      </svg>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+    </div>
+
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------我也是有底线的哦<i class="fa fa-anchor"></i>如需更多，欢迎打赏-------------</div>
+    
+</div>
+
+
+  
+</div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>ZHYCarge
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://zhycarge.github.io/2022/05/07/%E5%A6%82%E4%BD%95%E6%92%B0%E5%86%99%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/" title="如何撰写文献综述">https://zhycarge.github.io/2022/05/07/如何撰写文献综述/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%89%E5%AF%86%E7%A0%81/" rel="tag"><i class="fa fa-tag"></i> 有密码</a>
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/05/windows%E7%BB%88%E7%AB%AF%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86/" rel="prev" title="windows终端配置代理">
+      <i class="fa fa-chevron-left"></i> windows终端配置代理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/12/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%89/" rel="next" title="数字图像处理笔记——第二章">
+      数字图像处理笔记——第二章 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZHYCarge"
+      src="/images/1.gif">
+  <p class="site-author-name" itemprop="name">ZHYCarge</p>
+  <div class="site-description" itemprop="description">在黑夜中，负重前行</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZHYCarge" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="ZHYCarge:ZHYCarge@163.com" title="E-Mail → ZHYCarge:ZHYCarge@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://raw.githubusercontent.com/ZHYCarge/photo/master/mm_reward_qrcode_1650029406131.png" title="打赏一下? → https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;ZHYCarge&#x2F;photo&#x2F;master&#x2F;mm_reward_qrcode_1650029406131.png" rel="noopener" target="_blank"><i class="fa fa-money fa-fw"></i>打赏一下?</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="tencent://message/?Site=baidu.com&uin=470157929&Menu=yes" title="QQ → tencent:&#x2F;&#x2F;message&#x2F;?Site&#x3D;baidu.com&amp;uin&#x3D;470157929&amp;Menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/ZHYCarge/notes/new/master/source/_posts" title="https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge&#x2F;notes&#x2F;new&#x2F;master&#x2F;source&#x2F;_posts" rel="noopener" target="_blank">新建一篇文章</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://zhycarge.gitee.io/" title="https:&#x2F;&#x2F;zhycarge.gitee.io" rel="noopener" target="_blank">其他途径访问(gitee)</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://zhycarge.github.io/" title="https:&#x2F;&#x2F;zhycarge.github.io">其他途径访问(github)</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZHYCarge</span>
+</div>
+
+
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span> Look up at the stars and keep your feet on the ground 
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("07/10/2021 21:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已陪伴博主 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//fastly.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//fastly.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'lMi75lqHa0Nh3Q1wOb7J1wFf-gzGzoHsz',
+      appKey     : 't8jjo2V1scEx9nzeNexS5VUG',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-CN' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

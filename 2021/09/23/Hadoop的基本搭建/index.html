@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhycarge.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"manual"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言尝试在课下搭建完成hadoop，较为详细的教程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop的基本搭建">
+<meta property="og:url" content="https://zhycarge.github.io/2021/09/23/Hadoop%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="ZHYCarge的博客">
+<meta property="og:description" content="前言尝试在课下搭建完成hadoop，较为详细的教程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923102824100.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923105214569.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923105927066.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923111140236.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923112610429.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923113801257.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190821100015967.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923153254322.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923153347687.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/BABA3EC68E19E7A89A8A385323270682.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923152752487.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210925190804612.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210926134207835.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210926134434816.png">
+<meta property="article:published_time" content="2021-09-23T03:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-10T16:37:15.095Z">
+<meta property="article:author" content="ZHYCarge">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="Hadoop">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923102824100.png">
+
+<link rel="canonical" href="https://zhycarge.github.io/2021/09/23/Hadoop%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%90%AD%E5%BB%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Hadoop的基本搭建 | ZHYCarge的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="ZHYCarge的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ZHYCarge的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-必应一下">
+
+    <a href="/bings/" rel="section"><i class="fa fa-globe fa-fw"></i>必应一下</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhycarge.github.io/2021/09/23/Hadoop%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.gif">
+      <meta itemprop="name" content="ZHYCarge">
+      <meta itemprop="description" content="在黑夜中，负重前行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZHYCarge的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hadoop的基本搭建<a href="https://github.com/ZHYCarge/notes/blob/master/source/_posts/Hadoop%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%90%AD%E5%BB%BA.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-23 11:00:00" itemprop="dateCreated datePublished" datetime="2021-09-23T11:00:00+08:00">2021-09-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-11 00:37:15" itemprop="dateModified" datetime="2022-07-11T00:37:15+08:00">2022-07-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/study/" itemprop="url" rel="index"><span itemprop="name">study</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/09/23/Hadoop%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%90%AD%E5%BB%BA/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/09/23/Hadoop%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%90%AD%E5%BB%BA/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>尝试在课下搭建完成<code>hadoop</code>，较为详细的教程</p>
+<span id="more"></span>
+
+
+
+<h1 id="文章参考"><a href="#文章参考" class="headerlink" title="文章参考"></a>文章参考</h1><p><a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/recent/markdown/WEB89df9ee790282cb530f1e68be85e40da/4c44c3b7c9a6ee91c27ec456d9b38bc7">老师的有道云笔记</a></p>
+<p><a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html">老师上课发的链接</a></p>
+<p><a target="_blank" rel="noopener" href="http://dblab.xmu.edu.cn/blog/2441-2/">软工学子提供的链接，可参考</a><br><a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-vim.html">Vim的使用方法，不会的必须要看！！！！！！</a>  </p>
+<h1 id="前提准备"><a href="#前提准备" class="headerlink" title="前提准备"></a>前提准备</h1><ul>
+<li>一台主机(云服务器or虚拟机)</li>
+</ul>
+<p>由于为了省事，就直接买了百度云18元3个月的云服务器（毕竟结束之后就不需要用了）</p>
+<p>相关软件准备：</p>
+<ul>
+<li>ssh(必须)</li>
+<li>vim(推荐)</li>
+<li>其他在后续需要安装的</li>
+</ul>
+<h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1><h2 id="主机申请"><a href="#主机申请" class="headerlink" title="主机申请"></a>主机申请</h2><p>申请主机的过程就不叙述了，我的云主机配置如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923102824100.png" alt="image-20210923102824100"></p>
+<h2 id="更换镜像（可选）"><a href="#更换镜像（可选）" class="headerlink" title="更换镜像（可选）"></a>更换镜像（可选）</h2><p>由于有些人使用的是自己的虚拟机，因此可能会出现镜像使用的是官方的镜像，因此下载以及安装速度可能会很慢，甚至会出现无法进行下载的可能。因此对于这种情况，可以考虑更换镜像文件进行切换，更换方式如下：</p>
+<p><a href="https://zhycarge.github.io/2021/07/12/ubuntu%E6%8D%A2%E6%BA%90/">Ubuntu换源</a></p>
+<h2 id="更新源"><a href="#更新源" class="headerlink" title="更新源"></a>更新源</h2><p>由于服务器是Ubuntu的，因此使用的是apt的包管理器，因此在使用前需要先更新软件库，否则会导致软件无法进行安装。命令如下：</p>
+<p><code>apt update</code>检查是否拥有可更新的包</p>
+<p><code>apt upgrade</code>安装更新包</p>
+<h2 id="安装友好的交互式shell（推荐）"><a href="#安装友好的交互式shell（推荐）" class="headerlink" title="安装友好的交互式shell（推荐）"></a>安装友好的交互式shell（推荐）</h2><p>由于bash emmm一言难尽。。。因此需要安装一个比较友好的shell来进行替代，推荐两个，新手推荐安装fish：</p>
+<ul>
+<li>fish</li>
+</ul>
+<p>安装命令如下：</p>
+<p><code>apt install fish</code></p>
+<blockquote>
+<p>请注意：fish有些语法与bash不通，一些语法在bash中可以运行但是在fish中不可以进行运行，因此在运行此类代码时需要先转换为bash环境进行运行（后面会出现），因此遇到此类问题，代码为斜体*<code>我是个例子</code>*</p>
+</blockquote>
+<ul>
+<li>zsh</li>
+</ul>
+<p>安装命令如下：</p>
+<p><code>apt install zsh</code></p>
+<p>推荐配套安装[oh-my-zsh]</p>
+<p><code>sh -c &quot;$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;</code></p>
+<p>两款shell的对比：</p>
+<ul>
+<li><p>fish讲究的是开箱即用，因此基本不需要进行任何配置，直接使用就好，但是有些情况会不支持bash的语法（简单快捷）</p>
+</li>
+<li><p>zsh的配置要比fish要麻烦许多，但是有oh-my-zsh会好很多，感觉与arch一样，需要自己进行配置，不会与bash脚本产生冲突，配置好的zsh会比fish好用很多（深度发烧友喜爱）</p>
+</li>
+</ul>
+<p>zsh的配置链接：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35283688">oh-my-zsh配置</a></p>
+<h2 id="安装vim-推荐"><a href="#安装vim-推荐" class="headerlink" title="安装vim(推荐)"></a>安装vim(推荐)</h2><p>不习惯nano以及vi，嗯.     安装命令如下：</p>
+<p><code>apt install vim </code></p>
+<h2 id="创建Hadoop用户"><a href="#创建Hadoop用户" class="headerlink" title="创建Hadoop用户"></a>创建Hadoop用户</h2><p>由于root用户是超级用户，并且后续配置可能会涉及到一些变量配置，为了系统安全，推荐创建一个新用户</p>
+<ol>
+<li>创建用户</li>
+</ol>
+<p><code>useradd -m hadoop -s /bin/bash</code></p>
+<blockquote>
+<p>如果配置了其他的shell，在后面的<code>/bin/bash</code>可以换成其他的</p>
+</blockquote>
+<ol start="2">
+<li>设置帐号密码</li>
+</ol>
+<p><code>passwd hadoop</code></p>
+<blockquote>
+<p>linux中，密码不会外显，因此直接输入就好</p>
+</blockquote>
+<ol start="3">
+<li>将此用户增加管理员权限</li>
+</ol>
+<p><code>sudo adduser hadoop sudo</code></p>
+<ol start="4">
+<li>使用hadoop用户登录</li>
+</ol>
+<p><code>su - hadoop</code></p>
+<p>配置完成之后如下显示：配置完成之后如下显示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923105214569.png" alt="image-20210923105214569"></p>
+<h2 id="安装以及配置Java"><a href="#安装以及配置Java" class="headerlink" title="安装以及配置Java"></a>安装以及配置Java</h2><ol>
+<li>安装openjdk-8-jdk</li>
+</ol>
+<p><code>sudo apt install openjdk-8-jdk</code></p>
+<ol start="2">
+<li>查看当前java版本</li>
+</ol>
+<p><code>java -version</code></p>
+<ol start="3">
+<li>查找OpenJDK的安装路径</li>
+</ol>
+<p><code>update-alternatives --config java </code></p>
+<p>显示如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923105927066.png" alt="image-20210923105927066"></p>
+<p>因此绝对路径为：<code>/usr/lib/jvm/java-8-openjdk-amd64</code></p>
+<ol start="4">
+<li><p>配置JAVA_HOME 环境变量</p>
+<ol>
+<li><p><code>sudo vim /etc/profile</code></p>
+</li>
+<li><p>在开头位置添加如下内容（使用<kbd>i</kbd>进行编辑）： </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64</span><br><span class="line">export JRE_HOME=$JAVA_HOME/jre</span><br><span class="line">export PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">export CLASSPATH=$JAVA_HOME/lib:$JRE_HOME/lib</span><br><span class="line">export HADOOP_HOME=/usr/local/hadoop</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</span><br></pre></td></tr></table></figure>
+
+<p>之后按<kbd>Esc</kbd>,输入<code>:wq</code>来进行保存退出</p>
+</li>
+<li><p>让环境变量生效*<code>source /etc/profile</code>*</p>
+</li>
+</ol>
+</li>
+<li><p>检查是否配置正常</p>
+<ul>
+<li><em><code>echo $JAVA_HOME</code></em></li>
+<li><em><code>java -version</code></em></li>
+<li><em><code>$JAVA_HOME/bin/java -version</code></em></li>
+</ul>
+<p>如果最后两个指令输出是一样的，则代表配置完成，图片如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923111140236.png" alt="image-20210923111140236"></p>
+</li>
+</ol>
+<h2 id="安装Hadoop"><a href="#安装Hadoop" class="headerlink" title="安装Hadoop"></a>安装Hadoop</h2><ol>
+<li>下载</li>
+</ol>
+<p><code>wget https://mirrors.bfsu.edu.cn/apache/hadoop/common/hadoop-3.3.0/hadoop-3.3.0-aarch64.tar.gz</code></p>
+<blockquote>
+<p>百度云比阿里云要慢好多。。。。</p>
+</blockquote>
+<ol start="2">
+<li>解压<ol>
+<li>解压缩：<code>sudo tar -zxvf hadoop-3.3.0-aarch64.tar.gz -C /usr/local/</code></li>
+<li>进入目录：<code>cd /usr/local</code></li>
+<li>更改文件夹名称：<code>sudo mv  hadoop-3.3.0 hadoop</code></li>
+<li>赋权：<code>sudo chown -R hadoop ./hadoop</code></li>
+</ol>
+</li>
+</ol>
+<h2 id="配置Hadoop环境"><a href="#配置Hadoop环境" class="headerlink" title="配置Hadoop环境"></a>配置Hadoop环境</h2><p>输入命令<code>vim ~/.bashrc</code></p>
+<p>将以下内容添加到文件开头</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> HADOOP_HOME=/usr/local/hadoop</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=$(<span class="variable">$HADOOP_HOME</span>/bin/hadoop classpath):<span class="variable">$CLASSPATH</span></span><br><span class="line"><span class="built_in">export</span> HADOOP_COMMON_LIB_NATIVE_DIR=<span class="variable">$HADOOP_HOME</span>/lib/native</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$HADOOP_HOME</span>/bin:<span class="variable">$HADOOP_HOME</span>/sbin</span><br></pre></td></tr></table></figure>
+
+<p>执行命令使配置生效</p>
+<p><em><code>source ~/.bashrc</code></em></p>
+<p>图片如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923112610429.png" alt="image-20210923112610429"></p>
+<h2 id="配置Hadoop独立操作"><a href="#配置Hadoop独立操作" class="headerlink" title="配置Hadoop独立操作"></a>配置Hadoop独立操作</h2><ol>
+<li>进入目录 ：<code>cd /usr/local/hadoop</code> </li>
+<li>创建文件夹：<code>mkdir input</code></li>
+<li>拷贝文件到input：<code>cp etc/hadoop/*.xml input</code></li>
+<li>不懂：<code>bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.0.jar grep input output &#39;dfs[a-z.]+&#39;</code></li>
+<li>检查输出：<code>cat output/*</code></li>
+</ol>
+<p>最后输出结果如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923113801257.png" alt="image-20210923113801257"></p>
+<h2 id="配置Hadoop伪分布式操作"><a href="#配置Hadoop伪分布式操作" class="headerlink" title="配置Hadoop伪分布式操作"></a>配置Hadoop伪分布式操作</h2><ol>
+<li><p>修改配置文件<code>vim etc/hadoop/core-site.xml</code></p>
+</li>
+<li><p>删除掉内部的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>文件结尾添加如下内容：(注意缩进)</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;file:/usr/local/hadoop/tmp&lt;/value&gt;</span><br><span class="line">        &lt;description&gt;Abase <span class="keyword">for</span> other temporary directories.&lt;/description&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;hdfs://localhost:9000&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>修改配置文件<code>vim etc/hadoop/hdfs-site.xml</code></li>
+<li>与上一步一样，删除掉前面的内容并在文件结尾添加如下内容：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;1&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;file:/usr/local/hadoop/tmp/dfs/name&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;file:/usr/local/hadoop/tmp/dfs/data&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>请严格注意格式问题，如果后续出现这两个文件的编译报错，请在保证编码格式正确的前提下重新操作</strong>  </p>
+<h2 id="配置ssh无密码登录"><a href="#配置ssh无密码登录" class="headerlink" title="配置ssh无密码登录"></a>配置ssh无密码登录</h2><p>之前尝试不对其进行配置，发现如果不配置则会报错，信息如下:</p>
+<p><img src="https://img-blog.csdnimg.cn/20190821100015967.png" alt="img"></p>
+<p>因此需要我们进行配置localhost无密码登录</p>
+<ol>
+<li>首先试验能不能连接(如果直接连接成功就跳过，连不上继续)</li>
+</ol>
+<p><code>ssh localhost</code></p>
+<ol start="2">
+<li><p>执行以下命令</p>
+<ol>
+<li><code>ssh-keygen -t rsa -P &#39;&#39; -f ~/.ssh/id_rsa </code></li>
+<li><code>cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys </code></li>
+<li><code>chmod 0600 ~/.ssh/authorized_keys</code></li>
+</ol>
+</li>
+<li><p>之后重新尝试第一个命令，可以的话则配置完成</p>
+</li>
+</ol>
+<p><strong>请注意：ssh配置成功之后，需要退出ssh界面，而不是继续在ssh界面进行配置</strong></p>
+<h2 id="Hadoop运行"><a href="#Hadoop运行" class="headerlink" title="Hadoop运行"></a>Hadoop运行</h2><ol>
+<li>格式化文件系统：<code>bin/hdfs namenode -format</code></li>
+<li>启动进程：<code> sbin/start-dfs.sh</code></li>
+</ol>
+<p>正常配置之后显示如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923153254322.png" alt="image-20210923153254322"></p>
+<p>浏览器显示如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923153347687.png" alt="image-20210923153347687"></p>
+<p>（如果需要浏览器界面，请在浏览器中输入<code>你的服务器的IP地址:9870</code>[默认]）</p>
+<h2 id="运行检查"><a href="#运行检查" class="headerlink" title="运行检查"></a>运行检查</h2><p>使用命令<code>jps</code>对运行起来的<code>Hadoop</code>进行检查，如果成功运行的话会显示以下内容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hadoop@instance-b86q4g5n /u/l/hadoop&gt; jps</span><br><span class="line">6464 Jps                                                                                 </span><br><span class="line">1521 DataNode                                                                             </span><br><span class="line">1666 SecondaryNameNode                                                                   </span><br><span class="line">1428 NameNode  </span><br></pre></td></tr></table></figure>
+
+<p>（端口号可以不一样，但是对应服务要有）</p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="apt与apt-get区别"><a href="#apt与apt-get区别" class="headerlink" title="apt与apt-get区别"></a>apt与apt-get区别</h2><p><a target="_blank" rel="noopener" href="https://www.sysgeek.cn/apt-vs-apt-get/">https://www.sysgeek.cn/apt-vs-apt-get/</a></p>
+<h2 id="显示JAVA-HOME-is-not-set-and-could-not-be-found"><a href="#显示JAVA-HOME-is-not-set-and-could-not-be-found" class="headerlink" title="显示JAVA_HOME is not set and could not be found"></a>显示<code>JAVA_HOME is not set and could not be found</code></h2><p><img src="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/BABA3EC68E19E7A89A8A385323270682.jpg" alt="BABA3EC68E19E7A89A8A385323270682"></p>
+<p>根据老师指引，将<code>JAVA_HOME</code>的目录输入到<code>hadoop-env.sh</code>中，命令如下：</p>
+<ol>
+<li>进入到hadoop文件夹中:<code>cd /usr/local/hadoop</code></li>
+<li>编辑文件：<code>vim etc/hadoop/hadoop-env.sh</code></li>
+<li>在编辑文件界面输入<code>/JAVA_HOME</code>，显示如下：</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210923152752487.png" alt="image-20210923152752487"></p>
+<ol start="4">
+<li>在图指针所指位置将自己的<code>JAVA_HOME</code>位置输入进去</li>
+</ol>
+<p><code>JAVA_HOME</code>的位置查找如下：*<code>echo $JAVA_HOME</code>*<br>例如我的<code>JAVA_HOME</code>如下：<code>/usr/lib/jvm/java-8-openjdk-amd64</code>  </p>
+<blockquote>
+<p>如果显示还是为空，则重新执行*<code>source /etc/profile</code>*</p>
+</blockquote>
+<h2 id="9-25更新：出现错误failed-to-start-namenode"><a href="#9-25更新：出现错误failed-to-start-namenode" class="headerlink" title="9-25更新：出现错误failed to start namenode"></a>9-25更新：出现错误<code>failed to start namenode</code></h2><p>如果在配置的过程中出现了如下错误：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210925190804612.png" alt="image-20210925190804612"></p>
+<p>那就证明你的<code>core-site</code>的这个文件配置出现问题，建议重新配置此处。</p>
+<h2 id="所有配置都完成但是无法访问"><a href="#所有配置都完成但是无法访问" class="headerlink" title="所有配置都完成但是无法访问"></a>所有配置都完成但是无法访问</h2><p>如果遇到这个问题可能你是使用的是阿里云服务器，由于每个服务器的运营商不同，因此可能会导致安全组的配置会有问题，以阿里云的服务器为由：一般只会打开服务器的443(https服务)、22（ssh服务）、21（ftp服务）、80（http服务）因此其他端口均属于关闭状态（即无法通过外网进行访问），因此我们需要对其进行开放端口处理，因此配置如下（以阿里云为例）：</p>
+<ol>
+<li><p>进入到服务器基础界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210926134207835.png" alt="image-20210926134207835"></p>
+</li>
+<li><p>选择<code>防火墙</code></p>
+</li>
+<li><p>点击<code>添加规则</code></p>
+</li>
+<li><p>在弹出的对话框中输入如下内容（备注可以不输入）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20210926134434816.png" alt="image-20210926134434816"></p>
+</li>
+<li><p>之后保存便可以</p>
+</li>
+</ol>
+<h2 id="9-27更新：jps命令后无法显示namenode端口"><a href="#9-27更新：jps命令后无法显示namenode端口" class="headerlink" title="9.27更新：jps命令后无法显示namenode端口"></a>9.27更新：jps命令后无法显示namenode端口</h2><p>问题描述：启动进程之后，使用<code>jps</code>命令查看启动情况的时候发现缺少namenode端口</p>
+<p>文章链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u013075024/article/details/103252770">jps命令没有namenode或datanode, 怎么解决？</a></p>
+<p>解决办法：</p>
+<ol>
+<li><p>进入到hadoop目录下:</p>
+<p><code>cd /usr/local/hadoop</code></p>
+</li>
+<li><p>停止hadoop集群：</p>
+<p><code>stop-all.sh</code></p>
+</li>
+<li><p>删除data与logs目录下的文件</p>
+<p><code>cd logs</code></p>
+<p><code>rm -rf *</code></p>
+<p><code>cd ..</code></p>
+<p><code>rm -rf tmp</code></p>
+</li>
+<li><p>重新执行启动操作</p>
+<p><code>bin/hdfs namenode -format</code></p>
+<p><code>sbin/start-dfs.sh</code></p>
+</li>
+</ol>
+<h1 id="如果在配置完成之后仍然会出现问题的话，请留言或者发送邮件给我"><a href="#如果在配置完成之后仍然会出现问题的话，请留言或者发送邮件给我" class="headerlink" title="如果在配置完成之后仍然会出现问题的话，请留言或者发送邮件给我"></a>如果在配置完成之后仍然会出现问题的话，请留言或者发送邮件给我</h1>
+    </div>
+
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------我也是有底线的哦<i class="fa fa-anchor"></i>如需更多，欢迎打赏-------------</div>
+    
+</div>
+
+
+  
+</div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>ZHYCarge
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://zhycarge.github.io/2021/09/23/Hadoop%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%90%AD%E5%BB%BA/" title="Hadoop的基本搭建">https://zhycarge.github.io/2021/09/23/Hadoop的基本搭建/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 笔记</a>
+              <a href="/tags/Hadoop/" rel="tag"><i class="fa fa-tag"></i> Hadoop</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/15/CDN%E3%80%81%E9%95%9C%E5%83%8F%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="prev" title="CDN、镜像知识点">
+      <i class="fa fa-chevron-left"></i> CDN、镜像知识点
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/09/26/Hexo%E5%8D%9A%E5%AE%A2%E5%90%8C%E6%97%B6%E9%83%A8%E7%BD%B2github%E4%B8%8Egitee/" rel="next" title="Hexo博客同时部署github与gitee">
+      Hexo博客同时部署github与gitee <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E5%8F%82%E8%80%83"><span class="nav-number">2.</span> <span class="nav-text">文章参考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E6%8F%90%E5%87%86%E5%A4%87"><span class="nav-number">3.</span> <span class="nav-text">前提准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E6%9C%BA%E7%94%B3%E8%AF%B7"><span class="nav-number">4.1.</span> <span class="nav-text">主机申请</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%8D%A2%E9%95%9C%E5%83%8F%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="nav-number">4.2.</span> <span class="nav-text">更换镜像（可选）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%BA%90"><span class="nav-number">4.3.</span> <span class="nav-text">更新源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%8F%8B%E5%A5%BD%E7%9A%84%E4%BA%A4%E4%BA%92%E5%BC%8Fshell%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="nav-number">4.4.</span> <span class="nav-text">安装友好的交互式shell（推荐）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85vim-%E6%8E%A8%E8%8D%90"><span class="nav-number">4.5.</span> <span class="nav-text">安装vim(推荐)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAHadoop%E7%94%A8%E6%88%B7"><span class="nav-number">4.6.</span> <span class="nav-text">创建Hadoop用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E9%85%8D%E7%BD%AEJava"><span class="nav-number">4.7.</span> <span class="nav-text">安装以及配置Java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Hadoop"><span class="nav-number">4.8.</span> <span class="nav-text">安装Hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEHadoop%E7%8E%AF%E5%A2%83"><span class="nav-number">4.9.</span> <span class="nav-text">配置Hadoop环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEHadoop%E7%8B%AC%E7%AB%8B%E6%93%8D%E4%BD%9C"><span class="nav-number">4.10.</span> <span class="nav-text">配置Hadoop独立操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEHadoop%E4%BC%AA%E5%88%86%E5%B8%83%E5%BC%8F%E6%93%8D%E4%BD%9C"><span class="nav-number">4.11.</span> <span class="nav-text">配置Hadoop伪分布式操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEssh%E6%97%A0%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95"><span class="nav-number">4.12.</span> <span class="nav-text">配置ssh无密码登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop%E8%BF%90%E8%A1%8C"><span class="nav-number">4.13.</span> <span class="nav-text">Hadoop运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%A3%80%E6%9F%A5"><span class="nav-number">4.14.</span> <span class="nav-text">运行检查</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%BE%E8%A8%80"><span class="nav-number">5.</span> <span class="nav-text">尾言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#apt%E4%B8%8Eapt-get%E5%8C%BA%E5%88%AB"><span class="nav-number">5.1.</span> <span class="nav-text">apt与apt-get区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E7%A4%BAJAVA-HOME-is-not-set-and-could-not-be-found"><span class="nav-number">5.2.</span> <span class="nav-text">显示JAVA_HOME is not set and could not be found</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-25%E6%9B%B4%E6%96%B0%EF%BC%9A%E5%87%BA%E7%8E%B0%E9%94%99%E8%AF%AFfailed-to-start-namenode"><span class="nav-number">5.3.</span> <span class="nav-text">9-25更新：出现错误failed to start namenode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%80%E6%9C%89%E9%85%8D%E7%BD%AE%E9%83%BD%E5%AE%8C%E6%88%90%E4%BD%86%E6%98%AF%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE"><span class="nav-number">5.4.</span> <span class="nav-text">所有配置都完成但是无法访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-27%E6%9B%B4%E6%96%B0%EF%BC%9Ajps%E5%91%BD%E4%BB%A4%E5%90%8E%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BAnamenode%E7%AB%AF%E5%8F%A3"><span class="nav-number">5.5.</span> <span class="nav-text">9.27更新：jps命令后无法显示namenode端口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E5%9C%A8%E9%85%8D%E7%BD%AE%E5%AE%8C%E6%88%90%E4%B9%8B%E5%90%8E%E4%BB%8D%E7%84%B6%E4%BC%9A%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98%E7%9A%84%E8%AF%9D%EF%BC%8C%E8%AF%B7%E7%95%99%E8%A8%80%E6%88%96%E8%80%85%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6%E7%BB%99%E6%88%91"><span class="nav-number">6.</span> <span class="nav-text">如果在配置完成之后仍然会出现问题的话，请留言或者发送邮件给我</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZHYCarge"
+      src="/images/1.gif">
+  <p class="site-author-name" itemprop="name">ZHYCarge</p>
+  <div class="site-description" itemprop="description">在黑夜中，负重前行</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZHYCarge" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="ZHYCarge:ZHYCarge@163.com" title="E-Mail → ZHYCarge:ZHYCarge@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://raw.githubusercontent.com/ZHYCarge/photo/master/mm_reward_qrcode_1650029406131.png" title="打赏一下? → https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;ZHYCarge&#x2F;photo&#x2F;master&#x2F;mm_reward_qrcode_1650029406131.png" rel="noopener" target="_blank"><i class="fa fa-money fa-fw"></i>打赏一下?</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="tencent://message/?Site=baidu.com&uin=470157929&Menu=yes" title="QQ → tencent:&#x2F;&#x2F;message&#x2F;?Site&#x3D;baidu.com&amp;uin&#x3D;470157929&amp;Menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/ZHYCarge/notes/new/master/source/_posts" title="https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge&#x2F;notes&#x2F;new&#x2F;master&#x2F;source&#x2F;_posts" rel="noopener" target="_blank">新建一篇文章</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://zhycarge.gitee.io/" title="https:&#x2F;&#x2F;zhycarge.gitee.io" rel="noopener" target="_blank">其他途径访问(gitee)</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://zhycarge.github.io/" title="https:&#x2F;&#x2F;zhycarge.github.io">其他途径访问(github)</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZHYCarge</span>
+</div>
+
+
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span> Look up at the stars and keep your feet on the ground 
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("07/10/2021 21:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已陪伴博主 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//fastly.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//fastly.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'lMi75lqHa0Nh3Q1wOb7J1wFf-gzGzoHsz',
+      appKey     : 't8jjo2V1scEx9nzeNexS5VUG',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-CN' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

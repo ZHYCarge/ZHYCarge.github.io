@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhycarge.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"manual"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="第三章 灰度变换与空间滤波">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数字图像处理笔记——第三章">
+<meta property="og:url" content="https://zhycarge.github.io/2022/05/12/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%89/index.html">
+<meta property="og:site_name" content="ZHYCarge的博客">
+<meta property="og:description" content="第三章 灰度变换与空间滤波">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220503153448475.png">
+<meta property="og:image" content="https://npicture.oss-cn-beijing.aliyuncs.com/Picgo/image-20220519174659940.png">
+<meta property="og:image" content="https://npicture.oss-cn-beijing.aliyuncs.com/Picgo/image-20220519174414505.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220503162748957.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/20191023162000652.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517092647615.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517092746134.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517094437043.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517094606855.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517102327225.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/2019102416022050.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517110732982.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517110748694.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517110757873.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517114147549.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517114643764.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/20191024152917362.png">
+<meta property="og:image" content="https://npicture.oss-cn-beijing.aliyuncs.com/Picgo/image-20220517172237793.png">
+<meta property="og:image" content="https://npicture.oss-cn-beijing.aliyuncs.com/Picgo/image-20220517172549059.png">
+<meta property="og:image" content="https://npicture.oss-cn-beijing.aliyuncs.com/Picgo/image-20220517173334056.png">
+<meta property="og:image" content="https://npicture.oss-cn-beijing.aliyuncs.com/Picgo/image-20220517173824668.png">
+<meta property="og:image" content="https://npicture.oss-cn-beijing.aliyuncs.com/Picgo/image-20220517174039177.png">
+<meta property="article:published_time" content="2022-05-12T12:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-10T16:37:15.099Z">
+<meta property="article:author" content="ZHYCarge">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="数字图像处理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220503153448475.png">
+
+<link rel="canonical" href="https://zhycarge.github.io/2022/05/12/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数字图像处理笔记——第三章 | ZHYCarge的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="ZHYCarge的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ZHYCarge的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-必应一下">
+
+    <a href="/bings/" rel="section"><i class="fa fa-globe fa-fw"></i>必应一下</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhycarge.github.io/2022/05/12/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.gif">
+      <meta itemprop="name" content="ZHYCarge">
+      <meta itemprop="description" content="在黑夜中，负重前行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZHYCarge的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数字图像处理笔记——第三章<a href="https://github.com/ZHYCarge/notes/blob/master/source/_posts/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%89.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-12 20:00:00" itemprop="dateCreated datePublished" datetime="2022-05-12T20:00:00+08:00">2022-05-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-11 00:37:15" itemprop="dateModified" datetime="2022-07-11T00:37:15+08:00">2022-07-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E6%A0%A1%E8%AF%BE%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">学校课程</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/05/12/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%89/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/05/12/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%89/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="第三章-灰度变换与空间滤波"><a href="#第三章-灰度变换与空间滤波" class="headerlink" title="第三章 灰度变换与空间滤波"></a>第三章 灰度变换与空间滤波</h1><span id="more"></span>
+
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="灰度变换和空间滤波基础"><a href="#灰度变换和空间滤波基础" class="headerlink" title="灰度变换和空间滤波基础"></a>灰度变换和空间滤波基础</h3><p>空间域处理基于表达式<br>$$<br>g(x,y)=T[f(x,y)]<br>$$<br>其中， $f(x,y)$是输入图像， $g(x,y)$是输出图像， $T$是在点 $(x,y)$的一个领域上定义针对 $f$的算子</p>
+<p>灰度变换函数：<br>$$<br>s=T(r)<br>$$<br>简单起见，使用 $s$或者 $r$ 分别表示$g$和 $f$在任意点 $(x,y)$的灰度</p>
+<h2 id="一些基本的灰度变换函数"><a href="#一些基本的灰度变换函数" class="headerlink" title="一些基本的灰度变换函数"></a>一些基本的灰度变换函数</h2><h3 id="图像反转"><a href="#图像反转" class="headerlink" title="图像反转"></a>图像反转</h3><p>灰度级在区间 $[0,L-1]$的反转图像形式为<br>$$<br>s = L-1-r<br>$$<br>使用这种方式反转图像的灰度级，会有一种类似于照片底片的结果。</p>
+<p>可用于增强图像暗色区域的白色或者灰色细节，若暗色区域的尺寸很大这种增强效果会更好</p>
+<h3 id="对数变换"><a href="#对数变换" class="headerlink" title="对数变换"></a>对数变换</h3><p>对数变换的通式为<br>$$<br>s = clog(1+r)<br>$$<br>c是一个常数，并且 $r\geq0 $</p>
+<p>此变换会将输入中范围较窄的低灰度值映射为输出中范围较宽的灰度级，输入中的高灰度值则会被映射为输出中范围较窄的灰度级，使用此方法来扩展图像中的暗像素值。反对数变换的作用与此相反</p>
+<h3 id="幂律-伽马-变换"><a href="#幂律-伽马-变换" class="headerlink" title="幂律(伽马)变换"></a>幂律(伽马)变换</h3><p>通过压缩或者扩展图像的灰度级来增强图像对比度</p>
+<p>表达式为：<br>$$<br>s=cr^\gamma<br>$$<br>其中$c$ 和 $\gamma$ 均为正常数，若考虑到偏移情况，即输入为0的时候的一个可度量输出，有时公式也会为：$s=c(r+\epsilon)^\gamma$但偏移往往会是校准问题，因此可忽略不计</p>
+<h3 id="分段线性变换函数"><a href="#分段线性变换函数" class="headerlink" title="分段线性变换函数"></a>分段线性变换函数</h3><p>与前面函数相比的优点为：其形式可以任意复杂；缺点是会要求用户输入很多参数。</p>
+<ul>
+<li><p>对比度拉伸</p>
+<p>通过扩展图像的灰度级范围，使其覆盖记录介质或者显示设备的整个理想灰度范围</p>
+</li>
+<li><p>灰度级分层：突出图像中特定灰度范围的亮度</p>
+<p>突出图像的特定灰度区间，有如下两种基本方法的变体：</p>
+<ul>
+<li>将感兴趣范围内所有的灰度值显示为一个值（如白色），其他灰度值显示另外一个值（如黑色），产生一幅二值图像</li>
+<li>使期望的灰度范围变亮（或变暗），但保持图像的其他灰度级不变</li>
+</ul>
+</li>
+<li><p>比特平面分层</p>
+<p>像素值是由比特组成的整数。如在256级灰度图像中，图像值是由8比特组成的，其中平面1包含图像中所有像素的最低有效比特，平面8则包含所有像素最高有效比特。</p>
+<p><img src="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220503153448475.png" alt="image-20220503153448475"></p>
+<p>将图像分解成各个比特平面对分析图像每个比特的相对重要性使有用的，可以确定量化图像所用比特的充分性。</p>
+<p>突出特定比特。四个高阶比特平面包含视觉上重要的大多数数据，低阶比特平面贡献了更精细的灰度细节。原图像中任意一个像素的值可以由比特平面中对应的二进制像素值来重建，可以用于减少存储量</p>
+</li>
+</ul>
+<h2 id="直方图处理"><a href="#直方图处理" class="headerlink" title="直方图处理"></a>直方图处理</h2><p>令 $r_k , k=0,1,2，……,L-1$表示一副 $L$级回复数字图像 $f(x,y)$的灰度。 $f$的非归一化直方图定义为<br>$$<br>h(r_k)=n_k \ \ \ \  k=0,1,2,……,L-1<br>$$<br>其中， $n_k$是 $f$中灰度为 $r_k$的像素的数量。类似的， $f$的归一化直方图定义为<br>$$<br>p(r_k) = \frac{h(r_k)}{MN} = \frac{n_k}{MN}<br>$$<br>其中， MN分别是图像的行和列。多数情况下处理的是归一化直方图，简称为直方图或者图像直方图</p>
+<p>若像素占据整个灰度级范围并且均匀分布的图像，将具有高对比度的外观和多种灰色调。</p>
+<h3 id="直方图基本灰度特征"><a href="#直方图基本灰度特征" class="headerlink" title="直方图基本灰度特征"></a>直方图基本灰度特征</h3><p>Q：直方图相同的图像，是否为同一个图像？</p>
+<p>A：是同一个图像</p>
+<h4 id="四个直方图灰度级特征"><a href="#四个直方图灰度级特征" class="headerlink" title="四个直方图灰度级特征"></a>四个直方图灰度级特征</h4><ul>
+<li><p>暗图像</p>
+<p>大多数直方图容器集中在灰度级比较低的区域</p>
+</li>
+<li><p>亮图像</p>
+<p>大多数直方图容器集中在灰度级的高端</p>
+</li>
+<li><p>低对比度图像</p>
+<p>直方图容器基本位于灰度级的中间，对于单色图像来讲，意味着暗淡的灰色外观</p>
+</li>
+<li><p>高对比度的图像</p>
+<p>直方图容器覆盖了较宽的灰度级，并且像素分布较为均匀，容器高度基本相同</p>
+</li>
+</ul>
+<p>图片如下：</p>
+<p><img src="https://npicture.oss-cn-beijing.aliyuncs.com/Picgo/image-20220519174659940.png" alt="image-20220519174659940"></p>
+<p>直觉上，我们可以得到如下内容：</p>
+<p><strong>像素占据整个灰度级范围并且均匀分布的图像，将具有高对比度的外观和多种灰色调</strong></p>
+<h3 id="累计直方图CDF"><a href="#累计直方图CDF" class="headerlink" title="累计直方图CDF"></a>累计直方图CDF</h3><p><img src="https://npicture.oss-cn-beijing.aliyuncs.com/Picgo/image-20220519174414505.png" alt="image-20220519174414505"></p>
+<h3 id="直方图均衡化【相关知识点：书P87】"><a href="#直方图均衡化【相关知识点：书P87】" class="headerlink" title="直方图均衡化【相关知识点：书P87】"></a>直方图均衡化【相关知识点：书P87】</h3><p><del>假设灰度值最初是连续的，令变量 $r$表示待处理的图像灰度。 $r \in [0,L-1]$ ， $r=0$表示黑色， $r=L-1$表示白色。对于这些满足条件的 r，重点关注如下形式的灰度映射：</del><br>$$<br>s = T(r), \ \ \ 0\leq r \leq L-1<br>$$</p>
+<h4 id="题目1"><a href="#题目1" class="headerlink" title="题目1"></a>题目1</h4><p> 一幅大小为(64*64)的灰度图像，共有8个灰度级，其灰度级分布见下表，现要求对其进行均衡化处理</p>
+<table>
+<thead>
+<tr>
+<th><strong>序号</strong></th>
+<th><strong>运算</strong></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>列出原始灰度级f</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+</tr>
+<tr>
+<td>2</td>
+<td>列出原始直方图</td>
+<td>0.12</td>
+<td>0.01</td>
+<td>0.14</td>
+<td>0.09</td>
+<td>0.44</td>
+<td>0.09</td>
+<td>0.08</td>
+<td>0.03</td>
+</tr>
+<tr>
+<td>3</td>
+<td>累计直方图</td>
+<td>0.12</td>
+<td>0.13</td>
+<td>0.27</td>
+<td>0.36</td>
+<td>0.8</td>
+<td>0.89</td>
+<td>0.97</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>累计直方图*7</td>
+<td>0.84</td>
+<td>0.91</td>
+<td>1.89</td>
+<td>2.52</td>
+<td>5.6</td>
+<td>6.23</td>
+<td>6.79</td>
+<td>7</td>
+</tr>
+<tr>
+<td>4</td>
+<td>四舍五入取整g</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>6</td>
+<td>6</td>
+<td>7</td>
+<td>7</td>
+</tr>
+<tr>
+<td>5</td>
+<td>确定映射关系f-&gt;g</td>
+<td>0-&gt;1</td>
+<td>1-&gt;1</td>
+<td>2-&gt;2</td>
+<td>3-&gt;3</td>
+<td>4-&gt;6</td>
+<td>5-&gt;6</td>
+<td>6-&gt;7</td>
+<td>7-&gt;7</td>
+</tr>
+<tr>
+<td>6</td>
+<td>新直方图$n_k/n$</td>
+<td>0</td>
+<td>0.13</td>
+<td>0.14</td>
+<td>0.09</td>
+<td>0</td>
+<td>0</td>
+<td>0.53</td>
+<td>0.11</td>
+</tr>
+</tbody></table>
+<p><strong>解题思路：</strong></p>
+<ul>
+<li><p><code>累计直方图</code>：其为原始直方图相加得到：</p>
+<table>
+<thead>
+<tr>
+<th>列出原始直方图</th>
+<th>0.12</th>
+<th>0.01</th>
+<th>0.14</th>
+<th>0.09</th>
+<th>0.44</th>
+<th>0.09</th>
+<th>0.08</th>
+<th>0.03</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>累计直方图</td>
+<td>0.12</td>
+<td>0.12+0.01</td>
+<td>0.12+0.01+0.14</td>
+<td>0.12+0.0.1+0.14+0.09</td>
+<td>……</td>
+<td>……</td>
+<td>……</td>
+<td>1</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><code>累计直方图*7</code>：其为累计直方图值*7所得：</p>
+<table>
+<thead>
+<tr>
+<th>累计直方图</th>
+<th>0.12</th>
+<th>0.13</th>
+<th>0.27</th>
+<th>0.36</th>
+<th>0.8</th>
+<th>0.89</th>
+<th>0.97</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>累计直方图*7</td>
+<td>0.12*7</td>
+<td>0.13*7</td>
+<td>……</td>
+<td>……</td>
+<td>……</td>
+<td>……</td>
+<td>……</td>
+<td>7</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><code>四舍五入取整g </code>：其为对<code>累计直方图*7</code>进行取整可得：</p>
+<table>
+<thead>
+<tr>
+<th>累计直方图*7</th>
+<th>0.84</th>
+<th>0.91</th>
+<th>1.89</th>
+<th>2.52</th>
+<th>5.6</th>
+<th>6.23</th>
+<th>6.79</th>
+<th>7</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>四舍五入取整g</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>6</td>
+<td>6</td>
+<td>7</td>
+<td>7</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><code>确定映射关系f-&gt;g  </code>：则是对获得的g与最开始的 <code>列出原始灰度级f  </code>进行比较，看其与哪一个值进行对应：</p>
+<table>
+<thead>
+<tr>
+<th>列出原始灰度级f</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>四舍五入取整g</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>6</td>
+<td>6</td>
+<td>7</td>
+<td>7</td>
+</tr>
+<tr>
+<td>确定映射关系f-&gt;g</td>
+<td>0-&gt;1</td>
+<td>1-&gt;1</td>
+<td>2-&gt;2</td>
+<td>3-&gt;3</td>
+<td>4-&gt;6</td>
+<td>5-&gt;6</td>
+<td>6-&gt;7</td>
+<td>7-&gt;7</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>新直方图$n_k/n$：便是将所对应的映射关系进行对应的原始直方图数据进行重合累加：</p>
+<table>
+<thead>
+<tr>
+<th>列出原始灰度级f</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>列出原始直方图</td>
+<td>0.12</td>
+<td>0.01</td>
+<td>0.14</td>
+<td>0.09</td>
+<td>0.44</td>
+<td>0.09</td>
+<td>0.08</td>
+<td>0.03</td>
+</tr>
+<tr>
+<td>确定映射关系f-&gt;g</td>
+<td>0-&gt;1</td>
+<td>1-&gt;1</td>
+<td>2-&gt;2</td>
+<td>3-&gt;3</td>
+<td>4-&gt;6</td>
+<td>5-&gt;6</td>
+<td>6-&gt;7</td>
+<td>7-&gt;7</td>
+</tr>
+<tr>
+<td>新直方图$n_k/n$</td>
+<td>0</td>
+<td>0.12+0.01</td>
+<td>0.14</td>
+<td>0.09</td>
+<td>0</td>
+<td>0</td>
+<td>0.44+0.09</td>
+<td>0.08+0.03</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<p>至此题目做完。</p>
+<h3 id="直方图匹配化-规定化-【相关知识点书P92】"><a href="#直方图匹配化-规定化-【相关知识点书P92】" class="headerlink" title="直方图匹配化(规定化)【相关知识点书P92】"></a>直方图匹配化(规定化)【相关知识点书P92】</h3><h4 id="题目1-1"><a href="#题目1-1" class="headerlink" title="题目1"></a>题目1</h4><p>一幅大小为(64*64)的灰度图像，共有8个灰度级，其灰度级分布见下表，现要求对其按照给定的图像r的直方图进行匹配化处理</p>
+<table>
+<thead>
+<tr>
+<th><strong>序号</strong></th>
+<th><strong>运算</strong></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>列出原始灰度级f</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+</tr>
+<tr>
+<td>2</td>
+<td>列出原始直方图PDF(f)</td>
+<td>0.12</td>
+<td>0.01</td>
+<td>0.14</td>
+<td>0.09</td>
+<td>0.44</td>
+<td>0.09</td>
+<td>0.08</td>
+<td>0.03</td>
+</tr>
+<tr>
+<td>3</td>
+<td>原始图像的累计直方图CDF(f)</td>
+<td>0.12</td>
+<td>0.13</td>
+<td>0.27</td>
+<td>0.36</td>
+<td>0.8</td>
+<td>0.89</td>
+<td>0.97</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>原始图像的累计直方图*7</td>
+<td>0.84</td>
+<td>0.91</td>
+<td>1.89</td>
+<td>2.52</td>
+<td>5.6</td>
+<td>6.23</td>
+<td>6.79</td>
+<td>7</td>
+</tr>
+<tr>
+<td>5</td>
+<td>原始图像的累计直方图四舍五入取整g</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>6</td>
+<td>6</td>
+<td>7</td>
+<td>7</td>
+</tr>
+<tr>
+<td>6</td>
+<td>参考直方图PDF(r)</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.15</td>
+<td>0.2</td>
+<td>0.45</td>
+<td>0.2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>7</td>
+<td>参考直方图CDF(r)</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.15</td>
+<td>0.35</td>
+<td>0.8</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>8</td>
+<td>参考直方图CDF(r)*7</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1.05</td>
+<td>2.45</td>
+<td>5.6</td>
+<td>7</td>
+<td>7</td>
+</tr>
+<tr>
+<td>9</td>
+<td>参考直方图CDF(r)*7，四舍五入取整</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>6</td>
+<td>7</td>
+<td>7</td>
+</tr>
+<tr>
+<td>10</td>
+<td>完成规定化需要的映射</td>
+<td>0-3</td>
+<td>1-3</td>
+<td>2-4</td>
+<td>3-4</td>
+<td>4-5</td>
+<td>5-5</td>
+<td>6-6</td>
+<td>7-6</td>
+</tr>
+<tr>
+<td>11</td>
+<td>新直方图</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.13</td>
+<td>0.23</td>
+<td>0.53</td>
+<td>0.11</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p><strong>解题思路：</strong></p>
+<p>序号1-9与上文基本一样，因此不在赘述；</p>
+<ul>
+<li><p><code>完成规定化需要的映射</code>  ：将 <code>原始图像的累计直方图四舍五入取整g  </code>与 <code>参考直方图CDF(r)*7，四舍五入取整 </code>进行对比，如果不存在一一对应关系则就近划分，将后续比对的值与 <code>列出原始灰度级f</code>进行对应，即：</p>
+<table>
+<thead>
+<tr>
+<th>列出原始灰度级f</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>原始图像的累计直方图四舍五入取整g</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>6</td>
+<td>6</td>
+<td>7</td>
+<td>7</td>
+</tr>
+<tr>
+<td>参考直方图CDF(r)*7，四舍五入取整</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>6</td>
+<td>7</td>
+<td>7</td>
+</tr>
+<tr>
+<td>完成规定化需要的映射</td>
+<td>0-3</td>
+<td>1-3</td>
+<td>2-4</td>
+<td>3-4</td>
+<td>4-5</td>
+<td>5-5</td>
+<td>6-6</td>
+<td>7-6</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<p><img src="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220503162748957.png" alt="image-20220503162748957"></p>
+<p>后续操作与上文一致，不在进行过多赘述。</p>
+<h2 id="空间滤波基础"><a href="#空间滤波基础" class="headerlink" title="空间滤波基础"></a>空间滤波基础</h2><p>滤波：通过、修改或者抑制图像的规定频率分量。例如通过低频的滤波器为低通滤波器（模糊图像来平滑图像），可以直接对图像本身进行类似平滑处理。使用空间滤波器可以直接对图像本身进行类似的平滑处理。</p>
+<p>空间滤波将每个像素值替换该像素何其邻域的函数值来修改图像。若是线性的，则为线性空间滤波器，否则为非线性滤波器</p>
+<h3 id="线性空间滤波原理"><a href="#线性空间滤波原理" class="headerlink" title="线性空间滤波原理"></a>线性空间滤波原理</h3><p>线性空间滤波器在图像 $f$和滤波器核 $w$之间执行乘积之和运算，其中核是一个阵列，其大小代表了需要运算的邻域大小，其系数决定着该滤波器的性质。</p>
+<p>下图是以 $3*3$核进行线性空间滤波的原理：</p>
+<p><img src="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/20191023162000652.png" alt="图片"></p>
+<p>一般来讲，大小为 $m<em>n$的核对应大小为 $M</em>N$的图像的线性空间滤波器可以表示为：<br>$$<br>g(x,y) = \sum_{s=-a}^a \sum_{t=-b}^b w(s,t)f(x+s,y+t)<br>$$</p>
+<h3 id="空间相关与卷积"><a href="#空间相关与卷积" class="headerlink" title="空间相关与卷积"></a>空间相关与卷积</h3><ul>
+<li><p>相关</p>
+<p>滤波器模板移过图像并计算每个位置的乘积之和</p>
+</li>
+<li><p>单位离散冲激</p>
+<p>包含一个 <code>1</code>而其余项都是 <code>0</code>的函数</p>
+<p><img src="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517092647615.png" alt="image-20220517092647615"></p>
+</li>
+<li><p>卷积</p>
+<p>预先将滤波器旋转180°，执行与相关相同的滑动乘积求和操作</p>
+<p><img src="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517092746134.png" alt="image-20220517092746134"></p>
+</li>
+</ul>
+<blockquote>
+<p>下面的内容直接给出公式，详情解释在第四版教材的P104-P105</p>
+</blockquote>
+<ul>
+<li><p>冲激</p>
+<p>坐标 $(x_0,y_0)$处的离散冲激强度（振幅）A 定义为：<br>$$<br>\delta(x-x_0,y-y_0)=\begin{cases}A,x_0=x 和 y_0 =y\0,其他\end{cases}<br>$$</p>
+</li>
+<li><p>卷积相关</p>
+</li>
+<li><p><img src="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517094437043.png" alt="image-20220517094437043"></p>
+</li>
+<li><p><img src="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517094606855.png" alt="image-20220517094606855"></p>
+</li>
+</ul>
+<h3 id="空间域滤波和频率域滤波的一些重要比较"><a href="#空间域滤波和频率域滤波的一些重要比较" class="headerlink" title="空间域滤波和频率域滤波的一些重要比较"></a>空间域滤波和频率域滤波的一些重要比较</h3><ul>
+<li>卷积是空间域滤波的基础，它等效于频率域中的乘法，反之亦然</li>
+<li>空间域中振幅为A的冲激，是频率域中值为A的一个常数，反之亦然</li>
+</ul>
+<h3 id="如何构建空间滤波器核"><a href="#如何构建空间滤波器核" class="headerlink" title="如何构建空间滤波器核"></a>如何构建空间滤波器核</h3><p>有三种方法可以对其进行构建</p>
+<ul>
+<li><p>根据数学性质</p>
+<p>计算邻域平均值滤波器会模糊图像，计算平均值会类似于积分；计算图像局部导数的滤波器会锐化图像</p>
+</li>
+<li><p>对形状具有所需性质的二维空间函数进行取样</p>
+<p>使用高斯函数样本可以构建加权平均滤波器</p>
+</li>
+<li><p>设计具有规定频率响应的空间滤波器</p>
+<p>数字滤波器设计范畴</p>
+</li>
+</ul>
+<h2 id="平滑（低通空间滤波器）"><a href="#平滑（低通空间滤波器）" class="headerlink" title="平滑（低通空间滤波器）"></a>平滑（低通空间滤波器）</h2><p>用于降低灰度的极具过渡，由于随机噪声通常由灰度的极具过渡组成，因此其最明显的一个应用便是降噪。</p>
+<ul>
+<li>应用<ul>
+<li>减少图像之间的无关细节</li>
+<li>平滑因灰度级数量级不足导致的伪轮廓</li>
+</ul>
+</li>
+</ul>
+<h3 id="盒式滤波器"><a href="#盒式滤波器" class="headerlink" title="盒式滤波器"></a>盒式滤波器</h3><p>最简单的可分离低通滤波器核是盒式核，其系数通常相同（通常为1）下图为一个大小为<code>3*3</code>的盒式滤波器</p>
+<p><img src="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517102327225.png" alt="image-20220517102327225"></p>
+<p>一般来讲，其前面有一个归1化的系数，其值为1除以系数值之和（当所有系数为1时，值为 $1/mn$），有两个目的：</p>
+<ul>
+<li>一个恒定灰度区域的灰度平均值将等于滤波后的图像灰度值</li>
+<li>采用这种方式归一化之后，可防止在滤波过程中引入偏差</li>
+</ul>
+<h3 id="低通高斯滤波器核"><a href="#低通高斯滤波器核" class="headerlink" title="低通高斯滤波器核"></a>低通高斯滤波器核</h3><p>有待添加</p>
+<h3 id="统计排序（非线性）滤波器"><a href="#统计排序（非线性）滤波器" class="headerlink" title="统计排序（非线性）滤波器"></a>统计排序（非线性）滤波器</h3><p>以滤波器包围的图像区域中所包含的像素的排序为基础，使用统计排序结果决定的值代替中心像素的值</p>
+<p>中值滤波器，将像素邻域内灰度的中值代替该像素的值，比相同尺寸的线性平滑滤波器的模糊程度低，对处理脉冲噪声（椒盐噪声）非常有效。主要功能是使拥有不同灰度的点看起来更接近其相邻点，用于去除相对于其邻域像素更亮或更暗且其区域小于 $m^2/2$（滤波器区域的一半）的孤立像素族</p>
+<p>其为目前数字图像处理最有用的统计排序滤波器</p>
+<h3 id="锐化（高通）空间滤波器"><a href="#锐化（高通）空间滤波器" class="headerlink" title="锐化（高通）空间滤波器"></a>锐化（高通）空间滤波器</h3><p>锐化作用时突出灰度中的过渡，</p>
+<p>平滑通常为低通滤波，锐化通常为高通滤波</p>
+<p>作用：</p>
+<ul>
+<li>突出灰度的过渡部分，可由空间微分实现</li>
+<li>微分算子的响应程度与图像在用算子操作这一点的突变成正比</li>
+<li>图像微分增强边缘和其他突变（如噪声），削弱灰度变换缓慢的区域</li>
+</ul>
+<p><img src="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/2019102416022050.png" alt="2019102416022050"></p>
+<h3 id="使用二阶微分进行图像锐化——拉普拉斯"><a href="#使用二阶微分进行图像锐化——拉普拉斯" class="headerlink" title="使用二阶微分进行图像锐化——拉普拉斯"></a>使用二阶微分进行图像锐化——拉普拉斯</h3><p>定义一个二阶微分的离散公式，并基于此构造一个基于该公式的滤波器模板</p>
+<ul>
+<li><p>最简单的各项同性微分算子是线性的</p>
+</li>
+<li><p>二维图像函数 $f(x,y)$的拉普拉斯算子定义：</p>
+<p><img src="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517110732982.png" alt="image-20220517110732982"></p>
+</li>
+</ul>
+<p><img src="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517110748694.png" alt="image-20220517110748694"></p>
+<p>因此，其对应的滤波模板为：</p>
+<p><img src="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517110757873.png" alt="image-20220517110757873"></p>
+<ul>
+<li><p>使用拉普拉斯算子对图像增强的基本方法</p>
+<p><img src="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517114147549.png" alt="image-20220517114147549"></p>
+</li>
+</ul>
+<p>强调图像中灰度的突变，不强调灰度级缓慢变换的区域</p>
+<p>由于在拉普拉斯图像中既有正值，又有负值，并且所有负值在显示时都修剪成0，所以图像大多都是黑色的</p>
+<p>一个典型的标定拉普拉斯图像的方法是对其最小值加一个新的0代替最小值，然后将结果标定到整个灰度范围$[0-L-1]$中</p>
+<h3 id="钝化掩蔽和高提升滤波"><a href="#钝化掩蔽和高提升滤波" class="headerlink" title="钝化掩蔽和高提升滤波"></a>钝化掩蔽和高提升滤波</h3><p>从原图像中减去一幅非锐化（平滑过的）版本</p>
+<p>步骤如下：</p>
+<ol>
+<li>模糊原图像</li>
+<li>从原图像中减去模糊图像（产生的差值图像称为模板）</li>
+<li>将模板加到原图像上</li>
+</ol>
+<p><img src="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/image-20220517114643764.png" alt="image-20220517114643764"></p>
+<p>如上图所示，式中包含一个权值$K，k\geq 0$</p>
+<ul>
+<li>当$k=1$时，为钝化掩蔽</li>
+<li>当 $k&gt;1$时，这个过程为高提升滤波</li>
+<li>若选择 $k&lt;1$时可以减少钝化模板的贡献</li>
+</ul>
+<p>钝化掩蔽原理如下图所示，其：</p>
+<ul>
+<li>强调了锐化后信号中出现灰度斜率变换的点</li>
+<li>如果原图像有任何零值，或如果选择的k值大到足以使模板峰值大于原信号中的最小值时，最终的结果可能会存在负灰度。</li>
+<li>负值将导致边缘周围有暗的晕轮。如果k足够大，将产生不好的结果。</li>
+</ul>
+<img src="https://fastly.jsdelivr.net/gh/ZHYCarge/photo/20191024152917362.png" alt="20191024152917362" style="zoom:67%;" />
+
+
+
+<h3 id="使用一阶导数锐化图像——梯度"><a href="#使用一阶导数锐化图像——梯度" class="headerlink" title="使用一阶导数锐化图像——梯度"></a>使用一阶导数锐化图像——梯度</h3><p>图像 $f$在 $(x,y)$中的梯度被定义为二维列向量，其重要几何性质为指向了 $f$最大变换率的方向</p>
+<p><img src="https://npicture.oss-cn-beijing.aliyuncs.com/Picgo/image-20220517172237793.png" alt="image-20220517172237793"></p>
+<p>其中，</p>
+<p><img src="https://npicture.oss-cn-beijing.aliyuncs.com/Picgo/image-20220517172549059.png" alt="image-20220517172549059"></p>
+<p>以下的两个3*3的算子为 <code>slobe算子</code>（如下图），其中心系数为2是通过突出中心点来进行平滑处理，其所有核系数均为0，表明其灰度恒定区域的响应为0，因此可用于边缘增强</p>
+<p><img src="https://npicture.oss-cn-beijing.aliyuncs.com/Picgo/image-20220517173334056.png" alt="image-20220517173334056"></p>
+<h2 id="低通、高通、带阻和带通滤波器"><a href="#低通、高通、带阻和带通滤波器" class="headerlink" title="低通、高通、带阻和带通滤波器"></a>低通、高通、带阻和带通滤波器</h2><p>其传递函数如下图所示：</p>
+<p><img src="https://npicture.oss-cn-beijing.aliyuncs.com/Picgo/image-20220517173824668.png" alt="image-20220517173824668"></p>
+<p>其所对应的相关空间核如下图所示：</p>
+<p><img src="https://npicture.oss-cn-beijing.aliyuncs.com/Picgo/image-20220517174039177.png" alt="image-20220517174039177"></p>
+<h2 id="组合使用空间增强方法"><a href="#组合使用空间增强方法" class="headerlink" title="组合使用空间增强方法"></a>组合使用空间增强方法</h2><p>将多种图像增强方法结合起来，完成图像增强任务</p>
+
+    </div>
+
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------我也是有底线的哦<i class="fa fa-anchor"></i>如需更多，欢迎打赏-------------</div>
+    
+</div>
+
+
+  
+</div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>ZHYCarge
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://zhycarge.github.io/2022/05/12/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%89/" title="数字图像处理笔记——第三章">https://zhycarge.github.io/2022/05/12/数字图像处理笔记（第三章）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 笔记</a>
+              <a href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag"><i class="fa fa-tag"></i> 数字图像处理</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/12/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%89/" rel="prev" title="数字图像处理笔记——第二章">
+      <i class="fa fa-chevron-left"></i> 数字图像处理笔记——第二章
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/18/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E5%9B%9B%E7%AB%A0%EF%BC%89/" rel="next" title="数字图像处理笔记——第四章">
+      数字图像处理笔记——第四章 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E7%81%B0%E5%BA%A6%E5%8F%98%E6%8D%A2%E4%B8%8E%E7%A9%BA%E9%97%B4%E6%BB%A4%E6%B3%A2"><span class="nav-number">1.</span> <span class="nav-text">第三章 灰度变换与空间滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%81%B0%E5%BA%A6%E5%8F%98%E6%8D%A2%E5%92%8C%E7%A9%BA%E9%97%B4%E6%BB%A4%E6%B3%A2%E5%9F%BA%E7%A1%80"><span class="nav-number">1.1.1.</span> <span class="nav-text">灰度变换和空间滤波基础</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E7%9A%84%E7%81%B0%E5%BA%A6%E5%8F%98%E6%8D%A2%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">一些基本的灰度变换函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E5%8F%8D%E8%BD%AC"><span class="nav-number">1.2.1.</span> <span class="nav-text">图像反转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E6%95%B0%E5%8F%98%E6%8D%A2"><span class="nav-number">1.2.2.</span> <span class="nav-text">对数变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%82%E5%BE%8B-%E4%BC%BD%E9%A9%AC-%E5%8F%98%E6%8D%A2"><span class="nav-number">1.2.3.</span> <span class="nav-text">幂律(伽马)变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%AE%B5%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.4.</span> <span class="nav-text">分段线性变换函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E6%96%B9%E5%9B%BE%E5%A4%84%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">直方图处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%96%B9%E5%9B%BE%E5%9F%BA%E6%9C%AC%E7%81%B0%E5%BA%A6%E7%89%B9%E5%BE%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">直方图基本灰度特征</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9B%E4%B8%AA%E7%9B%B4%E6%96%B9%E5%9B%BE%E7%81%B0%E5%BA%A6%E7%BA%A7%E7%89%B9%E5%BE%81"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">四个直方图灰度级特征</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%AF%E8%AE%A1%E7%9B%B4%E6%96%B9%E5%9B%BECDF"><span class="nav-number">1.3.2.</span> <span class="nav-text">累计直方图CDF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%96%B9%E5%9B%BE%E5%9D%87%E8%A1%A1%E5%8C%96%E3%80%90%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%9A%E4%B9%A6P87%E3%80%91"><span class="nav-number">1.3.3.</span> <span class="nav-text">直方图均衡化【相关知识点：书P87】</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE1"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">题目1</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%96%B9%E5%9B%BE%E5%8C%B9%E9%85%8D%E5%8C%96-%E8%A7%84%E5%AE%9A%E5%8C%96-%E3%80%90%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E4%B9%A6P92%E3%80%91"><span class="nav-number">1.3.4.</span> <span class="nav-text">直方图匹配化(规定化)【相关知识点书P92】</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE1-1"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">题目1</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E6%BB%A4%E6%B3%A2%E5%9F%BA%E7%A1%80"><span class="nav-number">1.4.</span> <span class="nav-text">空间滤波基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4%E6%BB%A4%E6%B3%A2%E5%8E%9F%E7%90%86"><span class="nav-number">1.4.1.</span> <span class="nav-text">线性空间滤波原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E7%9B%B8%E5%85%B3%E4%B8%8E%E5%8D%B7%E7%A7%AF"><span class="nav-number">1.4.2.</span> <span class="nav-text">空间相关与卷积</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E5%9F%9F%E6%BB%A4%E6%B3%A2%E5%92%8C%E9%A2%91%E7%8E%87%E5%9F%9F%E6%BB%A4%E6%B3%A2%E7%9A%84%E4%B8%80%E4%BA%9B%E9%87%8D%E8%A6%81%E6%AF%94%E8%BE%83"><span class="nav-number">1.4.3.</span> <span class="nav-text">空间域滤波和频率域滤波的一些重要比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%9E%84%E5%BB%BA%E7%A9%BA%E9%97%B4%E6%BB%A4%E6%B3%A2%E5%99%A8%E6%A0%B8"><span class="nav-number">1.4.4.</span> <span class="nav-text">如何构建空间滤波器核</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E6%BB%91%EF%BC%88%E4%BD%8E%E9%80%9A%E7%A9%BA%E9%97%B4%E6%BB%A4%E6%B3%A2%E5%99%A8%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">平滑（低通空间滤波器）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%92%E5%BC%8F%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="nav-number">1.5.1.</span> <span class="nav-text">盒式滤波器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%8E%E9%80%9A%E9%AB%98%E6%96%AF%E6%BB%A4%E6%B3%A2%E5%99%A8%E6%A0%B8"><span class="nav-number">1.5.2.</span> <span class="nav-text">低通高斯滤波器核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%9F%E8%AE%A1%E6%8E%92%E5%BA%8F%EF%BC%88%E9%9D%9E%E7%BA%BF%E6%80%A7%EF%BC%89%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="nav-number">1.5.3.</span> <span class="nav-text">统计排序（非线性）滤波器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%90%E5%8C%96%EF%BC%88%E9%AB%98%E9%80%9A%EF%BC%89%E7%A9%BA%E9%97%B4%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="nav-number">1.5.4.</span> <span class="nav-text">锐化（高通）空间滤波器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%BA%8C%E9%98%B6%E5%BE%AE%E5%88%86%E8%BF%9B%E8%A1%8C%E5%9B%BE%E5%83%8F%E9%94%90%E5%8C%96%E2%80%94%E2%80%94%E6%8B%89%E6%99%AE%E6%8B%89%E6%96%AF"><span class="nav-number">1.5.5.</span> <span class="nav-text">使用二阶微分进行图像锐化——拉普拉斯</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%92%9D%E5%8C%96%E6%8E%A9%E8%94%BD%E5%92%8C%E9%AB%98%E6%8F%90%E5%8D%87%E6%BB%A4%E6%B3%A2"><span class="nav-number">1.5.6.</span> <span class="nav-text">钝化掩蔽和高提升滤波</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%80%E9%98%B6%E5%AF%BC%E6%95%B0%E9%94%90%E5%8C%96%E5%9B%BE%E5%83%8F%E2%80%94%E2%80%94%E6%A2%AF%E5%BA%A6"><span class="nav-number">1.5.7.</span> <span class="nav-text">使用一阶导数锐化图像——梯度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8E%E9%80%9A%E3%80%81%E9%AB%98%E9%80%9A%E3%80%81%E5%B8%A6%E9%98%BB%E5%92%8C%E5%B8%A6%E9%80%9A%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="nav-number">1.6.</span> <span class="nav-text">低通、高通、带阻和带通滤波器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E4%BD%BF%E7%94%A8%E7%A9%BA%E9%97%B4%E5%A2%9E%E5%BC%BA%E6%96%B9%E6%B3%95"><span class="nav-number">1.7.</span> <span class="nav-text">组合使用空间增强方法</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZHYCarge"
+      src="/images/1.gif">
+  <p class="site-author-name" itemprop="name">ZHYCarge</p>
+  <div class="site-description" itemprop="description">在黑夜中，负重前行</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZHYCarge" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="ZHYCarge:ZHYCarge@163.com" title="E-Mail → ZHYCarge:ZHYCarge@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://raw.githubusercontent.com/ZHYCarge/photo/master/mm_reward_qrcode_1650029406131.png" title="打赏一下? → https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;ZHYCarge&#x2F;photo&#x2F;master&#x2F;mm_reward_qrcode_1650029406131.png" rel="noopener" target="_blank"><i class="fa fa-money fa-fw"></i>打赏一下?</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="tencent://message/?Site=baidu.com&uin=470157929&Menu=yes" title="QQ → tencent:&#x2F;&#x2F;message&#x2F;?Site&#x3D;baidu.com&amp;uin&#x3D;470157929&amp;Menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/ZHYCarge/notes/new/master/source/_posts" title="https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge&#x2F;notes&#x2F;new&#x2F;master&#x2F;source&#x2F;_posts" rel="noopener" target="_blank">新建一篇文章</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://zhycarge.gitee.io/" title="https:&#x2F;&#x2F;zhycarge.gitee.io" rel="noopener" target="_blank">其他途径访问(gitee)</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://zhycarge.github.io/" title="https:&#x2F;&#x2F;zhycarge.github.io">其他途径访问(github)</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZHYCarge</span>
+</div>
+
+
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span> Look up at the stars and keep your feet on the ground 
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("07/10/2021 21:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已陪伴博主 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//fastly.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//fastly.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//fastly.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'lMi75lqHa0Nh3Q1wOb7J1wFf-gzGzoHsz',
+      appKey     : 't8jjo2V1scEx9nzeNexS5VUG',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-CN' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
