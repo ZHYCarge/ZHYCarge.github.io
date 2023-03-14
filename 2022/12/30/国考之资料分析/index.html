@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhycarge.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"manual"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="国考之资料分析 前言在此处记录一下资料分析的相关知识点，内容来自于花生十三">
+<meta property="og:type" content="article">
+<meta property="og:title" content="国考之资料分析">
+<meta property="og:url" content="https://zhycarge.github.io/2022/12/30/%E5%9B%BD%E8%80%83%E4%B9%8B%E8%B5%84%E6%96%99%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="ZHYCarge的博客">
+<meta property="og:description" content="国考之资料分析 前言在此处记录一下资料分析的相关知识点，内容来自于花生十三">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zenodo.org/badge/DOI/10.5281/zenodo.7500772.svg">
+<meta property="og:image" content="https://npicture.oss-cn-beijing.aliyuncs.com/Picgo/image-20230102153019795.png">
+<meta property="article:published_time" content="2022-12-30T10:27:55.000Z">
+<meta property="article:modified_time" content="2023-01-03T09:23:58.000Z">
+<meta property="article:author" content="ZHYCarge">
+<meta property="article:tag" content="国考">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zenodo.org/badge/DOI/10.5281/zenodo.7500772.svg">
+
+<link rel="canonical" href="https://zhycarge.github.io/2022/12/30/%E5%9B%BD%E8%80%83%E4%B9%8B%E8%B5%84%E6%96%99%E5%88%86%E6%9E%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>国考之资料分析 | ZHYCarge的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="ZHYCarge的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ZHYCarge的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-必应一下">
+
+    <a href="/bings/" rel="section"><i class="fa fa-globe fa-fw"></i>必应一下</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhycarge.github.io/2022/12/30/%E5%9B%BD%E8%80%83%E4%B9%8B%E8%B5%84%E6%96%99%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.gif">
+      <meta itemprop="name" content="ZHYCarge">
+      <meta itemprop="description" content="在黑夜中，负重前行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZHYCarge的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          国考之资料分析<a href="https://github.com/ZHYCarge/notes/blob/master/source/_posts/%E5%9B%BD%E8%80%83%E4%B9%8B%E8%B5%84%E6%96%99%E5%88%86%E6%9E%90.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-12-30 18:27:55" itemprop="dateCreated datePublished" datetime="2022-12-30T18:27:55+08:00">2022-12-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-01-03 17:23:58" itemprop="dateModified" datetime="2023-01-03T17:23:58+08:00">2023-01-03</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/12/30/%E5%9B%BD%E8%80%83%E4%B9%8B%E8%B5%84%E6%96%99%E5%88%86%E6%9E%90/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/12/30/%E5%9B%BD%E8%80%83%E4%B9%8B%E8%B5%84%E6%96%99%E5%88%86%E6%9E%90/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="国考之资料分析"><a href="#国考之资料分析" class="headerlink" title="国考之资料分析"></a>国考之资料分析</h1><p><a target="_blank" rel="noopener" href="https://doi.org/10.5281/zenodo.7500772"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.7500772.svg" alt="DOI"></a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在此处记录一下资料分析的相关知识点，内容来自于花生十三</p>
+<span id="more"></span>
+
+<p>在花生十三这里，有几个数据需要记录：</p>
+<ul>
+<li>B：现期值</li>
+<li>A：基期值</li>
+<li>R：增长率</li>
+<li>X：增长量</li>
+</ul>
+<h1 id="四则运算"><a href="#四则运算" class="headerlink" title="四则运算"></a>四则运算</h1><h2 id="高位叠加"><a href="#高位叠加" class="headerlink" title="高位叠加"></a>高位叠加</h2><p>与记忆中的列竖式作加法顺序相反，高位叠加是从高位加起，抓住问题的主要矛盾。非精确求和和没有选项可以参考时可以使用高位叠加</p>
+<img src="https://npicture.oss-cn-beijing.aliyuncs.com/Picgo/image-20230102153019795.png" alt="image-20230102153019795" style="zoom:50%;" />
+
+<p>适合：非精确题目</p>
+<p>适用范围：求比重、合计多少、</p>
+<h2 id="“21”-“12”分段法"><a href="#“21”-“12”分段法" class="headerlink" title="“21” “12”分段法"></a>“21” “12”分段法</h2><p>将三位数的减法分为“21”或者“12”两段，并尽可能保证不需要借位</p>
+<p>如 <code>519-127</code>：</p>
+<p>个位：9&gt;7，百位+十位：51&gt;12；我们可以将减法进行分段计算，百位+十位为一段“2”，个位为一段“1”</p>
+<p>则个位  = 9-7=2；百位+十位 = 51-12=39；将数据回归原位，答案=392</p>
+<h2 id="整数基准值法"><a href="#整数基准值法" class="headerlink" title="整数基准值法"></a>整数基准值法</h2><p>被减数-减数=（被减数-基准值）+（基准值-减数）</p>
+<p>如 <code>632-588</code> ：</p>
+<p>十位+个位中的3 2均小于 8  8；因此可以加入基准值，将减数588向上取整为600，则<br>$$<br>632-588 = （632-600）+（600-588） = 44<br>$$</p>
+<h2 id="小分互换"><a href="#小分互换" class="headerlink" title="小分互换"></a>小分互换</h2><p>若乘法中有某个乘数可以近似转化为某个常见分数，我们可以将多位数乘法转华为简单的除法计算</p>
+<p>常见百化分分数：</p>
+<table>
+<thead>
+<tr>
+<th>1/2 = 50%</th>
+<th>1/7=14.3%</th>
+<th>1/12=8.3%</th>
+<th>1/17=5.9%</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1/3=33.3%</td>
+<td>1/8=12.5%</td>
+<td>1/13=7.7%</td>
+<td>1/18=5.6%</td>
+</tr>
+<tr>
+<td>1/4=25%</td>
+<td>1/9=11.1%</td>
+<td>1/14=7.1%</td>
+<td>1/19=5.3%</td>
+</tr>
+<tr>
+<td>1/5=20%</td>
+<td>1/10=10%</td>
+<td>1/15=6.7%</td>
+<td>2/7=28.6%</td>
+</tr>
+<tr>
+<td>1/6=16.7%</td>
+<td>1/11=9.9%</td>
+<td>1/16=6.3%</td>
+<td>3/7=42.9%</td>
+</tr>
+</tbody></table>
+<p>如 <code>464*25%</code> ：<br>$$<br>25%=1/4，则464<em>25%=464/4=116<br>$$<br>如果遇到不是那么整的数值，如$464</em>12.1%$，则可以考虑将$12.1%化为11.1%+1%$之后转成$\frac{464}{9}+4.64\approx56.2$</p>
+<h2 id="凑整拆分"><a href="#凑整拆分" class="headerlink" title="凑整拆分"></a>凑整拆分</h2><p>将乘数拆分为“2或5”等容易计算的数字组成</p>
+<p>如 <code>464*48%</code>：<br>$$<br>464<em>48% = 464</em>（50%-2%） = 464/2-464*2% =232-9.28=222.72<br>$$</p>
+<h2 id="预估拆分法"><a href="#预估拆分法" class="headerlink" title="预估拆分法"></a>预估拆分法</h2><p>将被除数由大到小拆成几部分分别计算，通过逐步分解，从而得到结果。</p>
+<p>例1：</p>
+<p>$\frac{715}{729} = \frac{729-14}{729}=1-\frac{14}{729}\ \ \ \ 由于，\frac{14}{729} =2^-%，\ \ \ \ 因此\frac{715}{729} = 98^+%$</p>
+<p>例2：</p>
+<p>$\frac{247}{532}=\frac{266-19}{532}=50%-4^-%=46^+%$</p>
+<p>例3：</p>
+<p>$\frac{335}{831}\ \ 大体可以看出，约40%，因此40%*831=332,\frac{335}{831}=\frac{332+3}{831}=40%+0.4^-%=40.4^-%$</p>
+<p>使用规则：</p>
+<ul>
+<li>如果分数大小接近1（分子分母相差不大）可以先用100%减去、加上</li>
+<li>如果分子在分母的50%附近，先拆出50%</li>
+<li>如果分子在分母的50%-100%之间且不好预估，先拆出50%，之后继续计算</li>
+<li>如果分母接近500或1000，可以直接根据分子判断分数大约的百分比</li>
+<li>在不满足上述情况下，可以根据首位比值或分子前两位与分母首位比值，拆出其它特殊分数（如：1/3、1/4、1/6、1/7、30%、40%、70%等）</li>
+</ul>
+<h2 id="“415”份数法"><a href="#“415”份数法" class="headerlink" title="“415”份数法"></a>“415”份数法</h2><p>将数量关系转化为份数比例关系，从而简化计算。一般来讲，将现期B和增长率R为已知量的前提下，可以使用415份数法快速获得基期A与变化量X的数值</p>
+<p>例如：增长率为25%（$\frac14$），为了方便计算，可以将基期设为4份，变化量X=AR=1份，现期为基期和变化量之和，为5份。则基期、变化量、现期的份数分别为4、1、5</p>
+<p>使用时机：增长率R在一个分数附近</p>
+<p>例：</p>
+<p><em>今年工资456，比去年降低了12.5%，则去年工资是多少？</em></p>
+<p>$-12.5%=-\frac18$，则对于“415”份数来讲，现期为7份，增长量为-1份，基期为8份，$\frac{456}{7} \approx65$,则基期为“7+1”则为$65+456=521$</p>
+<h2 id="假设分配法"><a href="#假设分配法" class="headerlink" title="假设分配法"></a>假设分配法</h2><p>现期、基期、增长量成一定比例，且现期=基期+增长量，通常通过假设基期、增长量来分配现期，多退少补，逐步趋于正确的基期和增长量。</p>
+<p>核心公式：</p>
+<ul>
+<li>B=A+X——剩余分配=B-A-X</li>
+<li>A=B/(1+R)——A：X：B=x：100：100+x</li>
+<li>X=AR<ul>
+<li>R&gt;0——ABX同号，且A&lt;B</li>
+<li>R&lt;0——AB与X异号，且A&gt;B</li>
+</ul>
+</li>
+</ul>
+<p>其结构图大致如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">graph TB</span><br><span class="line">A((现期值))</span><br><span class="line">B((基期值))</span><br><span class="line">C((剩余分配值))</span><br><span class="line">D((增长量))</span><br><span class="line">E((基期值))</span><br><span class="line">F((增长量))</span><br><span class="line">G((剩余分配值))</span><br><span class="line">A--&gt;B</span><br><span class="line">A--&gt;C</span><br><span class="line">A--&gt;D</span><br><span class="line">C--&gt;E</span><br><span class="line">C--&gt;G</span><br><span class="line">C--&gt;F</span><br></pre></td></tr></table></figure>
+
+
+
+<p>左边分支为基期值，右边分支为增长量，中间剩余分配值为基期值与增长量和现期的差（基期和增长量的数值为假定）</p>
+<p>由于大部分情况下知道现期、增长量的值，求基期的情况较多，因此，以下为两个例子</p>
+<h5 id="例1（0-lt-x-lt-10-）"><a href="#例1（0-lt-x-lt-10-）" class="headerlink" title="例1（0&lt;x&lt;10%）:"></a>例1（0&lt;x&lt;10%）:</h5><p>假设现期量为<code>5362</code>，增长了<code>8%</code>，求基期or增长量：</p>
+<p>假设基期量为<code>5000</code>，其<code>8%</code>为<code>400</code>，<code>5000+400=5400</code>，与<code>5362</code>相差<code>38</code>，因此中间位置写<code>-38</code>，两侧分别写<code>5000</code>和<code>400</code>，之后将<code>-38</code>看作<code>-40</code>，以<code>40*8%=3%</code>，填入右侧，则左侧值为<code>38-3=35</code>。因此基期值为<code>4965</code>，增长量为<code>397</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">graph TB</span><br><span class="line">A((5362))</span><br><span class="line">B((5000))</span><br><span class="line">C([-38])</span><br><span class="line">D((400))</span><br><span class="line">E([-35])</span><br><span class="line">F([-3])</span><br><span class="line"></span><br><span class="line">A--&gt;B</span><br><span class="line">A--&gt;C</span><br><span class="line">A--&gt;D</span><br><span class="line">C--&gt;E</span><br><span class="line">C--&gt;F</span><br></pre></td></tr></table></figure>
+
+<h5 id="例2（x-gt-10-）"><a href="#例2（x-gt-10-）" class="headerlink" title="例2（x&gt;10%）:"></a>例2（x&gt;10%）:</h5><p>假设现期量为<code>402</code>，增长了<code>16%</code>，求基期or增长量:</p>
+<p>假设基期量为<code>300</code>，其增长量为<code>300*16%=48</code>，因此可以得到剩余量为<code>402-300-48=54</code>，由于增长量为<code>16%</code>，近似约等于可以看成<code>16.7%</code>，为$\frac16$，则增长一份的量为$\frac{54}{7}\approx8$，则增长量为<code>8</code>，基期量为<code>46</code>。因此基期为<code>346</code>，增长量为<code>56</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">graph TB</span><br><span class="line">A((402))</span><br><span class="line">B((300))</span><br><span class="line">C((54))</span><br><span class="line">D((48))</span><br><span class="line">E((46))</span><br><span class="line">F((8))</span><br><span class="line"></span><br><span class="line">A--&gt;B</span><br><span class="line">A--&gt;C</span><br><span class="line">A--&gt;D</span><br><span class="line">C--&gt;E</span><br><span class="line">C--&gt;F</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在第二步的时候使用“415”方法，第一步使用误差较大，可能会导致无法选择合适数据</p>
+<h5 id="例3（x-lt-0）"><a href="#例3（x-lt-0）" class="headerlink" title="例3（x&lt;0）:"></a>例3（x&lt;0）:</h5><p>假设现期量为456，减少了7%，求基期or增长量：</p>
+<p>假设基期量为500，则增长量为-35，剩余量为456-500-35=-9，之后使用-9*-7%可以得到约等于1，则前面为-10</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">graph TB</span><br><span class="line">A((456))</span><br><span class="line">B((500))</span><br><span class="line">C([-9])</span><br><span class="line">D([-35])</span><br><span class="line">E([-10])</span><br><span class="line">F((1))</span><br><span class="line"></span><br><span class="line">A--&gt;B</span><br><span class="line">A--&gt;C</span><br><span class="line">A--&gt;D</span><br><span class="line">C--&gt;E</span><br><span class="line">C--&gt;F</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------我也是有底线的哦<i class="fa fa-anchor"></i>如需更多，欢迎打赏-------------</div>
+    
+</div>
+
+
+  
+</div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>ZHYCarge
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://zhycarge.github.io/2022/12/30/%E5%9B%BD%E8%80%83%E4%B9%8B%E8%B5%84%E6%96%99%E5%88%86%E6%9E%90/" title="国考之资料分析">https://zhycarge.github.io/2022/12/30/国考之资料分析/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%9B%BD%E8%80%83/" rel="tag"><i class="fa fa-tag"></i> 国考</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/10/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98%E8%87%AA%E6%95%91%E6%8C%87%E5%8D%97/" rel="prev" title="数据挖掘自救指南">
+      <i class="fa fa-chevron-left"></i> 数据挖掘自救指南
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/03/%E5%9B%BD%E8%80%83%E4%B9%8B%E5%B8%B8%E8%AF%86%E6%8E%A8%E7%90%86/" rel="next" title="国考之常识推理">
+      国考之常识推理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BD%E8%80%83%E4%B9%8B%E8%B5%84%E6%96%99%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">国考之资料分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97"><span class="nav-number">3.</span> <span class="nav-text">四则运算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E4%BD%8D%E5%8F%A0%E5%8A%A0"><span class="nav-number">3.1.</span> <span class="nav-text">高位叠加</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%80%9C21%E2%80%9D-%E2%80%9C12%E2%80%9D%E5%88%86%E6%AE%B5%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">“21” “12”分段法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E6%95%B0%E5%9F%BA%E5%87%86%E5%80%BC%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">整数基准值法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E5%88%86%E4%BA%92%E6%8D%A2"><span class="nav-number">3.4.</span> <span class="nav-text">小分互换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%91%E6%95%B4%E6%8B%86%E5%88%86"><span class="nav-number">3.5.</span> <span class="nav-text">凑整拆分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E4%BC%B0%E6%8B%86%E5%88%86%E6%B3%95"><span class="nav-number">3.6.</span> <span class="nav-text">预估拆分法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%80%9C415%E2%80%9D%E4%BB%BD%E6%95%B0%E6%B3%95"><span class="nav-number">3.7.</span> <span class="nav-text">“415”份数法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%81%87%E8%AE%BE%E5%88%86%E9%85%8D%E6%B3%95"><span class="nav-number">3.8.</span> <span class="nav-text">假设分配法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BE%8B1%EF%BC%880-lt-x-lt-10-%EF%BC%89"><span class="nav-number">3.8.0.0.1.</span> <span class="nav-text">例1（0&lt;x&lt;10%）:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BE%8B2%EF%BC%88x-gt-10-%EF%BC%89"><span class="nav-number">3.8.0.0.2.</span> <span class="nav-text">例2（x&gt;10%）:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BE%8B3%EF%BC%88x-lt-0%EF%BC%89"><span class="nav-number">3.8.0.0.3.</span> <span class="nav-text">例3（x&lt;0）:</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZHYCarge"
+      src="/images/1.gif">
+  <p class="site-author-name" itemprop="name">ZHYCarge</p>
+  <div class="site-description" itemprop="description">在黑夜中，负重前行</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZHYCarge" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="ZHYCarge:ZHYCarge@163.com" title="E-Mail → ZHYCarge:ZHYCarge@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://raw.githubusercontent.com/ZHYCarge/photo/master/mm_reward_qrcode_1650029406131.png" title="打赏一下? → https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;ZHYCarge&#x2F;photo&#x2F;master&#x2F;mm_reward_qrcode_1650029406131.png" rel="noopener" target="_blank"><i class="fa fa-money fa-fw"></i>打赏一下?</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="tencent://message/?Site=baidu.com&uin=470157929&Menu=yes" title="QQ → tencent:&#x2F;&#x2F;message&#x2F;?Site&#x3D;baidu.com&amp;uin&#x3D;470157929&amp;Menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/ZHYCarge/notes/new/master/source/_posts" title="https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge&#x2F;notes&#x2F;new&#x2F;master&#x2F;source&#x2F;_posts" rel="noopener" target="_blank">新建一篇文章</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZHYCarge</span>
+</div>
+
+
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span> Look up at the stars and keep your feet on the ground 
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("07/10/2021 21:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已陪伴博主 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//fastly.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//fastly.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//fastly.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'lMi75lqHa0Nh3Q1wOb7J1wFf-gzGzoHsz',
+      appKey     : 't8jjo2V1scEx9nzeNexS5VUG',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-CN' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

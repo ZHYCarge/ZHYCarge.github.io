@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhycarge.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"manual"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言尝试根据b站大佬来扩充自己的知识面 本人使用的环境为tf2.0但是b站视频是1.0，因此与视频会稍有不符合">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用tf进行基本的矩阵运算">
+<meta property="og:url" content="https://zhycarge.github.io/2021/07/26/tf%E8%BF%9B%E8%A1%8C%E5%9F%BA%E6%9C%AC%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97/index.html">
+<meta property="og:site_name" content="ZHYCarge的博客">
+<meta property="og:description" content="前言尝试根据b站大佬来扩充自己的知识面 本人使用的环境为tf2.0但是b站视频是1.0，因此与视频会稍有不符合">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-26T08:48:00.000Z">
+<meta property="article:modified_time" content="2021-07-27T07:37:40.000Z">
+<meta property="article:author" content="ZHYCarge">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="tensorflow">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://zhycarge.github.io/2021/07/26/tf%E8%BF%9B%E8%A1%8C%E5%9F%BA%E6%9C%AC%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>使用tf进行基本的矩阵运算 | ZHYCarge的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="ZHYCarge的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ZHYCarge的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-必应一下">
+
+    <a href="/bings/" rel="section"><i class="fa fa-globe fa-fw"></i>必应一下</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhycarge.github.io/2021/07/26/tf%E8%BF%9B%E8%A1%8C%E5%9F%BA%E6%9C%AC%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.gif">
+      <meta itemprop="name" content="ZHYCarge">
+      <meta itemprop="description" content="在黑夜中，负重前行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZHYCarge的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用tf进行基本的矩阵运算<a href="https://github.com/ZHYCarge/notes/blob/master/source/_posts/tf%E8%BF%9B%E8%A1%8C%E5%9F%BA%E6%9C%AC%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-26 16:48:00" itemprop="dateCreated datePublished" datetime="2021-07-26T16:48:00+08:00">2021-07-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-27 15:37:40" itemprop="dateModified" datetime="2021-07-27T15:37:40+08:00">2021-07-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/study/" itemprop="url" rel="index"><span itemprop="name">study</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/study/%E8%A7%86%E8%A7%89/" itemprop="url" rel="index"><span itemprop="name">视觉</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/07/26/tf%E8%BF%9B%E8%A1%8C%E5%9F%BA%E6%9C%AC%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/26/tf%E8%BF%9B%E8%A1%8C%E5%9F%BA%E6%9C%AC%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>尝试根据b站大佬来扩充自己的知识面</p>
+<p>本人使用的环境为tf2.0但是b站视频是1.0，因此与视频会稍有不符合</p>
+<span id="more"></span>
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1QJ411W7SS?p=15">B站视频</a></p>
+<h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1><h2 id="代码片段1"><a href="#代码片段1" class="headerlink" title="代码片段1"></a>代码片段1</h2><p>这里仅贴出跟着b站视频写出来的代码，并在有些区域会有些许注释</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="comment"># data1 = tf.placeholder(tf.float32)        # 该方法在2.0版本之后就已经被弃用</span></span><br><span class="line"><span class="comment"># data2 = tf.placeholder(tf.float32)        # 该方法在2.0版本之后就已经被弃用</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.0之后使用</span></span><br><span class="line">tf.compat.v1.disable_eager_execution()  <span class="comment"># 初始化新版本的模块化更新信息</span></span><br><span class="line"></span><br><span class="line">data1 = tf.compat.v1.placeholder(tf.float32)</span><br><span class="line">data2 = tf.compat.v1.placeholder(tf.float32)</span><br><span class="line">dataAdd = tf.add(data1, data2)</span><br><span class="line"></span><br><span class="line"><span class="comment"># with tf.sesson() as sess: # 该方法已经在2.0之后弃用</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.0之后使用</span></span><br><span class="line"><span class="keyword">with</span> tf.compat.v1.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    <span class="built_in">print</span>(sess.run(dataAdd,  feed_dict=&#123;data1: <span class="number">6</span>, data2: <span class="number">2</span>&#125;))</span><br><span class="line">    <span class="comment"># feed_dict 为其中的内容进行赋值</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;end&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>输出内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">8.0</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="代码片段2"><a href="#代码片段2" class="headerlink" title="代码片段2"></a>代码片段2</h2><p>此部分代码表明Python的矩阵维度定义</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">tf.compat.v1.disable_eager_execution()  <span class="comment"># 初始化新版本的模块化更新信息</span></span><br><span class="line"></span><br><span class="line">data1 = tf.compat.v1.constant([[<span class="number">6</span>, <span class="number">6</span>]])  <span class="comment"># 一行两列</span></span><br><span class="line">data2 = tf.compat.v1.constant([[<span class="number">2</span>], [<span class="number">2</span>]])  <span class="comment"># 两行一列</span></span><br><span class="line">data3 = tf.compat.v1.constant([[<span class="number">3</span>, <span class="number">3</span>]])  <span class="comment"># 一行两列</span></span><br><span class="line">data4 = tf.compat.v1.constant([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]])  <span class="comment"># 三行两列</span></span><br><span class="line">data5 = tf.compat.v1.constant([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">                               [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>],</span><br><span class="line">                               [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]])  <span class="comment"># 三行三列，为了更好区分，因此加了回车</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(data5.shape)  <span class="comment"># 打印矩阵维度</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.compat.v1.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    <span class="built_in">print</span>(sess.run(data5))  <span class="comment"># 输出整个矩阵</span></span><br><span class="line">    <span class="built_in">print</span>(sess.run(data5[<span class="number">0</span>]))  <span class="comment"># 输出矩阵的某一行</span></span><br><span class="line">    <span class="built_in">print</span>(sess.run(data5[:, <span class="number">0</span>]))  <span class="comment"># 输出矩阵的某一列</span></span><br><span class="line">    <span class="built_in">print</span>(sess.run(data5[<span class="number">0</span>][<span class="number">0</span>]))  <span class="comment"># 输出矩阵第一行第一列</span></span><br><span class="line"><span class="comment"># 矩阵的起始位置都是0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>输出内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(3, 3)</span><br><span class="line">[[1 2 3]</span><br><span class="line"> [4 5 6]</span><br><span class="line"> [7 8 9]]</span><br><span class="line">[1 2 3]</span><br><span class="line">[1 4 7]</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<p>片段</p>
+<h2 id="代码片段3"><a href="#代码片段3" class="headerlink" title="代码片段3"></a>代码片段3</h2><p>此段代码讲解矩阵乘法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 矩阵乘法</span></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">os.environ[<span class="string">&quot;TF_CPP_MIN_LOG_LEVEL&quot;</span>] = <span class="string">&quot;2&quot;</span></span><br><span class="line"></span><br><span class="line">tf.compat.v1.disable_eager_execution()  <span class="comment"># 初始化新版本的模块化更新信息</span></span><br><span class="line"></span><br><span class="line">data1 = tf.compat.v1.constant([[<span class="number">6</span>, <span class="number">6</span>]])  <span class="comment"># 一行两列</span></span><br><span class="line">data2 = tf.compat.v1.constant([[<span class="number">2</span>], [<span class="number">2</span>]])  <span class="comment"># 两行一列</span></span><br><span class="line">data3 = tf.compat.v1.constant([[<span class="number">3</span>, <span class="number">3</span>]])  <span class="comment"># 一行两列</span></span><br><span class="line">data4 = tf.compat.v1.constant([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]])  <span class="comment"># 三行两列</span></span><br><span class="line">data5 = tf.compat.v1.constant([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">                               [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>],</span><br><span class="line">                               [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]])  <span class="comment"># 三行三列，为了更好区分，因此加了回车</span></span><br><span class="line">matMul = tf.matmul(data1, data2)</span><br><span class="line">matMul2 = tf.multiply(data1, data2)     <span class="comment"># 类似于加法，对应元素相乘</span></span><br><span class="line">matAdd = tf.add(data1, data3)</span><br><span class="line"><span class="keyword">with</span> tf.compat.v1.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    <span class="built_in">print</span>(sess.run(matMul))     <span class="comment"># 一维</span></span><br><span class="line">    <span class="built_in">print</span>(sess.run(matAdd))     <span class="comment"># 二维</span></span><br><span class="line">    <span class="built_in">print</span>(sess.run(matMul2))</span><br><span class="line">    <span class="built_in">print</span>(sess.run([matMul, matAdd]))   <span class="comment"># 可以通过中括号，一次性打印多个内容</span></span><br><span class="line"><span class="comment"># MK x KN = MN</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[[24]]</span><br><span class="line">[[9 9]]</span><br><span class="line">[[12 12]</span><br><span class="line"> [12 12]]</span><br><span class="line">[array([[24]], dtype=int32), array([[9, 9]], dtype=int32)]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="代码片段4"><a href="#代码片段4" class="headerlink" title="代码片段4"></a>代码片段4</h2><p>如何定义一个基本矩阵</p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">os.environ[<span class="string">&quot;TF_CPP_MIN_LOG_LEVEL&quot;</span>] = <span class="string">&quot;2&quot;</span></span><br><span class="line">tf.compat.v1.disable_eager_execution()  <span class="comment"># 初始化新版本的模块化更新信息</span></span><br><span class="line"></span><br><span class="line">mat0 = tf.constant([[<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]])  <span class="comment"># 自己动手，丰衣足食</span></span><br><span class="line">mat1 = tf.zeros([<span class="number">2</span>, <span class="number">3</span>])     <span class="comment"># 定义一个三行两列的空矩阵</span></span><br><span class="line">mat2 = tf.ones([<span class="number">3</span>, <span class="number">2</span>])      <span class="comment"># 定义一个三行两列的1矩阵</span></span><br><span class="line">mat3 = tf.fill([<span class="number">2</span>, <span class="number">3</span>], <span class="number">15</span>)</span><br><span class="line"><span class="keyword">with</span> tf.compat.v1.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    <span class="built_in">print</span>(sess.run(mat0))</span><br><span class="line">    <span class="built_in">print</span>(sess.run(mat1))</span><br><span class="line">    <span class="built_in">print</span>(sess.run(mat2))</span><br><span class="line">    <span class="built_in">print</span>(sess.run(mat3))</span><br></pre></td></tr></table></figure>
+
+
+
+<p>运行结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[[0 0 0]</span><br><span class="line"> [0 0 0]]</span><br><span class="line">[[0. 0. 0.]</span><br><span class="line"> [0. 0. 0.]]</span><br><span class="line">[[1. 1.]</span><br><span class="line"> [1. 1.]</span><br><span class="line"> [1. 1.]]</span><br><span class="line">[[15 15 15]</span><br><span class="line"> [15 15 15]]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="代码片段5"><a href="#代码片段5" class="headerlink" title="代码片段5"></a>代码片段5</h2><p>如何定义一个非基本矩阵</p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如何定义一个矩阵（非基础）</span></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">os.environ[<span class="string">&quot;TF_CPP_MIN_LOG_LEVEL&quot;</span>] = <span class="string">&quot;2&quot;</span></span><br><span class="line">tf.compat.v1.disable_eager_execution()  <span class="comment"># 初始化新版本的模块化更新信息</span></span><br><span class="line"></span><br><span class="line">mat1 = tf.constant([[<span class="number">2</span>], [<span class="number">3</span>], [<span class="number">4</span>]])</span><br><span class="line">mat2 = tf.zeros_like(mat1)  <span class="comment"># 定义一个全零矩阵，维度与mat1相同</span></span><br><span class="line">mat3 = tf.linspace(<span class="number">0.0</span>, <span class="number">2.0</span>, <span class="number">11</span>)    <span class="comment"># 创建一个从0-2的一个中间具有11个元素的矩阵</span></span><br><span class="line">mat4 = tf.compat.v1.random_uniform([<span class="number">2</span>, <span class="number">3</span>], -<span class="number">1</span>, <span class="number">2</span>)   <span class="comment"># 创建一个2×3的矩阵，并且矩阵数字为 (-1)-2 之间</span></span><br><span class="line"><span class="keyword">with</span> tf.compat.v1.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    <span class="built_in">print</span>(sess.run(mat2))</span><br><span class="line">    <span class="built_in">print</span>(sess.run(mat3))</span><br><span class="line">    <span class="built_in">print</span>(sess.run(mat4))</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[[0]</span><br><span class="line"> [0]</span><br><span class="line"> [0]]</span><br><span class="line">[0.        0.2       0.4       0.6       0.8       1.        1.2</span><br><span class="line"> 1.4       1.6       1.8000001 2.       ]</span><br><span class="line">[[-0.988165   0.3698578 -0.68531  ]</span><br><span class="line"> [-0.7001637  1.0496833  1.1087246]]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="在tf中矩阵的定义"><a href="#在tf中矩阵的定义" class="headerlink" title="在tf中矩阵的定义"></a>在tf中矩阵的定义</h2><p>在python中，定义一个矩阵可以采用以下方法进行定义：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># python中矩阵的定义</span></span><br><span class="line"><span class="comment"># 一行两列:[[6,6]]</span></span><br><span class="line"><span class="comment"># 两行两列:[[6,6],[6,6]]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="什么是placeholder"><a href="#什么是placeholder" class="headerlink" title="什么是placeholder"></a>什么是<code>placeholder</code></h2><blockquote>
+<p>Tensorflow中的palceholder，中文翻译为占位符，什么意思呢？</p>
+<p>在Tensoflow2.0以前，还是静态图的设计思想，整个设计理念是计算流图，在编写程序时，首先构筑整个系统的graph，代码并不会直接生效，这一点和python的其他数值计算库（如Numpy等）不同，graph为静态的，在实际的运行时，启动一个session，程序才会真正的运行。这样做的好处就是：避免反复地切换底层程序实际运行的上下文，tensorflow帮你优化整个系统的代码。我们知道，很多python程序的底层为C语言或者其他语言，执行一行脚本，就要切换一次，是有成本的，tensorflow通过计算流图的方式，可以帮你优化整个session需要执行的代码。</p>
+<p>在代码层面，每一个tensor值在graph上都是一个op，当我们将train数据分成一个个minibatch然后传入网络进行训练时，每一个minibatch都将是一个op，这样的话，一副graph上的op未免太多，也会产生巨大的开销；于是就有了tf.placeholder()，我们每次可以将 一个minibatch传入到x = tf.placeholder(tf.float32,[None,32])上，下一次传入的x都替换掉上一次传入的x，这样就对于所有传入的minibatch x就只会产生一个op，不会产生其他多余的op，进而减少了graph的开销。<br>——<a target="_blank" rel="noopener" href="https://blog.csdn.net/caoyuan666/article/details/104706756">CSDN</a></p>
+</blockquote>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="错误汇总"><a href="#错误汇总" class="headerlink" title="错误汇总"></a>错误汇总</h2><h4 id="报错信息为AttributeError-module-39-tensorflow-39-has-no-attribute-39-placeholder-39"><a href="#报错信息为AttributeError-module-39-tensorflow-39-has-no-attribute-39-placeholder-39" class="headerlink" title="报错信息为AttributeError: module &#39;tensorflow&#39; has no attribute &#39;placeholder&#39;"></a>报错信息为<code>AttributeError: module &#39;tensorflow&#39; has no attribute &#39;placeholder&#39;</code></h4><p>由于本人使用的环境不同，根据<a target="_blank" rel="noopener" href="https://blog.csdn.net/caoyuan666/article/details/104706756">CSDN</a>上的信息而言，表明在tf版本2.0之后，该方法就已经被进行了弃用，因此我们需要寻找到2.0版本的对应方法，对应方法已经在相关代码片段中进行提及</p>
+
+    </div>
+
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------我也是有底线的哦<i class="fa fa-anchor"></i>如需更多，欢迎打赏-------------</div>
+    
+</div>
+
+
+  
+</div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>ZHYCarge
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://zhycarge.github.io/2021/07/26/tf%E8%BF%9B%E8%A1%8C%E5%9F%BA%E6%9C%AC%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97/" title="使用tf进行基本的矩阵运算">https://zhycarge.github.io/2021/07/26/tf进行基本矩阵运算/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 笔记</a>
+              <a href="/tags/tensorflow/" rel="tag"><i class="fa fa-tag"></i> tensorflow</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/25/%E8%BF%9C%E7%A8%8B%E6%9B%B4%E6%96%B0esp8266%E4%BB%A3%E7%A0%81/" rel="prev" title="使用arduino远程更新esp8266代码">
+      <i class="fa fa-chevron-left"></i> 使用arduino远程更新esp8266代码
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/27/Numpy%E6%A8%A1%E5%9D%97%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="next" title="使用Numpy模块操作矩阵">
+      使用Numpy模块操作矩阵 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B51"><span class="nav-number">3.1.</span> <span class="nav-text">代码片段1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B52"><span class="nav-number">3.2.</span> <span class="nav-text">代码片段2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B53"><span class="nav-number">3.3.</span> <span class="nav-text">代码片段3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B54"><span class="nav-number">3.4.</span> <span class="nav-text">代码片段4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B55"><span class="nav-number">3.5.</span> <span class="nav-text">代码片段5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8tf%E4%B8%AD%E7%9F%A9%E9%98%B5%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">3.6.</span> <span class="nav-text">在tf中矩阵的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFplaceholder"><span class="nav-number">3.7.</span> <span class="nav-text">什么是placeholder</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E6%B1%87%E6%80%BB"><span class="nav-number">4.1.</span> <span class="nav-text">错误汇总</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E4%B8%BAAttributeError-module-39-tensorflow-39-has-no-attribute-39-placeholder-39"><span class="nav-number">4.1.0.1.</span> <span class="nav-text">报错信息为AttributeError: module &#39;tensorflow&#39; has no attribute &#39;placeholder&#39;</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZHYCarge"
+      src="/images/1.gif">
+  <p class="site-author-name" itemprop="name">ZHYCarge</p>
+  <div class="site-description" itemprop="description">在黑夜中，负重前行</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZHYCarge" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="ZHYCarge:ZHYCarge@163.com" title="E-Mail → ZHYCarge:ZHYCarge@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://raw.githubusercontent.com/ZHYCarge/photo/master/mm_reward_qrcode_1650029406131.png" title="打赏一下? → https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;ZHYCarge&#x2F;photo&#x2F;master&#x2F;mm_reward_qrcode_1650029406131.png" rel="noopener" target="_blank"><i class="fa fa-money fa-fw"></i>打赏一下?</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="tencent://message/?Site=baidu.com&uin=470157929&Menu=yes" title="QQ → tencent:&#x2F;&#x2F;message&#x2F;?Site&#x3D;baidu.com&amp;uin&#x3D;470157929&amp;Menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/ZHYCarge/notes/new/master/source/_posts" title="https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge&#x2F;notes&#x2F;new&#x2F;master&#x2F;source&#x2F;_posts" rel="noopener" target="_blank">新建一篇文章</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZHYCarge</span>
+</div>
+
+
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span> Look up at the stars and keep your feet on the ground 
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("07/10/2021 21:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已陪伴博主 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//fastly.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//fastly.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'lMi75lqHa0Nh3Q1wOb7J1wFf-gzGzoHsz',
+      appKey     : 't8jjo2V1scEx9nzeNexS5VUG',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-CN' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

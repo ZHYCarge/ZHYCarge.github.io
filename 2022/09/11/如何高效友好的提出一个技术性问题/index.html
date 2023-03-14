@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhycarge.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"manual"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言为什么要规范问题格式？因为在实际的学习中，总会遇到许许多多的问题提问方式，有些提问方式会显得更加高效率，而有些提问会极大的延长回复问题的时间，因此制作一个 关于技术性问题的提问模板，就会显得比较重要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何高效友好的提出一个技术性问题">
+<meta property="og:url" content="https://zhycarge.github.io/2022/09/11/%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%8F%8B%E5%A5%BD%E7%9A%84%E6%8F%90%E5%87%BA%E4%B8%80%E4%B8%AA%E6%8A%80%E6%9C%AF%E6%80%A7%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="ZHYCarge的博客">
+<meta property="og:description" content="前言为什么要规范问题格式？因为在实际的学习中，总会遇到许许多多的问题提问方式，有些提问方式会显得更加高效率，而有些提问会极大的延长回复问题的时间，因此制作一个 关于技术性问题的提问模板，就会显得比较重要">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.creativecommons.org/l/by/4.0/88x31.png">
+<meta property="article:published_time" content="2022-09-11T02:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-14T11:10:20.000Z">
+<meta property="article:author" content="ZHYCarge">
+<meta property="article:tag" content="Education">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.creativecommons.org/l/by/4.0/88x31.png">
+
+<link rel="canonical" href="https://zhycarge.github.io/2022/09/11/%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%8F%8B%E5%A5%BD%E7%9A%84%E6%8F%90%E5%87%BA%E4%B8%80%E4%B8%AA%E6%8A%80%E6%9C%AF%E6%80%A7%E9%97%AE%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>如何高效友好的提出一个技术性问题 | ZHYCarge的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="ZHYCarge的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ZHYCarge的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-必应一下">
+
+    <a href="/bings/" rel="section"><i class="fa fa-globe fa-fw"></i>必应一下</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhycarge.github.io/2022/09/11/%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%8F%8B%E5%A5%BD%E7%9A%84%E6%8F%90%E5%87%BA%E4%B8%80%E4%B8%AA%E6%8A%80%E6%9C%AF%E6%80%A7%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.gif">
+      <meta itemprop="name" content="ZHYCarge">
+      <meta itemprop="description" content="在黑夜中，负重前行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZHYCarge的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何高效友好的提出一个技术性问题<a href="https://github.com/ZHYCarge/notes/blob/master/source/_posts/%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%8F%8B%E5%A5%BD%E7%9A%84%E6%8F%90%E5%87%BA%E4%B8%80%E4%B8%AA%E6%8A%80%E6%9C%AF%E6%80%A7%E9%97%AE%E9%A2%98.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-11 10:00:00" itemprop="dateCreated datePublished" datetime="2022-09-11T10:00:00+08:00">2022-09-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-14 19:10:20" itemprop="dateModified" datetime="2022-09-14T19:10:20+08:00">2022-09-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Education/" itemprop="url" rel="index"><span itemprop="name">Education</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/09/11/%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%8F%8B%E5%A5%BD%E7%9A%84%E6%8F%90%E5%87%BA%E4%B8%80%E4%B8%AA%E6%8A%80%E6%9C%AF%E6%80%A7%E9%97%AE%E9%A2%98/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/11/%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%8F%8B%E5%A5%BD%E7%9A%84%E6%8F%90%E5%87%BA%E4%B8%80%E4%B8%AA%E6%8A%80%E6%9C%AF%E6%80%A7%E9%97%AE%E9%A2%98/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h2 id="为什么要规范问题格式？"><a href="#为什么要规范问题格式？" class="headerlink" title="为什么要规范问题格式？"></a>为什么要规范问题格式？</h2><p>因为在实际的学习中，总会遇到许许多多的问题提问方式，有些提问方式会显得更加高效率，而有些提问会极大的延长回复问题的时间，因此制作一个 <code>关于技术性问题的提问模板</code>，就会显得比较重要</p>
+<span id="more"></span>
+<p>如果不想看那么多，只想获得一个模板格式，<a href="##%E6%A1%86%E6%9E%B6%E5%86%85%E5%AE%B9">点我</a></p>
+<h2 id="这样做对我有什么好处？"><a href="#这样做对我有什么好处？" class="headerlink" title="这样做对我有什么好处？"></a>这样做对我有什么好处？</h2><p>对于每个人来讲，更加规范更加优秀的提问会极大的促进问答两个人之间的沟通效率，因此如何高效而又有效的问答，则是每个人需要学会的一件事。规范了问答格式，会让大家更倾向于去解决你的问题</p>
+<h1 id="提问的智慧"><a href="#提问的智慧" class="headerlink" title="提问的智慧"></a>提问的智慧</h1><p>这个标题最早来自于GitHub的一个开源仓库，由于其中内容介绍的十分中肯，因此也是受到了许多同行们的fork以及star，因此如果有时间可以去阅读一下他的文章，<a target="_blank" rel="noopener" href="https://github.com/GUET-EETB/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md">文章链接</a></p>
+<p>对于其中的一些问题，我做了一部分的节选（该章节其余内容来源于其文章内容）：</p>
+<h3 id="话不在多而在精"><a href="#话不在多而在精" class="headerlink" title="话不在多而在精"></a>话不在多而在精</h3><p>你需要提供精确有内容的信息。这并不是要求你简单的把成堆的出错代码或者资料完全转录到你的提问中。如果你有庞大而复杂的测试样例能重现程序挂掉的情境，尽量将它剪裁得越小越好。</p>
+<p>这样做的用处至少有三点。 第一，表现出你为简化问题付出了努力，这可以使你得到回答的机会增加； 第二，简化问题使你更有可能得到<strong>有用</strong>的答案； 第三，在精炼你的 bug 报告的过程中，你很可能就自己找到了解决方法或权宜之计。</p>
+<h3 id="描述目标而不是过程"><a href="#描述目标而不是过程" class="headerlink" title="描述目标而不是过程"></a>描述目标而不是过程</h3><p>如果你想弄清楚如何做某事（而不是报告一个 Bug），在开头就描述你的目标，然后才陈述重现你所卡住的特定步骤。</p>
+<p>经常寻求技术帮助的人在心中有个更高层次的目标，而他们在自以为能达到目标的特定道路上被卡住了，然后跑来问该怎么走，但没有意识到这条路本身就有问题。结果要费很大的劲才能搞定。</p>
+<p><strong>蠢问题</strong></p>
+<blockquote>
+<p>我怎样才能从某绘图程序的颜色选择器中取得十六进制的 RGB 值？</p>
+</blockquote>
+<p><strong>聪明问题</strong></p>
+<blockquote>
+<p>我正试着用替换一幅图片的色码（color table）成自己选定的色码，我现在知道的唯一方法是编辑每个色码区块（table slot）， 但却无法从某绘图程序的颜色选择器取得十六进制的 RGB 值。</p>
+</blockquote>
+<p>第二种提问法比较聪明，你可能得到像是<code>建议采用另一个更合适的工具</code>的回复。</p>
+<h3 id="清楚明确的表达你的问题以及需求"><a href="#清楚明确的表达你的问题以及需求" class="headerlink" title="清楚明确的表达你的问题以及需求"></a>清楚明确的表达你的问题以及需求</h3><p>漫无边际的提问是近乎无休无止的时间黑洞。最有可能给你有用答案的人通常也正是最忙的人（他们忙是因为要亲自完成大部分工作）。这样的人对无节制的时间黑洞相当厌恶，所以他们也倾向于厌恶那些漫无边际的提问。</p>
+<p>如果你明确表述需要回答者做什么（如提供指点、发送一段代码、检查你的补丁、或是其他等等），就最有可能得到有用的答案。因为这会定出一个时间和精力的上限，便于回答者能集中精力来帮你。这么做很棒。</p>
+<p>要理解专家们所处的世界，请把专业技能想像为充裕的资源，而回复的时间则是稀缺的资源。你要求他们奉献的时间越少，你越有可能从真正专业而且很忙的专家那里得到解答。</p>
+<p>所以，界定一下你的问题，使专家花在辨识你的问题和回答所需要付出的时间减到最少，这技巧对你有用答案相当有帮助 —— 但这技巧通常和简化问题有所区别。因此，问<code>我想更好地理解 X，可否指点一下哪有好一点说明？</code>通常比问<code>你能解释一下 X 吗？</code>更好。如果你的代码不能运作，通常请别人看看哪里有问题，比要求别人替你改正要明智得多。</p>
+<h3 id="别把自己家庭作业的问题贴上来"><a href="#别把自己家庭作业的问题贴上来" class="headerlink" title="别把自己家庭作业的问题贴上来"></a>别把自己家庭作业的问题贴上来</h3><p>黑客们很擅长分辨哪些问题是家庭作业式的问题；因为我们中的大多数都曾自己解决这类问题。同样，这些问题得由<strong>你</strong>来搞定，你会从中学到东西。你可以要求给点提示，但别要求得到完整的解决方案。</p>
+<p>如果你怀疑自己碰到了一个家庭作业式的问题，但仍然无法解决，试试在用户群组，论坛或（最后一招）在项目的<strong>用户</strong>邮件列表或论坛中提问。尽管黑客们<strong>会</strong>看出来，但一些有经验的用户也许仍会给你一些提示。</p>
+<h3 id="问题解决后，加个简短的补充说明"><a href="#问题解决后，加个简短的补充说明" class="headerlink" title="问题解决后，加个简短的补充说明"></a>问题解决后，加个简短的补充说明</h3><p>问题解决后，向所有帮助过你的人发个说明，让他们知道问题是怎样解决的，并再一次向他们表示感谢。如果问题在新闻组或者邮件列表中引起了广泛关注，应该在那里贴一个说明比较恰当。</p>
+<p>最理想的方式是向最初提问的话题回复此消息，并在标题中包含<code>已修正</code>，<code>已解决</code>或其它同等含义的明显标记。在人来人往的邮件列表里，一个看见讨论串<code>问题 X</code>和<code>问题 X - 已解决</code>的潜在回复者就明白不用再浪费时间了（除非他个人觉得<code>问题 X</code>的有趣），因此可以利用此时间去解决其它问题。</p>
+<p>补充说明不必很长或是很深入；简单的一句<code>你好，原来是网线出了问题！谢谢大家 – Bill</code>比什么也不说要来的好。事实上，除非结论真的很有技术含量，否则简短可爱的小结比长篇大论更好。说明问题是怎样解决的，但大可不必将解决问题的过程复述一遍。</p>
+<p>对于有深度的问题，张贴调试记录的摘要是有帮助的。描述问题的最终状态，说明是什么解决了问题，在此<strong>之后</strong>才指明可以避免的盲点。避免盲点的部分应放在正确的解决方案和其它总结材料之后，而不要将此信息搞成侦探推理小说。列出那些帮助过你的名字，会让你交到更多朋友。</p>
+<p>除了有礼貌和有内涵以外，这种类型的补充也有助于他人在邮件列表/新闻群组/论坛中搜索到真正解决你问题的方案，让他们也从中受益。</p>
+<p>至少，这种补充有助于让每位参与协助的人因问题的解决而从中得到满足感。如果你自己不是技术专家或者黑客，那就相信我们，这种感觉对于那些你向他们求助的大师或者专家而言，是非常重要的。问题悬而未决会让人灰心；黑客们渴望看到问题被解决。好人有好报，满足他们的渴望，你会在下次提问时尝到甜头。</p>
+<p>思考一下怎样才能避免他人将来也遇到类似的问题，自问写一份文件或加个常见问题（FAQ）会不会有帮助。如果是的话就将它们发给维护者。</p>
+<p>在黑客中，这种良好的后继行动实际上比传统的礼节更为重要，也是你如何透过善待他人而赢得声誉的方式，这是非常有价值的资产。</p>
+<h1 id="那我应该使用什么方式进行提问？"><a href="#那我应该使用什么方式进行提问？" class="headerlink" title="那我应该使用什么方式进行提问？"></a>那我应该使用什么方式进行提问？</h1><p>由于每个问题都会对应不同的提问框架，但是对于一般的技术性问题来讲，你大抵可以使用以下此类框架：</p>
+<h2 id="使用框架前你需要明确："><a href="#使用框架前你需要明确：" class="headerlink" title="使用框架前你需要明确："></a>使用框架前你需要明确：</h2><ul>
+<li>我已经阅读完毕 <a href="https://zhycarge.github.io/2022/09/11/%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%8F%8B%E5%A5%BD%E7%9A%84%E6%8F%90%E5%87%BA%E4%B8%80%E4%B8%AA%E6%8A%80%E6%9C%AF%E6%80%A7%E9%97%AE%E9%A2%98/">如何高效友好的提出一个技术性问题</a>，并保证自己会遵守里面的<a href="https://zhycarge.github.io/2022/09/11/%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%8F%8B%E5%A5%BD%E7%9A%84%E6%8F%90%E5%87%BA%E4%B8%80%E4%B8%AA%E6%8A%80%E6%9C%AF%E6%80%A7%E9%97%AE%E9%A2%98/##%E4%BD%BF%E7%94%A8%E6%A1%86%E6%9E%B6%E5%89%8D%E4%BD%A0%E9%9C%80%E8%A6%81%E6%98%8E%E7%A1%AE">相关要求</a></li>
+<li>在你提出这个问题之前，你已经去查证在论坛或者其他你可以搜索到的地方没有人提出了相关问题</li>
+<li>如果本文并未有效的帮助你更好的精简你的语言，我应该去看看 <a target="_blank" rel="noopener" href="https://github.com/GUET-EETB/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md">提问的智慧</a></li>
+<li>我接下来要上传的内容不包含个人敏感信息（在上传日志、代码截图之前，我已经有效的处理好我的个人敏感信息）</li>
+<li>如果我的问题并没有遵循相关要求，但是我还是提出了这个问题，那么我的问题会被无条件关闭或者被管理者拒绝回答</li>
+</ul>
+<h2 id="框架内容"><a href="#框架内容" class="headerlink" title="框架内容"></a>框架内容</h2><p>如有需要，请将下方内容复制粘贴到你需要的地方即可</p>
+<p>此处内容采用协议 <a target="_blank" rel="noopener" href="https://creativecommons.org/publicdomain/mark/1.0/">Public Domain</a></p>
+<h3 id="框架1"><a href="#框架1" class="headerlink" title="框架1"></a>框架1</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 在开始之前</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> [<span class="string"> </span>] 我已经阅读完毕并遵守[<span class="string">如何高效友好的提出一个技术性问题</span>](<span class="link">https://zhycarge.github.io/2022/09/11/%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%8F%8B%E5%A5%BD%E7%9A%84%E6%8F%90%E5%87%BA%E4%B8%80%E4%B8%AA%E6%8A%80%E6%9C%AF%E6%80%A7%E9%97%AE%E9%A2%98/</span>)里面的内容</span><br><span class="line"></span><br><span class="line"><span class="section"># 我当前使用的系统环境是</span></span><br><span class="line"></span><br><span class="line">写上你的个人系统环境信息，如Windows10，python3.7 使用了什么第三方库 etc.</span><br><span class="line"></span><br><span class="line"><span class="section"># 重现步骤</span></span><br><span class="line"></span><br><span class="line">你是通过什么操作出现了这个问题，是否这个问题在你再次尝试之后再次出现</span><br><span class="line">在此处可以使用markdown代码框贴出你的代码部分（已脱敏），方便我们进行复现或者重试</span><br><span class="line"></span><br><span class="line"><span class="section"># 我的预期成果是什么？</span></span><br><span class="line"></span><br><span class="line">比如我需要1+1=2</span><br><span class="line"></span><br><span class="line"><span class="section"># 但是实际输出时什么</span></span><br><span class="line"></span><br><span class="line">但是输出了1+1=3</span><br><span class="line"></span><br><span class="line"><span class="section"># 如果有日志（报错），那么日志（报错）记录了什么？</span></span><br><span class="line"></span><br><span class="line">如果有信息，请截全</span><br><span class="line"></span><br><span class="line"><span class="section"># 有什么需要向我们进行补充的？</span></span><br><span class="line"></span><br><span class="line">可选信息</span><br></pre></td></tr></table></figure>
+
+<h3 id="框架2"><a href="#框架2" class="headerlink" title="框架2"></a>框架2</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 在开始之前</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> [<span class="string"> </span>] 我已经阅读完毕并遵守[<span class="string">如何高效友好的提出一个技术性问题</span>](<span class="link">https://zhycarge.github.io/2022/09/11/%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%8F%8B%E5%A5%BD%E7%9A%84%E6%8F%90%E5%87%BA%E4%B8%80%E4%B8%AA%E6%8A%80%E6%9C%AF%E6%80%A7%E9%97%AE%E9%A2%98/</span>)里面的内容</span><br><span class="line"></span><br><span class="line"><span class="section"># 我的预期成果是什么？</span></span><br><span class="line"></span><br><span class="line">比如我需要1+1=2</span><br><span class="line"></span><br><span class="line"><span class="section"># 但是实际输出时什么</span></span><br><span class="line"></span><br><span class="line">但是输出了1+1=3</span><br><span class="line"></span><br><span class="line"><span class="section"># 为解决这个问题我尝试做了什么？</span></span><br><span class="line"></span><br><span class="line">比如我去百度查询了一下小学数学知识，但是并没有帮助</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="section"># 你还有什么需要补充的吗？</span></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h1><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/GUET-EETB/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md">提问的智慧</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/GUET-EETB/How-To-Create-A-Issue">How-To-Create-A-Issue</a></li>
+</ul>
+<h2 id="本文协议"><a href="#本文协议" class="headerlink" title="本文协议"></a>本文协议</h2><p><a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
+
+    </div>
+
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------我也是有底线的哦<i class="fa fa-anchor"></i>如需更多，欢迎打赏-------------</div>
+    
+</div>
+
+
+  
+</div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>ZHYCarge
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://zhycarge.github.io/2022/09/11/%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%8F%8B%E5%A5%BD%E7%9A%84%E6%8F%90%E5%87%BA%E4%B8%80%E4%B8%AA%E6%8A%80%E6%9C%AF%E6%80%A7%E9%97%AE%E9%A2%98/" title="如何高效友好的提出一个技术性问题">https://zhycarge.github.io/2022/09/11/如何高效友好的提出一个技术性问题/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Education/" rel="tag"><i class="fa fa-tag"></i> Education</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/09/08/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%85%AC%E5%BC%80%E5%9B%BE%E5%BA%8A%E4%BC%98%E5%8C%96%E6%96%87%E6%A1%A3%E6%92%B0%E5%86%99/" rel="prev" title="如何使用公开图床优化文档撰写">
+      <i class="fa fa-chevron-left"></i> 如何使用公开图床优化文档撰写
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/09/25/Python%20RSA%E6%96%87%E4%BB%B6%E5%8A%A0%E5%AF%86%E7%B3%BB%E5%88%97%E2%80%94%E2%80%94%E7%94%9F%E6%88%90%E5%85%AC%E7%A7%81%E9%92%A5%E3%80%81%E6%96%87%E4%BB%B6%E7%AD%BE%E5%90%8D/" rel="next" title="Python RSA文件加密系列——生成公私钥、文件签名">
+      Python RSA文件加密系列——生成公私钥、文件签名 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%A7%84%E8%8C%83%E9%97%AE%E9%A2%98%E6%A0%BC%E5%BC%8F%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要规范问题格式？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E6%A0%B7%E5%81%9A%E5%AF%B9%E6%88%91%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">这样做对我有什么好处？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E9%97%AE%E7%9A%84%E6%99%BA%E6%85%A7"><span class="nav-number">2.</span> <span class="nav-text">提问的智慧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%9D%E4%B8%8D%E5%9C%A8%E5%A4%9A%E8%80%8C%E5%9C%A8%E7%B2%BE"><span class="nav-number">2.0.1.</span> <span class="nav-text">话不在多而在精</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%8F%E8%BF%B0%E7%9B%AE%E6%A0%87%E8%80%8C%E4%B8%8D%E6%98%AF%E8%BF%87%E7%A8%8B"><span class="nav-number">2.0.2.</span> <span class="nav-text">描述目标而不是过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%85%E6%A5%9A%E6%98%8E%E7%A1%AE%E7%9A%84%E8%A1%A8%E8%BE%BE%E4%BD%A0%E7%9A%84%E9%97%AE%E9%A2%98%E4%BB%A5%E5%8F%8A%E9%9C%80%E6%B1%82"><span class="nav-number">2.0.3.</span> <span class="nav-text">清楚明确的表达你的问题以及需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%AB%E6%8A%8A%E8%87%AA%E5%B7%B1%E5%AE%B6%E5%BA%AD%E4%BD%9C%E4%B8%9A%E7%9A%84%E9%97%AE%E9%A2%98%E8%B4%B4%E4%B8%8A%E6%9D%A5"><span class="nav-number">2.0.4.</span> <span class="nav-text">别把自己家庭作业的问题贴上来</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%90%8E%EF%BC%8C%E5%8A%A0%E4%B8%AA%E7%AE%80%E7%9F%AD%E7%9A%84%E8%A1%A5%E5%85%85%E8%AF%B4%E6%98%8E"><span class="nav-number">2.0.5.</span> <span class="nav-text">问题解决后，加个简短的补充说明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%82%A3%E6%88%91%E5%BA%94%E8%AF%A5%E4%BD%BF%E7%94%A8%E4%BB%80%E4%B9%88%E6%96%B9%E5%BC%8F%E8%BF%9B%E8%A1%8C%E6%8F%90%E9%97%AE%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">那我应该使用什么方式进行提问？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%A1%86%E6%9E%B6%E5%89%8D%E4%BD%A0%E9%9C%80%E8%A6%81%E6%98%8E%E7%A1%AE%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">使用框架前你需要明确：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%E5%86%85%E5%AE%B9"><span class="nav-number">3.2.</span> <span class="nav-text">框架内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%86%E6%9E%B61"><span class="nav-number">3.2.1.</span> <span class="nav-text">框架1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%86%E6%9E%B62"><span class="nav-number">3.2.2.</span> <span class="nav-text">框架2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E5%B0%BE"><span class="nav-number">4.</span> <span class="nav-text">结尾</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E6%96%87%E5%8D%8F%E8%AE%AE"><span class="nav-number">4.2.</span> <span class="nav-text">本文协议</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZHYCarge"
+      src="/images/1.gif">
+  <p class="site-author-name" itemprop="name">ZHYCarge</p>
+  <div class="site-description" itemprop="description">在黑夜中，负重前行</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZHYCarge" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="ZHYCarge:ZHYCarge@163.com" title="E-Mail → ZHYCarge:ZHYCarge@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://raw.githubusercontent.com/ZHYCarge/photo/master/mm_reward_qrcode_1650029406131.png" title="打赏一下? → https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;ZHYCarge&#x2F;photo&#x2F;master&#x2F;mm_reward_qrcode_1650029406131.png" rel="noopener" target="_blank"><i class="fa fa-money fa-fw"></i>打赏一下?</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="tencent://message/?Site=baidu.com&uin=470157929&Menu=yes" title="QQ → tencent:&#x2F;&#x2F;message&#x2F;?Site&#x3D;baidu.com&amp;uin&#x3D;470157929&amp;Menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/ZHYCarge/notes/new/master/source/_posts" title="https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge&#x2F;notes&#x2F;new&#x2F;master&#x2F;source&#x2F;_posts" rel="noopener" target="_blank">新建一篇文章</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZHYCarge</span>
+</div>
+
+
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span> Look up at the stars and keep your feet on the ground 
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("07/10/2021 21:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已陪伴博主 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//fastly.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//fastly.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'lMi75lqHa0Nh3Q1wOb7J1wFf-gzGzoHsz',
+      appKey     : 't8jjo2V1scEx9nzeNexS5VUG',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-CN' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhycarge.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"manual"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="国考之常识推理简介记录整理网络中如何快速判断常识答案的蒙题技巧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="国考之常识推理">
+<meta property="og:url" content="https://zhycarge.github.io/2023/01/03/%E5%9B%BD%E8%80%83%E4%B9%8B%E5%B8%B8%E8%AF%86%E6%8E%A8%E7%90%86/index.html">
+<meta property="og:site_name" content="ZHYCarge的博客">
+<meta property="og:description" content="国考之常识推理简介记录整理网络中如何快速判断常识答案的蒙题技巧">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-01-03T09:24:32.000Z">
+<meta property="article:modified_time" content="2023-01-04T03:31:50.000Z">
+<meta property="article:author" content="ZHYCarge">
+<meta property="article:tag" content="国考">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://zhycarge.github.io/2023/01/03/%E5%9B%BD%E8%80%83%E4%B9%8B%E5%B8%B8%E8%AF%86%E6%8E%A8%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>国考之常识推理 | ZHYCarge的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="ZHYCarge的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ZHYCarge的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-必应一下">
+
+    <a href="/bings/" rel="section"><i class="fa fa-globe fa-fw"></i>必应一下</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhycarge.github.io/2023/01/03/%E5%9B%BD%E8%80%83%E4%B9%8B%E5%B8%B8%E8%AF%86%E6%8E%A8%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.gif">
+      <meta itemprop="name" content="ZHYCarge">
+      <meta itemprop="description" content="在黑夜中，负重前行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZHYCarge的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          国考之常识推理<a href="https://github.com/ZHYCarge/notes/blob/master/source/_posts/%E5%9B%BD%E8%80%83%E4%B9%8B%E5%B8%B8%E8%AF%86%E6%8E%A8%E7%90%86.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-03 17:24:32" itemprop="dateCreated datePublished" datetime="2023-01-03T17:24:32+08:00">2023-01-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-01-04 11:31:50" itemprop="dateModified" datetime="2023-01-04T11:31:50+08:00">2023-01-04</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/01/03/%E5%9B%BD%E8%80%83%E4%B9%8B%E5%B8%B8%E8%AF%86%E6%8E%A8%E7%90%86/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/01/03/%E5%9B%BD%E8%80%83%E4%B9%8B%E5%B8%B8%E8%AF%86%E6%8E%A8%E7%90%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="国考之常识推理"><a href="#国考之常识推理" class="headerlink" title="国考之常识推理"></a>国考之常识推理</h1><h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>记录整理网络中如何快速判断常识答案的蒙题技巧</p>
+<span id="more"></span>
+
+
+
+<h1 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h1><h2 id="题干分析法"><a href="#题干分析法" class="headerlink" title="题干分析法"></a>题干分析法</h2><p>主体一致。抓住定语、约束范围的词语</p>
+<p>例1：</p>
+<p>日前，习近平主席在亚太经合组织工商领导人峰会上表示，新常态将给中国带来新的发展机遇。下列关于我国经济发展“新常态”的主要特点描述正确的一项是(C)。</p>
+<p>A.从高速增长转为低速增长</p>
+<p>B.从投资驱动转向要素驱动</p>
+<p>C.经济结构不断优化升级</p>
+<p>D.面临的挑战趋于常态化</p>
+<p>由于表示是<code>新常态</code>，A：低速增长不为<code>新</code>，排除；B：无法体现<code>新的感觉</code>；C：优化升级可以体现<code>新的、好处的发展趋势</code>；D：挑战常态化，表示不出来<code>新的东西</code>。因此选<code>C</code></p>
+<h2 id="绝对表述排除法"><a href="#绝对表述排除法" class="headerlink" title="绝对表述排除法"></a>绝对表述排除法</h2><p>绝对化表述内容不选。例如：一定、完全、所有、任何、必须、最、绝对、唯一，一般用于选非题</p>
+<p>例：</p>
+<p>关于我国的水资源与水能，下列说法错误的是:(A)</p>
+<p>A.我国水能大部分分布在西南地区,按河流统计以雅鲁藏布江水系最多</p>
+<p>B.我国水能资源理论蕴藏量居世界首位</p>
+<p>C.我国已经被联合国列为13个贫水国家之一</p>
+<p>D.我国是一-个水资源短缺、水灾频繁的国家</p>
+<p>由于在A选项中出现了 <code>最</code>字，因此优先排除</p>
+<h2 id="逻辑分析法"><a href="#逻辑分析法" class="headerlink" title="逻辑分析法"></a>逻辑分析法</h2><p>选项是否出现矛盾关系</p>
+<p>例：</p>
+<p>下列与我国军事国防相关的说法错误的是:(A)</p>
+<p>A.大力发展军民融合是维护国家主权和安全的战略基石</p>
+<p>B.新形势下我军的军事战略方针是积极防御</p>
+<p>C.中国位于海洋地缘战略区和欧亚大陆地缘战略区的交接处</p>
+<p>D.维护地区和世界和平是我国军队担负的主要战略任务之一</p>
+<p>军民融合对安全起不到作用</p>
+<h2 id="法律常识推理"><a href="#法律常识推理" class="headerlink" title="法律常识推理"></a>法律常识推理</h2><p>核心内容：</p>
+<ul>
+<li>人身安全高于财产安全</li>
+<li>不能让人“不爽”</li>
+<li>维护社会公平</li>
+<li>保护弱者、受害者</li>
+</ul>
+<p>例：</p>
+<p>下列关于行政许可的表述中，错误的是:(C)</p>
+<p>A.实施行政许可，应当遵循便民的原则，提高办事效率，提供优质服务</p>
+<p>B.公民、法人或者其他组织依法取得的行政许可受法律保护，行政机关不得擅自改变已经生效的行政许可</p>
+<p>C.行政许可的实施和结果，除涉及国家秘密的外，应当公开</p>
+<p>D.公民、法人或者其他组织对行政机关实施行政许可，享有陈述权、申辩权</p>
+<p>由于在实际执行过程中，除国家秘密外，还可能包含企业、个人的个人隐私，因此需要进行保密——<code>不能让人“不爽”</code></p>
+<h1 id="第二种方法"><a href="#第二种方法" class="headerlink" title="第二种方法"></a>第二种方法</h1><h2 id="心中有党"><a href="#心中有党" class="headerlink" title="心中有党"></a>心中有党</h2><p>选项中涉及到习近平总书记的要进行选择，有国家领导人的一般都不选</p>
+<p>例：</p>
+<p>“四个全面”是新一届党的领导集体治国理政的战略布局。下列与“四个全面”有关的说法正确的是:(d)</p>
+<p>A.党的十八大通过了《中共中央关于全面深化改革若干重大问题的决定》</p>
+<p>B.十八届三中全会通过了《中共中央关于全面推进依法治国若干重大问题的决定》</p>
+<p>C.十八届四中全会提出了“全面建成小康社会”的战略目标</p>
+<p>D.习近平总书记在江苏调研时将“从严治党”首次提升到“全面从严”的高度</p>
+<h2 id="公平正义"><a href="#公平正义" class="headerlink" title="公平正义"></a>公平正义</h2><p>可以与<a href="#%E6%B3%95%E5%BE%8B%E5%B8%B8%E8%AF%86%E6%8E%A8%E7%90%86">法律常识推理</a>一起判断</p>
+<p>例：</p>
+<p>甲于2010年3月1日开始使用“红红太阳”牌商标，乙同年4月1日开始使用相同商标。商标局于2011年5月10日同一天收到甲、乙关于“红红太阳”商标的申请文件，但甲的文件是5月8日寄出的，乙的文件是5月5日寄出的。商标局应初步审定公告谁的申请?(A)</p>
+<p>A.公告甲的申请，因甲、乙虽同时申请，但甲使用在先</p>
+<p>B.同时公告，因甲、乙申请日期相同</p>
+<p>C.公告乙的申请，因乙申请在先</p>
+<p>D.可以由商标局自由裁定.</p>
+<h2 id="字斟句酌"><a href="#字斟句酌" class="headerlink" title="字斟句酌"></a>字斟句酌</h2><p>例：</p>
+<p>下列情形中，甲和乙只需承担双方责任,无需承担共同责任的是:（A）</p>
+<p>A.甲养的羊误入乙的菜地，乙发现后不管不问导致损失扩大</p>
+<p>B.甲乙共同实施了故意伤害行为</p>
+<p>C.甲乙合伙办了一家快递企业，乙在运输过程中丢失包裹</p>
+<p>D.甲与乙协商共同买下一套房屋，二人约定各欠卖方十万元房款</p>
+<h1 id="第三种方法"><a href="#第三种方法" class="headerlink" title="第三种方法"></a>第三种方法</h1><h2 id="正确选项积极向上，常和党性在一起"><a href="#正确选项积极向上，常和党性在一起" class="headerlink" title="正确选项积极向上，常和党性在一起"></a>正确选项积极向上，常和党性在一起</h2><p>与<a href="#%E5%BF%83%E4%B8%AD%E6%9C%89%E5%85%9A">心中有党</a>类似</p>
+<h2 id="矛盾选项和稀泥，你不会就要选其一"><a href="#矛盾选项和稀泥，你不会就要选其一" class="headerlink" title="矛盾选项和稀泥，你不会就要选其一"></a>矛盾选项和稀泥，你不会就要选其一</h2><p>与<a href="#%E9%80%BB%E8%BE%91%E5%88%86%E6%9E%90%E6%B3%95">逻辑分析法</a>类似</p>
+<p>例:</p>
+<p>掩星是一种天文现象，指一个天体在另一个天体与观测者之间通过而产生 的遮蔽现象。<br>科学家经常借助观察这一现象来判断星体是否有大气层。当行星掩过 遥远恒星，如果恒星<br>变得模糊之后才消失，那么可以认为：(B)<br>A.该恒星有稠密的大气层<br>B.该行星有稠密的大气层<br>C.该恒星无大气层或大气层稀薄<br>D.该行星无大气层或大气层稀薄</p>
+<h2 id="小心数字，数字经常迷惑你"><a href="#小心数字，数字经常迷惑你" class="headerlink" title="小心数字，数字经常迷惑你"></a>小心数字，数字经常迷惑你</h2><p>在判断不出来的时候，包含数字的项往往是错误的</p>
+<p>例：</p>
+<p>关于丝绸之路经济带，下列说法不正确的是：（C）<br>A.东接亚太经济圈，西系欧洲经济圈<br>B.被认为是世界上最长、最具有发展潜力的经济大走廊<br>C.以温带季风气候为主，年平均降水量在 800 毫米左右<br>D.是国家主席习近平在哈萨克斯坦纳扎尔巴耶夫大学演讲时提出的</p>
+<h2 id="诗词哲学题不会，找关键词定主体"><a href="#诗词哲学题不会，找关键词定主体" class="headerlink" title="诗词哲学题不会，找关键词定主体"></a>诗词哲学题不会，找关键词定主体</h2><p>找关键词与内容相关即可与<a href="#%E9%A2%98%E5%B9%B2%E5%88%86%E6%9E%90%E6%B3%95">题干分析法</a>类似</p>
+<p>例1：</p>
+<p>我国古代用 “金”“石”“丝”“竹”指代不同材质、类别的乐器。下列诗词涉及 “竹”的是：（C）<br>A.珠帘夕殿闻钟磬，白日秋天忆鼓鼙<br>B.主人有酒欢今夕,请奏鸣琴广陵客<br>C.深秋帘幕千家雨，落日楼台一笛风<br>D.哀筝一弄湘江曲,声声写尽湘波绿</p>
+<p>看选项可知，笛子一般都是使用竹子做的，其它乐器与竹子无关</p>
+<p>例2：</p>
+<p>对下列对联依次所指的文学家，判断正确的一项是：（C）<br>①哀怨托离骚，生而独开诗赋立；孤忠报楚国，余风波及汉湘人。<br>②兵甲富于胸中，一代功名高宋室；忧乐关乎天下，千秋俎豆重苏台。<br>③质而绮，真而醇，自可传之千古；樽中酒，篱下诗，岂甘了此一生。<br>④笔诤时政，心在苍生，万户争传新乐府；堤建西湖，神归东洛，千秋永祀老诗翁。<br>A.孔子 李白 李煜 陆游<br>B.屈原 陶潜 李煜 白居易<br>C.屈原 范仲淹 陶潜 白居易<br>D.孔子 李白 白居易 范仲淹</p>
+<p>第一句：<code>离骚</code>，能判断出是屈原；第二句：<code>忧乐</code>，能想到范仲淹；第三句：<code>篱下</code>，能想到陶渊明；第四句：<code>新乐府</code>、<code>西湖</code>，能想到白居易</p>
+<h2 id="太绝对要提高警惕，不符合中庸语气"><a href="#太绝对要提高警惕，不符合中庸语气" class="headerlink" title="太绝对要提高警惕，不符合中庸语气"></a>太绝对要提高警惕，不符合中庸语气</h2><p>与<a href="#%E7%BB%9D%E5%AF%B9%E8%A1%A8%E8%BF%B0%E6%8E%92%E9%99%A4%E6%B3%95">绝对表述排除法</a>类似，答案一定是比较模糊的、摸棱两可的，若出现过于绝对的内容，则一般是错误的</p>
+<p>例：</p>
+<p>关于地质年代与地层，下列说法错误的是：（D）<br>A.当岩层之间有切割现象时，被切割的岩层比切割的岩层古老<br>B.发现大量三叶虫化石的岩层比发现大量鱼类化石的岩层古老<br>C.放射性同位素方法可用来测定岩层的形成年代<br>D.在全球范围内,形成于同一地质时期的岩层岩性都是相同的</p>
+<p>选项太过于绝对</p>
+<h2 id="包含关系，选择最概括的"><a href="#包含关系，选择最概括的" class="headerlink" title="包含关系，选择最概括的"></a>包含关系，选择最概括的</h2><p>选择包含面最广的，涉及内容最多的</p>
+<p>例：</p>
+<p>下列关于我国脱贫攻坚工作说法准确的是：（D）<br>A.强化行政一把手负总责的责任制<br>B.坚持先扶志，再扶智，后扶技的顺序<br>C.坚持中央统筹省负总责县乡抓落实的工作机制<br>D.动员全党全国全社会力量，坚持精准扶贫，精准脱贫</p>
+<h2 id="本质出发点落脚点，实在不行选民意"><a href="#本质出发点落脚点，实在不行选民意" class="headerlink" title="本质出发点落脚点，实在不行选民意"></a>本质出发点落脚点，实在不行选民意</h2><p>看到人民群众，基本都是正确的</p>
+<p>例1：</p>
+<p>“中国共产党必须始终代表中国先进生产力的发展要求，代表中国先进文化的前进方向，代表中国最广大人民的根本利益。”这是对“三个 代表”重要思想的集中概括。“三个代表”重要思想的根本出发点和落脚点是：（A）<br>A.实现人民的愿望、满足人民的需要、维护人民的利益<br>B.大力促进先进生产力的发展<br>C.大力发展社会主义先进文化<br>D.不断增强社会主义国家的综合国力</p>
+<p>例2：</p>
+<p>习近平总书记指出，体育强国的基础在于（ A），要通过举办北京冬奥会、冬残奥会，把我国冰雪运动特别是雪上运动搞上去,在 3 亿人中更好推广冰雪运动。</p>
+<p>A.群众体育<br>B.竞技体育<br>C.体育文化<br>D.体育产业</p>
+<h2 id="四个选项三个同，选择存异选项"><a href="#四个选项三个同，选择存异选项" class="headerlink" title="四个选项三个同，选择存异选项"></a>四个选项三个同，选择存异选项</h2><p>选择与其它选项不同的</p>
+<p>例：</p>
+<p>下列关于武器装备的说法中错误的是：（C）<br>A.尼米兹级航母是美军装备的核动力航空母舰<br>B.S300 导弹是俄罗斯生产的高空防空导弹<br>C.枭龙是我国生产的性能优良的无人机<br>D.Ｆ-22 是美军装备的先进的隐身战机</p>
+<p>由于其它四个选项都在说国外，因此选C</p>
+<h2 id="正确选项常辨证说，错误选项脱离实际"><a href="#正确选项常辨证说，错误选项脱离实际" class="headerlink" title="正确选项常辨证说，错误选项脱离实际"></a>正确选项常辨证说，错误选项脱离实际</h2><p>选项内容要符合实际情况</p>
+<p>例：</p>
+<p>下列关于农业的说法正确的是：（A）<br>Ａ.花生、大豆、向日葵和芝麻都属于油料作物<br>Ｂ.农药在夏天中午气温较高时喷洒灭虫效果最好<br>Ｃ.有机农作物通常种在便于运输的交通主干线附近<br>Ｄ.追肥是农闲时期为调节土地所含养分而施用的肥料</p>
+<h1 id="第四种方法"><a href="#第四种方法" class="headerlink" title="第四种方法"></a>第四种方法</h1><p>第四种方法内容与其它内容有一定重合，这里只记录不一样的地方</p>
+<h2 id="关键词中庸"><a href="#关键词中庸" class="headerlink" title="关键词中庸"></a>关键词中庸</h2><p>答案出现在选项中最多相同或相反的关键词中。若多个选项含有相同关健词，答案越容易被遮蔽，不易被发现，符合中庸之道。 某一个选项含有最多的关健词语，那么这个选项最容易隐藏自己，最符合中庸之道， 就是正确选项。</p>
+<p>例：</p>
+<p>下列表述不正确的是（B）。 </p>
+<p>A.自然界中的金属在常温下一般呈固态 </p>
+<p>B.惰性气体不与其他物质发生化学反应 </p>
+<p>C.天然气是一种无色无味无毒的气体燃料 </p>
+<p>D.钢是铁和碳按照一定比例加工而成的合金<br>由于B C 选项中都有关键词气体。所以答案在 B C 选项中，进一步分析，选B</p>
+<h2 id="判断选项长短"><a href="#判断选项长短" class="headerlink" title="判断选项长短"></a>判断选项长短</h2><p>原则一 如果题干要选正确的 那么答案在长度最中庸的选项中即长度不长不短的选项是答案<br>原则二 如果题干要选错误的 那么答案在长度最不中庸的选项中即长度最长或者最短的选项便是答案</p>
+<p>例1：</p>
+<p>下列关于国家主权及国防地理的表述，不正确的是：（A）<br>A. 主权是联合国赋予国家的最基本的权利<br>B. 一国的领海和领空都是其领土的组成部分<br>C. 我国南海四大群岛是东沙、西沙、中沙和南沙群岛<br>D. 我国与越南、缅甸、吉尔吉斯斯坦等十几个国家接壤<br>首先，要选错误的。根据原则二 A 选项最短 D 选项最长，所以排除 B C，进一步分析则选A</p>
+<p>例2：</p>
+<p>关于欧洲主权债务危机的原因，下列说法不正确的是？（A）<br>A.欧元升值<br>B.欧元区经济低迷<br>C.巨额财政赤字<br>D.财政政策与货币政策的不协调<br>首先，要选不正确的。根据原则二 A 选项最短 D 选项最长，所以排除 B C。又根 据<a href="#%E5%85%B3%E9%94%AE%E8%AF%8D%E4%B8%AD%E5%BA%B8">关键词中庸</a>原则，直接选 A。</p>
+<h2 id="答案体现民族自豪感"><a href="#答案体现民族自豪感" class="headerlink" title="答案体现民族自豪感"></a>答案体现民族自豪感</h2><p>体现中国好的是正确的，反之是错误的。命题者必须积极弘扬中国的强大。</p>
+<p>注意：民族自豪感会表现的比较隐蔽</p>
+<p>例：</p>
+<p>下列关于我国经济发展现状的表达，不正确的是：（C）<br>A、人均国民生产总值已超过 3000 美元<br>B、黄金储备量已超过 1000 吨<br>C、对石油进口的依存度已接近 30%<br>D、第三产业增加值已接近第二产业<br>我们看到每个选项都有数字，不能用规律一了。这时，我们仔细观察人均生产总值突破了，黄金储量超过了，第三产业增加值接近了，全部是说的我国强大的一面。只有 C 选项说的是我国的依存度问题，不能积极反应我国的强大。所以答案是C。 </p>
+<h2 id="年份最近的常是答案"><a href="#年份最近的常是答案" class="headerlink" title="年份最近的常是答案"></a>年份最近的常是答案</h2><p>出题者喜欢考最近年份的知识</p>
+<p>下列关于我国人大代表选举的表述，不正确的是：（D）<br>A、1953 年通过的选举法规定，全国人大代表的选举，各省按每 80 万人选代表 1人， 直辖市和人口在 50 万以上的直辖市按每 10 万人选代表 1 人<br>B、1979 年修订的选举法规定。自治州、县、自治县人大代表中，农村每一代表的人 口数 4 倍于镇每一代表所代表的人口数、省、自治区人大为 5：1，全国人大为8：1<br>C、1995 年修改的选举法规定，省、自治区和全国人大代表中，农村每一代表与城市每一代表所代表的人口数为 4：1，自治州、县、自治县仍是 4：1<br>D、2010 年修改的选举法规定，全国人民代表大会代表名额，按照每一代表所代表的城乡人口数 2： 1 的原则，以及保证各地区、各民族、各方面都有适当数量代表的 要求进行分配</p>
+<p>由于2010年距离最近，则选择D</p>
+
+    </div>
+
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------我也是有底线的哦<i class="fa fa-anchor"></i>如需更多，欢迎打赏-------------</div>
+    
+</div>
+
+
+  
+</div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>ZHYCarge
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://zhycarge.github.io/2023/01/03/%E5%9B%BD%E8%80%83%E4%B9%8B%E5%B8%B8%E8%AF%86%E6%8E%A8%E7%90%86/" title="国考之常识推理">https://zhycarge.github.io/2023/01/03/国考之常识推理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%9B%BD%E8%80%83/" rel="tag"><i class="fa fa-tag"></i> 国考</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E5%9B%BD%E8%80%83%E4%B9%8B%E8%B5%84%E6%96%99%E5%88%86%E6%9E%90/" rel="prev" title="国考之资料分析">
+      <i class="fa fa-chevron-left"></i> 国考之资料分析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/14/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/" rel="next" title="毕设问题汇总">
+      毕设问题汇总 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BD%E8%80%83%E4%B9%8B%E5%B8%B8%E8%AF%86%E6%8E%A8%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">国考之常识推理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">第一种方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E5%B9%B2%E5%88%86%E6%9E%90%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">题干分析法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9D%E5%AF%B9%E8%A1%A8%E8%BF%B0%E6%8E%92%E9%99%A4%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">绝对表述排除法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E5%88%86%E6%9E%90%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">逻辑分析法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%95%E5%BE%8B%E5%B8%B8%E8%AF%86%E6%8E%A8%E7%90%86"><span class="nav-number">3.4.</span> <span class="nav-text">法律常识推理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">第二种方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%83%E4%B8%AD%E6%9C%89%E5%85%9A"><span class="nav-number">4.1.</span> <span class="nav-text">心中有党</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AC%E5%B9%B3%E6%AD%A3%E4%B9%89"><span class="nav-number">4.2.</span> <span class="nav-text">公平正义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E6%96%9F%E5%8F%A5%E9%85%8C"><span class="nav-number">4.3.</span> <span class="nav-text">字斟句酌</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">第三种方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E9%80%89%E9%A1%B9%E7%A7%AF%E6%9E%81%E5%90%91%E4%B8%8A%EF%BC%8C%E5%B8%B8%E5%92%8C%E5%85%9A%E6%80%A7%E5%9C%A8%E4%B8%80%E8%B5%B7"><span class="nav-number">5.1.</span> <span class="nav-text">正确选项积极向上，常和党性在一起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%9B%E7%9B%BE%E9%80%89%E9%A1%B9%E5%92%8C%E7%A8%80%E6%B3%A5%EF%BC%8C%E4%BD%A0%E4%B8%8D%E4%BC%9A%E5%B0%B1%E8%A6%81%E9%80%89%E5%85%B6%E4%B8%80"><span class="nav-number">5.2.</span> <span class="nav-text">矛盾选项和稀泥，你不会就要选其一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E5%BF%83%E6%95%B0%E5%AD%97%EF%BC%8C%E6%95%B0%E5%AD%97%E7%BB%8F%E5%B8%B8%E8%BF%B7%E6%83%91%E4%BD%A0"><span class="nav-number">5.3.</span> <span class="nav-text">小心数字，数字经常迷惑你</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%97%E8%AF%8D%E5%93%B2%E5%AD%A6%E9%A2%98%E4%B8%8D%E4%BC%9A%EF%BC%8C%E6%89%BE%E5%85%B3%E9%94%AE%E8%AF%8D%E5%AE%9A%E4%B8%BB%E4%BD%93"><span class="nav-number">5.4.</span> <span class="nav-text">诗词哲学题不会，找关键词定主体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%AA%E7%BB%9D%E5%AF%B9%E8%A6%81%E6%8F%90%E9%AB%98%E8%AD%A6%E6%83%95%EF%BC%8C%E4%B8%8D%E7%AC%A6%E5%90%88%E4%B8%AD%E5%BA%B8%E8%AF%AD%E6%B0%94"><span class="nav-number">5.5.</span> <span class="nav-text">太绝对要提高警惕，不符合中庸语气</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%85%E5%90%AB%E5%85%B3%E7%B3%BB%EF%BC%8C%E9%80%89%E6%8B%A9%E6%9C%80%E6%A6%82%E6%8B%AC%E7%9A%84"><span class="nav-number">5.6.</span> <span class="nav-text">包含关系，选择最概括的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E8%B4%A8%E5%87%BA%E5%8F%91%E7%82%B9%E8%90%BD%E8%84%9A%E7%82%B9%EF%BC%8C%E5%AE%9E%E5%9C%A8%E4%B8%8D%E8%A1%8C%E9%80%89%E6%B0%91%E6%84%8F"><span class="nav-number">5.7.</span> <span class="nav-text">本质出发点落脚点，实在不行选民意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E4%B8%AA%E9%80%89%E9%A1%B9%E4%B8%89%E4%B8%AA%E5%90%8C%EF%BC%8C%E9%80%89%E6%8B%A9%E5%AD%98%E5%BC%82%E9%80%89%E9%A1%B9"><span class="nav-number">5.8.</span> <span class="nav-text">四个选项三个同，选择存异选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E9%80%89%E9%A1%B9%E5%B8%B8%E8%BE%A8%E8%AF%81%E8%AF%B4%EF%BC%8C%E9%94%99%E8%AF%AF%E9%80%89%E9%A1%B9%E8%84%B1%E7%A6%BB%E5%AE%9E%E9%99%85"><span class="nav-number">5.9.</span> <span class="nav-text">正确选项常辨证说，错误选项脱离实际</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">第四种方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E8%AF%8D%E4%B8%AD%E5%BA%B8"><span class="nav-number">6.1.</span> <span class="nav-text">关键词中庸</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E9%80%89%E9%A1%B9%E9%95%BF%E7%9F%AD"><span class="nav-number">6.2.</span> <span class="nav-text">判断选项长短</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%94%E6%A1%88%E4%BD%93%E7%8E%B0%E6%B0%91%E6%97%8F%E8%87%AA%E8%B1%AA%E6%84%9F"><span class="nav-number">6.3.</span> <span class="nav-text">答案体现民族自豪感</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B4%E4%BB%BD%E6%9C%80%E8%BF%91%E7%9A%84%E5%B8%B8%E6%98%AF%E7%AD%94%E6%A1%88"><span class="nav-number">6.4.</span> <span class="nav-text">年份最近的常是答案</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZHYCarge"
+      src="/images/1.gif">
+  <p class="site-author-name" itemprop="name">ZHYCarge</p>
+  <div class="site-description" itemprop="description">在黑夜中，负重前行</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZHYCarge" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="ZHYCarge:ZHYCarge@163.com" title="E-Mail → ZHYCarge:ZHYCarge@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://raw.githubusercontent.com/ZHYCarge/photo/master/mm_reward_qrcode_1650029406131.png" title="打赏一下? → https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;ZHYCarge&#x2F;photo&#x2F;master&#x2F;mm_reward_qrcode_1650029406131.png" rel="noopener" target="_blank"><i class="fa fa-money fa-fw"></i>打赏一下?</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="tencent://message/?Site=baidu.com&uin=470157929&Menu=yes" title="QQ → tencent:&#x2F;&#x2F;message&#x2F;?Site&#x3D;baidu.com&amp;uin&#x3D;470157929&amp;Menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/ZHYCarge/notes/new/master/source/_posts" title="https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge&#x2F;notes&#x2F;new&#x2F;master&#x2F;source&#x2F;_posts" rel="noopener" target="_blank">新建一篇文章</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZHYCarge</span>
+</div>
+
+
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span> Look up at the stars and keep your feet on the ground 
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("07/10/2021 21:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已陪伴博主 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//fastly.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//fastly.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//fastly.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'lMi75lqHa0Nh3Q1wOb7J1wFf-gzGzoHsz',
+      appKey     : 't8jjo2V1scEx9nzeNexS5VUG',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-CN' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

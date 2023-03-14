@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhycarge.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"manual"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言由于想使用Esp8266实现一个小的服务器，基本的、在arduino中编写的界面并不能实现我们所需要的界面美观以及相关UI、JS的实现，因需要使用到esp8266的存储系统，来进一步提升界面的美观性以及实用性。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用插件向ESP8266上传文件">
+<meta property="og:url" content="https://zhycarge.github.io/2021/11/01/%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6%E5%90%91ESP8266%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:site_name" content="ZHYCarge的博客">
+<meta property="og:description" content="前言由于想使用Esp8266实现一个小的服务器，基本的、在arduino中编写的界面并不能实现我们所需要的界面美观以及相关UI、JS的实现，因需要使用到esp8266的存储系统，来进一步提升界面的美观性以及实用性。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20211101171324698.png">
+<meta property="og:image" content="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266fs-download.jpg">
+<meta property="og:image" content="http://www.taichi-maker.com/wp-content/uploads/2020/02/Arduino-ide-preferences.jpg">
+<meta property="og:image" content="http://www.taichi-maker.com/wp-content/uploads/2020/02/Arduino-Project-Folder.jpg">
+<meta property="og:image" content="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266fs-tools-folder.jpg">
+<meta property="og:image" content="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266fs-unzip.jpg">
+<meta property="og:image" content="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266fs-unzipped.jpg">
+<meta property="og:image" content="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266fs-paste.jpg">
+<meta property="og:image" content="http://www.taichi-maker.com/wp-content/uploads/2020/02/Arduino-ide-logo.jpg">
+<meta property="og:image" content="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266-data-upload-menu.jpg">
+<meta property="og:image" content="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266-flash-size-settings.jpg">
+<meta property="og:image" content="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266-flash-data-storage.jpg">
+<meta property="og:image" content="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266-flash-data-upload.jpg">
+<meta property="article:published_time" content="2021-11-01T09:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-01T09:14:54.000Z">
+<meta property="article:author" content="ZHYCarge">
+<meta property="article:tag" content="esp8266">
+<meta property="article:tag" content="arduino">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20211101171324698.png">
+
+<link rel="canonical" href="https://zhycarge.github.io/2021/11/01/%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6%E5%90%91ESP8266%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>使用插件向ESP8266上传文件 | ZHYCarge的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="ZHYCarge的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ZHYCarge的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-必应一下">
+
+    <a href="/bings/" rel="section"><i class="fa fa-globe fa-fw"></i>必应一下</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhycarge.github.io/2021/11/01/%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6%E5%90%91ESP8266%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.gif">
+      <meta itemprop="name" content="ZHYCarge">
+      <meta itemprop="description" content="在黑夜中，负重前行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZHYCarge的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用插件向ESP8266上传文件<a href="https://github.com/ZHYCarge/notes/blob/master/source/_posts/%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6%E5%90%91ESP8266%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-01 17:00:00 / 修改时间：17:14:54" itemprop="dateCreated datePublished" datetime="2021-11-01T17:00:00+08:00">2021-11-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/study/" itemprop="url" rel="index"><span itemprop="name">study</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/study/%E7%A1%AC%E4%BB%B6/" itemprop="url" rel="index"><span itemprop="name">硬件</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/11/01/%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6%E5%90%91ESP8266%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/11/01/%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6%E5%90%91ESP8266%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于想使用Esp8266实现一个小的服务器，基本的、在arduino中编写的界面并不能实现我们所需要的界面美观以及相关UI、JS的实现，因需要使用到esp8266的存储系统，来进一步提升界面的美观性以及实用性。</p>
+<span id="more"></span>
+
+
+
+<h1 id="转载文章参考"><a href="#转载文章参考" class="headerlink" title="转载文章参考"></a>转载文章参考</h1><p><strong>本篇文章转载自太极创客的<a target="_blank" rel="noopener" href="http://www.taichi-maker.com/homepage/esp8266-nodemcu-iot/iot-c/spiffs/upload-files/">3-3-2 通过Arduino IDE向闪存文件系统上传文件</a>，在此著名转载。同时不受博客尾部的著作声明影响</strong></p>
+<p>太极创客文章版权声明：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/ZHYCarge/photo/image-20211101171324698.png" alt="image-20211101171324698"></p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a target="_blank" rel="noopener" href="https://github.com/esp8266/arduino-esp8266fs-plugin/releases">插件的官方仓库</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.taichi-maker.com/homepage/esp8266-nodemcu-iot/iot-c/spiffs/upload-files/">太极创客对其的讲解说明</a></p>
+<h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1><p>基本按照太极创客的步骤来就好，以下内容来自太极创客部分</p>
+<h1 id="转载"><a href="#转载" class="headerlink" title="转载"></a>转载</h1><h5 id="1-下载-Arduino-ESP8266闪存文件插件程序"><a href="#1-下载-Arduino-ESP8266闪存文件插件程序" class="headerlink" title="1. 下载 Arduino-ESP8266闪存文件插件程序"></a>1. 下载 Arduino-ESP8266闪存文件插件程序</h5><p>您有两种方法可以下载该插件程序。</p>
+<p><strong>第一种</strong>方法是通过<a target="_blank" rel="noopener" href="https://github.com/esp8266/arduino-esp8266fs-plugin/releases">点击此链接进入 Arduino-ESP8266官方GitHub页面下载</a>。详情请见以下截图：</p>
+<p><img src="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266fs-download.jpg" alt="esp8266fs下载页面">esp8266fs下载页面</p>
+<p>由于GitHub网站服务器在国外，有些朋友登录该网站会有些困难。如果是这样的话，那么您也可以<a target="_blank" rel="noopener" href="http://www.taichi-maker.com/homepage/download/#esp8266fs">点击此链接进入太极创客网站下载页面去下载该插件</a>。</p>
+<h5 id="2-确定Arduino-IDE项目文件夹位置"><a href="#2-确定Arduino-IDE项目文件夹位置" class="headerlink" title="2. 确定Arduino IDE项目文件夹位置"></a>2. 确定Arduino IDE项目文件夹位置</h5><p><img src="http://www.taichi-maker.com/wp-content/uploads/2020/02/Arduino-ide-preferences.jpg" alt="Arduino-ide-首选项菜单项">Arduino-ide-首选项菜单项</p>
+<p><img src="http://www.taichi-maker.com/wp-content/uploads/2020/02/Arduino-Project-Folder.jpg" alt="Arduino-IDE-项目文件夹位置">Arduino-IDE-项目文件夹位置</p>
+<h5 id="3-通过资源管理器打开Arduino-IDE项目文件夹并建立tools文件夹"><a href="#3-通过资源管理器打开Arduino-IDE项目文件夹并建立tools文件夹" class="headerlink" title="3. 通过资源管理器打开Arduino IDE项目文件夹并建立tools文件夹"></a>3. 通过资源管理器打开Arduino IDE项目文件夹并建立tools文件夹</h5><p><img src="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266fs-tools-folder.jpg" alt="在项目文件夹中建立名称为tools的文件夹">在项目文件夹中建立名称为tools的文件夹</p>
+<h5 id="4-解压缩esp8266fs插件压缩包，并将解压缩后的文件内容粘贴到项目文件夹中"><a href="#4-解压缩esp8266fs插件压缩包，并将解压缩后的文件内容粘贴到项目文件夹中" class="headerlink" title="4. 解压缩esp8266fs插件压缩包，并将解压缩后的文件内容粘贴到项目文件夹中"></a>4. 解压缩esp8266fs插件压缩包，并将解压缩后的文件内容粘贴到项目文件夹中</h5><p><img src="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266fs-unzip.jpg" alt="esp8266fs解压缩">esp8266fs解压缩</p>
+<p><img src="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266fs-unzipped.jpg" alt="解压缩后可找到esp8266fs文件夹">解压缩后可找到esp8266fs文件夹</p>
+<p><img src="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266fs-paste.jpg" alt="将esp8266fs文件夹粘贴到tools文件夹里">将esp8266fs文件夹粘贴到tools文件夹里</p>
+<h5 id="5-重新启动Arduino-IDE"><a href="#5-重新启动Arduino-IDE" class="headerlink" title="5. 重新启动Arduino IDE"></a>5. 重新启动Arduino IDE</h5><p>为了让ESP8266FS闪存文件上传插件生效，我们需要重新启动Arduino IDE</p>
+<p><img src="http://www.taichi-maker.com/wp-content/uploads/2020/02/Arduino-ide-logo.jpg" alt="Arduino IDE 启动">Arduino IDE 启动</p>
+<h5 id="5-检查“工具”菜单确认插件安装"><a href="#5-检查“工具”菜单确认插件安装" class="headerlink" title="5. 检查“工具”菜单确认插件安装"></a>5. 检查“工具”菜单确认插件安装</h5><p><img src="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266-data-upload-menu.jpg" alt="ESP8266 data upload 菜单项">ESP8266 data upload 菜单项</p>
+<h5 id="6-根据上传的文件总大小来设置闪存大小"><a href="#6-根据上传的文件总大小来设置闪存大小" class="headerlink" title="6. 根据上传的文件总大小来设置闪存大小"></a>6. 根据上传的文件总大小来设置闪存大小</h5><p><img src="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266-flash-size-settings.jpg" alt="设置esp8266闪存大小">设置esp8266闪存大小</p>
+<h5 id="7-将需要上传的文件保存在程序路径下的data文件夹中"><a href="#7-将需要上传的文件保存在程序路径下的data文件夹中" class="headerlink" title="7. 将需要上传的文件保存在程序路径下的data文件夹中"></a>7. 将需要上传的文件保存在程序路径下的data文件夹中</h5><p><img src="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266-flash-data-storage.jpg" alt="将需要上传到esp8266闪存文件系统的文件保存在data目录中">将需要上传到esp8266闪存文件系统的文件保存在data目录中</p>
+<h5 id="8-将需要上传的文件保存在程序路径下的data文件夹中"><a href="#8-将需要上传的文件保存在程序路径下的data文件夹中" class="headerlink" title="8. 将需要上传的文件保存在程序路径下的data文件夹中"></a>8. 将需要上传的文件保存在程序路径下的data文件夹中</h5><p><img src="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266-flash-data-upload.jpg" alt="通过ESP8266 Sketch Data Upload可以将data文件夹里的文件上传">通过ESP8266 Sketch Data Upload可以将data文件夹里的文件上传</p>
+<p>假如您不确定具体文件如何存储，请点击以下链接下载示例程序压缩包。<br><a target="_blank" rel="noopener" href="http://www.taichi-maker.com/wp-content/uploads/2020/02/esp8266-data-upload.zip">文件上传示例程序</a></p>
+
+    </div>
+
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------我也是有底线的哦<i class="fa fa-anchor"></i>如需更多，欢迎打赏-------------</div>
+    
+</div>
+
+
+  
+</div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>ZHYCarge
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://zhycarge.github.io/2021/11/01/%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6%E5%90%91ESP8266%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6/" title="使用插件向ESP8266上传文件">https://zhycarge.github.io/2021/11/01/使用插件向ESP8266上传文件/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/esp8266/" rel="tag"><i class="fa fa-tag"></i> esp8266</a>
+              <a href="/tags/arduino/" rel="tag"><i class="fa fa-tag"></i> arduino</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/30/Termux%E4%BB%8B%E7%BB%8D/" rel="prev" title="Termux的基本介绍">
+      <i class="fa fa-chevron-left"></i> Termux的基本介绍
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/01/ESP8266%E7%9A%84%E8%BF%9E%E6%8E%A5%E6%A8%A1%E5%BC%8F/" rel="next" title="ESP8266的连接模式">
+      ESP8266的连接模式 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%AC%E8%BD%BD%E6%96%87%E7%AB%A0%E5%8F%82%E8%80%83"><span class="nav-number">2.</span> <span class="nav-text">转载文章参考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">3.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%AC%E8%BD%BD"><span class="nav-number">5.</span> <span class="nav-text">转载</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E4%B8%8B%E8%BD%BD-Arduino-ESP8266%E9%97%AA%E5%AD%98%E6%96%87%E4%BB%B6%E6%8F%92%E4%BB%B6%E7%A8%8B%E5%BA%8F"><span class="nav-number">5.0.0.0.1.</span> <span class="nav-text">1. 下载 Arduino-ESP8266闪存文件插件程序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E7%A1%AE%E5%AE%9AArduino-IDE%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6%E5%A4%B9%E4%BD%8D%E7%BD%AE"><span class="nav-number">5.0.0.0.2.</span> <span class="nav-text">2. 确定Arduino IDE项目文件夹位置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E9%80%9A%E8%BF%87%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8%E6%89%93%E5%BC%80Arduino-IDE%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6%E5%A4%B9%E5%B9%B6%E5%BB%BA%E7%AB%8Btools%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">5.0.0.0.3.</span> <span class="nav-text">3. 通过资源管理器打开Arduino IDE项目文件夹并建立tools文件夹</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-%E8%A7%A3%E5%8E%8B%E7%BC%A9esp8266fs%E6%8F%92%E4%BB%B6%E5%8E%8B%E7%BC%A9%E5%8C%85%EF%BC%8C%E5%B9%B6%E5%B0%86%E8%A7%A3%E5%8E%8B%E7%BC%A9%E5%90%8E%E7%9A%84%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%B2%98%E8%B4%B4%E5%88%B0%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD"><span class="nav-number">5.0.0.0.4.</span> <span class="nav-text">4. 解压缩esp8266fs插件压缩包，并将解压缩后的文件内容粘贴到项目文件夹中</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-%E9%87%8D%E6%96%B0%E5%90%AF%E5%8A%A8Arduino-IDE"><span class="nav-number">5.0.0.0.5.</span> <span class="nav-text">5. 重新启动Arduino IDE</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-%E6%A3%80%E6%9F%A5%E2%80%9C%E5%B7%A5%E5%85%B7%E2%80%9D%E8%8F%9C%E5%8D%95%E7%A1%AE%E8%AE%A4%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-number">5.0.0.0.6.</span> <span class="nav-text">5. 检查“工具”菜单确认插件安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-%E6%A0%B9%E6%8D%AE%E4%B8%8A%E4%BC%A0%E7%9A%84%E6%96%87%E4%BB%B6%E6%80%BB%E5%A4%A7%E5%B0%8F%E6%9D%A5%E8%AE%BE%E7%BD%AE%E9%97%AA%E5%AD%98%E5%A4%A7%E5%B0%8F"><span class="nav-number">5.0.0.0.7.</span> <span class="nav-text">6. 根据上传的文件总大小来设置闪存大小</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-%E5%B0%86%E9%9C%80%E8%A6%81%E4%B8%8A%E4%BC%A0%E7%9A%84%E6%96%87%E4%BB%B6%E4%BF%9D%E5%AD%98%E5%9C%A8%E7%A8%8B%E5%BA%8F%E8%B7%AF%E5%BE%84%E4%B8%8B%E7%9A%84data%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD"><span class="nav-number">5.0.0.0.8.</span> <span class="nav-text">7. 将需要上传的文件保存在程序路径下的data文件夹中</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-%E5%B0%86%E9%9C%80%E8%A6%81%E4%B8%8A%E4%BC%A0%E7%9A%84%E6%96%87%E4%BB%B6%E4%BF%9D%E5%AD%98%E5%9C%A8%E7%A8%8B%E5%BA%8F%E8%B7%AF%E5%BE%84%E4%B8%8B%E7%9A%84data%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD"><span class="nav-number">5.0.0.0.9.</span> <span class="nav-text">8. 将需要上传的文件保存在程序路径下的data文件夹中</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZHYCarge"
+      src="/images/1.gif">
+  <p class="site-author-name" itemprop="name">ZHYCarge</p>
+  <div class="site-description" itemprop="description">在黑夜中，负重前行</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZHYCarge" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="ZHYCarge:ZHYCarge@163.com" title="E-Mail → ZHYCarge:ZHYCarge@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://raw.githubusercontent.com/ZHYCarge/photo/master/mm_reward_qrcode_1650029406131.png" title="打赏一下? → https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;ZHYCarge&#x2F;photo&#x2F;master&#x2F;mm_reward_qrcode_1650029406131.png" rel="noopener" target="_blank"><i class="fa fa-money fa-fw"></i>打赏一下?</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="tencent://message/?Site=baidu.com&uin=470157929&Menu=yes" title="QQ → tencent:&#x2F;&#x2F;message&#x2F;?Site&#x3D;baidu.com&amp;uin&#x3D;470157929&amp;Menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/ZHYCarge/notes/new/master/source/_posts" title="https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge&#x2F;notes&#x2F;new&#x2F;master&#x2F;source&#x2F;_posts" rel="noopener" target="_blank">新建一篇文章</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZHYCarge</span>
+</div>
+
+
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span> Look up at the stars and keep your feet on the ground 
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("07/10/2021 21:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已陪伴博主 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//fastly.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//fastly.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//fastly.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'lMi75lqHa0Nh3Q1wOb7J1wFf-gzGzoHsz',
+      appKey     : 't8jjo2V1scEx9nzeNexS5VUG',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-CN' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
