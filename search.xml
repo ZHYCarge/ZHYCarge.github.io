@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>DIY Waline评论邮件提醒模板</title>
+    <url>/2024/12/09/2024-12-09-DIY-Waline%E8%AF%84%E8%AE%BA%E9%82%AE%E4%BB%B6%E6%8F%90%E9%86%92%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于Waline评论平台的邮件提醒默认模板实在太难以使用了，因此根据官方教程进行DIY一下</p>
+<span id="more"></span>
+
+<p>U1S1，官方文档编写的真的一言难尽。。。</p>
+<p>由于博客平台还在更新中，因此本博文所有图像信息使用<a href="https://imgse.com/">路过图床</a>进行代理</p>
+<h2 id="版本说明"><a href="#版本说明" class="headerlink" title="版本说明"></a>版本说明</h2><p>适配Waline版本：2.15.8 </p>
+<p>使用Vercel进行部署的后端服务</p>
+<p>若该博文没有进行更新，则代表后续版本也OK</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://waline.js.org/guide/features/notification.html">官方文档</a></li>
+</ul>
+<h1 id="自定义过程"><a href="#自定义过程" class="headerlink" title="自定义过程"></a>自定义过程</h1><p>由于Waline 与Valine异曲同工，其次模板是针对于邮件的模板化内容，因此打算将Valine的模板进行魔改一下。</p>
+<p>在Vercel上按照需求添加信息：</p>
+<h3 id="MAIL-SUBJECT"><a href="#MAIL-SUBJECT" class="headerlink" title="MAIL_SUBJECT"></a>MAIL_SUBJECT</h3><p>A评论完后B进行回复评论，A收到的提醒模板（标题部分）</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;&#123;parent.nick&#125;&#125;，您在&quot;&#123;&#123;site.name&#125;&#125;&quot;上的评论收到了回复</span><br></pre></td></tr></table></figure>
+
+<h3 id="MAIL-TEMPLATE"><a href="#MAIL-TEMPLATE" class="headerlink" title="MAIL_TEMPLATE"></a>MAIL_TEMPLATE</h3><p>A评论完后B进行回复评论，A收到的提醒模板(正文部分)</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;border-top:2px solid #12ADDB;box-shadow:0 1px 3px #AAAAAA;line-height:180%;padding:0 15px 12px;margin:50px auto;font-size:12px;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">h2</span> <span class="attr">style</span>=<span class="string">&quot;border-bottom:1px solid #DDD;font-size:14px;font-weight:normal;padding:13px 0 10px 8px;&quot;</span>&gt;</span>您在<span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;text-decoration:none;color: #12ADDB;&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123;site.url&#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>&#123;&#123;site.name&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span>上的评论有了新的回复<span class="tag">&lt;/<span class="name">h2</span>&gt;</span>&#123;&#123;parent.nick&#125;&#125;，你曾发表评论：<span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;padding:0 12px 0 12px;margin-top:18px&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;background-color: #f5f5f5;padding: 10px 15px;margin:18px 0;word-wrap:break-word;&quot;</span>&gt;</span>&#123;&#123;parent.comment|safe&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>&#123;&#123;self.nick&#125;&#125;<span class="tag">&lt;/<span class="name">strong</span>&gt;</span>回复说：<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;background-color: #f5f5f5;padding: 10px 15px;margin:18px 0;word-wrap:break-word;&quot;</span>&gt;</span>&#123;&#123;self.comment|safe&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>您可以点击<span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;text-decoration:none; color:#12addb&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123;self.link&#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>查看有关博文<span class="tag">&lt;/<span class="name">a</span>&gt;</span>，欢迎再次回复交流。<span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;text-align: center;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;text-decoration: none; color: #12addb;&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123;site.url&#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>&#123;&#123;site.name&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="MAIL-SUBJECT-ADMIN"><a href="#MAIL-SUBJECT-ADMIN" class="headerlink" title="MAIL_SUBJECT_ADMIN"></a>MAIL_SUBJECT_ADMIN</h3><p>有新评论时管理员收到的评论模板（标题部分）</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;&#123;site.name&#125;&#125;上有新评论了</span><br></pre></td></tr></table></figure>
+
+<h3 id="MAIL-TEMPLATE-ADMIN"><a href="#MAIL-TEMPLATE-ADMIN" class="headerlink" title="MAIL_TEMPLATE_ADMIN"></a>MAIL_TEMPLATE_ADMIN</h3><p>有新评论时管理员收到的评论模板（正文部分）</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;border-top:2px solid #12ADDB;box-shadow:0 1px 3px #AAAAAA;line-height:180%;padding:0 15px 12px;margin:50px auto;font-size:12px;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">h2</span> <span class="attr">style</span>=<span class="string">&quot;border-bottom:1px solid #DDD;font-size:14px;font-weight:normal;padding:13px 0 10px 8px;&quot;</span>&gt;</span>博主你好，你的<span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;text-decoration:none;color: #12ADDB;&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123;site.url&#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>&#123;&#123;site.name&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span>上有了新的评论<span class="tag">&lt;/<span class="name">h2</span>&gt;</span>&#123;&#123;self.nick&#125;&#125;在你的博客上发表评论，评论内容为：<span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;padding:0 12px 0 12px;margin-top:18px&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;background-color: #f5f5f5;padding: 10px 15px;margin:18px 0;word-wrap:break-word;&quot;</span>&gt;</span>&#123;&#123;self.comment|safe&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>您可以点击<span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;text-decoration:none; color:#12addb&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123;self.link&#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>查看评论的博文內容<span class="tag">&lt;/<span class="name">a</span>&gt;</span>，不要忘记回复。<span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;text-align: center;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;text-decoration: none; color: #12addb;&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123;site.url&#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>&#123;&#123;site.name&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h1><p>（通过路过图床展示图片）</p>
+<p>博主端收到的评论消息</p>
+<p><a href="https://imgse.com/i/pAHVFun"><img data-src="https://s21.ax1x.com/2024/12/09/pAHVKgJ.png" alt="博主端收到的评论消息"></a></p>
+<p>评论者收到的提醒消息：</p>
+<p><a href="https://imgse.com/i/pAHVAH0"><img data-src="https://s21.ax1x.com/2024/12/09/pAHVluR.png" alt="评论者收到的提醒消息"></a></p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="可能会出现的环境变量问题"><a href="#可能会出现的环境变量问题" class="headerlink" title="可能会出现的环境变量问题"></a>可能会出现的环境变量问题</h2><p>（我没遇到过我不知道）</p>
+<blockquote>
+<p>Vercel 的环境变量大小限制为 <code>4KB</code> ，所以如果您的模板很长，请使用代码配置，参见 <a href="https://github.com/walinejs/waline/issues/106">issue#106</a> ；</p>
+<p>–<a href="https://waline.js.org/guide/features/notification.html#%E9%BB%98%E8%AE%A4%E6%A8%A1%E6%9D%BF:~:text=%E5%9C%B0%E5%9D%80%E3%80%91%EF%BC%9A%7B%7Bsite.postUrl%7D%7D-,%E9%99%84%E5%8A%A0%E8%AF%B4%E6%98%8E,-Vercel%20%E7%9A%84%E7%8E%AF%E5%A2%83">附加说明</a></p>
+</blockquote>
+<h2 id="comment内容需要进行safe转义处理"><a href="#comment内容需要进行safe转义处理" class="headerlink" title="comment内容需要进行safe转义处理"></a>comment内容需要进行safe转义处理</h2><p>通过观察评论内容时发现Waline博客平台为了防止XSS消息注入采用了字符转义处理，如果不进行干涉，则在评论信息中多了<code>&lt;p&gt;</code>标签，评论消息无法进行渲染。因此有两种路线选择：</p>
+<ol>
+<li><p>放弃美观度，更加安全保守：则将<code>comment</code>后面的<code>|safe</code>删除，便会进行转义处理，效果类似于：</p>
+<p><a href="https://imgse.com/i/pAHVAH0"><img data-src="https://s21.ax1x.com/2024/12/09/pAHVAH0.png" alt="pAHVAH0.png"></a></p>
+</li>
+<li><p>拥抱美观，信赖评论者还有Waline平台有更多的防护手段：无需进行任何更改，直接CV，效果即是展示效果。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>Waline</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo Next主题版权信息显示</title>
+    <url>/2024/12/09/2024-12-09-Hexo-Next%E4%B8%BB%E9%A2%98%E7%89%88%E6%9D%83%E4%BF%A1%E6%81%AF%E6%98%BE%E7%A4%BA/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>出于对版权的尊重，由于官方文档在此处并未进行严格说明，因此在此处进行标注，方便做好版权管理</p>
+<span id="more"></span>
+
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ul>
+<li>涉及到的NexT版本为8.21.1</li>
+<li>由于编写博客时还未迁移完相关信息，因此图片采用<a href="https://imgse.com/">路过图床</a>进行存储</li>
+</ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://theme-next.js.org/docs/">NexT官方文档</a></li>
+<li><a href="https://theme-next.js.org/docs/advanced-settings/front-matter">Front-matter（NexT）</a></li>
+</ul>
+<h1 id="版权标注说明"><a href="#版权标注说明" class="headerlink" title="版权标注说明"></a>版权标注说明</h1><h2 id="个人书写版权标注"><a href="#个人书写版权标注" class="headerlink" title="个人书写版权标注"></a>个人书写版权标注</h2><p>在<code>Front-matter</code>进行如下标记（或者说无需管理）：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">author:</span> <span class="string">作者名字，默认为Hexo的博主信息想</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">copyright:</span> <span class="literal">true</span> <span class="string">默认为true，展示版权信息</span></span><br></pre></td></tr></table></figure>
+
+<p>实现效果：</p>
+<p><a href="https://imgse.com/i/pAHnFRU"><img data-src="https://s21.ax1x.com/2024/12/09/pAHnFRU.png" alt="个人书写版权标注"></a></p>
+<h2 id="转载文章版权标注"><a href="#转载文章版权标注" class="headerlink" title="转载文章版权标注"></a>转载文章版权标注</h2><p>在<code>Front-matter</code>进行如下标记：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">author:</span> <span class="string">原作者姓名</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">copyright:</span> <span class="literal">true</span><span class="string">（可以为false，直接不显示版权信息，但最好还是让其默认开启）</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">post_link:</span> <span class="string">原文链接(str格式数据，如:https://zhycarge.github.io/)</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">copyright_reprint:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>实现效果：</p>
+<p><a href="https://imgse.com/i/pAHnnd1"><img data-src="https://s21.ax1x.com/2024/12/09/pAHnnd1.png" alt="转载文章版权标注"></a></p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="隐秘的发现"><a href="#隐秘的发现" class="headerlink" title="隐秘的发现"></a>隐秘的发现</h2><p><code>copyright_reprint</code>这个参数在官方文档中并未进行给出，但是后续在查找<code>langurages</code>文件夹下对各国语言的翻译情况时发现，存在一项：<code>license_content_reprint</code>的翻译内容，通过与本国语言进行对比后得出，该项传参与转载文章时版权信息的显示有关，但由于官方文档并未进行给出，因此翻找其在GitHub的仓库信息，在<code>layout/_partials/post/post-copyright.njk</code>中<code>25-31</code>行发现如下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;%- if page.copyright_reprint %&#125;</span><br><span class="line">      &lt;strong&gt;&#123;&#123; __(&#x27;post.copyright.license_title&#x27;) + __(&#x27;symbol.colon&#x27;) &#125;&#125; &lt;/strong&gt;</span><br><span class="line">      &#123;&#123;- __(&#x27;post.copyright.license_content_reprint&#x27;, next_url(ccURL, ccIcon + ccText)) &#125;&#125;</span><br><span class="line">    &#123;%- else %&#125;</span><br><span class="line">      &lt;strong&gt;&#123;&#123; __(&#x27;post.copyright.license_title&#x27;) + __(&#x27;symbol.colon&#x27;) &#125;&#125; &lt;/strong&gt;</span><br><span class="line">      &#123;&#123;- __(&#x27;post.copyright.license_content&#x27;, next_url(ccURL, ccIcon + ccText)) &#125;&#125;</span><br><span class="line">    &#123;%- endif %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>推断<code>copyright_reprint</code>这个传值应该为<code>bool</code>型，并且根据代码能得出默认值应该为<code>false</code>，因此尝试在<code>Front-matter</code>中进行添加，发现能够实现功能。</p>
+<h2 id="做了什么"><a href="#做了什么" class="headerlink" title="做了什么"></a>做了什么</h2><p>向官方文档仓库提了个PR，不知道能不能审核过233</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>NexT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Next主题下友人链功能实现</title>
+    <url>/2024/12/09/2024-12-09-Next%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%8F%8B%E4%BA%BA%E9%93%BE%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新增博客平台功能，友人链内容实现</p>
+<span id="more"></span>
+
+<p>由于该博文处理博客平台更新期间发布，因此图片信息通过<a href="https://imgse.com/">路过图床</a>进行存储。</p>
+<h2 id="环境版本"><a href="#环境版本" class="headerlink" title="环境版本"></a>环境版本</h2><p>没什么特别的版本要求，感觉只要满足就行</p>
+<h2 id="前期考察"><a href="#前期考察" class="headerlink" title="前期考察"></a>前期考察</h2><p>通过了解网络中友人链部分的实现方式，发现分为如下几种</p>
+<ol>
+<li><p>通过主题自带功能实现</p>
+<p>Next主题莫得，直接否（严格来讲没有独立平台，仅通过Link实现。但是通过Link一个个加，后续会十分冗余）</p>
+</li>
+<li><p>更改相关配置信息，修改渲染方式等</p>
+<p>过于复杂和过于DIY化。我只是个前端小白。。。并且后续主题、平台更新需要重新Fork解决问题。很麻烦。。。</p>
+</li>
+<li><p>通过Markdown自带HTML功能实现</p>
+<p>相对简单，虽然没有那么多花里胡哨，但是方便添加修改，适合懒人小白（我）</p>
+</li>
+</ol>
+<h2 id="参考资源"><a href="#参考资源" class="headerlink" title="参考资源"></a>参考资源</h2><ul>
+<li><a href="https://blog.csdn.net/Jimmy_wei_2010/article/details/130409233">https://blog.csdn.net/Jimmy_wei_2010/article/details/130409233</a></li>
+</ul>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="创建Menu信息"><a href="#创建Menu信息" class="headerlink" title="创建Menu信息"></a>创建Menu信息</h2><p>在主题文件夹中的<code>languages</code>文件夹中找到<code>zh-CN.yml</code>文件，找到<code>menu</code>标题，创建内容：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">links:</span> <span class="string">友人链</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="添加友人链到Menu"><a href="#添加友人链到Menu" class="headerlink" title="添加友人链到Menu"></a>添加友人链到Menu</h2><p>在根目录下找到环境配置文件主题配置文件 <code>_config.next.yml</code>，在其中的<code>Menu Settings</code>中添加信息：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">links:</span> <span class="string">/links/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-book-heart</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="创建友人链文件内容"><a href="#创建友人链文件内容" class="headerlink" title="创建友人链文件内容"></a>创建友人链文件内容</h2><p>在<code>sources</code>文件夹中创建<code>links</code>文件夹，并在里面创建一个<code>index.md</code>文件，内容填充如下：</p>
+<p>这里有参考部分，但是为了保证自身友人链的与众不同，因此请教了下GPT关于前端CSS的知识点（好吧，用GPT修改了一点）（后续精进CSS后这里会有完善，实现真正友人帐显示【Big Cake】）</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;post-body&quot;</span>&gt;</span></span></span><br><span class="line">   <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;links&quot;</span>&gt;</span></span></span><br><span class="line"><span class="code">      &lt;style&gt;</span></span><br><span class="line"><span class="code">         body &#123;</span></span><br><span class="line"><span class="code">            background-color: #f0f0f0; /* 设置整个页面的背景颜色为浅灰色 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .links-content &#123;</span></span><br><span class="line"><span class="code">            margin-top: 1rem;</span></span><br><span class="line"><span class="code">            display: flex;</span></span><br><span class="line"><span class="code">            flex-wrap: wrap; /* 允许换行 */</span></span><br><span class="line"><span class="code">            justify-content: center; /* 水平居中 */</span></span><br><span class="line"><span class="code">            align-items: center; /* 垂直居中 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card &#123;</span></span><br><span class="line"><span class="code">            width: 130px; /* 设置卡片宽度 */</span></span><br><span class="line"><span class="code">            height: 160px; /* 设置卡片高度 */</span></span><br><span class="line"><span class="code">            font-size: 1rem;</span></span><br><span class="line"><span class="code">            padding: 20px;</span></span><br><span class="line"><span class="code">            border-radius: 10px; /* 圆角 */</span></span><br><span class="line"><span class="code">            transition-duration: 0.15s;</span></span><br><span class="line"><span class="code">            margin: 1rem; /* 设置卡片的上下左右间距 */</span></span><br><span class="line"><span class="code">            display: flex;</span></span><br><span class="line"><span class="code">            flex-direction: column; /* 竖向排列 */</span></span><br><span class="line"><span class="code">            align-items: center; /* 内容居中 */</span></span><br><span class="line"><span class="code">            justify-content: center; /* 内容居中 */</span></span><br><span class="line"><span class="code">            text-align: center; /* 文字居中 */</span></span><br><span class="line"><span class="code">            background-color: #fff; /* 卡片背景颜色 */</span></span><br><span class="line"><span class="code">            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* 阴影 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card:hover &#123;</span></span><br><span class="line"><span class="code">            transform: scale(1.05); /* 鼠标悬停时放大 */</span></span><br><span class="line"><span class="code">            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 鼠标悬停时阴影变化 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .ava &#123;</span></span><br><span class="line"><span class="code">            width: 60px; /* 图像宽度 */</span></span><br><span class="line"><span class="code">            height: 60px; /* 图像高度 */</span></span><br><span class="line"><span class="code">            margin-bottom: 10px; /* 图像与标题之间的间距 */</span></span><br><span class="line"><span class="code">            border-radius: 50%; /* 圆形图像 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .card-header &#123;</span></span><br><span class="line"><span class="code">            font-weight: bold; /* 粗体 */</span></span><br><span class="line"><span class="code">            margin: 5px 0; /* 标题上下间距 */</span></span><br><span class="line"><span class="code">            transition: color 0.5s; /* 颜色变化过渡 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .card-header a &#123;</span></span><br><span class="line"><span class="code">            color: #2bbc8a; /* 标题颜色 */</span></span><br><span class="line"><span class="code">            text-decoration: none; /* 去掉下划线 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .card-header a:hover &#123;</span></span><br><span class="line"><span class="code">            animation: rainbow 1.5s infinite; /* 鼠标悬停时彩虹效果 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .info &#123;</span></span><br><span class="line"><span class="code">            color: #a3a3a3; /* 描述颜色 */</span></span><br><span class="line"><span class="code">            font-size: 14px; /* 描述字体大小 */</span></span><br><span class="line"><span class="code">            margin-top: 20px; /* 增加标题与描述之间的距离 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         @keyframes rainbow &#123;</span></span><br><span class="line"><span class="code">            0% &#123; color: red; &#125;</span></span><br><span class="line"><span class="code">            14% &#123; color: orange; &#125;</span></span><br><span class="line"><span class="code">            28% &#123; color: yellow; &#125;</span></span><br><span class="line"><span class="code">            42% &#123; color: green; &#125;</span></span><br><span class="line"><span class="code">            57% &#123; color: blue; &#125;</span></span><br><span class="line"><span class="code">            71% &#123; color: indigo; &#125;</span></span><br><span class="line"><span class="code">            85% &#123; color: violet; &#125;</span></span><br><span class="line"><span class="code">            100% &#123; color: red; &#125;</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">      &lt;/style&gt;</span></span><br><span class="line"><span class="code">      &lt;div class=&quot;links-content&quot;&gt;</span></span><br><span class="line"><span class="code">          		&lt;--在此处添加卡片信息--&gt;</span></span><br><span class="line"><span class="code">                 &lt;div class=&quot;card&quot;&gt;</span></span><br><span class="line"><span class="code">                    &lt;img class=&quot;ava&quot; src=https://zhycarge.github.io/images/1.gif&quot; /&gt;</span></span><br><span class="line"><span class="code">                    &lt;div class=&quot;card-header&quot;&gt;</span></span><br><span class="line"><span class="code">                       &lt;a href=&quot;https://zhycarge.github.io/&quot;&gt;ZHYCarge的个人博客&lt;/a&gt;</span></span><br><span class="line"><span class="code">                    &lt;/div&gt;</span></span><br><span class="line"><span class="code">                    &lt;div class=&quot;info&quot;&gt;总是要记录些什么……&lt;/div&gt;</span></span><br><span class="line"><span class="code">                 &lt;/div&gt;</span></span><br><span class="line"><span class="code">    &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="新人添加"><a href="#新人添加" class="headerlink" title="新人添加"></a>新人添加</h2><p>只需要在后面添加这段代码即可</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;card&quot;</span>&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;ava&quot;</span> <span class="attr">src</span>=<span class="string">https://zhycarge.github.io/images/1.gif</span>&quot; /&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;card-header&quot;</span>&gt;</span></span><br><span class="line">                      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://zhycarge.github.io/&quot;</span>&gt;</span>ZHYCarge的个人博客<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                   <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;info&quot;</span>&gt;</span>总是要记录些什么……<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h2><ul>
+<li><a href="https://zhycarge.github.io/friends-links/">友人帐</a></li>
+</ul>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><p>后续可能会考虑更换方法，等待后续进一步学习NexT与Hexo对于传值内容及相关自定义页面的设立。。。</p>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>NexT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在博文中实现提示框</title>
+    <url>/2024/12/09/2024-12-09-%E5%9C%A8%E5%8D%9A%E6%96%87%E4%B8%AD%E5%AE%9E%E7%8E%B0%E6%8F%90%E7%A4%BA%E6%A1%86/</url>
+    <content><![CDATA[<h1 id="转载说明"><a href="#转载说明" class="headerlink" title="转载说明"></a>转载说明</h1><p>该博文为转载博文，转载来源为：<a href="https://jinnsjj.github.io/uncategorized/hexo-next-note/">在hexo-NexT中插入note提示块</a></p>
+<span id="more"></span>
+
+<h1 id="原文摘要"><a href="#原文摘要" class="headerlink" title="原文摘要"></a>原文摘要</h1><h2 id="提示框实现"><a href="#提示框实现" class="headerlink" title="提示框实现"></a>提示框实现</h2><div class="note default"><p>default 提示块标签</p>
+</div>
+
+<div class="note primary"><p>primary 提示块标签</p>
+</div>
+
+<div class="note success"><p>success 提示块标签</p>
+</div>
+
+<div class="note info"><p>info 提示块标签</p>
+</div>
+
+<div class="note warning"><p>warning 提示块标签</p>
+</div>
+
+<div class="note danger"><p>danger 提示块标签</p>
+</div>
+
+<p>代码：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">&#123;% note default %&#125;</span><br><span class="line">default 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note primary %&#125;</span><br><span class="line">primary 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note success %&#125;</span><br><span class="line">success 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note info %&#125;</span><br><span class="line">info 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note warning %&#125;</span><br><span class="line">warning 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note danger %&#125;</span><br><span class="line">danger 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="选项卡实现"><a href="#选项卡实现" class="headerlink" title="选项卡实现"></a>选项卡实现</h2><div class="tabs" id="tab"><ul class="nav-tabs"><li class="tab active"><a href="#tab-1">tab 1</a></li><li class="tab"><a href="#tab-2">tab 2</a></li><li class="tab"><a href="#tab-3">A</a></li></ul><div class="tab-content"><div class="tab-pane active" id="tab-1"><p><strong>选项卡 1</strong> </p></div><div class="tab-pane" id="tab-2"><p><strong>选项卡 2</strong></p></div><div class="tab-pane" id="tab-3"><p><strong>选项卡 3</strong> 名字为A</p></div></div></div>
+
+<p>代码实现</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">&#123;% tabs tab,1 %&#125; 名字为tab，默认在第1个选项卡，如果是-1则隐藏</span><br><span class="line">&lt;!-- tab --&gt;</span><br><span class="line"><span class="strong">**选项卡 1**</span> </span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line">&lt;!-- tab --&gt;</span><br><span class="line"><span class="strong">**选项卡 2**</span></span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line">&lt;!-- tab A --&gt;</span><br><span class="line"><span class="strong">**选项卡 3**</span> 名字为A</span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line">&#123;% endtabs %&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="原文参考"><a href="#原文参考" class="headerlink" title="原文参考"></a>原文参考</h2><ul>
+<li><a href="https://reuixiy.github.io/technology/computer/computer-aided-art/2017/06/09/hexo-next-optimization.html">打造个性超赞博客Hexo+NexT+GithubPages的超深度优化</a></li>
+<li><a href="https://biueo.github.io/2018/01/11/Hexo-markdown%E4%BC%98%E9%9B%85%E5%86%99%E5%8D%9A%E5%AE%A2/">Hexo+markdown优雅写博客</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>Markdown</tag>
+        <tag>Hexo</tag>
+        <tag>转载</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo配置详解</title>
+    <url>/2024/12/09/Hexo%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下Hexo博客平台的相关配置信息，方便后续进行查找与自定义</p>
+<span id="more"></span> 
+
+<h1 id="前情摘要"><a href="#前情摘要" class="headerlink" title="前情摘要"></a>前情摘要</h1><p>所进行配置的Hexo平台版本为<code>7.3.0</code></p>
+<p>本篇文章说明内容大量节选于<a href="https://hexo.io/docs/configuration.html">官方文档教程</a>，但由于官方文档后面存在更新文档的要求，因此这里只做摘要，不保证能完全实现功能。</p>
+<h1 id="配置信息详解"><a href="#配置信息详解" class="headerlink" title="配置信息详解"></a>配置信息详解</h1><h2 id="文件中存在的"><a href="#文件中存在的" class="headerlink" title="文件中存在的"></a>文件中存在的</h2><h5 id="前缀"><a href="#前缀" class="headerlink" title="前缀"></a>前缀</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Hexo Configuration</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/configuration.html</span></span><br><span class="line"><span class="comment">## Source: https://github.com/hexojs/hexo/</span></span><br></pre></td></tr></table></figure>
+
+<p>官网配置文档信息，还有项目GitHub地址</p>
+<h5 id="网站标题等"><a href="#网站标题等" class="headerlink" title="网站标题等"></a>网站标题等</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">ZHYCarge的个人博客</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;&#x27;</span> </span><br><span class="line"><span class="attr">description:</span> <span class="string">&#x27;总是要留下些什么&#x27;</span>	</span><br><span class="line"><span class="attr">keywords:</span> </span><br><span class="line"><span class="attr">author:</span> <span class="string">ZHYCarge</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span></span><br><span class="line"><span class="attr">timezone:</span> <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>title</code></td>
+<td>网站主标题</td>
+</tr>
+<tr>
+<td align="center"><code>subtitle</code></td>
+<td>网站副标题，在主标题下面</td>
+</tr>
+<tr>
+<td align="center"><code>description</code></td>
+<td>个人描述，出现在博客作者下面</td>
+</tr>
+<tr>
+<td align="center"><code>keywords</code></td>
+<td>关键词，支持多个值进行输入。应该是搜索引擎索引使用（猜测）</td>
+</tr>
+<tr>
+<td align="center"><code>author</code></td>
+<td>博客平台作者（如果在博文中不指定作者名字，则默认为这个）</td>
+</tr>
+<tr>
+<td align="center"><code>language</code></td>
+<td>博客平台网站语言，使用<a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">2 个字母的 ISO-639-1 代码</a>或其<a href="https://hexo.io/docs/internationalization">变体</a>（可选）。默认<code>en</code>，由于是中文平台，修改为<code>zh-CN</code></td>
+</tr>
+<tr>
+<td align="center"><code>timezone</code></td>
+<td>平台时区信息，可以<a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">点我查到更多</a>，国内应为<code>Asia/Shanghai</code>代表北京时间</td>
+</tr>
+</tbody></table>
+<h5 id="博文URL配置"><a href="#博文URL配置" class="headerlink" title="博文URL配置"></a>博文URL配置</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://zhycarge.github.io/</span> </span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:title/</span></span><br><span class="line"><span class="attr">permalink_defaults:</span></span><br><span class="line"><span class="attr">pretty_urls:</span></span><br><span class="line">  <span class="attr">trailing_index:</span> <span class="literal">true</span> <span class="comment"># Set to false to remove trailing &#x27;index.html&#x27; from permalinks</span></span><br><span class="line">  <span class="attr">trailing_html:</span> <span class="literal">true</span> <span class="comment"># Set to false to remove trailing &#x27;.html&#x27; from permalinks</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>url</code></td>
+<td>博客站点的URL信息，后续文章索引链接都会编辑为这个</td>
+</tr>
+<tr>
+<td><code>permalink</code></td>
+<td>文章的永久链接地址。方便引用文章等。默认为<code>年/月/日/文章标题</code></td>
+</tr>
+<tr>
+<td><code>root</code>（未提及）</td>
+<td>网站的根目录信息。根据<a href="https://hexo.io/docs/configuration.html#:~:text=true-,%E5%AD%90%E7%9B%AE%E5%BD%95%E4%B8%AD%E7%9A%84%E7%BD%91%E7%AB%99,-%E5%A6%82%E6%9E%9C%E6%82%A8%E7%9A%84">官网所诉</a>：如果您的网站位于子目录中（例如<code>http://example.org/blog</code>），则设置<code>url</code>为<code>http://example.org/blog</code>并设置<code>root</code>为<code>/blog/</code>。</td>
+</tr>
+<tr>
+<td><code>permalink_defaults</code></td>
+<td>永久链接中每个段的默认值，若修改<code>permalink</code>生成格式，可能需要该参数</td>
+</tr>
+<tr>
+<td><code>pretty_urls.trailing_index</code></td>
+<td>美化URL格式，删除尾随的<code>index.html</code>URL显示内容。默认为<code>true</code>，对<code>index.html</code>内容进行显示。<a href="https://hexo.io/docs/configuration.html#:~:text=/blog/%E3%80%82-,%E4%BE%8B%E5%AD%90%EF%BC%9A,-%23%20%E4%BE%8B%E5%A6%82%20page.permalink">官网例子</a></td>
+</tr>
+<tr>
+<td><code>pretty_urls.trailing_html</code></td>
+<td>美化URL格式，显示后面尾随的<code>.html</code>显示内容，对<code>index.html</code>不适用。默认为<code>true</code></td>
+</tr>
+</tbody></table>
+<h5 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Directory</span></span><br><span class="line"><span class="attr">source_dir:</span> <span class="string">source</span></span><br><span class="line"><span class="attr">public_dir:</span> <span class="string">public</span></span><br><span class="line"><span class="attr">tag_dir:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">archive_dir:</span> <span class="string">archives</span></span><br><span class="line"><span class="attr">category_dir:</span> <span class="string">categories</span></span><br><span class="line"><span class="attr">code_dir:</span> <span class="string">downloads/code</span></span><br><span class="line"><span class="attr">i18n_dir:</span> <span class="string">:lang</span></span><br><span class="line"><span class="attr">skip_render:</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>source_dir</code></td>
+<td>源文件夹。内容存储的位置。文章存放文件夹一般为<code>_posts</code></td>
+</tr>
+<tr>
+<td><code>public_dir</code></td>
+<td>公共文件夹，在其中生成静态网站，文件夹中的内容可对外展示</td>
+</tr>
+<tr>
+<td><code>tag_dir</code></td>
+<td>标签目录。一般在<code>source</code>文件夹下创建<code>tags</code>文件夹并附一个<code>index.md</code>文件来进行标签目录渲染</td>
+</tr>
+<tr>
+<td><code>archive_dir</code></td>
+<td>文章存档目录。暂不知道有什么用处。初步想法是与<code>Hexo admin</code>进行配套使用</td>
+</tr>
+<tr>
+<td><code>category_dir</code></td>
+<td>分类目录。一般在<code>source</code>文件夹下创建<code>categories</code>文件夹并附一个<code>index.md</code>文件来进行分类目录渲染</td>
+</tr>
+<tr>
+<td><code>code_dir</code></td>
+<td>包含代码目录。暂不知道有何用处。</td>
+</tr>
+<tr>
+<td><code>i18n_dir</code></td>
+<td>i18n 目录。应该是用于国际化适配作用</td>
+</tr>
+<tr>
+<td><code>skip_render</code></td>
+<td>会将指定文件内容或者文件夹信息复制到<code>public</code>目录下，不进行渲染。可以使用<a href="https://github.com/micromatch/micromatch#extended-globbing">glob 表达式</a>进行路径匹配。<a href="https://hexo.io/docs/configuration.html#:~:text=%E8%BF%9B%E8%A1%8C%E8%B7%AF%E5%BE%84%E5%8C%B9%E9%85%8D%E3%80%82-,%E4%BE%8B%E5%AD%90%EF%BC%9A,-skip_render%3A%20%20%22mypage">官网示例</a></td>
+</tr>
+</tbody></table>
+<h5 id="写作部分"><a href="#写作部分" class="headerlink" title="写作部分"></a>写作部分</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into titlecase</span></span><br><span class="line"><span class="attr">external_link:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># Open external links in new tab</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">site</span> <span class="comment"># Apply to the whole site</span></span><br><span class="line">  <span class="attr">exclude:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="attr">filename_case:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">render_drafts:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">relative_link:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">future:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">syntax_highlighter:</span> <span class="string">highlight.js</span></span><br><span class="line"><span class="attr">highlight:</span></span><br><span class="line">  <span class="attr">line_number:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">auto_detect:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">tab_replace:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">  <span class="attr">wrap:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">hljs:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">prismjs:</span></span><br><span class="line">  <span class="attr">preprocess:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">line_number:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">tab_replace:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>new_post_name</code></td>
+<td>新博文提交的名字</td>
+</tr>
+<tr>
+<td><code>default_layout</code></td>
+<td>默认布局方式。暂不知道有何别的方式</td>
+</tr>
+<tr>
+<td><code>titlecase</code></td>
+<td>将标题转换为标题首字母大写？默认<code>false</code>，可能跟英文书写方式有关。。</td>
+</tr>
+<tr>
+<td><code>external_link.enable</code></td>
+<td>是否用新标签打开外部链接，默认为<code>true</code></td>
+</tr>
+<tr>
+<td><code>external_link.field</code></td>
+<td>适用于整个站点<code>site</code>还是仅适用于博文<code>post</code></td>
+</tr>
+<tr>
+<td><code>external_link.exclude</code></td>
+<td>排除哪几个网址。需要添加子域信息</td>
+</tr>
+<tr>
+<td><code>filename_case</code></td>
+<td>将文件名转换为大小写。禁用：<code>0</code>，<code>1</code>小写，<code>2</code>大写</td>
+</tr>
+<tr>
+<td><code>render_drafts</code></td>
+<td>是否显示草稿博文（感觉就是与<code>Hexo admin</code>使用）</td>
+</tr>
+<tr>
+<td><code>post_asset_folder</code></td>
+<td>启用<a href="https://hexo.io/docs/asset-folders">资产文件夹</a>。能够存放少量照片或文件，默认为 <code>false</code></td>
+</tr>
+<tr>
+<td><code>relative_link</code></td>
+<td>建立相对于根文件夹的链接（感觉像使用相对引用进行）未查证</td>
+</tr>
+<tr>
+<td><code>future</code></td>
+<td>是否显示未来的帖子（帖子上写的时间还在未来）默认为<code>true</code></td>
+</tr>
+<tr>
+<td><code>syntax_highlighter</code></td>
+<td>代码块语法高亮设置，使用指南见<a href="https://hexo.io/docs/syntax-highlight">语法高亮部分</a></td>
+</tr>
+<tr>
+<td><code>highlight</code></td>
+<td>代码块语法高亮设置，使用指南见<a href="https://hexo.io/docs/syntax-highlight#Highlight-js">Highlight.js部分</a></td>
+</tr>
+<tr>
+<td><code>prismjs</code></td>
+<td>代码块语法高亮设置，使用指南见<a href="https://hexo.io/docs/syntax-highlight#PrismJS">PrismJS部分</a></td>
+</tr>
+</tbody></table>
+<h5 id="主页设置"><a href="#主页设置" class="headerlink" title="主页设置"></a>主页设置</h5><p>生成帖子存档，由<a href="https://github.com/hexojs/hexo-generator-index">hexo-generator-index提供支持</a></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Home page setting</span></span><br><span class="line"><span class="comment"># path: Root path for your blogs index page. (default = &#x27;&#x27;)</span></span><br><span class="line"><span class="comment"># per_page: Posts displayed per page. (0 = disable pagination)</span></span><br><span class="line"><span class="comment"># order_by: Posts order. (Order by date descending by default)</span></span><br><span class="line"><span class="attr">index_generator:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">  <span class="attr">per_page:</span> <span class="number">10</span></span><br><span class="line">  <span class="attr">order_by:</span> <span class="string">-date</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>index_generator.path</code></td>
+<td>博客索引页的根路径</td>
+</tr>
+<tr>
+<td><code>index_generator.per_page</code></td>
+<td>每页显示的帖子数量</td>
+</tr>
+<tr>
+<td><code>index_generator.order_by</code></td>
+<td>帖子排序。默认按日期降序排列（从新到旧）</td>
+</tr>
+</tbody></table>
+<h5 id="分类和标签"><a href="#分类和标签" class="headerlink" title="分类和标签"></a>分类和标签</h5><p>不知道有什么别的用途emmm有待进一步学习</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Category &amp; Tag</span></span><br><span class="line"><span class="attr">default_category:</span> <span class="string">uncategorized</span></span><br><span class="line"><span class="attr">category_map:</span></span><br><span class="line"><span class="attr">tag_map:</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>default_category</code></td>
+<td>默认类别</td>
+</tr>
+<tr>
+<td><code>category_map</code></td>
+<td>覆盖类别 slug</td>
+</tr>
+<tr>
+<td><code>tag_map</code></td>
+<td>覆盖标签</td>
+</tr>
+</tbody></table>
+<h5 id="Metadata-数据信息"><a href="#Metadata-数据信息" class="headerlink" title="Metadata 数据信息"></a>Metadata 数据信息</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Metadata elements</span></span><br><span class="line"><span class="comment">## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta</span></span><br><span class="line"><span class="attr">meta_generator:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>在官方文档中并未进行提及有关内容，查看相关文档，默认将其打开吧，应该是关于网站渲染的内容，有待后续了解</p>
+<h5 id="日期与时间"><a href="#日期与时间" class="headerlink" title="日期与时间"></a>日期与时间</h5><p>Hexo 使用<a href="http://momentjs.com/">Moment.js</a>来处理日期</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Date / Time format</span></span><br><span class="line"><span class="comment">## Hexo uses Moment.js to parse and display date</span></span><br><span class="line"><span class="comment">## You can customize the date format as defined in</span></span><br><span class="line"><span class="comment">## http://momentjs.com/docs/#/displaying/format/</span></span><br><span class="line"><span class="attr">date_format:</span> <span class="string">YYYY-MM-DD</span></span><br><span class="line"><span class="attr">time_format:</span> <span class="string">HH:mm:ss</span></span><br><span class="line"><span class="comment">## updated_option supports &#x27;mtime&#x27;, &#x27;date&#x27;, &#x27;empty&#x27;</span></span><br><span class="line"><span class="attr">updated_option:</span> <span class="string">&#x27;mtime&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>date_format</code></td>
+<td>日期格式</td>
+</tr>
+<tr>
+<td><code>time_format</code></td>
+<td>时间格式</td>
+</tr>
+<tr>
+<td><code>updated_option</code></td>
+<td>更新时间格式。当文章中不存在<code>updated</code>值时使用的默认值</td>
+</tr>
+</tbody></table>
+<h5 id="文章分页"><a href="#文章分页" class="headerlink" title="文章分页"></a>文章分页</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Pagination</span></span><br><span class="line"><span class="comment">## Set per_page to 0 to disable pagination</span></span><br><span class="line"><span class="attr">per_page:</span> <span class="number">10</span></span><br><span class="line"><span class="attr">pagination_dir:</span> <span class="string">page</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>per_page</code></td>
+<td>每页能存放多少篇文章，为<code>0</code>代表禁用</td>
+</tr>
+<tr>
+<td><code>pagination_dir</code></td>
+<td>URL格式信息</td>
+</tr>
+</tbody></table>
+<h5 id="包括、排除文件"><a href="#包括、排除文件" class="headerlink" title="包括、排除文件"></a>包括、排除文件</h5><p>使用以下选项明确处理或忽略某些文件&#x2F;文件夹。支持使用<a href="https://github.com/micromatch/micromatch#extended-globbing">glob 表达式</a>进行路径匹配。</p>
+<p><code>include</code>与<code>exclude</code>选项仅适用于<code>source/</code>文件夹，而<code>ignore</code>选项适用于所有文件夹。</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Include / Exclude file(s)</span></span><br><span class="line"><span class="comment">## include:/exclude: options only apply to the &#x27;source/&#x27; folder</span></span><br><span class="line"><span class="attr">include:</span></span><br><span class="line"><span class="attr">exclude:</span></span><br><span class="line"><span class="attr">ignore:</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>include</code></td>
+<td>包括隐藏文件（包括名称以下划线开头的文件&#x2F;文件夹，但有例外*）</td>
+</tr>
+<tr>
+<td><code>exclude</code></td>
+<td>排除文件&#x2F;文件夹</td>
+</tr>
+<tr>
+<td><code>ignore</code></td>
+<td>忽略文件&#x2F;文件夹</td>
+</tr>
+</tbody></table>
+<p><a href="https://hexo.io/docs/configuration.html#:~:text=%E6%96%87%E4%BB%B6/%E6%96%87%E4%BB%B6%E5%A4%B9-,%E4%BE%8B%E5%AD%90%EF%BC%9A,-%23%20%E5%8C%85%E5%90%AB/%E6%8E%92%E9%99%A4%E6%96%87%E4%BB%B6">官网示例</a></p>
+<h5 id="插件和主题设置"><a href="#插件和主题设置" class="headerlink" title="插件和主题设置"></a>插件和主题设置</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure>
+
+<p>设置主题内容或者插件信息</p>
+<h5 id="部署设置"><a href="#部署设置" class="headerlink" title="部署设置"></a>部署设置</h5><p><a href="https://hexo.io/docs/one-command-deployment#:~:text=more%20deployment%20plugins.-,Git,-Install%20hexo%2Ddeployer">参考这段</a>进行设置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">type:</span> <span class="string">&#x27;git&#x27;</span></span><br><span class="line">    <span class="attr">repo:</span> <span class="string">git@github.com:ZHYCarge/ZHYCarge.github.io.git</span></span><br><span class="line">    <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="其它内容"><a href="#其它内容" class="headerlink" title="其它内容"></a>其它内容</h1><h2 id="标签文件夹中index-md文件内容信息"><a href="#标签文件夹中index-md文件内容信息" class="headerlink" title="标签文件夹中index.md文件内容信息"></a>标签文件夹中<code>index.md</code>文件内容信息</h2><p>未配置其它内容，仅支持默认情况的话，应为：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2024-12-09 09:53:46</span><br><span class="line"><span class="section">type: &quot;tags&quot;</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></table></figure>
+
+<p>时间可修改为创建的时间</p>
+<h2 id="分类文件夹中index-md文件内容信息"><a href="#分类文件夹中index-md文件内容信息" class="headerlink" title="分类文件夹中index.md文件内容信息"></a>分类文件夹中<code>index.md</code>文件内容信息</h2><p>未配置其它内容，仅支持默认情况的话，应为：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2024-12-09 09:53:46</span><br><span class="line"><span class="section">type: &quot;categories&quot;</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></table></figure>
+
+<p>时间可修改为创建的时间</p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://hexo.io/docs/configuration.html">官方文档教程</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搭建Hexo博客平台</title>
+    <url>/2024/12/09/%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这里浅浅记录一下博客平台的创建步骤</p>
+<span id="more"></span>
+
+<h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><ul>
+<li>系统：Windows10家庭版</li>
+<li>Node.js： 22.12.0</li>
+<li>npm：10.9.2</li>
+<li>Hexo-cli：4.3.2</li>
+<li>hexo-theme-next：8.21.1</li>
+</ul>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
+<li><a href="https://hexo.io/zh-cn/docs/">Hexo</a></li>
+<li><a href="https://nodejs.org/zh-cn">Node.js</a></li>
+<li><a href="https://github.com/next-theme/hexo-theme-next">hexo-theme-next</a></li>
+</ul>
+<h1 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h1><h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><ol>
+<li>安装<code>hexo-cli</code>（全局）：<code>npm install -g hexo-cli</code></li>
+<li>创建一个新的文件夹，并确保里面没有任何文件</li>
+<li>初始化<code>hexo</code>。在新文件夹中输入命令：<code>hexo init</code></li>
+<li>安装别的依赖文件：<code>npm install</code></li>
+</ol>
+<h2 id="配置Hexo"><a href="#配置Hexo" class="headerlink" title="配置Hexo"></a>配置Hexo</h2><h3 id="主题安装"><a href="#主题安装" class="headerlink" title="主题安装"></a>主题安装</h3><p>由于之前的博客平台使用的是Next主题，因此进行继承，安装Next主题。</p>
+<p>安装命令：<code>npm install hexo-theme-next</code></p>
+<p>在Hexo的<code>_config.yml</code>文件中找到<code>theme</code>，将其修改为<code>next</code></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure>
+
+<p><em>与通过GitHub下载安装主题包不同的是，通过这个方法安装的主题包，会存储在<code>node_modules</code>这一文件夹下，名字为<code>hexo-theme-next</code>，并不是简单存储在<code>theme/next</code>中</em></p>
+<h3 id="主题配置"><a href="#主题配置" class="headerlink" title="主题配置"></a>主题配置</h3><p>根据之前的博客内容进行整合，同时引入Waline作为评论平台。这里为了篇幅方便不再进行赘述，若想查看详细的配置文件说明移步：<a href="">Next主题配置说明(这是张饼，应该没人想看，没人想看就不更了)</a></p>
+<h3 id="Hexo配置"><a href="#Hexo配置" class="headerlink" title="Hexo配置"></a>Hexo配置</h3><p>同理，根据之前的博客平台信息进行整合，详细配置文件说明移步：<a href="">Hexo配置说明</a></p>
+<h3 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h3><h4 id="搜索插件安装"><a href="#搜索插件安装" class="headerlink" title="搜索插件安装"></a>搜索插件安装</h4><p><a href="https://theme-next.js.org/docs/third-party-services/search-services#Local-Search">教程链接</a></p>
+<p><code>npm install hexo-generator-searchdb</code>安装</p>
+<p>在Hexo配置文件中添加</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">content:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br></pre></td></tr></table></figure>
+
+<p>在Next主题配置文件中添加</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/next-theme/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Show top n results per article, show all results by setting to -1</span></span><br><span class="line">  <span class="attr">top_n_per_article:</span> <span class="number">1</span></span><br><span class="line">  <span class="comment"># Unescape html strings to the readable one.</span></span><br><span class="line">  <span class="attr">unescape:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Preload the search data when the page loads.</span></span><br><span class="line">  <span class="attr">preload:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="博文加密插件安装"><a href="#博文加密插件安装" class="headerlink" title="博文加密插件安装"></a>博文加密插件安装</h4><p><a href="https://github.com/D0n9X1n/hexo-blog-encrypt/blob/master/ReadMe.zh.md">官方教程</a></p>
+<p><code>npm install --save hexo-blog-encrypt</code>输入命令安装</p>
+<p>在Hexo配置文件中添加配置信息：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Security</span></span><br><span class="line"><span class="attr">encrypt:</span> <span class="comment"># hexo-blog-encrypt</span></span><br><span class="line">  <span class="attr">abstract:</span> <span class="string">有东西被加密了,</span> <span class="string">请输入密码查看.</span></span><br><span class="line">  <span class="attr">message:</span> <span class="string">您好,</span> <span class="string">这里需要密码.</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">name:</span> <span class="string">tagName</span>, <span class="attr">password:</span> <span class="string">密码A</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">name:</span> <span class="string">tagName</span>, <span class="attr">password:</span> <span class="string">密码B</span>&#125;</span><br><span class="line">  <span class="attr">wrong_pass_message:</span> <span class="string">抱歉,</span> <span class="string">这个密码看着不太对,</span> <span class="string">请再试试.</span></span><br><span class="line">  <span class="attr">wrong_hash_message:</span> <span class="string">抱歉,</span> <span class="string">这个文章不能被校验,</span> <span class="string">不过您还是能看看解密后的内容.</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="npm-warn-deprecated-cuid-2-1-8"><a href="#npm-warn-deprecated-cuid-2-1-8" class="headerlink" title="npm warn deprecated cuid@2.1.8"></a><code>npm warn deprecated cuid@2.1.8</code></h2><p>在更新Hexo版本的时候发现有如下提示：</p>
+<p><code>npm warn deprecated cuid@2.1.8: Cuid and other k-sortable and non-cryptographic ids (Ulid, ObjectId, KSUID, all UUIDs) are all insecure. Use @paralleldrive/cuid2 instead.</code></p>
+<p>经检查后发现是Hexo所使用的<code>cuid</code>模块过时了，通过询问了下GPT，GPT给出的答复是<code>cuid</code>与<code>cuid2</code>相似，但后者更改了有些实现方式，同时查看<a href="https://github.com/paralleldrive/cuid#:~:text=Status%3A%20Deprecated%20due%20to%20security.%20Use%20Cuid2%2C%20instead.">为什么将cuid置于过时</a>，发现原因是可能会造成隐私泄露。但作为一个个人博客系统，没有隐私防护需求😂并且为防止Hexo未进行相关更改，盲目更换依赖包容易导致程序报错为保证Hexo的正常运行emmm，因此决定不管他 </p>
+<h2 id="Next主题的两个仓库问题"><a href="#Next主题的两个仓库问题" class="headerlink" title="Next主题的两个仓库问题"></a>Next主题的两个仓库问题</h2><blockquote>
+<p>简单来说，问题就是 theme-next 团队的 owner - Ivan Nginx 始终拒绝向其它任何团队成员提供足够的权限，且 owner 本人自 2019 年 10 月起已连续半年不在线，导致其它活跃的团队成员无法管理仓库，也无法邀请新的成员。<br>由于对 theme-next 团队的未来不抱有期望，我作为 theme-next 的主要贡献者，自 2020 年 4 月起停止为旧的仓库贡献代码，并创建了新的组织，以确保维护工作正常进行。</p>
+<p><a href="https://github.com/next-theme/hexo-theme-next/issues/4#issuecomment-626205848">https://github.com/next-theme/hexo-theme-next/issues/4#issuecomment-626205848</a></p>
+</blockquote>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2>]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+</search>
