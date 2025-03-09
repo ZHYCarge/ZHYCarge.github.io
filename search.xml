@@ -1,0 +1,940 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>DIY Waline评论邮件提醒模板</title>
+    <url>/2024/12/09/2024-12-09-DIY-Waline%E8%AF%84%E8%AE%BA%E9%82%AE%E4%BB%B6%E6%8F%90%E9%86%92%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于Waline评论平台的邮件提醒默认模板实在太难以使用了，因此根据官方教程进行DIY一下</p>
+<span id="more"></span>
+
+<p>U1S1，官方文档编写的真的一言难尽。。。</p>
+<p>由于博客平台还在更新中，因此本博文所有图像信息使用<a href="https://imgse.com/">路过图床</a>进行代理</p>
+<h2 id="版本说明"><a href="#版本说明" class="headerlink" title="版本说明"></a>版本说明</h2><p>适配Waline版本：2.15.8 </p>
+<p>使用Vercel进行部署的后端服务</p>
+<p>若该博文没有进行更新，则代表后续版本也OK</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://waline.js.org/guide/features/notification.html">官方文档</a></li>
+</ul>
+<h1 id="自定义过程"><a href="#自定义过程" class="headerlink" title="自定义过程"></a>自定义过程</h1><p>由于Waline 与Valine异曲同工，其次模板是针对于邮件的模板化内容，因此打算将Valine的模板进行魔改一下。</p>
+<p>在Vercel上按照需求添加信息：</p>
+<h3 id="MAIL-SUBJECT"><a href="#MAIL-SUBJECT" class="headerlink" title="MAIL_SUBJECT"></a>MAIL_SUBJECT</h3><p>A评论完后B进行回复评论，A收到的提醒模板（标题部分）</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;&#123;parent.nick&#125;&#125;，您在&quot;&#123;&#123;site.name&#125;&#125;&quot;上的评论收到了回复</span><br></pre></td></tr></table></figure>
+
+<h3 id="MAIL-TEMPLATE"><a href="#MAIL-TEMPLATE" class="headerlink" title="MAIL_TEMPLATE"></a>MAIL_TEMPLATE</h3><p>A评论完后B进行回复评论，A收到的提醒模板(正文部分)</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;border-top:2px solid #12ADDB;box-shadow:0 1px 3px #AAAAAA;line-height:180%;padding:0 15px 12px;margin:50px auto;font-size:12px;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">h2</span> <span class="attr">style</span>=<span class="string">&quot;border-bottom:1px solid #DDD;font-size:14px;font-weight:normal;padding:13px 0 10px 8px;&quot;</span>&gt;</span>您在<span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;text-decoration:none;color: #12ADDB;&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123;site.url&#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>&#123;&#123;site.name&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span>上的评论有了新的回复<span class="tag">&lt;/<span class="name">h2</span>&gt;</span>&#123;&#123;parent.nick&#125;&#125;，你曾发表评论：<span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;padding:0 12px 0 12px;margin-top:18px&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;background-color: #f5f5f5;padding: 10px 15px;margin:18px 0;word-wrap:break-word;&quot;</span>&gt;</span>&#123;&#123;parent.comment|safe&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>&#123;&#123;self.nick&#125;&#125;<span class="tag">&lt;/<span class="name">strong</span>&gt;</span>回复说：<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;background-color: #f5f5f5;padding: 10px 15px;margin:18px 0;word-wrap:break-word;&quot;</span>&gt;</span>&#123;&#123;self.comment|safe&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>您可以点击<span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;text-decoration:none; color:#12addb&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123;self.link&#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>查看有关博文<span class="tag">&lt;/<span class="name">a</span>&gt;</span>，欢迎再次回复交流。<span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;text-align: center;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;text-decoration: none; color: #12addb;&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123;site.url&#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>&#123;&#123;site.name&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="MAIL-SUBJECT-ADMIN"><a href="#MAIL-SUBJECT-ADMIN" class="headerlink" title="MAIL_SUBJECT_ADMIN"></a>MAIL_SUBJECT_ADMIN</h3><p>有新评论时管理员收到的评论模板（标题部分）</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;&#123;site.name&#125;&#125;上有新评论了</span><br></pre></td></tr></table></figure>
+
+<h3 id="MAIL-TEMPLATE-ADMIN"><a href="#MAIL-TEMPLATE-ADMIN" class="headerlink" title="MAIL_TEMPLATE_ADMIN"></a>MAIL_TEMPLATE_ADMIN</h3><p>有新评论时管理员收到的评论模板（正文部分）</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;border-top:2px solid #12ADDB;box-shadow:0 1px 3px #AAAAAA;line-height:180%;padding:0 15px 12px;margin:50px auto;font-size:12px;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">h2</span> <span class="attr">style</span>=<span class="string">&quot;border-bottom:1px solid #DDD;font-size:14px;font-weight:normal;padding:13px 0 10px 8px;&quot;</span>&gt;</span>博主你好，你的<span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;text-decoration:none;color: #12ADDB;&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123;site.url&#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>&#123;&#123;site.name&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span>上有了新的评论<span class="tag">&lt;/<span class="name">h2</span>&gt;</span>&#123;&#123;self.nick&#125;&#125;在你的博客上发表评论，评论内容为：<span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;padding:0 12px 0 12px;margin-top:18px&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;background-color: #f5f5f5;padding: 10px 15px;margin:18px 0;word-wrap:break-word;&quot;</span>&gt;</span>&#123;&#123;self.comment|safe&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>您可以点击<span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;text-decoration:none; color:#12addb&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123;self.link&#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>查看评论的博文內容<span class="tag">&lt;/<span class="name">a</span>&gt;</span>，不要忘记回复。<span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;text-align: center;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;text-decoration: none; color: #12addb;&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123;site.url&#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>&#123;&#123;site.name&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h1><p>（通过路过图床展示图片）</p>
+<p>博主端收到的评论消息</p>
+<p><a href="https://imgse.com/i/pAHVFun"><img data-src="https://s21.ax1x.com/2024/12/09/pAHVKgJ.png" alt="博主端收到的评论消息"></a></p>
+<p>评论者收到的提醒消息：</p>
+<p><a href="https://imgse.com/i/pAHVAH0"><img data-src="https://s21.ax1x.com/2024/12/09/pAHVluR.png" alt="评论者收到的提醒消息"></a></p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="可能会出现的环境变量问题"><a href="#可能会出现的环境变量问题" class="headerlink" title="可能会出现的环境变量问题"></a>可能会出现的环境变量问题</h2><p>（我没遇到过我不知道）</p>
+<blockquote>
+<p>Vercel 的环境变量大小限制为 <code>4KB</code> ，所以如果您的模板很长，请使用代码配置，参见 <a href="https://github.com/walinejs/waline/issues/106">issue#106</a> ；</p>
+<p>–<a href="https://waline.js.org/guide/features/notification.html#%E9%BB%98%E8%AE%A4%E6%A8%A1%E6%9D%BF:~:text=%E5%9C%B0%E5%9D%80%E3%80%91%EF%BC%9A%7B%7Bsite.postUrl%7D%7D-,%E9%99%84%E5%8A%A0%E8%AF%B4%E6%98%8E,-Vercel%20%E7%9A%84%E7%8E%AF%E5%A2%83">附加说明</a></p>
+</blockquote>
+<h2 id="comment内容需要进行safe转义处理"><a href="#comment内容需要进行safe转义处理" class="headerlink" title="comment内容需要进行safe转义处理"></a>comment内容需要进行safe转义处理</h2><p>通过观察评论内容时发现Waline博客平台为了防止XSS消息注入采用了字符转义处理，如果不进行干涉，则在评论信息中多了<code>&lt;p&gt;</code>标签，评论消息无法进行渲染。因此有两种路线选择：</p>
+<ol>
+<li><p>放弃美观度，更加安全保守：则将<code>comment</code>后面的<code>|safe</code>删除，便会进行转义处理，效果类似于：</p>
+<p><a href="https://imgse.com/i/pAHVAH0"><img data-src="https://s21.ax1x.com/2024/12/09/pAHVAH0.png" alt="pAHVAH0.png"></a></p>
+</li>
+<li><p>拥抱美观，信赖评论者还有Waline平台有更多的防护手段：无需进行任何更改，直接CV，效果即是展示效果。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>Waline</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo Next主题版权信息显示</title>
+    <url>/2024/12/09/2024-12-09-Hexo-Next%E4%B8%BB%E9%A2%98%E7%89%88%E6%9D%83%E4%BF%A1%E6%81%AF%E6%98%BE%E7%A4%BA/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>出于对版权的尊重，由于官方文档在此处并未进行严格说明，因此在此处进行标注，方便做好版权管理</p>
+<span id="more"></span>
+
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ul>
+<li>涉及到的NexT版本为8.21.1</li>
+<li>由于编写博客时还未迁移完相关信息，因此图片采用<a href="https://imgse.com/">路过图床</a>进行存储</li>
+</ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://theme-next.js.org/docs/">NexT官方文档</a></li>
+<li><a href="https://theme-next.js.org/docs/advanced-settings/front-matter">Front-matter（NexT）</a></li>
+</ul>
+<h1 id="版权标注说明"><a href="#版权标注说明" class="headerlink" title="版权标注说明"></a>版权标注说明</h1><h2 id="个人书写版权标注"><a href="#个人书写版权标注" class="headerlink" title="个人书写版权标注"></a>个人书写版权标注</h2><p>在<code>Front-matter</code>进行如下标记（或者说无需管理）：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">author:</span> <span class="string">作者名字，默认为Hexo的博主信息想</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">copyright:</span> <span class="literal">true</span> <span class="string">默认为true，展示版权信息</span></span><br></pre></td></tr></table></figure>
+
+<p>实现效果：</p>
+<p><a href="https://imgse.com/i/pAHnFRU"><img data-src="https://s21.ax1x.com/2024/12/09/pAHnFRU.png" alt="个人书写版权标注"></a></p>
+<h2 id="转载文章版权标注"><a href="#转载文章版权标注" class="headerlink" title="转载文章版权标注"></a>转载文章版权标注</h2><p>在<code>Front-matter</code>进行如下标记：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">author:</span> <span class="string">原作者姓名</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">copyright:</span> <span class="literal">true</span><span class="string">（可以为false，直接不显示版权信息，但最好还是让其默认开启）</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">post_link:</span> <span class="string">原文链接(str格式数据，如:https://zhycarge.github.io/)</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">copyright_reprint:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>实现效果：</p>
+<p><a href="https://imgse.com/i/pAHnnd1"><img data-src="https://s21.ax1x.com/2024/12/09/pAHnnd1.png" alt="转载文章版权标注"></a></p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="隐秘的发现"><a href="#隐秘的发现" class="headerlink" title="隐秘的发现"></a>隐秘的发现</h2><p><code>copyright_reprint</code>这个参数在官方文档中并未进行给出，但是后续在查找<code>langurages</code>文件夹下对各国语言的翻译情况时发现，存在一项：<code>license_content_reprint</code>的翻译内容，通过与本国语言进行对比后得出，该项传参与转载文章时版权信息的显示有关，但由于官方文档并未进行给出，因此翻找其在GitHub的仓库信息，在<code>layout/_partials/post/post-copyright.njk</code>中<code>25-31</code>行发现如下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;%- if page.copyright_reprint %&#125;</span><br><span class="line">      &lt;strong&gt;&#123;&#123; __(&#x27;post.copyright.license_title&#x27;) + __(&#x27;symbol.colon&#x27;) &#125;&#125; &lt;/strong&gt;</span><br><span class="line">      &#123;&#123;- __(&#x27;post.copyright.license_content_reprint&#x27;, next_url(ccURL, ccIcon + ccText)) &#125;&#125;</span><br><span class="line">    &#123;%- else %&#125;</span><br><span class="line">      &lt;strong&gt;&#123;&#123; __(&#x27;post.copyright.license_title&#x27;) + __(&#x27;symbol.colon&#x27;) &#125;&#125; &lt;/strong&gt;</span><br><span class="line">      &#123;&#123;- __(&#x27;post.copyright.license_content&#x27;, next_url(ccURL, ccIcon + ccText)) &#125;&#125;</span><br><span class="line">    &#123;%- endif %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>推断<code>copyright_reprint</code>这个传值应该为<code>bool</code>型，并且根据代码能得出默认值应该为<code>false</code>，因此尝试在<code>Front-matter</code>中进行添加，发现能够实现功能。</p>
+<h2 id="做了什么"><a href="#做了什么" class="headerlink" title="做了什么"></a>做了什么</h2><p>向官方文档仓库提了个PR，不知道能不能审核过233</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>NexT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Next主题下友人链功能实现</title>
+    <url>/2024/12/09/2024-12-09-Next%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%8F%8B%E4%BA%BA%E9%93%BE%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新增博客平台功能，友人链内容实现</p>
+<span id="more"></span>
+
+<p>由于该博文处理博客平台更新期间发布，因此图片信息通过<a href="https://imgse.com/">路过图床</a>进行存储。</p>
+<h2 id="环境版本"><a href="#环境版本" class="headerlink" title="环境版本"></a>环境版本</h2><p>没什么特别的版本要求，感觉只要满足就行</p>
+<h2 id="前期考察"><a href="#前期考察" class="headerlink" title="前期考察"></a>前期考察</h2><p>通过了解网络中友人链部分的实现方式，发现分为如下几种</p>
+<ol>
+<li><p>通过主题自带功能实现</p>
+<p>Next主题莫得，直接否（严格来讲没有独立平台，仅通过Link实现。但是通过Link一个个加，后续会十分冗余）</p>
+</li>
+<li><p>更改相关配置信息，修改渲染方式等</p>
+<p>过于复杂和过于DIY化。我只是个前端小白。。。并且后续主题、平台更新需要重新Fork解决问题。很麻烦。。。</p>
+</li>
+<li><p>通过Markdown自带HTML功能实现</p>
+<p>相对简单，虽然没有那么多花里胡哨，但是方便添加修改，适合懒人小白（我）</p>
+</li>
+</ol>
+<h2 id="参考资源"><a href="#参考资源" class="headerlink" title="参考资源"></a>参考资源</h2><ul>
+<li><a href="https://blog.csdn.net/Jimmy_wei_2010/article/details/130409233">https://blog.csdn.net/Jimmy_wei_2010/article/details/130409233</a></li>
+</ul>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="创建Menu信息"><a href="#创建Menu信息" class="headerlink" title="创建Menu信息"></a>创建Menu信息</h2><p>在主题文件夹中的<code>languages</code>文件夹中找到<code>zh-CN.yml</code>文件，找到<code>menu</code>标题，创建内容：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">links:</span> <span class="string">友人链</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="添加友人链到Menu"><a href="#添加友人链到Menu" class="headerlink" title="添加友人链到Menu"></a>添加友人链到Menu</h2><p>在根目录下找到环境配置文件主题配置文件 <code>_config.next.yml</code>，在其中的<code>Menu Settings</code>中添加信息：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">links:</span> <span class="string">/links/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-book-heart</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="创建友人链文件内容"><a href="#创建友人链文件内容" class="headerlink" title="创建友人链文件内容"></a>创建友人链文件内容</h2><p>在<code>sources</code>文件夹中创建<code>links</code>文件夹，并在里面创建一个<code>index.md</code>文件，内容填充如下：</p>
+<p>这里有参考部分，但是为了保证自身友人链的与众不同，因此请教了下GPT关于前端CSS的知识点（好吧，用GPT修改了一点）（后续精进CSS后这里会有完善，实现真正友人帐显示【Big Cake】）</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;post-body&quot;</span>&gt;</span></span></span><br><span class="line">   <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;links&quot;</span>&gt;</span></span></span><br><span class="line"><span class="code">      &lt;style&gt;</span></span><br><span class="line"><span class="code">         body &#123;</span></span><br><span class="line"><span class="code">            background-color: #f0f0f0; /* 设置整个页面的背景颜色为浅灰色 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .links-content &#123;</span></span><br><span class="line"><span class="code">            margin-top: 1rem;</span></span><br><span class="line"><span class="code">            display: flex;</span></span><br><span class="line"><span class="code">            flex-wrap: wrap; /* 允许换行 */</span></span><br><span class="line"><span class="code">            justify-content: center; /* 水平居中 */</span></span><br><span class="line"><span class="code">            align-items: center; /* 垂直居中 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card &#123;</span></span><br><span class="line"><span class="code">            width: 130px; /* 设置卡片宽度 */</span></span><br><span class="line"><span class="code">            height: 160px; /* 设置卡片高度 */</span></span><br><span class="line"><span class="code">            font-size: 1rem;</span></span><br><span class="line"><span class="code">            padding: 20px;</span></span><br><span class="line"><span class="code">            border-radius: 10px; /* 圆角 */</span></span><br><span class="line"><span class="code">            transition-duration: 0.15s;</span></span><br><span class="line"><span class="code">            margin: 1rem; /* 设置卡片的上下左右间距 */</span></span><br><span class="line"><span class="code">            display: flex;</span></span><br><span class="line"><span class="code">            flex-direction: column; /* 竖向排列 */</span></span><br><span class="line"><span class="code">            align-items: center; /* 内容居中 */</span></span><br><span class="line"><span class="code">            justify-content: center; /* 内容居中 */</span></span><br><span class="line"><span class="code">            text-align: center; /* 文字居中 */</span></span><br><span class="line"><span class="code">            background-color: #fff; /* 卡片背景颜色 */</span></span><br><span class="line"><span class="code">            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* 阴影 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card:hover &#123;</span></span><br><span class="line"><span class="code">            transform: scale(1.05); /* 鼠标悬停时放大 */</span></span><br><span class="line"><span class="code">            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 鼠标悬停时阴影变化 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .ava &#123;</span></span><br><span class="line"><span class="code">            width: 60px; /* 图像宽度 */</span></span><br><span class="line"><span class="code">            height: 60px; /* 图像高度 */</span></span><br><span class="line"><span class="code">            margin-bottom: 10px; /* 图像与标题之间的间距 */</span></span><br><span class="line"><span class="code">            border-radius: 50%; /* 圆形图像 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .card-header &#123;</span></span><br><span class="line"><span class="code">            font-weight: bold; /* 粗体 */</span></span><br><span class="line"><span class="code">            margin: 5px 0; /* 标题上下间距 */</span></span><br><span class="line"><span class="code">            transition: color 0.5s; /* 颜色变化过渡 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .card-header a &#123;</span></span><br><span class="line"><span class="code">            color: #2bbc8a; /* 标题颜色 */</span></span><br><span class="line"><span class="code">            text-decoration: none; /* 去掉下划线 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .card-header a:hover &#123;</span></span><br><span class="line"><span class="code">            animation: rainbow 1.5s infinite; /* 鼠标悬停时彩虹效果 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .info &#123;</span></span><br><span class="line"><span class="code">            color: #a3a3a3; /* 描述颜色 */</span></span><br><span class="line"><span class="code">            font-size: 14px; /* 描述字体大小 */</span></span><br><span class="line"><span class="code">            margin-top: 20px; /* 增加标题与描述之间的距离 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         @keyframes rainbow &#123;</span></span><br><span class="line"><span class="code">            0% &#123; color: red; &#125;</span></span><br><span class="line"><span class="code">            14% &#123; color: orange; &#125;</span></span><br><span class="line"><span class="code">            28% &#123; color: yellow; &#125;</span></span><br><span class="line"><span class="code">            42% &#123; color: green; &#125;</span></span><br><span class="line"><span class="code">            57% &#123; color: blue; &#125;</span></span><br><span class="line"><span class="code">            71% &#123; color: indigo; &#125;</span></span><br><span class="line"><span class="code">            85% &#123; color: violet; &#125;</span></span><br><span class="line"><span class="code">            100% &#123; color: red; &#125;</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">      &lt;/style&gt;</span></span><br><span class="line"><span class="code">      &lt;div class=&quot;links-content&quot;&gt;</span></span><br><span class="line"><span class="code">          		&lt;--在此处添加卡片信息--&gt;</span></span><br><span class="line"><span class="code">                 &lt;div class=&quot;card&quot;&gt;</span></span><br><span class="line"><span class="code">                    &lt;img class=&quot;ava&quot; src=https://zhycarge.github.io/images/1.gif&quot; /&gt;</span></span><br><span class="line"><span class="code">                    &lt;div class=&quot;card-header&quot;&gt;</span></span><br><span class="line"><span class="code">                       &lt;a href=&quot;https://zhycarge.github.io/&quot;&gt;ZHYCarge的个人博客&lt;/a&gt;</span></span><br><span class="line"><span class="code">                    &lt;/div&gt;</span></span><br><span class="line"><span class="code">                    &lt;div class=&quot;info&quot;&gt;总是要记录些什么……&lt;/div&gt;</span></span><br><span class="line"><span class="code">                 &lt;/div&gt;</span></span><br><span class="line"><span class="code">    &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="新人添加"><a href="#新人添加" class="headerlink" title="新人添加"></a>新人添加</h2><p>只需要在后面添加这段代码即可</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;card&quot;</span>&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;ava&quot;</span> <span class="attr">src</span>=<span class="string">https://zhycarge.github.io/images/1.gif</span>&quot; /&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;card-header&quot;</span>&gt;</span></span><br><span class="line">                      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://zhycarge.github.io/&quot;</span>&gt;</span>ZHYCarge的个人博客<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                   <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;info&quot;</span>&gt;</span>总是要记录些什么……<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h2><ul>
+<li><a href="https://zhycarge.github.io/friends-links/">友人帐</a></li>
+</ul>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><p>后续可能会考虑更换方法，等待后续进一步学习NexT与Hexo对于传值内容及相关自定义页面的设立。。。</p>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>NexT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在博文中实现提示框</title>
+    <url>/2024/12/09/2024-12-09-%E5%9C%A8%E5%8D%9A%E6%96%87%E4%B8%AD%E5%AE%9E%E7%8E%B0%E6%8F%90%E7%A4%BA%E6%A1%86/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="转载说明"><a href="#转载说明" class="headerlink" title="转载说明"></a>转载说明</h1><p>该博文为转载博文，转载来源为：<a href="https://jinnsjj.github.io/uncategorized/hexo-next-note/">在hexo-NexT中插入note提示块</a></p>
+<span id="more"></span>
+
+<h1 id="原文摘要"><a href="#原文摘要" class="headerlink" title="原文摘要"></a>原文摘要</h1><h2 id="提示框实现"><a href="#提示框实现" class="headerlink" title="提示框实现"></a>提示框实现</h2><div class="note default"><p>default 提示块标签</p>
+</div>
+
+<div class="note primary"><p>primary 提示块标签</p>
+</div>
+
+<div class="note success"><p>success 提示块标签</p>
+</div>
+
+<div class="note info"><p>info 提示块标签</p>
+</div>
+
+<div class="note warning"><p>warning 提示块标签</p>
+</div>
+
+<div class="note danger"><p>danger 提示块标签</p>
+</div>
+
+<p>代码：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">&#123;% note default %&#125;</span><br><span class="line">default 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note primary %&#125;</span><br><span class="line">primary 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note success %&#125;</span><br><span class="line">success 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note info %&#125;</span><br><span class="line">info 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note warning %&#125;</span><br><span class="line">warning 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note danger %&#125;</span><br><span class="line">danger 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="选项卡实现"><a href="#选项卡实现" class="headerlink" title="选项卡实现"></a>选项卡实现</h2><div class="tabs" id="tab"><ul class="nav-tabs"><li class="tab active"><a href="#tab-1">tab 1</a></li><li class="tab"><a href="#tab-2">tab 2</a></li><li class="tab"><a href="#tab-3">A</a></li></ul><div class="tab-content"><div class="tab-pane active" id="tab-1"><p><strong>选项卡 1</strong> </p></div><div class="tab-pane" id="tab-2"><p><strong>选项卡 2</strong></p></div><div class="tab-pane" id="tab-3"><p><strong>选项卡 3</strong> 名字为A</p></div></div></div>
+
+<p>代码实现</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">&#123;% tabs tab,1 %&#125; 名字为tab，默认在第1个选项卡，如果是-1则隐藏</span><br><span class="line">&lt;!-- tab --&gt;</span><br><span class="line"><span class="strong">**选项卡 1**</span> </span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line">&lt;!-- tab --&gt;</span><br><span class="line"><span class="strong">**选项卡 2**</span></span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line">&lt;!-- tab A --&gt;</span><br><span class="line"><span class="strong">**选项卡 3**</span> 名字为A</span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line">&#123;% endtabs %&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="原文参考"><a href="#原文参考" class="headerlink" title="原文参考"></a>原文参考</h2><ul>
+<li><a href="https://reuixiy.github.io/technology/computer/computer-aided-art/2017/06/09/hexo-next-optimization.html">打造个性超赞博客Hexo+NexT+GithubPages的超深度优化</a></li>
+<li><a href="https://biueo.github.io/2018/01/11/Hexo-markdown%E4%BC%98%E9%9B%85%E5%86%99%E5%8D%9A%E5%AE%A2/">Hexo+markdown优雅写博客</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>Markdown</tag>
+        <tag>Hexo</tag>
+        <tag>转载</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo配置详解</title>
+    <url>/2024/12/09/Hexo%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下Hexo博客平台的相关配置信息，方便后续进行查找与自定义</p>
+<span id="more"></span> 
+
+<h1 id="前情摘要"><a href="#前情摘要" class="headerlink" title="前情摘要"></a>前情摘要</h1><p>所进行配置的Hexo平台版本为<code>7.3.0</code></p>
+<p>本篇文章说明内容大量节选于<a href="https://hexo.io/docs/configuration.html">官方文档教程</a>，但由于官方文档后面存在更新文档的要求，因此这里只做摘要，不保证能完全实现功能。</p>
+<h1 id="配置信息详解"><a href="#配置信息详解" class="headerlink" title="配置信息详解"></a>配置信息详解</h1><h2 id="文件中存在的"><a href="#文件中存在的" class="headerlink" title="文件中存在的"></a>文件中存在的</h2><h5 id="前缀"><a href="#前缀" class="headerlink" title="前缀"></a>前缀</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Hexo Configuration</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/configuration.html</span></span><br><span class="line"><span class="comment">## Source: https://github.com/hexojs/hexo/</span></span><br></pre></td></tr></table></figure>
+
+<p>官网配置文档信息，还有项目GitHub地址</p>
+<h5 id="网站标题等"><a href="#网站标题等" class="headerlink" title="网站标题等"></a>网站标题等</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">ZHYCarge的个人博客</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;&#x27;</span> </span><br><span class="line"><span class="attr">description:</span> <span class="string">&#x27;总是要留下些什么&#x27;</span>	</span><br><span class="line"><span class="attr">keywords:</span> </span><br><span class="line"><span class="attr">author:</span> <span class="string">ZHYCarge</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span></span><br><span class="line"><span class="attr">timezone:</span> <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>title</code></td>
+<td>网站主标题</td>
+</tr>
+<tr>
+<td align="center"><code>subtitle</code></td>
+<td>网站副标题，在主标题下面</td>
+</tr>
+<tr>
+<td align="center"><code>description</code></td>
+<td>个人描述，出现在博客作者下面</td>
+</tr>
+<tr>
+<td align="center"><code>keywords</code></td>
+<td>关键词，支持多个值进行输入。应该是搜索引擎索引使用（猜测）</td>
+</tr>
+<tr>
+<td align="center"><code>author</code></td>
+<td>博客平台作者（如果在博文中不指定作者名字，则默认为这个）</td>
+</tr>
+<tr>
+<td align="center"><code>language</code></td>
+<td>博客平台网站语言，使用<a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">2 个字母的 ISO-639-1 代码</a>或其<a href="https://hexo.io/docs/internationalization">变体</a>（可选）。默认<code>en</code>，由于是中文平台，修改为<code>zh-CN</code></td>
+</tr>
+<tr>
+<td align="center"><code>timezone</code></td>
+<td>平台时区信息，可以<a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">点我查到更多</a>，国内应为<code>Asia/Shanghai</code>代表北京时间</td>
+</tr>
+</tbody></table>
+<h5 id="博文URL配置"><a href="#博文URL配置" class="headerlink" title="博文URL配置"></a>博文URL配置</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://zhycarge.github.io/</span> </span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:title/</span></span><br><span class="line"><span class="attr">permalink_defaults:</span></span><br><span class="line"><span class="attr">pretty_urls:</span></span><br><span class="line">  <span class="attr">trailing_index:</span> <span class="literal">true</span> <span class="comment"># Set to false to remove trailing &#x27;index.html&#x27; from permalinks</span></span><br><span class="line">  <span class="attr">trailing_html:</span> <span class="literal">true</span> <span class="comment"># Set to false to remove trailing &#x27;.html&#x27; from permalinks</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>url</code></td>
+<td>博客站点的URL信息，后续文章索引链接都会编辑为这个</td>
+</tr>
+<tr>
+<td><code>permalink</code></td>
+<td>文章的永久链接地址。方便引用文章等。默认为<code>年/月/日/文章标题</code></td>
+</tr>
+<tr>
+<td><code>root</code>（未提及）</td>
+<td>网站的根目录信息。根据<a href="https://hexo.io/docs/configuration.html#:~:text=true-,%E5%AD%90%E7%9B%AE%E5%BD%95%E4%B8%AD%E7%9A%84%E7%BD%91%E7%AB%99,-%E5%A6%82%E6%9E%9C%E6%82%A8%E7%9A%84">官网所诉</a>：如果您的网站位于子目录中（例如<code>http://example.org/blog</code>），则设置<code>url</code>为<code>http://example.org/blog</code>并设置<code>root</code>为<code>/blog/</code>。</td>
+</tr>
+<tr>
+<td><code>permalink_defaults</code></td>
+<td>永久链接中每个段的默认值，若修改<code>permalink</code>生成格式，可能需要该参数</td>
+</tr>
+<tr>
+<td><code>pretty_urls.trailing_index</code></td>
+<td>美化URL格式，删除尾随的<code>index.html</code>URL显示内容。默认为<code>true</code>，对<code>index.html</code>内容进行显示。<a href="https://hexo.io/docs/configuration.html#:~:text=/blog/%E3%80%82-,%E4%BE%8B%E5%AD%90%EF%BC%9A,-%23%20%E4%BE%8B%E5%A6%82%20page.permalink">官网例子</a></td>
+</tr>
+<tr>
+<td><code>pretty_urls.trailing_html</code></td>
+<td>美化URL格式，显示后面尾随的<code>.html</code>显示内容，对<code>index.html</code>不适用。默认为<code>true</code></td>
+</tr>
+</tbody></table>
+<h5 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Directory</span></span><br><span class="line"><span class="attr">source_dir:</span> <span class="string">source</span></span><br><span class="line"><span class="attr">public_dir:</span> <span class="string">public</span></span><br><span class="line"><span class="attr">tag_dir:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">archive_dir:</span> <span class="string">archives</span></span><br><span class="line"><span class="attr">category_dir:</span> <span class="string">categories</span></span><br><span class="line"><span class="attr">code_dir:</span> <span class="string">downloads/code</span></span><br><span class="line"><span class="attr">i18n_dir:</span> <span class="string">:lang</span></span><br><span class="line"><span class="attr">skip_render:</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>source_dir</code></td>
+<td>源文件夹。内容存储的位置。文章存放文件夹一般为<code>_posts</code></td>
+</tr>
+<tr>
+<td><code>public_dir</code></td>
+<td>公共文件夹，在其中生成静态网站，文件夹中的内容可对外展示</td>
+</tr>
+<tr>
+<td><code>tag_dir</code></td>
+<td>标签目录。一般在<code>source</code>文件夹下创建<code>tags</code>文件夹并附一个<code>index.md</code>文件来进行标签目录渲染</td>
+</tr>
+<tr>
+<td><code>archive_dir</code></td>
+<td>文章存档目录。暂不知道有什么用处。初步想法是与<code>Hexo admin</code>进行配套使用</td>
+</tr>
+<tr>
+<td><code>category_dir</code></td>
+<td>分类目录。一般在<code>source</code>文件夹下创建<code>categories</code>文件夹并附一个<code>index.md</code>文件来进行分类目录渲染</td>
+</tr>
+<tr>
+<td><code>code_dir</code></td>
+<td>包含代码目录。暂不知道有何用处。</td>
+</tr>
+<tr>
+<td><code>i18n_dir</code></td>
+<td>i18n 目录。应该是用于国际化适配作用</td>
+</tr>
+<tr>
+<td><code>skip_render</code></td>
+<td>会将指定文件内容或者文件夹信息复制到<code>public</code>目录下，不进行渲染。可以使用<a href="https://github.com/micromatch/micromatch#extended-globbing">glob 表达式</a>进行路径匹配。<a href="https://hexo.io/docs/configuration.html#:~:text=%E8%BF%9B%E8%A1%8C%E8%B7%AF%E5%BE%84%E5%8C%B9%E9%85%8D%E3%80%82-,%E4%BE%8B%E5%AD%90%EF%BC%9A,-skip_render%3A%20%20%22mypage">官网示例</a></td>
+</tr>
+</tbody></table>
+<h5 id="写作部分"><a href="#写作部分" class="headerlink" title="写作部分"></a>写作部分</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into titlecase</span></span><br><span class="line"><span class="attr">external_link:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># Open external links in new tab</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">site</span> <span class="comment"># Apply to the whole site</span></span><br><span class="line">  <span class="attr">exclude:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="attr">filename_case:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">render_drafts:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">relative_link:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">future:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">syntax_highlighter:</span> <span class="string">highlight.js</span></span><br><span class="line"><span class="attr">highlight:</span></span><br><span class="line">  <span class="attr">line_number:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">auto_detect:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">tab_replace:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">  <span class="attr">wrap:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">hljs:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">prismjs:</span></span><br><span class="line">  <span class="attr">preprocess:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">line_number:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">tab_replace:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>new_post_name</code></td>
+<td>新博文提交的名字</td>
+</tr>
+<tr>
+<td><code>default_layout</code></td>
+<td>默认布局方式。暂不知道有何别的方式</td>
+</tr>
+<tr>
+<td><code>titlecase</code></td>
+<td>将标题转换为标题首字母大写？默认<code>false</code>，可能跟英文书写方式有关。。</td>
+</tr>
+<tr>
+<td><code>external_link.enable</code></td>
+<td>是否用新标签打开外部链接，默认为<code>true</code></td>
+</tr>
+<tr>
+<td><code>external_link.field</code></td>
+<td>适用于整个站点<code>site</code>还是仅适用于博文<code>post</code></td>
+</tr>
+<tr>
+<td><code>external_link.exclude</code></td>
+<td>排除哪几个网址。需要添加子域信息</td>
+</tr>
+<tr>
+<td><code>filename_case</code></td>
+<td>将文件名转换为大小写。禁用：<code>0</code>，<code>1</code>小写，<code>2</code>大写</td>
+</tr>
+<tr>
+<td><code>render_drafts</code></td>
+<td>是否显示草稿博文（感觉就是与<code>Hexo admin</code>使用）</td>
+</tr>
+<tr>
+<td><code>post_asset_folder</code></td>
+<td>启用<a href="https://hexo.io/docs/asset-folders">资产文件夹</a>。能够存放少量照片或文件，默认为 <code>false</code></td>
+</tr>
+<tr>
+<td><code>relative_link</code></td>
+<td>建立相对于根文件夹的链接（感觉像使用相对引用进行）未查证</td>
+</tr>
+<tr>
+<td><code>future</code></td>
+<td>是否显示未来的帖子（帖子上写的时间还在未来）默认为<code>true</code></td>
+</tr>
+<tr>
+<td><code>syntax_highlighter</code></td>
+<td>代码块语法高亮设置，使用指南见<a href="https://hexo.io/docs/syntax-highlight">语法高亮部分</a></td>
+</tr>
+<tr>
+<td><code>highlight</code></td>
+<td>代码块语法高亮设置，使用指南见<a href="https://hexo.io/docs/syntax-highlight#Highlight-js">Highlight.js部分</a></td>
+</tr>
+<tr>
+<td><code>prismjs</code></td>
+<td>代码块语法高亮设置，使用指南见<a href="https://hexo.io/docs/syntax-highlight#PrismJS">PrismJS部分</a></td>
+</tr>
+</tbody></table>
+<h5 id="主页设置"><a href="#主页设置" class="headerlink" title="主页设置"></a>主页设置</h5><p>生成帖子存档，由<a href="https://github.com/hexojs/hexo-generator-index">hexo-generator-index提供支持</a></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Home page setting</span></span><br><span class="line"><span class="comment"># path: Root path for your blogs index page. (default = &#x27;&#x27;)</span></span><br><span class="line"><span class="comment"># per_page: Posts displayed per page. (0 = disable pagination)</span></span><br><span class="line"><span class="comment"># order_by: Posts order. (Order by date descending by default)</span></span><br><span class="line"><span class="attr">index_generator:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">  <span class="attr">per_page:</span> <span class="number">10</span></span><br><span class="line">  <span class="attr">order_by:</span> <span class="string">-date</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>index_generator.path</code></td>
+<td>博客索引页的根路径</td>
+</tr>
+<tr>
+<td><code>index_generator.per_page</code></td>
+<td>每页显示的帖子数量</td>
+</tr>
+<tr>
+<td><code>index_generator.order_by</code></td>
+<td>帖子排序。默认按日期降序排列（从新到旧）</td>
+</tr>
+</tbody></table>
+<h5 id="分类和标签"><a href="#分类和标签" class="headerlink" title="分类和标签"></a>分类和标签</h5><p>不知道有什么别的用途emmm有待进一步学习</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Category &amp; Tag</span></span><br><span class="line"><span class="attr">default_category:</span> <span class="string">uncategorized</span></span><br><span class="line"><span class="attr">category_map:</span></span><br><span class="line"><span class="attr">tag_map:</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>default_category</code></td>
+<td>默认类别</td>
+</tr>
+<tr>
+<td><code>category_map</code></td>
+<td>覆盖类别 slug</td>
+</tr>
+<tr>
+<td><code>tag_map</code></td>
+<td>覆盖标签</td>
+</tr>
+</tbody></table>
+<h5 id="Metadata-数据信息"><a href="#Metadata-数据信息" class="headerlink" title="Metadata 数据信息"></a>Metadata 数据信息</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Metadata elements</span></span><br><span class="line"><span class="comment">## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta</span></span><br><span class="line"><span class="attr">meta_generator:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>在官方文档中并未进行提及有关内容，查看相关文档，默认将其打开吧，应该是关于网站渲染的内容，有待后续了解</p>
+<h5 id="日期与时间"><a href="#日期与时间" class="headerlink" title="日期与时间"></a>日期与时间</h5><p>Hexo 使用<a href="http://momentjs.com/">Moment.js</a>来处理日期</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Date / Time format</span></span><br><span class="line"><span class="comment">## Hexo uses Moment.js to parse and display date</span></span><br><span class="line"><span class="comment">## You can customize the date format as defined in</span></span><br><span class="line"><span class="comment">## http://momentjs.com/docs/#/displaying/format/</span></span><br><span class="line"><span class="attr">date_format:</span> <span class="string">YYYY-MM-DD</span></span><br><span class="line"><span class="attr">time_format:</span> <span class="string">HH:mm:ss</span></span><br><span class="line"><span class="comment">## updated_option supports &#x27;mtime&#x27;, &#x27;date&#x27;, &#x27;empty&#x27;</span></span><br><span class="line"><span class="attr">updated_option:</span> <span class="string">&#x27;mtime&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>date_format</code></td>
+<td>日期格式</td>
+</tr>
+<tr>
+<td><code>time_format</code></td>
+<td>时间格式</td>
+</tr>
+<tr>
+<td><code>updated_option</code></td>
+<td>更新时间格式。当文章中不存在<code>updated</code>值时使用的默认值</td>
+</tr>
+</tbody></table>
+<h5 id="文章分页"><a href="#文章分页" class="headerlink" title="文章分页"></a>文章分页</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Pagination</span></span><br><span class="line"><span class="comment">## Set per_page to 0 to disable pagination</span></span><br><span class="line"><span class="attr">per_page:</span> <span class="number">10</span></span><br><span class="line"><span class="attr">pagination_dir:</span> <span class="string">page</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>per_page</code></td>
+<td>每页能存放多少篇文章，为<code>0</code>代表禁用</td>
+</tr>
+<tr>
+<td><code>pagination_dir</code></td>
+<td>URL格式信息</td>
+</tr>
+</tbody></table>
+<h5 id="包括、排除文件"><a href="#包括、排除文件" class="headerlink" title="包括、排除文件"></a>包括、排除文件</h5><p>使用以下选项明确处理或忽略某些文件&#x2F;文件夹。支持使用<a href="https://github.com/micromatch/micromatch#extended-globbing">glob 表达式</a>进行路径匹配。</p>
+<p><code>include</code>与<code>exclude</code>选项仅适用于<code>source/</code>文件夹，而<code>ignore</code>选项适用于所有文件夹。</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Include / Exclude file(s)</span></span><br><span class="line"><span class="comment">## include:/exclude: options only apply to the &#x27;source/&#x27; folder</span></span><br><span class="line"><span class="attr">include:</span></span><br><span class="line"><span class="attr">exclude:</span></span><br><span class="line"><span class="attr">ignore:</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>include</code></td>
+<td>包括隐藏文件（包括名称以下划线开头的文件&#x2F;文件夹，但有例外*）</td>
+</tr>
+<tr>
+<td><code>exclude</code></td>
+<td>排除文件&#x2F;文件夹</td>
+</tr>
+<tr>
+<td><code>ignore</code></td>
+<td>忽略文件&#x2F;文件夹</td>
+</tr>
+</tbody></table>
+<p><a href="https://hexo.io/docs/configuration.html#:~:text=%E6%96%87%E4%BB%B6/%E6%96%87%E4%BB%B6%E5%A4%B9-,%E4%BE%8B%E5%AD%90%EF%BC%9A,-%23%20%E5%8C%85%E5%90%AB/%E6%8E%92%E9%99%A4%E6%96%87%E4%BB%B6">官网示例</a></p>
+<h5 id="插件和主题设置"><a href="#插件和主题设置" class="headerlink" title="插件和主题设置"></a>插件和主题设置</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure>
+
+<p>设置主题内容或者插件信息</p>
+<h5 id="部署设置"><a href="#部署设置" class="headerlink" title="部署设置"></a>部署设置</h5><p><a href="https://hexo.io/docs/one-command-deployment#:~:text=more%20deployment%20plugins.-,Git,-Install%20hexo%2Ddeployer">参考这段</a>进行设置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">type:</span> <span class="string">&#x27;git&#x27;</span></span><br><span class="line">    <span class="attr">repo:</span> <span class="string">git@github.com:ZHYCarge/ZHYCarge.github.io.git</span></span><br><span class="line">    <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="其它内容"><a href="#其它内容" class="headerlink" title="其它内容"></a>其它内容</h1><h2 id="标签文件夹中index-md文件内容信息"><a href="#标签文件夹中index-md文件内容信息" class="headerlink" title="标签文件夹中index.md文件内容信息"></a>标签文件夹中<code>index.md</code>文件内容信息</h2><p>未配置其它内容，仅支持默认情况的话，应为：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2024-12-09 09:53:46</span><br><span class="line"><span class="section">type: &quot;tags&quot;</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></table></figure>
+
+<p>时间可修改为创建的时间</p>
+<h2 id="分类文件夹中index-md文件内容信息"><a href="#分类文件夹中index-md文件内容信息" class="headerlink" title="分类文件夹中index.md文件内容信息"></a>分类文件夹中<code>index.md</code>文件内容信息</h2><p>未配置其它内容，仅支持默认情况的话，应为：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2024-12-09 09:53:46</span><br><span class="line"><span class="section">type: &quot;categories&quot;</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></table></figure>
+
+<p>时间可修改为创建的时间</p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://hexo.io/docs/configuration.html">官方文档教程</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenSSL之创建中间证书</title>
+    <url>/2024/12/22/OpenSSL%E4%B9%8B%E5%88%9B%E5%BB%BA%E4%B8%AD%E9%97%B4%E8%AF%81%E4%B9%A6/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>OpenSSL系列的第二集。</p>
+<span id="more"></span>
+
+<p>创建完根证书之后，便可以继续创建中间证书信息了，这里以<code>MidCA</code>作为中间证书命名。</p>
+<h2 id="为什么要使用中间证书？"><a href="#为什么要使用中间证书？" class="headerlink" title="为什么要使用中间证书？"></a>为什么要使用中间证书？</h2><blockquote>
+<p>通过使用中间证书，<strong>可以减少根密钥的暴露风险，因为即使中间密钥被泄露，影响的范围也仅限于由该中间证书签发的证书</strong>。 密钥轮换：中间证书的密钥可以定期更换，而不需要更换根密钥。 这样可以保持根证书的长期稳定性，同时确保整个系统的安全性。</p>
+<p>–<a href="https://www.cnblogs.com/arnoldlu/p/18401403">根证书、中间证书、目标证书，以及签名和验签(基于openssl) </a></p>
+</blockquote>
+<h2 id="版本说明"><a href="#版本说明" class="headerlink" title="版本说明"></a>版本说明</h2><ul>
+<li>OpenSSL版本为3.0.13</li>
+</ul>
+<h2 id="专题跳转"><a href="#专题跳转" class="headerlink" title="专题跳转"></a>专题跳转</h2><ul>
+<li><a href="https://zhycarge.github.io/tags/OpenSSL/">OpenSSL系列文章</a></li>
+</ul>
+<h1 id="创建属于自己的根证书（快捷指令版）"><a href="#创建属于自己的根证书（快捷指令版）" class="headerlink" title="创建属于自己的根证书（快捷指令版）"></a>创建属于自己的根证书（快捷指令版）</h1><p>与创建根证书一致，这里记录着需要创建中间证书所需要的快捷指令方式，方便无脑CV，如需了解更多请前往 <a href="#%E5%88%9B%E5%BB%BA%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E4%B8%AD%E9%97%B4%E8%AF%81%E4%B9%A6%EF%BC%88%E4%B8%80%E6%AD%A5%E6%AD%A5%E6%93%8D%E4%BD%9C%E7%89%88%EF%BC%89">创建属于自己的中间证书（一步步操作版）</a></p>
+<h2 id="创建中间证书的文件夹及数据库"><a href="#创建中间证书的文件夹及数据库" class="headerlink" title="创建中间证书的文件夹及数据库"></a>创建中间证书的文件夹及数据库</h2><p>创建<code>2.sh</code>文件，并加入如下代码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># 创建中间证书所需要的全部文件信息</span></span><br><span class="line"><span class="comment"># 创建签发证书位置</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d MidCA/crt ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p MidCA/crt</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 创建根证书数据文件点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d MidCA/db ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p MidCA/db</span><br><span class="line">    <span class="built_in">touch</span> MidCA/db/index</span><br><span class="line">    openssl rand -hex 16 &gt; MidCA/db/serial</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 创建密钥存放点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d MidCA/key ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p MidCA/key</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 创建中间证书新证书记录存放点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d MidCA/newcerts ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p MidCA/newcerts</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>之后<code>./2.sh</code>进行运行配置文件</p>
+<p>创建中间证书配置文件<code>touch ./conf/MidCA.cnf</code>，并添加如下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#</span><br><span class="line"># OpenSSL example configuration file.</span><br><span class="line"># See doc/man5/config.pod for more info.</span><br><span class="line">#</span><br><span class="line"># 整个项目的根目录，默认为当下</span><br><span class="line">HOME			= .</span><br><span class="line"></span><br><span class="line">####################################################################</span><br><span class="line">[ ca ]</span><br><span class="line">default_ca	= CA_default		# The default ca section</span><br><span class="line"></span><br><span class="line">####################################################################</span><br><span class="line">[ CA_default ]</span><br><span class="line">dir = ./MidCA</span><br><span class="line">database	= $dir/db/index.txt	# 数据文件存放点(必要)</span><br><span class="line">new_certs_dir	= $dir/newcerts		# 存放新证书 （必要）</span><br><span class="line">private_key	= ./KEY/Mid_CA.key # 私钥地址 (必要)</span><br><span class="line">serial		= $dir/db/serial 		# 当前序列号(必要)</span><br><span class="line">certificate = RootCA/crt/Mid_CA.crt # 根证书签发文件位置</span><br><span class="line">name_opt 	= ca_default		# Subject Name options</span><br><span class="line">cert_opt 	= ca_default		# Certificate field options</span><br><span class="line">crl_extensions = crl_ext    # 添加撤销证书功能</span><br><span class="line">default_days	= 365			# 默认天数</span><br><span class="line">default_crl_days= 30			# 默认30天获取撤销证书信息</span><br><span class="line">default_md	= sha256		# 公钥默认加密方式</span><br><span class="line">preserve	= no			# keep passed DN ordering</span><br><span class="line">policy		= policy_match</span><br><span class="line"></span><br><span class="line"># For the CA policy</span><br><span class="line">[ policy_match ]</span><br><span class="line">countryName		= match</span><br><span class="line">stateOrProvinceName	= match</span><br><span class="line">organizationName	= match</span><br><span class="line">organizationalUnitName	= optional</span><br><span class="line">commonName		= supplied</span><br><span class="line">emailAddress		= optional</span><br><span class="line"></span><br><span class="line">####################################################################</span><br><span class="line">[ req ]</span><br><span class="line">default_bits		= 2048</span><br><span class="line">prompt = no</span><br><span class="line">distinguished_name	= req_distinguished_name</span><br><span class="line">string_mask = pkix</span><br><span class="line"></span><br><span class="line">[ req_distinguished_name ]</span><br><span class="line">C = CN</span><br><span class="line">ST   = TianJin</span><br><span class="line">L    = TJ</span><br><span class="line">O    = ZHYCarge</span><br><span class="line">OU   = ZHYCarge Mid CA</span><br><span class="line">CN   = ZHYCarge Mid CA</span><br><span class="line">emailAddress   = ZHYCarge@zhycarge.top</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[ crl_ext ]</span><br><span class="line">authorityKeyIdentifier=keyid:always</span><br><span class="line"></span><br><span class="line">[ web1_cert ]</span><br><span class="line"># www.zhycarge.top config</span><br><span class="line">basicConstraints = CA:FALSE</span><br><span class="line">subjectKeyIdentifier = hash</span><br><span class="line">authorityKeyIdentifier = keyid,issuer:always</span><br><span class="line">keyUsage = critical, digitalSignature, keyEncipherment</span><br><span class="line">extendedKeyUsage = serverAuth</span><br><span class="line">subjectAltName = DNS:www.zhycarge.top</span><br><span class="line">authorityInfoAccess=caIssuers;URI:http://ca.zhycarge.top/crt/Mid_CA.crt</span><br><span class="line">crlDistributionPoints = URI:http://ca.zhycarge.top/crl/crl-Mid.crl</span><br></pre></td></tr></table></figure>
+
+<p>生成中间证书私钥：</p>
+<p><code>openssl genrsa -aes256 -out KEY/Mid_CA.key 4096</code></p>
+<p>生成中间证书签名请求：</p>
+<p><code>openssl req -new -config ./conf/MidCA.cnf -sha256 -key /KEY/Mid_CA.key -out ./RootCA/csr/Mid_CA.csr</code></p>
+<p>签发证书：</p>
+<p><code>openssl ca -config ./conf/Root_CA.cnf -extensions v3_Web_ca -days 365 -notext -md sha256 -in ./RootCA/csr/Mid_CA.csr -out ./RootCA/crt/Web_CA.crt</code></p>
+<p>至此证书无脑化生成完毕。</p>
+<h1 id="创建属于自己的中间证书（一步步操作版）"><a href="#创建属于自己的中间证书（一步步操作版）" class="headerlink" title="创建属于自己的中间证书（一步步操作版）"></a>创建属于自己的中间证书（一步步操作版）</h1><p>此处记录详细讲解内容，由于创建证书命令与根证书那里基本相同，因此不过多赘述</p>
+<h2 id="创建数据库及相关存储文件夹"><a href="#创建数据库及相关存储文件夹" class="headerlink" title="创建数据库及相关存储文件夹"></a>创建数据库及相关存储文件夹</h2><p><a href="##%E5%88%9B%E5%BB%BA%E4%B8%AD%E9%97%B4%E8%AF%81%E4%B9%A6%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9%E5%8F%8A%E6%95%B0%E6%8D%AE%E5%BA%93">创建中间证书的文件夹及数据库</a></p>
+<h2 id="创建中间证书的配置文件"><a href="#创建中间证书的配置文件" class="headerlink" title="创建中间证书的配置文件"></a>创建中间证书的配置文件</h2><p>此处内容一步步复制即可，相关讲解已附</p>
+<p>创建中间证书配置文件<code>touch ./conf/MidCA.cnf</code>，并添加如下内容：</p>
+<h3 id="CA头"><a href="#CA头" class="headerlink" title="CA头"></a>CA头</h3><p>没什么可以讲解的，默认配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#</span><br><span class="line"># OpenSSL example configuration file.</span><br><span class="line"># See doc/man5/config.pod for more info.</span><br><span class="line">#</span><br><span class="line"># 整个项目的根目录，默认为当下</span><br><span class="line">HOME			= .</span><br><span class="line"></span><br><span class="line">####################################################################</span><br><span class="line">[ ca ]</span><br><span class="line">default_ca	= CA_default		# The default ca section</span><br><span class="line"></span><br><span class="line">####################################################################</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书配置"><a href="#证书配置" class="headerlink" title="证书配置"></a>证书配置</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ CA_default ]</span><br><span class="line">dir = ./MidCA # 与证书配套的配置文件夹</span><br><span class="line">database	= $dir/db/index.txt	# 证书签发记录数据库</span><br><span class="line">new_certs_dir	= $dir/newcerts		# 存放生成证书签名信息</span><br><span class="line">private_key	= ./KEY/Mid_CA.key # 当前证书私钥地址</span><br><span class="line">serial		= $dir/db/serial 		# 生成随机数，根据随机数进行索引记录</span><br><span class="line">certificate = ./RootCA/crt/Mid_CA.crt # 当前证书签发文件位置</span><br><span class="line">name_opt 	= ca_default		# 默认</span><br><span class="line">cert_opt 	= ca_default		# 默认</span><br><span class="line">crl_extensions = crl_ext    # 添加撤销证书功能，与后续功能块联动</span><br><span class="line">default_days	= 365			# 默认证书天数</span><br><span class="line">default_crl_days= 30			# 默认更新撤销证书实践</span><br><span class="line">default_md	= sha256		# 私钥默认加密方式</span><br><span class="line">preserve	= no			# 不知道，暂存</span><br><span class="line">policy		= policy_match  # 证书创建规则匹配，与后续功能块联动</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书规则匹配"><a href="#证书规则匹配" class="headerlink" title="证书规则匹配"></a>证书规则匹配</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># For the CA policy</span><br><span class="line"># 前三个match 要求签发证书与当前CA一致，optional为可选项，supplied会在创建时进行输入</span><br><span class="line">[ policy_match ]</span><br><span class="line">countryName		= match</span><br><span class="line">stateOrProvinceName	= match</span><br><span class="line">organizationName	= match</span><br><span class="line">organizationalUnitName	= optional</span><br><span class="line">commonName		= supplied</span><br><span class="line">emailAddress		= optional</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书生成参数"><a href="#证书生成参数" class="headerlink" title="证书生成参数"></a>证书生成参数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ req ]</span><br><span class="line">default_bits = 2048 # 证书加密位数</span><br><span class="line">prompt = no # 不需要显示提示信息，直接按照参数信息进行键入CN信息等</span><br><span class="line">distinguished_name	= req_distinguished_name # 参数信息，后面功能块联动</span><br><span class="line">string_mask = pkix	# 如果是utf8only，则键入英文可能会出现证书规则匹配错误，具体查看后面疑难杂症章节</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书参数信息"><a href="#证书参数信息" class="headerlink" title="证书参数信息"></a>证书参数信息</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ req_distinguished_name ]</span><br><span class="line">C = CN	# 国家代码，默认2位</span><br><span class="line">ST   = TianJin	# 所在州省</span><br><span class="line">L    = TJ	# 所在市 </span><br><span class="line">O    = ZHYCarge	# 组织名称</span><br><span class="line">OU   = ZHYCarge Mid CA	# 组织唯一名称</span><br><span class="line">CN   = ZHYCarge Mid CA	# 通用名称，要求唯一</span><br><span class="line">emailAddress   = ZHYCarge@zhycarge.top	# 邮箱地址</span><br></pre></td></tr></table></figure>
+
+<h3 id="用户证书签发参数"><a href="#用户证书签发参数" class="headerlink" title="用户证书签发参数"></a>用户证书签发参数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ web1_cert ]</span><br><span class="line"># www.zhycarge.top config # 自己做的备忘记录，记得这个参数对应的是哪个证书</span><br><span class="line">basicConstraints = CA:FALSE # 是终端证书，不可再次签发证书</span><br><span class="line">subjectKeyIdentifier = hash</span><br><span class="line">authorityKeyIdentifier = keyid,issuer:always</span><br><span class="line">keyUsage = critical, digitalSignature, keyEncipherment # 证书用途(在根证书讲解里有，查看之前博文)</span><br><span class="line">extendedKeyUsage = serverAuth	# 证书用途</span><br><span class="line">subjectAltName = DNS:www.zhycarge.top	# SAN信息</span><br><span class="line">authorityInfoAccess=caIssuers;URI:http://ca.zhycarge.top/crt/Mid_CA.crt # AIA信息(在根证书讲解里有，查看之前博文)</span><br><span class="line">crlDistributionPoints = URI:http://ca.zhycarge.top/crl/crl-Mid.crl # CRL信息(在根证书讲解里有，查看之前博文)</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书吊销列表参数"><a href="#证书吊销列表参数" class="headerlink" title="证书吊销列表参数"></a>证书吊销列表参数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ crl_ext ]</span><br><span class="line">authorityKeyIdentifier=keyid:always	# 与根证书同</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="subjectAltName讲解"><a href="#subjectAltName讲解" class="headerlink" title="subjectAltName讲解"></a><code>subjectAltName</code>讲解</h3><p>现已知如果证书不添加这个值，在局域网中IP地址使用Chrome访问时会出现报错：缺少SAN。因此增加此项。</p>
+<blockquote>
+<p><code>subjectAltName</code>（SAN），是一项对<a href="https://zh.wikipedia.org/wiki/X.509">X.509</a>的扩展，它允许在安全证书中使用<code>subjectAltName</code>字段将多种值与证书关联[<a href="https://zh.wikipedia.org/wiki/%E4%B8%BB%E9%A2%98%E5%A4%87%E7%94%A8%E5%90%8D%E7%A7%B0#cite_note-1">1]</a>，这些值被称为主题备用名称。名称可包括：[<a href="https://zh.wikipedia.org/wiki/%E4%B8%BB%E9%A2%98%E5%A4%87%E7%94%A8%E5%90%8D%E7%A7%B0#cite_note-2">2]</a></p>
+<ul>
+<li><a href="https://zh.wikipedia.org/w/index.php?title=EAI&action=edit&redlink=1">电子邮件地址</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/IP%E5%9C%B0%E5%9D%80">IP地址</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E7%B5%B1%E4%B8%80%E8%B3%87%E6%BA%90%E6%A8%99%E8%AA%8C%E7%AC%A6">统一资源标志符</a>（URI）</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%9F%9F%E5%90%8D%E7%B3%BB%E7%BB%9F">DNS名称</a>（通常也在主证书的主题字段中提供为公共名称<a href="https://zh.wikipedia.org/wiki/%E8%BD%BB%E5%9E%8B%E7%9B%AE%E5%BD%95%E8%AE%BF%E9%97%AE%E5%8D%8F%E8%AE%AE">RDN</a>。）</li>
+<li>目录名称（主题中<a href="https://zh.wikipedia.org/wiki/%E8%BD%BB%E5%9E%8B%E7%9B%AE%E5%BD%95%E8%AE%BF%E9%97%AE%E5%8D%8F%E8%AE%AE">唯一名称</a>的备用名称）</li>
+<li>其他通用名称，在已注册的[<a href="https://zh.wikipedia.org/wiki/%E4%B8%BB%E9%A2%98%E5%A4%87%E7%94%A8%E5%90%8D%E7%A7%B0#cite_note-3">3]</a><a href="https://zh.wikipedia.org/w/index.php?title=%E5%AF%B9%E8%B1%A1%E6%A0%87%E8%AF%86%E7%AC%A6&action=edit&redlink=1">对象标识符</a>后提供一个值。</li>
+</ul>
+<p>– <a href="https://zh.wikipedia.org/wiki/%E4%B8%BB%E9%A2%98%E5%A4%87%E7%94%A8%E5%90%8D%E7%A7%B0">subjectAltName wiki</a></p>
+</blockquote>
+<p>信息标注说明：</p>
+<p>可以添加多个，使用<code>,</code>分开，应该可以使用通配符，如<code>DNS:*.zhycarge.top</code></p>
+<ul>
+<li>IP地址标注：<code>IP:127.0.0.1</code></li>
+<li>电子邮件地址：<code>email:zhycarge@zhycarge.top</code></li>
+<li>域名信息：<code>DNS:www.zhycarge.top</code></li>
+</ul>
+<h2 id="生成中间证书密钥"><a href="#生成中间证书密钥" class="headerlink" title="生成中间证书密钥"></a>生成中间证书密钥</h2><p><code>openssl genrsa -aes256 -out ./KEY/Mid_CA.key 4096</code></p>
+<h2 id="生成CSR文件"><a href="#生成CSR文件" class="headerlink" title="生成CSR文件"></a>生成CSR文件</h2><p><code>openssl req -new -config ./conf/MidCA.cnf -sha256 -key ./KEY/Mid_CA.key -out ./RootCA/csr/Mid_CA.csr</code></p>
+<h2 id="生成中间证书"><a href="#生成中间证书" class="headerlink" title="生成中间证书"></a>生成中间证书</h2><p><code>openssl ca -config ./conf/Root_CA.cnf -extensions v3_Web_ca -days 365 -notext -md sha256 -in ./RootCA/csr/Mid_CA.csr -out ./RootCA/crt/Mid_CA.crt</code></p>
+<p>其中这里使用的配置文件便是根证书的配置文件，在使用根证书配置文件时同时也许访问根证书私钥与根证书文件，因此请确保根证书配置文件中根证书私钥和根证书文件路径有效。</p>
+<p>至此中间证书创建结束</p>
+<h1 id="其余操作"><a href="#其余操作" class="headerlink" title="其余操作"></a>其余操作</h1><h2 id="创建证书链"><a href="#创建证书链" class="headerlink" title="创建证书链"></a>创建证书链</h2><p>由于本教程搭建的证书链是通过AIA进行连接，因此在有网条件下签发证书时会自动连接好相关证书信息，但是如果是无网情况下需要签发证书链才能使用证书。（签发证书链过程可能会存在些许问题，暂由于使用AIA进行证书链生成，因此不再研究，若后续自身有需求或有人留言则会继续研究）</p>
+<p>命令如下，中间证书在上，根证书在下，生成证书链，生成证书链便可导入到局域网机器中进行安装验证书</p>
+<p><code>cat ./RootCA/crt/Mid_CA.crt ./RootCA/crt/RootCA.crt &gt; ./RootCA/crt/CA_Mid.crt</code></p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><p>暂无</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>OpenSSL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenSSL之创建根证书</title>
+    <url>/2024/12/18/OpenSSL%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%A0%B9%E8%AF%81%E4%B9%A6/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近想研究一下关于OpenSSL的相关知识，顺便想创建自己的一个根CA方便后续进行个人项目的各种证书签发工作。因此打算编写一份关于OpenSSL的专题，记录一下它的相关使用方法，为后续使用做准备。</p>
+<span id="more"></span>
+
+<p>所有操作均未考虑权限管理，如需引入权限管理，请移步<a href="(https://www.cnblogs.com/sparkdev/p/10369313.html)">^重点教程</a></p>
+<h2 id="什么是OpenSSL？"><a href="#什么是OpenSSL？" class="headerlink" title="什么是OpenSSL？"></a>什么是OpenSSL？</h2><blockquote>
+<p>在<a href="https://zh.wikipedia.org/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>上，<strong>OpenSSL</strong>是一个<a href="https://zh.wikipedia.org/wiki/%E9%96%8B%E6%94%BE%E5%8E%9F%E5%A7%8B%E7%A2%BC">开放源代码</a>的<a href="https://zh.wikipedia.org/wiki/%E8%BB%9F%E9%AB%94">软件</a><a href="https://zh.wikipedia.org/wiki/%E5%87%BD%E5%BC%8F%E5%BA%AB">函数库</a>包，应用程序可以使用这个包来进行安全通信，避免窃听，同时确认另一端连线者的身份。这个包广泛被应用在互联网的网页服务器上。</p>
+<p>–<a href="https://zh.wikipedia.org/wiki/OpenSSL">OpenSSL</a></p>
+</blockquote>
+<h2 id="版本说明"><a href="#版本说明" class="headerlink" title="版本说明"></a>版本说明</h2><ul>
+<li>OpenSSL版本为3.0.13</li>
+</ul>
+<h2 id="专题跳转"><a href="#专题跳转" class="headerlink" title="专题跳转"></a>专题跳转</h2><ul>
+<li><a href="https://zhycarge.github.io/tags/OpenSSL/">OpenSSL系列文章</a></li>
+</ul>
+<h1 id="创建属于自己的根证书（快捷指令版）"><a href="#创建属于自己的根证书（快捷指令版）" class="headerlink" title="创建属于自己的根证书（快捷指令版）"></a>创建属于自己的根证书（快捷指令版）</h1><p>这里记录着所有所需要的命令，如果想无脑用，则可以直接CV进行使用，如果想要了解更多有关的知识信息，那么请跳过该章节，跳转到<a href="#%E5%88%9B%E5%BB%BA%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E6%A0%B9%E8%AF%81%E4%B9%A6%EF%BC%88%E4%B8%80%E6%AD%A5%E6%AD%A5%E6%93%8D%E4%BD%9C%E7%89%88%EF%BC%89">创建属于自己的根证书（一步步操作版）</a></p>
+<p>以下操作默认证书存放为当前地址。</p>
+<p>创建<code>root.sh</code>文件，并在里面输入如下内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># 创建根证书所需要的全部文件信息</span></span><br><span class="line"><span class="comment"># 创建签发证书位置</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d RootCA/crt ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p RootCA/crt</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 创建根证书数据文件点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d RootCA/db ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p RootCA/db</span><br><span class="line">    <span class="built_in">touch</span> RootCA/db/index</span><br><span class="line">    openssl rand -hex 16 &gt; RootCA/db/serial</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 创建密钥存放点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d RootCA/key ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p RootCA/key</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 【总】创建过期证书生成点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d ./crl ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p ./crl</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 创建根证书新证书记录存放点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d RootCA/newcerts ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p RootCA/newcerts</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 【总】创建根证书、中间证书存放密钥点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d ./KEY ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p ./KEY</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 【总】创建根证书、中间证书配置点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d ./conf ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p ./conf</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>运行命令：<code>./root.sh</code></p>
+<p>创建根证书配置文件<code>touch ./conf/RootCA.cnf</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#</span><br><span class="line"># OpenSSL example configuration file.</span><br><span class="line"># See doc/man5/config.pod for more info.</span><br><span class="line">#</span><br><span class="line"># 整个项目的根目录，默认为当下</span><br><span class="line">HOME			= .</span><br><span class="line"></span><br><span class="line">####################################################################</span><br><span class="line">[ ca ]</span><br><span class="line">default_ca	= CA_default		# The default ca section</span><br><span class="line"></span><br><span class="line">####################################################################</span><br><span class="line">[ CA_default ]</span><br><span class="line">dir = ./RootCA</span><br><span class="line">database	= $dir/db/index.txt	# 数据文件存放点(必要)</span><br><span class="line">new_certs_dir	= $dir/newcerts		# 存放新证书 （必要）</span><br><span class="line">private_key	= ./KEY/RootCA.key # 私钥地址 (必要)</span><br><span class="line">serial		= $dir/db/serial 		# 当前序列号(必要)</span><br><span class="line">certificate = $dir/crt/RootCA.crt # 根证书签发文件位置</span><br><span class="line">name_opt 	= ca_default		# Subject Name options</span><br><span class="line">cert_opt 	= ca_default		# Certificate field options</span><br><span class="line">crl_extensions = crl_ext    # 添加撤销证书功能</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">default_days	= 365			# 默认天数</span><br><span class="line">default_crl_days= 30			# 默认30天获取撤销证书信息</span><br><span class="line">default_md	= sha256		# 公钥默认加密方式</span><br><span class="line">preserve	= no			# keep passed DN ordering</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">policy		= policy_match</span><br><span class="line"></span><br><span class="line"># For the CA policy</span><br><span class="line">[ policy_match ]</span><br><span class="line">countryName		= match</span><br><span class="line">stateOrProvinceName	= match</span><br><span class="line">organizationName	= match</span><br><span class="line">organizationalUnitName	= optional</span><br><span class="line">commonName		= supplied</span><br><span class="line">emailAddress		= optional</span><br><span class="line"></span><br><span class="line">[ policy_anything ]</span><br><span class="line">countryName		= optional</span><br><span class="line">stateOrProvinceName	= optional</span><br><span class="line">localityName		= optional</span><br><span class="line">organizationName	= optional</span><br><span class="line">organizationalUnitName	= optional</span><br><span class="line">commonName		= supplied</span><br><span class="line">emailAddress		= optional</span><br><span class="line"></span><br><span class="line">####################################################################</span><br><span class="line">[ req ]</span><br><span class="line">default_bits		= 2048</span><br><span class="line">prompt = no</span><br><span class="line">distinguished_name	= req_distinguished_name</span><br><span class="line">x509_extensions	= v3_ca	# The extensions to add to the self signed cert</span><br><span class="line">string_mask = pkix</span><br><span class="line"></span><br><span class="line">[ req_distinguished_name ]</span><br><span class="line">C = CN</span><br><span class="line">ST   = TianJin</span><br><span class="line">L    = TJ</span><br><span class="line">O    = ROOT</span><br><span class="line">OU   = Root CA</span><br><span class="line">CN   = Root CA</span><br><span class="line">emailAddress   = ZHYCarge@zhycarge.top</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[ v3_ca ]</span><br><span class="line">subjectKeyIdentifier=hash</span><br><span class="line">authorityKeyIdentifier=keyid:always,issuer</span><br><span class="line">basicConstraints = critical,CA:true</span><br><span class="line">keyUsage = critical, keyCertSign, cRLSign, digitalSignature</span><br><span class="line">crlDistributionPoints = URI:http://ca.zhycarge.top/crl/crl-Root.crl</span><br><span class="line"></span><br><span class="line">[ v3_Web_ca ]</span><br><span class="line">subjectKeyIdentifier = hash</span><br><span class="line">authorityKeyIdentifier = keyid:always,issuer</span><br><span class="line">basicConstraints = critical, CA:true, pathlen:0</span><br><span class="line">keyUsage = critical, digitalSignature, cRLSign, keyCertSign, keyEncipherment</span><br><span class="line">extendedKeyUsage = serverAuth</span><br><span class="line">authorityInfoAccess=caIssuers;URI:http://ca.zhycarge.top/crt/ZHYCargeRootCA.crt</span><br><span class="line">crlDistributionPoints = URI:http://ca.zhycarge.top/crl/crl-Root.crl</span><br><span class="line"></span><br><span class="line">[ crl_ext ]</span><br><span class="line">authorityKeyIdentifier=keyid:always</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>生成根证书私钥：</p>
+<p><code>openssl genrsa -aes256 -out KEY/RootCA.key 4096</code></p>
+<p>生成根证书签名请求：</p>
+<p><code>openssl req -new -config ./conf/RootCA.cnf -sha256 -key /KEY/RootCA.key -out ./RootCA/csr/RootCA.csr</code></p>
+<p>签发证书：</p>
+<p><code>openssl ca -selfsign -config ./conf/RootCA.cnf -in ./RootCA/csr/RootCA.csr -extensions v3_ca -days 365 -out ./RootCA/crt/RootCA.crt</code></p>
+<p>至此证书无脑化生成完毕。</p>
+<h1 id="创建属于自己的根证书（一步步操作版）"><a href="#创建属于自己的根证书（一步步操作版）" class="headerlink" title="创建属于自己的根证书（一步步操作版）"></a>创建属于自己的根证书（一步步操作版）</h1><p>此处记录着详细的生成操作，供了解学习。</p>
+<h2 id="生成目录文件"><a href="#生成目录文件" class="headerlink" title="生成目录文件"></a>生成目录文件</h2><p>参考上文<code>root.sh</code>文件的创建方式以及生成目录文件，这里不再进行赘述 <a href="#%E5%88%9B%E5%BB%BA%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E6%A0%B9%E8%AF%81%E4%B9%A6%EF%BC%88%E5%BF%AB%E6%8D%B7%E6%8C%87%E4%BB%A4%E7%89%88%EF%BC%89">创建属于自己的根证书（快捷指令版）</a></p>
+<h2 id="配置文件详解"><a href="#配置文件详解" class="headerlink" title="配置文件详解"></a>配置文件详解</h2><p>在<code>conf</code>文件夹中创建<code>RootCA.cnf</code>文件，并依次添加如下代码框中的内容：</p>
+<h3 id="CA头"><a href="#CA头" class="headerlink" title="CA头"></a>CA头</h3><p>没什么可以讲解的，默认配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#</span><br><span class="line"># OpenSSL example configuration file.</span><br><span class="line"># See doc/man5/config.pod for more info.</span><br><span class="line">#</span><br><span class="line"># 整个项目的根目录，默认为当下</span><br><span class="line">HOME			= .</span><br><span class="line">####################################################################</span><br><span class="line">[ ca ]</span><br><span class="line">default_ca	= CA_default		# The default ca section</span><br><span class="line">####################################################################</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书配置"><a href="#证书配置" class="headerlink" title="证书配置"></a>证书配置</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ CA_default ]</span><br><span class="line">dir = ./RootCA # 与证书配套的配置文件夹</span><br><span class="line">database	= $dir/db/index.txt	# 证书签发记录数据库</span><br><span class="line">new_certs_dir	= $dir/newcerts		# 存放生成证书签名信息</span><br><span class="line">private_key	= ./KEY/RootCA.key # 当前证书私钥地址</span><br><span class="line">serial		= $dir/db/serial 		# 生成随机数，根据随机数进行索引记录</span><br><span class="line">certificate = $dir/crt/RootCA.crt # 当前证书签发文件位置</span><br><span class="line">name_opt 	= ca_default		# 默认</span><br><span class="line">cert_opt 	= ca_default		# 默认</span><br><span class="line">crl_extensions = crl_ext    # 添加撤销证书功能，与后续功能块联动</span><br><span class="line">default_days	= 365			# 默认证书天数</span><br><span class="line">default_crl_days= 30			# 默认更新撤销证书实践</span><br><span class="line">default_md	= sha256		# 私钥默认加密方式</span><br><span class="line">preserve	= no			# 不知道，暂存</span><br><span class="line">policy		= policy_match  # 证书创建规则匹配，与后续功能块联动</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书规则匹配"><a href="#证书规则匹配" class="headerlink" title="证书规则匹配"></a>证书规则匹配</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># For the CA policy</span><br><span class="line"># 前三个match 要求签发证书与当前CA一致，optional为可选项，supplied会在创建时进行输入</span><br><span class="line">[ policy_match ]</span><br><span class="line">countryName		= match</span><br><span class="line">stateOrProvinceName	= match</span><br><span class="line">organizationName	= match</span><br><span class="line">organizationalUnitName	= optional</span><br><span class="line">commonName		= supplied</span><br><span class="line">emailAddress		= optional</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书生成参数"><a href="#证书生成参数" class="headerlink" title="证书生成参数"></a>证书生成参数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ req ]</span><br><span class="line">default_bits = 2048 # 证书加密位数</span><br><span class="line">prompt = no # 不需要显示提示信息，直接按照参数信息进行键入CN信息等</span><br><span class="line">distinguished_name	= req_distinguished_name # 参数信息，后面功能块联动</span><br><span class="line">x509_extensions	= v3_ca	# The extensions to add to the self signed cert # 签发证书参数，后面功能块联动</span><br><span class="line">string_mask = pkix	# 如果是utf8only，则键入英文可能会出现证书规则匹配错误，具体查看后面疑难杂症章节</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书参数信息"><a href="#证书参数信息" class="headerlink" title="证书参数信息"></a>证书参数信息</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ req_distinguished_name ]</span><br><span class="line">C = CN	# 国家代码，默认2位</span><br><span class="line">ST   = TianJin	# 所在州省</span><br><span class="line">L    = TJ	# 所在市 </span><br><span class="line">O    = ZHYCarge	# 组织名称</span><br><span class="line">OU   = ZHYCarge Root CA	# 组织唯一名称</span><br><span class="line">CN   = ZHYCarge Root CA	# 通用名称，要求唯一</span><br><span class="line">emailAddress   = ZHYCarge@zhycarge.top	# 邮箱地址</span><br></pre></td></tr></table></figure>
+
+<h3 id="根证书签发参数"><a href="#根证书签发参数" class="headerlink" title="根证书签发参数"></a>根证书签发参数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ v3_ca ]</span><br><span class="line">subjectKeyIdentifier=hash	# 加密方式</span><br><span class="line">authorityKeyIdentifier=keyid:always,issuer # 参数存储</span><br><span class="line">basicConstraints = critical,CA:true	# 是CA签发机构，能继续签发证书，若FALSE则为终端证书，不允许签发</span><br><span class="line">keyUsage = critical, keyCertSign, cRLSign, digitalSignature	# 证书用途，后续章节疑难解答详细说明</span><br><span class="line">crlDistributionPoints = URI:http://ca.zhycarge.top/crl/crl-Root.crl	# 证书吊销地址，后续疑难解答有详细说明</span><br></pre></td></tr></table></figure>
+
+<h3 id="中间证书配置文件"><a href="#中间证书配置文件" class="headerlink" title="中间证书配置文件"></a>中间证书配置文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ v3_Web_ca ] # 名称随意，后续创建中间证书会用上</span><br><span class="line">subjectKeyIdentifier = hash	# 与根证书同</span><br><span class="line">authorityKeyIdentifier = keyid:always,issuer # 与根证书同</span><br><span class="line">basicConstraints = critical, CA:true, pathlen:0	# pathlen代表签发证书无限制，默认就是0</span><br><span class="line">keyUsage = critical, digitalSignature, cRLSign, keyCertSign, keyEncipherment	# 与根证书同</span><br><span class="line">extendedKeyUsage = serverAuth	# 额外证书用途，后续有详细讲解</span><br><span class="line">authorityInfoAccess=caIssuers;URI:http://ca.zhycarge.top/crt/ZHYCargeRootCA.crt	# 指向根证书地址，后续详细讲解</span><br><span class="line">crlDistributionPoints = URI:http://ca.zhycarge.top/crl/crl-Root.crl	# 与根证书同</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书吊销列表参数"><a href="#证书吊销列表参数" class="headerlink" title="证书吊销列表参数"></a>证书吊销列表参数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ crl_ext ]</span><br><span class="line">authorityKeyIdentifier=keyid:always	# 与根证书同</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="keyUsage讲解"><a href="#keyUsage讲解" class="headerlink" title="keyUsage讲解"></a><code>keyUsage</code>讲解</h3><p>扩展用于指明证书的基本用途。可以包含多个值，常见的选项有：</p>
+<ul>
+<li><code>digitalSignature</code> 用于数字签名（如 SSL&#x2F;TLS 握手、代码签名等）</li>
+<li><code>nonRepudiation</code>用于非否认性（证明某个操作已被执行）</li>
+<li><code>keyEncipherment</code>用于密钥加密（例如，保护会话密钥）</li>
+<li><code>dataEncipherment</code>用于数据加密（加密实际数据）</li>
+<li><code>keyAgreement</code>用于密钥协商（如 Diffie-Hellman）</li>
+<li><code>keyCertSign</code>用于签署其他证书（CA 证书）</li>
+<li><code>cRLSign</code>用于签署证书撤销列表（CRL）</li>
+<li><code>encipherOnly</code>用于仅加密操作</li>
+<li><code>decipherOnly</code>用于仅解密操作</li>
+</ul>
+<h3 id="extendedKeyUsage讲解"><a href="#extendedKeyUsage讲解" class="headerlink" title="extendedKeyUsage讲解"></a><code>extendedKeyUsage</code>讲解</h3><p>扩展用于指明证书的扩展用途，可以包含多个值，常见的选项有：</p>
+<ul>
+<li><code>serverAuth</code>用于服务器身份验证</li>
+<li><code>clientAuth</code>用于客户端身份验证</li>
+<li><code>codeSigning</code>用于代码签名</li>
+<li><code>emailProtection</code>用于电子邮件保护（S&#x2F;MIME）</li>
+<li><code>timeStamping</code>用于时间戳服务</li>
+<li><code>OCSPSigning</code>用于在线证书状态协议（OCSP）签名</li>
+<li><code>ipsecEndSystem</code>用于 IPsec 终端</li>
+<li><code>ipsecTunnel</code>用于 IPsec 隧道</li>
+<li><code>ipsecUser</code>用于 IPsec 用户</li>
+<li><code>anyExtendedKeyUsage</code>表示可以用于任何扩展用途</li>
+</ul>
+<h3 id="authorityInfoAccess讲解"><a href="#authorityInfoAccess讲解" class="headerlink" title="authorityInfoAccess讲解"></a><code>authorityInfoAccess</code>讲解</h3><p><code>authorityInfoAccess</code>(AIA) 是 X.509 证书中的一个扩展，用于提供证书颁发机构（CA）信息的访问方法。这一扩展可以帮助用户或应用程序获取有关证书的更多信息，例如证书的撤销状态或颁发者的证书。</p>
+<p>通常配置文件:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">authorityInfoAccess = critical</span><br><span class="line">    CAIssuers;URI:http://ca.example.com/ca.crt,</span><br><span class="line">    OCSP;URI:http://ocsp.example.com</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>critical</code> ：表示该扩展是关键的，如果接收方不支持这一扩展，可能会拒绝该证书。</li>
+<li><code>CAIssuers</code>：指向 CA 证书的 URL，客户端可以通过该 URL 获取 CA 的证书。</li>
+<li><code>OCSP</code>：指向在线证书状态协议（OCSP）的 URL，客户端可以通过该 URL 查询证书的实时状态。</li>
+</ul>
+<p>这里由于OCSP需要搭建服务器等进行匹配，由于证书信息都在本地进行生成，因此不考虑，仅提供<code>CAIssuers</code>，通过配置<code>crlDistributionPoints</code>提供CRL文件进行证书的撤销状态提示。</p>
+<h2 id="创建根证书私钥"><a href="#创建根证书私钥" class="headerlink" title="创建根证书私钥"></a>创建根证书私钥</h2><p>参考文章<a href="https://docs.openssl.org/3.0/man1/openssl-genrsa/">^openssl-genrsa</a></p>
+<p>通过使用命令创建根证书私钥</p>
+<p><code>openssl genrsa -aes256 -out ./KEY/RootCA.key 4096</code></p>
+<p>其中参数说明：</p>
+<ul>
+<li><code>-out</code>：生成根证书私钥的名称及存储位置</li>
+<li><code>-aes256</code>：生成证书的加密方式</li>
+<li><code>4096</code>：证书私钥的大小，默认值为<code>2048</code></li>
+</ul>
+<h2 id="生成根证书的签名请求"><a href="#生成根证书的签名请求" class="headerlink" title="生成根证书的签名请求"></a>生成根证书的签名请求</h2><p>参考文章<a href="https://docs.openssl.org/3.0/man1/openssl-req/">^openssl-req</a>,使用命令创建签名请求。</p>
+<p><code>openssl req -new -config ./conf/RootCA.cnf -sha256 -key ./KEY/RootCA.key -out ./RootCA/csr/RootCA.csr</code></p>
+<h2 id="签发CA证书"><a href="#签发CA证书" class="headerlink" title="签发CA证书"></a>签发CA证书</h2><p>输入下列命令后通过输入密钥密码还有两个<code>y</code>之后便可生成根证书密钥。</p>
+<p><code>openssl ca -selfsign -config ./conf/RootCA.cnf -in ./RootCA/csr/RootCA.csr -extensions v3_ca -days 365 -out ./RootCA/crt/RootCA.crt</code></p>
+<p>至此，根证书创建完成，可以根据自身需要将根证书导入到指定环境或者进行分发，或者等待中间证书创建好后编写证书链进行分发。</p>
+<h1 id="其余操作介绍"><a href="#其余操作介绍" class="headerlink" title="其余操作介绍"></a>其余操作介绍</h1><h2 id="查看签发证书情况"><a href="#查看签发证书情况" class="headerlink" title="查看签发证书情况"></a>查看签发证书情况</h2><p>通过使用如下命令查看签发证书情况，能够看到大致的证书信息。</p>
+<p><code>openssl req -text -noout -in ./RootCA/csr/RootCA.csr</code></p>
+<h2 id="添加crl信息"><a href="#添加crl信息" class="headerlink" title="添加crl信息"></a>添加crl信息</h2><div class="note info"><p>以下内容在发稿前实验撤销证书暂无效果，撤销证书效果存疑，后续实验有新进展后会更新博文</p>
+</div>
+
+<p><strong>使用前提：要确保在证书中已经添加好CRL链接文件</strong></p>
+<h3 id="撤销证书"><a href="#撤销证书" class="headerlink" title="撤销证书"></a>撤销证书</h3><p>通过命令撤销<code>1.crt</code>证书</p>
+<p><code>openssl ca -revoke 1.crt -config ./conf/RootCA.cnf</code></p>
+<p>更新crl文件</p>
+<p><code> openssl ca -gencrl -out ./crl/ca-Root.crl -config ./conf/RootCA.cnf</code></p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="疑难杂症"><a href="#疑难杂症" class="headerlink" title="疑难杂症"></a>疑难杂症</h2><h3 id="The-mandatory-stateOrProvinceName-field-was-missing"><a href="#The-mandatory-stateOrProvinceName-field-was-missing" class="headerlink" title="The mandatory stateOrProvinceName field was missing"></a><code>The mandatory stateOrProvinceName field was missing</code></h3><p>报错内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Check that the request matches the signature</span><br><span class="line">Signature ok</span><br><span class="line">The mandatory stateOrProvinceName field was missing</span><br></pre></td></tr></table></figure>
+
+<p>根据<a href="https://www.cnblogs.com/loleina/p/8418111.html#:~:text=%E5%B0%8F%E6%8F%92%E6%9B%B2%EF%BC%9A%E7%94%A8CA%E6%A0%B9%E8%AF%81%E4%B9%A6%E7%AD%BE%E5%90%8D%E6%97%B6%E6%8A%A5%E9%94%99%EF%BC%8CThe%20mandatory%20stateOrProvinceName%20field%20was%20missing">^报错1</a>可知，配置文件中<code>[policy_match]</code>中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ policy_match ]</span><br><span class="line">countryName		= match</span><br><span class="line">stateOrProvinceName	= match</span><br><span class="line">organizationName	= match</span><br></pre></td></tr></table></figure>
+
+<p>有三个选项应该一致，但是并未保持一致，所以报错。</p>
+<p>修改方式是要么将 <code>match</code>改成 <code>optional</code>，要么参考<a href="https://stackoverflow.com/a/14382731">^报错2</a>将<code>string_mask</code>从<code>utf8only</code>更改为<code>pkix</code>。</p>
+<h3 id="无法创建有效的证书链"><a href="#无法创建有效的证书链" class="headerlink" title="无法创建有效的证书链"></a>无法创建有效的证书链</h3><p>添加<code>authorityInfoAccess</code>指向上级证书的信息时不能加HTTPS，要用HTTP进行引用，否则无法找到</p>
+<h3 id="存在疑问信息"><a href="#存在疑问信息" class="headerlink" title="存在疑问信息"></a>存在疑问信息</h3><p>手机端无法签发该证书，不知道哪一步存在问题，证书签发仅在电脑端能够实现</p>
+<h2 id="张贴自己的根证书"><a href="#张贴自己的根证书" class="headerlink" title="张贴自己的根证书"></a>张贴自己的根证书</h2><p>根证书下载地址：<a href="http://ca.zhycarge.top/ZHYCargeRootCA.crt">ZHYCargeRootCA</a></p>
+<p>在后续的不定期更新中，可能会存在需要使用数字证书进行相关工作，为保证访问及不会出报错，因此张贴个人的根证书信息，若有需要可以下载安装：安装需要安装在<code>受信任的根证书</code>中。</p>
+<p>为保证证书有效性，可通过发送主题包含<code>根证书指纹验证</code>邮件到<code>ZHYCarge@zhycarge.top</code>中，你会得到根证书的<code>sha1</code>与<code>sha256</code>指纹信息，与你下载的证书进行匹配，若一致便可确认。</p>
+<p>为保障个人证书安全性，该证书仅1年有效，后续证书更换也会在当前博文及关于里进行更新。</p>
+<h2 id="更新说明"><a href="#更新说明" class="headerlink" title="更新说明"></a>更新说明</h2><h3 id="2024-12-20-13-41-34"><a href="#2024-12-20-13-41-34" class="headerlink" title="2024-12-20 13:41:34"></a><code>2024-12-20 13:41:34</code></h3><p>重新更换文章、刊错</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://cloud.baidu.com/article/2697901">使用OpenSSL生成根证书CA及签发子证书</a></li>
+<li><a href="https://docs.openssl.org/">项目官方文档</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>OpenSSL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>WSL介绍与安装</title>
+    <url>/2024/12/18/WSL%E4%BB%8B%E7%BB%8D%E4%B8%8E%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>打算了解一下WSL的相关内容（双系统感觉来回切换过于麻烦，打算换成这个）</p>
+<span id="more"></span>
+
+<h1 id="前情摘要"><a href="#前情摘要" class="headerlink" title="前情摘要"></a>前情摘要</h1><h2 id="什么是WSL"><a href="#什么是WSL" class="headerlink" title="什么是WSL"></a>什么是WSL</h2><blockquote>
+<p>WSL全称为<code>Windows Subsystem for Linux</code>，可用于在 Windows 计算机上运行 Linux 环境，而无需单独的虚拟机或双引导。  WSL 旨在为希望同时使用 Windows 和 Linux 的开发人员提供无缝高效的体验。</p>
+<p>–<a href="https://learn.microsoft.com/zh-cn/windows/wsl/about">什么是适用于 Linux 的 Windows 子系统？</a></p>
+</blockquote>
+<p>因此，相较于双系统来讲，WSL能更加方便主用Windows的用户更加方便的使用Linux的相关内容，从而避免双系统的切换，同时，相较于虚拟机而言，WSL所需资源要远小于虚拟机使用，因此相较于主用Windows的用户来讲，更加方便快捷。</p>
+<h2 id="WSL面向哪些用户"><a href="#WSL面向哪些用户" class="headerlink" title="WSL面向哪些用户"></a>WSL面向哪些用户</h2><blockquote>
+<p>这主要是一种面向开发人员的工具，尤其是 Web 开发人员，他们从事开源项目，或者部署到 Linux 服务器环境。 WSL 适用于喜欢使用 Bash、常用 Linux 工具 (<code>sed</code> <code>awk</code>、 等) 和 Linux 优先框架 (Ruby、Python 等) 但也喜欢使用 Windows 生产力工具的任何人</p>
+<p>–<a href="https://learn.microsoft.com/zh-cn/windows/wsl/faq#wsl--------">WSL 面向哪些用户？</a></p>
+</blockquote>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="简易安装（有适用要求）"><a href="#简易安装（有适用要求）" class="headerlink" title="简易安装（有适用要求）"></a>简易安装（有适用要求）</h2><p>由于WSL是微软集成的一项程序功能，并且WSL已经更新到了第二个版本：<code>WSL2</code>，因此通常而言安装方式也极为简单：</p>
+<div class="note info"><p><strong>下述方式使用的先决条件：</strong></p>
+<p>必须运行 Windows 10 版本 2004 及更高版本（内部版本 19041 及更高版本）或 Windows 11 才能使用以下命令。 </p>
+<p>对于旧版本的Windows来讲，请参考 <a href="https://learn.microsoft.com/zh-cn/windows/wsl/install-manual">旧版 WSL 的手动安装步骤</a>进行安装，Windows专业版或者企业定制版可能不太会适用。具体原因暂不了解。</p>
+</div>
+
+<ul>
+<li>打开PowerShell</li>
+<li>输入命令<code>wsl --install</code></li>
+<li>等待第一步安装结束后重启</li>
+<li>继续输入命令<code>wsl --install</code></li>
+</ul>
+<p>等待进一步安装完成之后会需要输入Linux的账户密码，之后便可进行访问</p>
+<h2 id="相关操作方式"><a href="#相关操作方式" class="headerlink" title="相关操作方式"></a>相关操作方式</h2><ul>
+<li><code>wsl --list</code>：列出系统所有的Linux子系统</li>
+<li><code>wsl -d &lt;Distro&gt;</code>：使用指定Linux系统进行登录</li>
+<li><code>wsl --install</code>：安装适用于Windows的子系统发行版，默认是最新的Ubuntu<ul>
+<li><code>--no-launch, -n</code>：安装后不进行启动</li>
+<li><code> --web-download</code>：从Web中下载，并不使用微软商店进行下载</li>
+<li><code>[发行版名称]</code>：可以指定想要安装的Linux发行版</li>
+</ul>
+</li>
+</ul>
+<h2 id="将Linux发行版移到别的磁盘"><a href="#将Linux发行版移到别的磁盘" class="headerlink" title="将Linux发行版移到别的磁盘"></a>将Linux发行版移到别的磁盘</h2><p>由于Windows经典垃圾属性，WSL安装默认路径是系统盘下（通常是C盘），因此在后续使用过程中会逐渐占满C盘。为此可以进行系统迁移，参考博文：<a href="https://blog.csdn.net/m0_37605642/article/details/127812965">【WSL2教程】WSL迁移到非系统盘</a></p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://learn.microsoft.com/zh-cn/windows/wsl/">【官方】适用于 Linux 的 Windows 子系统文档</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>WSL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何撰写一篇比较好的读书笔记</title>
+    <url>/2025/03/09/%E5%A6%82%E4%BD%95%E6%92%B0%E5%86%99%E4%B8%80%E7%AF%87%E6%AF%94%E8%BE%83%E5%A5%BD%E7%9A%84%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>想寻找到一个适合自己的读书笔记记录环节，将自己读的书能够有存档一样的记录下来，供日后参考</p>
+<span id="more"></span>
+<p>本次尝试于<a href="https://www.bilibili.com/video/BV1mF41137EC/">B站UP主大罗小罗自习室</a>，通过理解她们所传授的读书笔记撰写方法，去完善自己的知识体系架构，因此在接下来的时间过程中，笔者所看书籍会采用该方式进行实验，观察是否是满足于自身的阅读方式。</p>
+<h1 id="读书笔记的架构"><a href="#读书笔记的架构" class="headerlink" title="读书笔记的架构"></a>读书笔记的架构</h1><h2 id="（个人想法）为什么要选择这本书，这本书是从什么地方吸引的你"><a href="#（个人想法）为什么要选择这本书，这本书是从什么地方吸引的你" class="headerlink" title="（个人想法）为什么要选择这本书，这本书是从什么地方吸引的你"></a>（个人想法）为什么要选择这本书，这本书是从什么地方吸引的你</h2><p>简要几句话进行概括</p>
+<h2 id="整体总结介绍"><a href="#整体总结介绍" class="headerlink" title="整体总结介绍"></a>整体总结介绍</h2><p>简要的几句话，概况这本书讲了什么（从图书标题进行解读、对每一章信息进行总结概括）</p>
+<ul>
+<li>从标题入手</li>
+<li>从各个段落入手<br>总结提炼书中的逻辑</li>
+</ul>
+<h2 id="提取书中的亮点信息"><a href="#提取书中的亮点信息" class="headerlink" title="提取书中的亮点信息"></a>提取书中的亮点信息</h2><ul>
+<li>提取书中的亮点信息<ul>
+<li>问之最（看看最喜欢的情节、最喜欢的任务、最精彩的论证、最意外的事实）<br>  摘抄内容要标注好为什么要摘抄这个，凭据是什么</li>
+</ul>
+</li>
+</ul>
+<h2 id="对自己的联系（找出几个特别的问题）"><a href="#对自己的联系（找出几个特别的问题）" class="headerlink" title="对自己的联系（找出几个特别的问题）"></a>对自己的联系（找出几个特别的问题）</h2><ul>
+<li>对自己的启发<ul>
+<li>同意作者观点吗？为什么</li>
+<li>是否喜欢这本书，为什么</li>
+<li>书中主人公你是否喜欢，为什么</li>
+<li>如何运用书中观点，有何启发</li>
+</ul>
+</li>
+</ul>
+<h2 id="联系之前的书"><a href="#联系之前的书" class="headerlink" title="联系之前的书"></a>联系之前的书</h2><ul>
+<li>联系之前的书</li>
+</ul>
+<h1 id="撰写读书笔记的步骤"><a href="#撰写读书笔记的步骤" class="headerlink" title="撰写读书笔记的步骤"></a>撰写读书笔记的步骤</h1><p>至少在阅读过程中需要有两遍及以上的过程，这里以两遍阅读为例</p>
+<h2 id="第一遍读书：收集素材——“把书读薄”（可以放松标准）"><a href="#第一遍读书：收集素材——“把书读薄”（可以放松标准）" class="headerlink" title="第一遍读书：收集素材——“把书读薄”（可以放松标准）"></a>第一遍读书：收集素材——“把书读薄”（可以放松标准）</h2><ol>
+<li>可用于回答关键问题，例如解释标题的句子</li>
+<li>打动你的“之最”语句<br> 推荐方法：<em>通过贴标签</em> 个人习惯直接打字2333<br> 长标签用于章总结，在页数上面；小标签用于好句子，贴在书侧<br> 主要观点、之最句子、金句积累</li>
+</ol>
+<h2 id="第二遍读书：筛选素材"><a href="#第二遍读书：筛选素材" class="headerlink" title="第二遍读书：筛选素材"></a>第二遍读书：筛选素材</h2><p>根据关键问题再次筛选，找出关键问题与关键词信息</p>
+<h2 id="按照需求进行书写"><a href="#按照需求进行书写" class="headerlink" title="按照需求进行书写"></a>按照需求进行书写</h2>]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>ReadBook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搭建Hexo博客平台</title>
+    <url>/2024/12/09/%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这里浅浅记录一下博客平台的创建步骤</p>
+<span id="more"></span>
+
+<h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><ul>
+<li>系统：Windows10家庭版</li>
+<li>Node.js： 22.12.0</li>
+<li>npm：10.9.2</li>
+<li>Hexo-cli：4.3.2</li>
+<li>hexo-theme-next：8.21.1</li>
+</ul>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
+<li><a href="https://hexo.io/zh-cn/docs/">Hexo</a></li>
+<li><a href="https://nodejs.org/zh-cn">Node.js</a></li>
+<li><a href="https://github.com/next-theme/hexo-theme-next">hexo-theme-next</a></li>
+</ul>
+<h1 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h1><h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><ol>
+<li>安装<code>hexo-cli</code>（全局）：<code>npm install -g hexo-cli</code></li>
+<li>创建一个新的文件夹，并确保里面没有任何文件</li>
+<li>初始化<code>hexo</code>。在新文件夹中输入命令：<code>hexo init</code></li>
+<li>安装别的依赖文件：<code>npm install</code></li>
+</ol>
+<h2 id="配置Hexo"><a href="#配置Hexo" class="headerlink" title="配置Hexo"></a>配置Hexo</h2><h3 id="主题安装"><a href="#主题安装" class="headerlink" title="主题安装"></a>主题安装</h3><p>由于之前的博客平台使用的是Next主题，因此进行继承，安装Next主题。</p>
+<p>安装命令：<code>npm install hexo-theme-next</code></p>
+<p>在Hexo的<code>_config.yml</code>文件中找到<code>theme</code>，将其修改为<code>next</code></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure>
+
+<p><em>与通过GitHub下载安装主题包不同的是，通过这个方法安装的主题包，会存储在<code>node_modules</code>这一文件夹下，名字为<code>hexo-theme-next</code>，并不是简单存储在<code>theme/next</code>中</em></p>
+<h3 id="主题配置"><a href="#主题配置" class="headerlink" title="主题配置"></a>主题配置</h3><p>根据之前的博客内容进行整合，同时引入Waline作为评论平台。这里为了篇幅方便不再进行赘述，若想查看详细的配置文件说明移步：<a href="">Next主题配置说明(这是张饼，应该没人想看，没人想看就不更了)</a></p>
+<h3 id="Hexo配置"><a href="#Hexo配置" class="headerlink" title="Hexo配置"></a>Hexo配置</h3><p>同理，根据之前的博客平台信息进行整合，详细配置文件说明移步：<a href="">Hexo配置说明</a></p>
+<h3 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h3><h4 id="搜索插件安装"><a href="#搜索插件安装" class="headerlink" title="搜索插件安装"></a>搜索插件安装</h4><p><a href="https://theme-next.js.org/docs/third-party-services/search-services#Local-Search">教程链接</a></p>
+<p><code>npm install hexo-generator-searchdb</code>安装</p>
+<p>在Hexo配置文件中添加</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">content:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br></pre></td></tr></table></figure>
+
+<p>在Next主题配置文件中添加</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/next-theme/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Show top n results per article, show all results by setting to -1</span></span><br><span class="line">  <span class="attr">top_n_per_article:</span> <span class="number">1</span></span><br><span class="line">  <span class="comment"># Unescape html strings to the readable one.</span></span><br><span class="line">  <span class="attr">unescape:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Preload the search data when the page loads.</span></span><br><span class="line">  <span class="attr">preload:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="博文加密插件安装"><a href="#博文加密插件安装" class="headerlink" title="博文加密插件安装"></a>博文加密插件安装</h4><p><a href="https://github.com/D0n9X1n/hexo-blog-encrypt/blob/master/ReadMe.zh.md">官方教程</a></p>
+<p><code>npm install --save hexo-blog-encrypt</code>输入命令安装</p>
+<p>在Hexo配置文件中添加配置信息：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Security</span></span><br><span class="line"><span class="attr">encrypt:</span> <span class="comment"># hexo-blog-encrypt</span></span><br><span class="line">  <span class="attr">abstract:</span> <span class="string">有东西被加密了,</span> <span class="string">请输入密码查看.</span></span><br><span class="line">  <span class="attr">message:</span> <span class="string">您好,</span> <span class="string">这里需要密码.</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">name:</span> <span class="string">tagName</span>, <span class="attr">password:</span> <span class="string">密码A</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">name:</span> <span class="string">tagName</span>, <span class="attr">password:</span> <span class="string">密码B</span>&#125;</span><br><span class="line">  <span class="attr">wrong_pass_message:</span> <span class="string">抱歉,</span> <span class="string">这个密码看着不太对,</span> <span class="string">请再试试.</span></span><br><span class="line">  <span class="attr">wrong_hash_message:</span> <span class="string">抱歉,</span> <span class="string">这个文章不能被校验,</span> <span class="string">不过您还是能看看解密后的内容.</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="npm-warn-deprecated-cuid-2-1-8"><a href="#npm-warn-deprecated-cuid-2-1-8" class="headerlink" title="npm warn deprecated cuid@2.1.8"></a><code>npm warn deprecated cuid@2.1.8</code></h2><p>在更新Hexo版本的时候发现有如下提示：</p>
+<p><code>npm warn deprecated cuid@2.1.8: Cuid and other k-sortable and non-cryptographic ids (Ulid, ObjectId, KSUID, all UUIDs) are all insecure. Use @paralleldrive/cuid2 instead.</code></p>
+<p>经检查后发现是Hexo所使用的<code>cuid</code>模块过时了，通过询问了下GPT，GPT给出的答复是<code>cuid</code>与<code>cuid2</code>相似，但后者更改了有些实现方式，同时查看<a href="https://github.com/paralleldrive/cuid#:~:text=Status%3A%20Deprecated%20due%20to%20security.%20Use%20Cuid2%2C%20instead.">为什么将cuid置于过时</a>，发现原因是可能会造成隐私泄露。但作为一个个人博客系统，没有隐私防护需求😂并且为防止Hexo未进行相关更改，盲目更换依赖包容易导致程序报错为保证Hexo的正常运行emmm，因此决定不管他 </p>
+<h2 id="Next主题的两个仓库问题"><a href="#Next主题的两个仓库问题" class="headerlink" title="Next主题的两个仓库问题"></a>Next主题的两个仓库问题</h2><blockquote>
+<p>简单来说，问题就是 theme-next 团队的 owner - Ivan Nginx 始终拒绝向其它任何团队成员提供足够的权限，且 owner 本人自 2019 年 10 月起已连续半年不在线，导致其它活跃的团队成员无法管理仓库，也无法邀请新的成员。<br>由于对 theme-next 团队的未来不抱有期望，我作为 theme-next 的主要贡献者，自 2020 年 4 月起停止为旧的仓库贡献代码，并创建了新的组织，以确保维护工作正常进行。</p>
+<p><a href="https://github.com/next-theme/hexo-theme-next/issues/4#issuecomment-626205848">https://github.com/next-theme/hexo-theme-next/issues/4#issuecomment-626205848</a></p>
+</blockquote>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2>]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>魔改Editor.md</title>
+    <url>/2025/03/09/%E9%AD%94%E6%94%B9Editor.md/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于想要使用Editor.md作为自己博客和日常写作的markdown编写工具（主要是可以实时网页端打开真的很好）</p>
+<p>所以编写该教程，记录自己的魔改过程</p>
+<span id="more"></span>
+
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.debuggerx.com/2020/11/08/an-awesome-markdown-editor-for-hexo/">为博客加入一个好用的在线MD编辑工具</a></p>
+<h1 id="魔改阶段"><a href="#魔改阶段" class="headerlink" title="魔改阶段"></a>魔改阶段</h1><h2 id="涉及方向"><a href="#涉及方向" class="headerlink" title="涉及方向"></a>涉及方向</h2><p>本次魔改主要涉及如下几个方面：</p>
+<ul>
+<li>通过使用<code>LocalStorage</code>实现自动保存功能  </li>
+<li>通过使用<code>HTML5</code>上的<code>File System Access API</code>功能实现对本地文件的打开与保存</li>
+<li>实现模板化文档编写，简化编写特定文档的繁琐流程</li>
+</ul>
+<h2 id="实现内容"><a href="#实现内容" class="headerlink" title="实现内容"></a>实现内容</h2><p>通过对项目目录下的<code>index.html</code>文件进行相关修改，最终实现所需要功能。由于对JS编写着实小白，因此不便描述具体信息，详情代码可参考：<a href="https://github.com/ZHYCarge/mdw">https://github.com/ZHYCarge/mdw</a></p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="后续进展"><a href="#后续进展" class="headerlink" title="后续进展"></a>后续进展</h2><p>根据后续要求，尝试实现对复制图片或上传图片自动上传图床（但是怕被薅羊毛，因此在斟酌是否实现）</p>
+<h2 id="鸣谢"><a href="#鸣谢" class="headerlink" title="鸣谢"></a>鸣谢</h2><p>由于本人对前端JS的不甚了解，因此鸣谢在二次修改过程中的遇到的各种笔记以及各种辅助</p>
+<ul>
+<li><a href="https://github.com/pandao/editor.md/">原项目</a></li>
+<li><a href="https://www.debuggerx.com/2020/11/08/an-awesome-markdown-editor-for-hexo/">为博客加入一个好用的在线MD编辑工具</a></li>
+<li><a href="https://www.deepseek.com/">DeepSeek</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>Editor.md</tag>
+      </tags>
+  </entry>
+</search>
