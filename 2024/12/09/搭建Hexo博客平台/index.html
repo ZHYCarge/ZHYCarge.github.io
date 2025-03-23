@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhycarge.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言这里浅浅记录一下博客平台的创建步骤">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建Hexo博客平台">
+<meta property="og:url" content="https://zhycarge.github.io/2024/12/09/%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0/index.html">
+<meta property="og:site_name" content="ZHYCarge的个人博客">
+<meta property="og:description" content="前言这里浅浅记录一下博客平台的创建步骤">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-12-09T06:34:29.000Z">
+<meta property="article:modified_time" content="2024-12-10T02:56:10.000Z">
+<meta property="article:author" content="ZHYCarge">
+<meta property="article:tag" content="Hexo">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhycarge.github.io/2024/12/09/%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhycarge.github.io/2024/12/09/%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0/","path":"2024/12/09/搭建Hexo博客平台/","title":"搭建Hexo博客平台"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>搭建Hexo博客平台 | ZHYCarge的个人博客</title>
+  
+
+
+
+
+
+
+
+<link rel="dns-prefetch" href="commit.waline.zhycarge.top">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ZHYCarge的个人博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-bings"><a href="/bings/" rel="section"><i class="fa  fa-search fa-fw"></i>必应一下</a></li><li class="menu-item menu-item-friends_links"><a href="/friends-links/" rel="section"><i class="fa fa-scroll-torah fa-fw"></i>友人帐</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87"><span class="nav-number">2.</span> <span class="nav-text">前期准备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5"><span class="nav-number">2.2.</span> <span class="nav-text">相关链接</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">搭建过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Hexo"><span class="nav-number">3.1.</span> <span class="nav-text">安装Hexo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEHexo"><span class="nav-number">3.2.</span> <span class="nav-text">配置Hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85"><span class="nav-number">3.2.1.</span> <span class="nav-text">主题安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.2.</span> <span class="nav-text">主题配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.3.</span> <span class="nav-text">Hexo配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-number">3.2.4.</span> <span class="nav-text">插件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-number">3.2.4.1.</span> <span class="nav-text">搜索插件安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%9A%E6%96%87%E5%8A%A0%E5%AF%86%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-number">3.2.4.2.</span> <span class="nav-text">博文加密插件安装</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%BE%E8%A8%80"><span class="nav-number">4.</span> <span class="nav-text">尾言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#npm-warn-deprecated-cuid-2-1-8"><span class="nav-number">4.1.</span> <span class="nav-text">npm warn deprecated cuid@2.1.8</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Next%E4%B8%BB%E9%A2%98%E7%9A%84%E4%B8%A4%E4%B8%AA%E4%BB%93%E5%BA%93%E9%97%AE%E9%A2%98"><span class="nav-number">4.2.</span> <span class="nav-text">Next主题的两个仓库问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.3.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZHYCarge"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">ZHYCarge</p>
+  <div class="site-description" itemprop="description">总是要留下些什么</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZHYCarge" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="ZHYCarge:ZHYCarge@zhycarge.top" title="E-Mail → ZHYCarge:ZHYCarge@zhycarge.top" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://github.com/ZHYCarge/BLOG_BACKEND/new/master/source/_posts" title="https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge&#x2F;BLOG_BACKEND&#x2F;new&#x2F;master&#x2F;source&#x2F;_posts" rel="noopener" target="_blank">新建一篇文章</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhycarge.github.io/2024/12/09/%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ZHYCarge">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZHYCarge的个人博客">
+      <meta itemprop="description" content="总是要留下些什么">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="搭建Hexo博客平台 | ZHYCarge的个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          搭建Hexo博客平台<a href="https://github.com/ZHYCarge/BLOG_BACKEND/blob/master/source/_posts/%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-12-09 14:34:29" itemprop="dateCreated datePublished" datetime="2024-12-09T14:34:29+08:00">2024-12-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-10 10:56:10" itemprop="dateModified" datetime="2024-12-10T10:56:10+08:00">2024-12-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%97%A5%E5%B8%B8/" itemprop="url" rel="index"><span itemprop="name">日常</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2024/12/09/%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2024/12/09/%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>937</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这里浅浅记录一下博客平台的创建步骤</p>
+<span id="more"></span>
+
+<h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><ul>
+<li>系统：Windows10家庭版</li>
+<li>Node.js： 22.12.0</li>
+<li>npm：10.9.2</li>
+<li>Hexo-cli：4.3.2</li>
+<li>hexo-theme-next：8.21.1</li>
+</ul>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">Hexo</a></li>
+<li><a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn">Node.js</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/next-theme/hexo-theme-next">hexo-theme-next</a></li>
+</ul>
+<h1 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h1><h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><ol>
+<li>安装<code>hexo-cli</code>（全局）：<code>npm install -g hexo-cli</code></li>
+<li>创建一个新的文件夹，并确保里面没有任何文件</li>
+<li>初始化<code>hexo</code>。在新文件夹中输入命令：<code>hexo init</code></li>
+<li>安装别的依赖文件：<code>npm install</code></li>
+</ol>
+<h2 id="配置Hexo"><a href="#配置Hexo" class="headerlink" title="配置Hexo"></a>配置Hexo</h2><h3 id="主题安装"><a href="#主题安装" class="headerlink" title="主题安装"></a>主题安装</h3><p>由于之前的博客平台使用的是Next主题，因此进行继承，安装Next主题。</p>
+<p>安装命令：<code>npm install hexo-theme-next</code></p>
+<p>在Hexo的<code>_config.yml</code>文件中找到<code>theme</code>，将其修改为<code>next</code></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure>
+
+<p><em>与通过GitHub下载安装主题包不同的是，通过这个方法安装的主题包，会存储在<code>node_modules</code>这一文件夹下，名字为<code>hexo-theme-next</code>，并不是简单存储在<code>theme/next</code>中</em></p>
+<h3 id="主题配置"><a href="#主题配置" class="headerlink" title="主题配置"></a>主题配置</h3><p>根据之前的博客内容进行整合，同时引入Waline作为评论平台。这里为了篇幅方便不再进行赘述，若想查看详细的配置文件说明移步：<a href="">Next主题配置说明(这是张饼，应该没人想看，没人想看就不更了)</a></p>
+<h3 id="Hexo配置"><a href="#Hexo配置" class="headerlink" title="Hexo配置"></a>Hexo配置</h3><p>同理，根据之前的博客平台信息进行整合，详细配置文件说明移步：<a href="">Hexo配置说明</a></p>
+<h3 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h3><h4 id="搜索插件安装"><a href="#搜索插件安装" class="headerlink" title="搜索插件安装"></a>搜索插件安装</h4><p><a target="_blank" rel="noopener" href="https://theme-next.js.org/docs/third-party-services/search-services#Local-Search">教程链接</a></p>
+<p><code>npm install hexo-generator-searchdb</code>安装</p>
+<p>在Hexo配置文件中添加</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">content:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br></pre></td></tr></table></figure>
+
+<p>在Next主题配置文件中添加</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Local search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/next-theme/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Show top n results per article, show all results by setting to -1</span></span><br><span class="line">  <span class="attr">top_n_per_article:</span> <span class="number">1</span></span><br><span class="line">  <span class="comment"># Unescape html strings to the readable one.</span></span><br><span class="line">  <span class="attr">unescape:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Preload the search data when the page loads.</span></span><br><span class="line">  <span class="attr">preload:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="博文加密插件安装"><a href="#博文加密插件安装" class="headerlink" title="博文加密插件安装"></a>博文加密插件安装</h4><p><a target="_blank" rel="noopener" href="https://github.com/D0n9X1n/hexo-blog-encrypt/blob/master/ReadMe.zh.md">官方教程</a></p>
+<p><code>npm install --save hexo-blog-encrypt</code>输入命令安装</p>
+<p>在Hexo配置文件中添加配置信息：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Security</span></span><br><span class="line"><span class="attr">encrypt:</span> <span class="comment"># hexo-blog-encrypt</span></span><br><span class="line">  <span class="attr">abstract:</span> <span class="string">有东西被加密了,</span> <span class="string">请输入密码查看.</span></span><br><span class="line">  <span class="attr">message:</span> <span class="string">您好,</span> <span class="string">这里需要密码.</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">name:</span> <span class="string">tagName</span>, <span class="attr">password:</span> <span class="string">密码A</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">name:</span> <span class="string">tagName</span>, <span class="attr">password:</span> <span class="string">密码B</span>&#125;</span><br><span class="line">  <span class="attr">wrong_pass_message:</span> <span class="string">抱歉,</span> <span class="string">这个密码看着不太对,</span> <span class="string">请再试试.</span></span><br><span class="line">  <span class="attr">wrong_hash_message:</span> <span class="string">抱歉,</span> <span class="string">这个文章不能被校验,</span> <span class="string">不过您还是能看看解密后的内容.</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="npm-warn-deprecated-cuid-2-1-8"><a href="#npm-warn-deprecated-cuid-2-1-8" class="headerlink" title="npm warn deprecated cuid@2.1.8"></a><code>npm warn deprecated cuid@2.1.8</code></h2><p>在更新Hexo版本的时候发现有如下提示：</p>
+<p><code>npm warn deprecated cuid@2.1.8: Cuid and other k-sortable and non-cryptographic ids (Ulid, ObjectId, KSUID, all UUIDs) are all insecure. Use @paralleldrive/cuid2 instead.</code></p>
+<p>经检查后发现是Hexo所使用的<code>cuid</code>模块过时了，通过询问了下GPT，GPT给出的答复是<code>cuid</code>与<code>cuid2</code>相似，但后者更改了有些实现方式，同时查看<a target="_blank" rel="noopener" href="https://github.com/paralleldrive/cuid#:~:text=Status%3A%20Deprecated%20due%20to%20security.%20Use%20Cuid2%2C%20instead.">为什么将cuid置于过时</a>，发现原因是可能会造成隐私泄露。但作为一个个人博客系统，没有隐私防护需求😂并且为防止Hexo未进行相关更改，盲目更换依赖包容易导致程序报错为保证Hexo的正常运行emmm，因此决定不管他 </p>
+<h2 id="Next主题的两个仓库问题"><a href="#Next主题的两个仓库问题" class="headerlink" title="Next主题的两个仓库问题"></a>Next主题的两个仓库问题</h2><blockquote>
+<p>简单来说，问题就是 theme-next 团队的 owner - Ivan Nginx 始终拒绝向其它任何团队成员提供足够的权限，且 owner 本人自 2019 年 10 月起已连续半年不在线，导致其它活跃的团队成员无法管理仓库，也无法邀请新的成员。<br>由于对 theme-next 团队的未来不抱有期望，我作为 theme-next 的主要贡献者，自 2020 年 4 月起停止为旧的仓库贡献代码，并创建了新的组织，以确保维护工作正常进行。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/next-theme/hexo-theme-next/issues/4#issuecomment-626205848">https://github.com/next-theme/hexo-theme-next/issues/4#issuecomment-626205848</a></p>
+</blockquote>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>欢迎打赏~</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wx_donate.png" alt="ZHYCarge 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>ZHYCarge
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://zhycarge.github.io/2024/12/09/%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0/" title="搭建Hexo博客平台">https://zhycarge.github.io/2024/12/09/搭建Hexo博客平台/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Hexo/" rel="tag"><i class="fa fa-tag"></i> Hexo</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/12/09/Hexo%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/" rel="next" title="Hexo配置详解">
+                  Hexo配置详解 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2024 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">ZHYCarge</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">15k</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-CN","enable":true,"serverURL":"commit.waline.zhycarge.top","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"locale":{"placeholder":"为保证能正常的收到评论提醒，在评论时请填写邮箱信息"},"avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"visitor":true,"comment_count":true,"requiredMeta":["mail"],"el":"#waline","comment":true,"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","path":"/2024/12/09/%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0/"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>
