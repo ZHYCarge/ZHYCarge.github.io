@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhycarge.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言新增博客平台功能，友人链内容实现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Next主题下友人链功能实现">
+<meta property="og:url" content="https://zhycarge.github.io/2024/12/09/2024-12-09-Next%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%8F%8B%E4%BA%BA%E9%93%BE%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:site_name" content="ZHYCarge的个人博客">
+<meta property="og:description" content="前言新增博客平台功能，友人链内容实现">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-12-09T12:24:09.000Z">
+<meta property="article:modified_time" content="2024-12-10T11:57:26.000Z">
+<meta property="article:author" content="ZHYCarge">
+<meta property="article:tag" content="NexT">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhycarge.github.io/2024/12/09/2024-12-09-Next%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%8F%8B%E4%BA%BA%E9%93%BE%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhycarge.github.io/2024/12/09/2024-12-09-Next%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%8F%8B%E4%BA%BA%E9%93%BE%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/","path":"2024/12/09/2024-12-09-Next主题下友人链功能实现/","title":"Next主题下友人链功能实现"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Next主题下友人链功能实现 | ZHYCarge的个人博客</title>
+  
+
+
+
+
+
+
+
+<link rel="dns-prefetch" href="commit.waline.zhycarge.top">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ZHYCarge的个人博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-bings"><a href="/bings/" rel="section"><i class="fa  fa-search fa-fw"></i>必应一下</a></li><li class="menu-item menu-item-friends_links"><a href="/friends-links/" rel="section"><i class="fa fa-scroll-torah fa-fw"></i>友人帐</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E7%89%88%E6%9C%AC"><span class="nav-number">1.1.</span> <span class="nav-text">环境版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E6%9C%9F%E8%80%83%E5%AF%9F"><span class="nav-number">1.2.</span> <span class="nav-text">前期考察</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%BA%90"><span class="nav-number">1.3.</span> <span class="nav-text">参考资源</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAMenu%E4%BF%A1%E6%81%AF"><span class="nav-number">2.1.</span> <span class="nav-text">创建Menu信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%8F%8B%E4%BA%BA%E9%93%BE%E5%88%B0Menu"><span class="nav-number">2.2.</span> <span class="nav-text">添加友人链到Menu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%8F%8B%E4%BA%BA%E9%93%BE%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="nav-number">2.3.</span> <span class="nav-text">创建友人链文件内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E4%BA%BA%E6%B7%BB%E5%8A%A0"><span class="nav-number">2.4.</span> <span class="nav-text">新人添加</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%95%88%E6%9E%9C"><span class="nav-number">2.5.</span> <span class="nav-text">实现效果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%BE%E8%A8%80"><span class="nav-number">3.</span> <span class="nav-text">尾言</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZHYCarge"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">ZHYCarge</p>
+  <div class="site-description" itemprop="description">总是要留下些什么</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZHYCarge" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="ZHYCarge:ZHYCarge@zhycarge.top" title="E-Mail → ZHYCarge:ZHYCarge@zhycarge.top" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://github.com/ZHYCarge/BLOG_BACKEND/new/master/source/_posts" title="https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge&#x2F;BLOG_BACKEND&#x2F;new&#x2F;master&#x2F;source&#x2F;_posts" rel="noopener" target="_blank">新建一篇文章</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhycarge.github.io/2024/12/09/2024-12-09-Next%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%8F%8B%E4%BA%BA%E9%93%BE%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ZHYCarge">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZHYCarge的个人博客">
+      <meta itemprop="description" content="总是要留下些什么">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Next主题下友人链功能实现 | ZHYCarge的个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Next主题下友人链功能实现<a href="https://github.com/ZHYCarge/BLOG_BACKEND/blob/master/source/_posts/2024-12-09-Next%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%8F%8B%E4%BA%BA%E9%93%BE%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-12-09 20:24:09" itemprop="dateCreated datePublished" datetime="2024-12-09T20:24:09+08:00">2024-12-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-10 19:57:26" itemprop="dateModified" datetime="2024-12-10T19:57:26+08:00">2024-12-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%97%A5%E5%B8%B8/" itemprop="url" rel="index"><span itemprop="name">日常</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2024/12/09/2024-12-09-Next%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%8F%8B%E4%BA%BA%E9%93%BE%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2024/12/09/2024-12-09-Next%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%8F%8B%E4%BA%BA%E9%93%BE%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>955</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新增博客平台功能，友人链内容实现</p>
+<span id="more"></span>
+
+<p>由于该博文处理博客平台更新期间发布，因此图片信息通过<a target="_blank" rel="noopener" href="https://imgse.com/">路过图床</a>进行存储。</p>
+<h2 id="环境版本"><a href="#环境版本" class="headerlink" title="环境版本"></a>环境版本</h2><p>没什么特别的版本要求，感觉只要满足就行</p>
+<h2 id="前期考察"><a href="#前期考察" class="headerlink" title="前期考察"></a>前期考察</h2><p>通过了解网络中友人链部分的实现方式，发现分为如下几种</p>
+<ol>
+<li><p>通过主题自带功能实现</p>
+<p>Next主题莫得，直接否（严格来讲没有独立平台，仅通过Link实现。但是通过Link一个个加，后续会十分冗余）</p>
+</li>
+<li><p>更改相关配置信息，修改渲染方式等</p>
+<p>过于复杂和过于DIY化。我只是个前端小白。。。并且后续主题、平台更新需要重新Fork解决问题。很麻烦。。。</p>
+</li>
+<li><p>通过Markdown自带HTML功能实现</p>
+<p>相对简单，虽然没有那么多花里胡哨，但是方便添加修改，适合懒人小白（我）</p>
+</li>
+</ol>
+<h2 id="参考资源"><a href="#参考资源" class="headerlink" title="参考资源"></a>参考资源</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Jimmy_wei_2010/article/details/130409233">https://blog.csdn.net/Jimmy_wei_2010/article/details/130409233</a></li>
+</ul>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="创建Menu信息"><a href="#创建Menu信息" class="headerlink" title="创建Menu信息"></a>创建Menu信息</h2><p>在主题文件夹中的<code>languages</code>文件夹中找到<code>zh-CN.yml</code>文件，找到<code>menu</code>标题，创建内容：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">links:</span> <span class="string">友人链</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="添加友人链到Menu"><a href="#添加友人链到Menu" class="headerlink" title="添加友人链到Menu"></a>添加友人链到Menu</h2><p>在根目录下找到环境配置文件主题配置文件 <code>_config.next.yml</code>，在其中的<code>Menu Settings</code>中添加信息：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">links:</span> <span class="string">/links/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-book-heart</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="创建友人链文件内容"><a href="#创建友人链文件内容" class="headerlink" title="创建友人链文件内容"></a>创建友人链文件内容</h2><p>在<code>sources</code>文件夹中创建<code>links</code>文件夹，并在里面创建一个<code>index.md</code>文件，内容填充如下：</p>
+<p>这里有参考部分，但是为了保证自身友人链的与众不同，因此请教了下GPT关于前端CSS的知识点（好吧，用GPT修改了一点）（后续精进CSS后这里会有完善，实现真正友人帐显示【Big Cake】）</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;post-body&quot;</span>&gt;</span></span></span><br><span class="line">   <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;links&quot;</span>&gt;</span></span></span><br><span class="line"><span class="code">      &lt;style&gt;</span></span><br><span class="line"><span class="code">         body &#123;</span></span><br><span class="line"><span class="code">            background-color: #f0f0f0; /* 设置整个页面的背景颜色为浅灰色 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .links-content &#123;</span></span><br><span class="line"><span class="code">            margin-top: 1rem;</span></span><br><span class="line"><span class="code">            display: flex;</span></span><br><span class="line"><span class="code">            flex-wrap: wrap; /* 允许换行 */</span></span><br><span class="line"><span class="code">            justify-content: center; /* 水平居中 */</span></span><br><span class="line"><span class="code">            align-items: center; /* 垂直居中 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card &#123;</span></span><br><span class="line"><span class="code">            width: 130px; /* 设置卡片宽度 */</span></span><br><span class="line"><span class="code">            height: 160px; /* 设置卡片高度 */</span></span><br><span class="line"><span class="code">            font-size: 1rem;</span></span><br><span class="line"><span class="code">            padding: 20px;</span></span><br><span class="line"><span class="code">            border-radius: 10px; /* 圆角 */</span></span><br><span class="line"><span class="code">            transition-duration: 0.15s;</span></span><br><span class="line"><span class="code">            margin: 1rem; /* 设置卡片的上下左右间距 */</span></span><br><span class="line"><span class="code">            display: flex;</span></span><br><span class="line"><span class="code">            flex-direction: column; /* 竖向排列 */</span></span><br><span class="line"><span class="code">            align-items: center; /* 内容居中 */</span></span><br><span class="line"><span class="code">            justify-content: center; /* 内容居中 */</span></span><br><span class="line"><span class="code">            text-align: center; /* 文字居中 */</span></span><br><span class="line"><span class="code">            background-color: #fff; /* 卡片背景颜色 */</span></span><br><span class="line"><span class="code">            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* 阴影 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card:hover &#123;</span></span><br><span class="line"><span class="code">            transform: scale(1.05); /* 鼠标悬停时放大 */</span></span><br><span class="line"><span class="code">            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 鼠标悬停时阴影变化 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .ava &#123;</span></span><br><span class="line"><span class="code">            width: 60px; /* 图像宽度 */</span></span><br><span class="line"><span class="code">            height: 60px; /* 图像高度 */</span></span><br><span class="line"><span class="code">            margin-bottom: 10px; /* 图像与标题之间的间距 */</span></span><br><span class="line"><span class="code">            border-radius: 50%; /* 圆形图像 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .card-header &#123;</span></span><br><span class="line"><span class="code">            font-weight: bold; /* 粗体 */</span></span><br><span class="line"><span class="code">            margin: 5px 0; /* 标题上下间距 */</span></span><br><span class="line"><span class="code">            transition: color 0.5s; /* 颜色变化过渡 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .card-header a &#123;</span></span><br><span class="line"><span class="code">            color: #2bbc8a; /* 标题颜色 */</span></span><br><span class="line"><span class="code">            text-decoration: none; /* 去掉下划线 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .card-header a:hover &#123;</span></span><br><span class="line"><span class="code">            animation: rainbow 1.5s infinite; /* 鼠标悬停时彩虹效果 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .info &#123;</span></span><br><span class="line"><span class="code">            color: #a3a3a3; /* 描述颜色 */</span></span><br><span class="line"><span class="code">            font-size: 14px; /* 描述字体大小 */</span></span><br><span class="line"><span class="code">            margin-top: 20px; /* 增加标题与描述之间的距离 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         @keyframes rainbow &#123;</span></span><br><span class="line"><span class="code">            0% &#123; color: red; &#125;</span></span><br><span class="line"><span class="code">            14% &#123; color: orange; &#125;</span></span><br><span class="line"><span class="code">            28% &#123; color: yellow; &#125;</span></span><br><span class="line"><span class="code">            42% &#123; color: green; &#125;</span></span><br><span class="line"><span class="code">            57% &#123; color: blue; &#125;</span></span><br><span class="line"><span class="code">            71% &#123; color: indigo; &#125;</span></span><br><span class="line"><span class="code">            85% &#123; color: violet; &#125;</span></span><br><span class="line"><span class="code">            100% &#123; color: red; &#125;</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">      &lt;/style&gt;</span></span><br><span class="line"><span class="code">      &lt;div class=&quot;links-content&quot;&gt;</span></span><br><span class="line"><span class="code">          		&lt;--在此处添加卡片信息--&gt;</span></span><br><span class="line"><span class="code">                 &lt;div class=&quot;card&quot;&gt;</span></span><br><span class="line"><span class="code">                    &lt;img class=&quot;ava&quot; src=https://zhycarge.github.io/images/1.gif&quot; /&gt;</span></span><br><span class="line"><span class="code">                    &lt;div class=&quot;card-header&quot;&gt;</span></span><br><span class="line"><span class="code">                       &lt;a href=&quot;https://zhycarge.github.io/&quot;&gt;ZHYCarge的个人博客&lt;/a&gt;</span></span><br><span class="line"><span class="code">                    &lt;/div&gt;</span></span><br><span class="line"><span class="code">                    &lt;div class=&quot;info&quot;&gt;总是要记录些什么……&lt;/div&gt;</span></span><br><span class="line"><span class="code">                 &lt;/div&gt;</span></span><br><span class="line"><span class="code">    &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="新人添加"><a href="#新人添加" class="headerlink" title="新人添加"></a>新人添加</h2><p>只需要在后面添加这段代码即可</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;card&quot;</span>&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;ava&quot;</span> <span class="attr">src</span>=<span class="string">https://zhycarge.github.io/images/1.gif</span>&quot; /&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;card-header&quot;</span>&gt;</span></span><br><span class="line">                      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://zhycarge.github.io/&quot;</span>&gt;</span>ZHYCarge的个人博客<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                   <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;info&quot;</span>&gt;</span>总是要记录些什么……<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h2><ul>
+<li><a href="https://zhycarge.github.io/friends-links/">友人帐</a></li>
+</ul>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><p>后续可能会考虑更换方法，等待后续进一步学习NexT与Hexo对于传值内容及相关自定义页面的设立。。。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>欢迎打赏~</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wx_donate.png" alt="ZHYCarge 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>ZHYCarge
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://zhycarge.github.io/2024/12/09/2024-12-09-Next%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%8F%8B%E4%BA%BA%E9%93%BE%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/" title="Next主题下友人链功能实现">https://zhycarge.github.io/2024/12/09/2024-12-09-Next主题下友人链功能实现/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/NexT/" rel="tag"><i class="fa fa-tag"></i> NexT</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/12/09/2024-12-09-DIY-Waline%E8%AF%84%E8%AE%BA%E9%82%AE%E4%BB%B6%E6%8F%90%E9%86%92%E6%A8%A1%E6%9D%BF/" rel="prev" title="DIY Waline评论邮件提醒模板">
+                  <i class="fa fa-angle-left"></i> DIY Waline评论邮件提醒模板
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/12/09/2024-12-09-%E5%9C%A8%E5%8D%9A%E6%96%87%E4%B8%AD%E5%AE%9E%E7%8E%B0%E6%8F%90%E7%A4%BA%E6%A1%86/" rel="next" title="在博文中实现提示框">
+                  在博文中实现提示框 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2024 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">ZHYCarge</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">25k</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-CN","enable":true,"serverURL":"commit.waline.zhycarge.top","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"locale":{"placeholder":"为保证能正常的收到评论提醒，在评论时请填写邮箱信息"},"avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"visitor":true,"comment_count":true,"requiredMeta":["mail"],"el":"#waline","comment":true,"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","path":"/2024/12/09/2024-12-09-Next%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%8F%8B%E4%BA%BA%E9%93%BE%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

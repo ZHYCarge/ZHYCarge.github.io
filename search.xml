@@ -1,0 +1,1190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>DIY Waline评论邮件提醒模板</title>
+    <url>/2024/12/09/2024-12-09-DIY-Waline%E8%AF%84%E8%AE%BA%E9%82%AE%E4%BB%B6%E6%8F%90%E9%86%92%E6%A8%A1%E6%9D%BF/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于Waline评论平台的邮件提醒默认模板实在太难以使用了，因此根据官方教程进行DIY一下</p>
+<span id="more"></span>
+
+<p>U1S1，官方文档编写的真的一言难尽。。。</p>
+<p>由于博客平台还在更新中，因此本博文所有图像信息使用<a href="https://imgse.com/">路过图床</a>进行代理</p>
+<h2 id="版本说明"><a href="#版本说明" class="headerlink" title="版本说明"></a>版本说明</h2><p>适配Waline版本：2.15.8 </p>
+<p>使用Vercel进行部署的后端服务</p>
+<p>若该博文没有进行更新，则代表后续版本也OK</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://waline.js.org/guide/features/notification.html">官方文档</a></li>
+</ul>
+<h1 id="自定义过程"><a href="#自定义过程" class="headerlink" title="自定义过程"></a>自定义过程</h1><p>由于Waline 与Valine异曲同工，其次模板是针对于邮件的模板化内容，因此打算将Valine的模板进行魔改一下。</p>
+<p>在Vercel上按照需求添加信息：</p>
+<h3 id="MAIL-SUBJECT"><a href="#MAIL-SUBJECT" class="headerlink" title="MAIL_SUBJECT"></a>MAIL_SUBJECT</h3><p>A评论完后B进行回复评论，A收到的提醒模板（标题部分）</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;&#123;parent.nick&#125;&#125;，您在&quot;&#123;&#123;site.name&#125;&#125;&quot;上的评论收到了回复</span><br></pre></td></tr></table></figure>
+
+<h3 id="MAIL-TEMPLATE"><a href="#MAIL-TEMPLATE" class="headerlink" title="MAIL_TEMPLATE"></a>MAIL_TEMPLATE</h3><p>A评论完后B进行回复评论，A收到的提醒模板(正文部分)</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;border-top:2px solid #12ADDB;box-shadow:0 1px 3px #AAAAAA;line-height:180%;padding:0 15px 12px;margin:50px auto;font-size:12px;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">h2</span> <span class="attr">style</span>=<span class="string">&quot;border-bottom:1px solid #DDD;font-size:14px;font-weight:normal;padding:13px 0 10px 8px;&quot;</span>&gt;</span>您在<span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;text-decoration:none;color: #12ADDB;&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123;site.url&#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>&#123;&#123;site.name&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span>上的评论有了新的回复<span class="tag">&lt;/<span class="name">h2</span>&gt;</span>&#123;&#123;parent.nick&#125;&#125;，你曾发表评论：<span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;padding:0 12px 0 12px;margin-top:18px&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;background-color: #f5f5f5;padding: 10px 15px;margin:18px 0;word-wrap:break-word;&quot;</span>&gt;</span>&#123;&#123;parent.comment|safe&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>&#123;&#123;self.nick&#125;&#125;<span class="tag">&lt;/<span class="name">strong</span>&gt;</span>回复说：<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;background-color: #f5f5f5;padding: 10px 15px;margin:18px 0;word-wrap:break-word;&quot;</span>&gt;</span>&#123;&#123;self.comment|safe&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>您可以点击<span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;text-decoration:none; color:#12addb&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123;self.link&#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>查看有关博文<span class="tag">&lt;/<span class="name">a</span>&gt;</span>，欢迎再次回复交流。<span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;text-align: center;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;text-decoration: none; color: #12addb;&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123;site.url&#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>&#123;&#123;site.name&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="MAIL-SUBJECT-ADMIN"><a href="#MAIL-SUBJECT-ADMIN" class="headerlink" title="MAIL_SUBJECT_ADMIN"></a>MAIL_SUBJECT_ADMIN</h3><p>有新评论时管理员收到的评论模板（标题部分）</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;&#123;site.name&#125;&#125;上有新评论了</span><br></pre></td></tr></table></figure>
+
+<h3 id="MAIL-TEMPLATE-ADMIN"><a href="#MAIL-TEMPLATE-ADMIN" class="headerlink" title="MAIL_TEMPLATE_ADMIN"></a>MAIL_TEMPLATE_ADMIN</h3><p>有新评论时管理员收到的评论模板（正文部分）</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;border-top:2px solid #12ADDB;box-shadow:0 1px 3px #AAAAAA;line-height:180%;padding:0 15px 12px;margin:50px auto;font-size:12px;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">h2</span> <span class="attr">style</span>=<span class="string">&quot;border-bottom:1px solid #DDD;font-size:14px;font-weight:normal;padding:13px 0 10px 8px;&quot;</span>&gt;</span>博主你好，你的<span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;text-decoration:none;color: #12ADDB;&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123;site.url&#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>&#123;&#123;site.name&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span>上有了新的评论<span class="tag">&lt;/<span class="name">h2</span>&gt;</span>&#123;&#123;self.nick&#125;&#125;在你的博客上发表评论，评论内容为：<span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;padding:0 12px 0 12px;margin-top:18px&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;background-color: #f5f5f5;padding: 10px 15px;margin:18px 0;word-wrap:break-word;&quot;</span>&gt;</span>&#123;&#123;self.comment|safe&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>您可以点击<span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;text-decoration:none; color:#12addb&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123;self.link&#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>查看评论的博文內容<span class="tag">&lt;/<span class="name">a</span>&gt;</span>，不要忘记回复。<span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;text-align: center;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;text-decoration: none; color: #12addb;&quot;</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123;site.url&#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>&#123;&#123;site.name&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h1><p>（通过路过图床展示图片）</p>
+<p>博主端收到的评论消息</p>
+<p><a href="https://imgse.com/i/pAHVFun"><img data-src="https://s21.ax1x.com/2024/12/09/pAHVKgJ.png" alt="博主端收到的评论消息"></a></p>
+<p>评论者收到的提醒消息：</p>
+<p><a href="https://imgse.com/i/pAHVAH0"><img data-src="https://s21.ax1x.com/2024/12/09/pAHVluR.png" alt="评论者收到的提醒消息"></a></p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="可能会出现的环境变量问题"><a href="#可能会出现的环境变量问题" class="headerlink" title="可能会出现的环境变量问题"></a>可能会出现的环境变量问题</h2><p>（我没遇到过我不知道）</p>
+<blockquote>
+<p>Vercel 的环境变量大小限制为 <code>4KB</code> ，所以如果您的模板很长，请使用代码配置，参见 <a href="https://github.com/walinejs/waline/issues/106">issue#106</a> ；</p>
+<p>–<a href="https://waline.js.org/guide/features/notification.html#%E9%BB%98%E8%AE%A4%E6%A8%A1%E6%9D%BF:~:text=%E5%9C%B0%E5%9D%80%E3%80%91%EF%BC%9A%7B%7Bsite.postUrl%7D%7D-,%E9%99%84%E5%8A%A0%E8%AF%B4%E6%98%8E,-Vercel%20%E7%9A%84%E7%8E%AF%E5%A2%83">附加说明</a></p>
+</blockquote>
+<h2 id="comment内容需要进行safe转义处理"><a href="#comment内容需要进行safe转义处理" class="headerlink" title="comment内容需要进行safe转义处理"></a>comment内容需要进行safe转义处理</h2><p>通过观察评论内容时发现Waline博客平台为了防止XSS消息注入采用了字符转义处理，如果不进行干涉，则在评论信息中多了<code>&lt;p&gt;</code>标签，评论消息无法进行渲染。因此有两种路线选择：</p>
+<ol>
+<li><p>放弃美观度，更加安全保守：则将<code>comment</code>后面的<code>|safe</code>删除，便会进行转义处理，效果类似于：</p>
+<p><a href="https://imgse.com/i/pAHVAH0"><img data-src="https://s21.ax1x.com/2024/12/09/pAHVAH0.png" alt="pAHVAH0.png"></a></p>
+</li>
+<li><p>拥抱美观，信赖评论者还有Waline平台有更多的防护手段：无需进行任何更改，直接CV，效果即是展示效果。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>Waline</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo Next主题版权信息显示</title>
+    <url>/2024/12/09/2024-12-09-Hexo-Next%E4%B8%BB%E9%A2%98%E7%89%88%E6%9D%83%E4%BF%A1%E6%81%AF%E6%98%BE%E7%A4%BA/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>出于对版权的尊重，由于官方文档在此处并未进行严格说明，因此在此处进行标注，方便做好版权管理</p>
+<span id="more"></span>
+
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ul>
+<li>涉及到的NexT版本为8.21.1</li>
+<li>由于编写博客时还未迁移完相关信息，因此图片采用<a href="https://imgse.com/">路过图床</a>进行存储</li>
+</ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://theme-next.js.org/docs/">NexT官方文档</a></li>
+<li><a href="https://theme-next.js.org/docs/advanced-settings/front-matter">Front-matter（NexT）</a></li>
+</ul>
+<h1 id="版权标注说明"><a href="#版权标注说明" class="headerlink" title="版权标注说明"></a>版权标注说明</h1><h2 id="个人书写版权标注"><a href="#个人书写版权标注" class="headerlink" title="个人书写版权标注"></a>个人书写版权标注</h2><p>在<code>Front-matter</code>进行如下标记（或者说无需管理）：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">author:</span> <span class="string">作者名字，默认为Hexo的博主信息想</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">copyright:</span> <span class="literal">true</span> <span class="string">默认为true，展示版权信息</span></span><br></pre></td></tr></table></figure>
+
+<p>实现效果：</p>
+<p><a href="https://imgse.com/i/pAHnFRU"><img data-src="https://s21.ax1x.com/2024/12/09/pAHnFRU.png" alt="个人书写版权标注"></a></p>
+<h2 id="转载文章版权标注"><a href="#转载文章版权标注" class="headerlink" title="转载文章版权标注"></a>转载文章版权标注</h2><p>在<code>Front-matter</code>进行如下标记：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">author:</span> <span class="string">原作者姓名</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">copyright:</span> <span class="literal">true</span><span class="string">（可以为false，直接不显示版权信息，但最好还是让其默认开启）</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">post_link:</span> <span class="string">原文链接(str格式数据，如:https://zhycarge.github.io/)</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">copyright_reprint:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>实现效果：</p>
+<p><a href="https://imgse.com/i/pAHnnd1"><img data-src="https://s21.ax1x.com/2024/12/09/pAHnnd1.png" alt="转载文章版权标注"></a></p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="隐秘的发现"><a href="#隐秘的发现" class="headerlink" title="隐秘的发现"></a>隐秘的发现</h2><p><code>copyright_reprint</code>这个参数在官方文档中并未进行给出，但是后续在查找<code>langurages</code>文件夹下对各国语言的翻译情况时发现，存在一项：<code>license_content_reprint</code>的翻译内容，通过与本国语言进行对比后得出，该项传参与转载文章时版权信息的显示有关，但由于官方文档并未进行给出，因此翻找其在GitHub的仓库信息，在<code>layout/_partials/post/post-copyright.njk</code>中<code>25-31</code>行发现如下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;%- if page.copyright_reprint %&#125;</span><br><span class="line">      &lt;strong&gt;&#123;&#123; __(&#x27;post.copyright.license_title&#x27;) + __(&#x27;symbol.colon&#x27;) &#125;&#125; &lt;/strong&gt;</span><br><span class="line">      &#123;&#123;- __(&#x27;post.copyright.license_content_reprint&#x27;, next_url(ccURL, ccIcon + ccText)) &#125;&#125;</span><br><span class="line">    &#123;%- else %&#125;</span><br><span class="line">      &lt;strong&gt;&#123;&#123; __(&#x27;post.copyright.license_title&#x27;) + __(&#x27;symbol.colon&#x27;) &#125;&#125; &lt;/strong&gt;</span><br><span class="line">      &#123;&#123;- __(&#x27;post.copyright.license_content&#x27;, next_url(ccURL, ccIcon + ccText)) &#125;&#125;</span><br><span class="line">    &#123;%- endif %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>推断<code>copyright_reprint</code>这个传值应该为<code>bool</code>型，并且根据代码能得出默认值应该为<code>false</code>，因此尝试在<code>Front-matter</code>中进行添加，发现能够实现功能。</p>
+<h2 id="做了什么"><a href="#做了什么" class="headerlink" title="做了什么"></a>做了什么</h2><p>向官方文档仓库提了个PR，不知道能不能审核过233</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>NexT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Next主题下友人链功能实现</title>
+    <url>/2024/12/09/2024-12-09-Next%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%8F%8B%E4%BA%BA%E9%93%BE%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>新增博客平台功能，友人链内容实现</p>
+<span id="more"></span>
+
+<p>由于该博文处理博客平台更新期间发布，因此图片信息通过<a href="https://imgse.com/">路过图床</a>进行存储。</p>
+<h2 id="环境版本"><a href="#环境版本" class="headerlink" title="环境版本"></a>环境版本</h2><p>没什么特别的版本要求，感觉只要满足就行</p>
+<h2 id="前期考察"><a href="#前期考察" class="headerlink" title="前期考察"></a>前期考察</h2><p>通过了解网络中友人链部分的实现方式，发现分为如下几种</p>
+<ol>
+<li><p>通过主题自带功能实现</p>
+<p>Next主题莫得，直接否（严格来讲没有独立平台，仅通过Link实现。但是通过Link一个个加，后续会十分冗余）</p>
+</li>
+<li><p>更改相关配置信息，修改渲染方式等</p>
+<p>过于复杂和过于DIY化。我只是个前端小白。。。并且后续主题、平台更新需要重新Fork解决问题。很麻烦。。。</p>
+</li>
+<li><p>通过Markdown自带HTML功能实现</p>
+<p>相对简单，虽然没有那么多花里胡哨，但是方便添加修改，适合懒人小白（我）</p>
+</li>
+</ol>
+<h2 id="参考资源"><a href="#参考资源" class="headerlink" title="参考资源"></a>参考资源</h2><ul>
+<li><a href="https://blog.csdn.net/Jimmy_wei_2010/article/details/130409233">https://blog.csdn.net/Jimmy_wei_2010/article/details/130409233</a></li>
+</ul>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="创建Menu信息"><a href="#创建Menu信息" class="headerlink" title="创建Menu信息"></a>创建Menu信息</h2><p>在主题文件夹中的<code>languages</code>文件夹中找到<code>zh-CN.yml</code>文件，找到<code>menu</code>标题，创建内容：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">links:</span> <span class="string">友人链</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="添加友人链到Menu"><a href="#添加友人链到Menu" class="headerlink" title="添加友人链到Menu"></a>添加友人链到Menu</h2><p>在根目录下找到环境配置文件主题配置文件 <code>_config.next.yml</code>，在其中的<code>Menu Settings</code>中添加信息：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">links:</span> <span class="string">/links/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-book-heart</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="创建友人链文件内容"><a href="#创建友人链文件内容" class="headerlink" title="创建友人链文件内容"></a>创建友人链文件内容</h2><p>在<code>sources</code>文件夹中创建<code>links</code>文件夹，并在里面创建一个<code>index.md</code>文件，内容填充如下：</p>
+<p>这里有参考部分，但是为了保证自身友人链的与众不同，因此请教了下GPT关于前端CSS的知识点（好吧，用GPT修改了一点）（后续精进CSS后这里会有完善，实现真正友人帐显示【Big Cake】）</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;post-body&quot;</span>&gt;</span></span></span><br><span class="line">   <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;links&quot;</span>&gt;</span></span></span><br><span class="line"><span class="code">      &lt;style&gt;</span></span><br><span class="line"><span class="code">         body &#123;</span></span><br><span class="line"><span class="code">            background-color: #f0f0f0; /* 设置整个页面的背景颜色为浅灰色 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .links-content &#123;</span></span><br><span class="line"><span class="code">            margin-top: 1rem;</span></span><br><span class="line"><span class="code">            display: flex;</span></span><br><span class="line"><span class="code">            flex-wrap: wrap; /* 允许换行 */</span></span><br><span class="line"><span class="code">            justify-content: center; /* 水平居中 */</span></span><br><span class="line"><span class="code">            align-items: center; /* 垂直居中 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card &#123;</span></span><br><span class="line"><span class="code">            width: 130px; /* 设置卡片宽度 */</span></span><br><span class="line"><span class="code">            height: 160px; /* 设置卡片高度 */</span></span><br><span class="line"><span class="code">            font-size: 1rem;</span></span><br><span class="line"><span class="code">            padding: 20px;</span></span><br><span class="line"><span class="code">            border-radius: 10px; /* 圆角 */</span></span><br><span class="line"><span class="code">            transition-duration: 0.15s;</span></span><br><span class="line"><span class="code">            margin: 1rem; /* 设置卡片的上下左右间距 */</span></span><br><span class="line"><span class="code">            display: flex;</span></span><br><span class="line"><span class="code">            flex-direction: column; /* 竖向排列 */</span></span><br><span class="line"><span class="code">            align-items: center; /* 内容居中 */</span></span><br><span class="line"><span class="code">            justify-content: center; /* 内容居中 */</span></span><br><span class="line"><span class="code">            text-align: center; /* 文字居中 */</span></span><br><span class="line"><span class="code">            background-color: #fff; /* 卡片背景颜色 */</span></span><br><span class="line"><span class="code">            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* 阴影 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card:hover &#123;</span></span><br><span class="line"><span class="code">            transform: scale(1.05); /* 鼠标悬停时放大 */</span></span><br><span class="line"><span class="code">            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 鼠标悬停时阴影变化 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .ava &#123;</span></span><br><span class="line"><span class="code">            width: 60px; /* 图像宽度 */</span></span><br><span class="line"><span class="code">            height: 60px; /* 图像高度 */</span></span><br><span class="line"><span class="code">            margin-bottom: 10px; /* 图像与标题之间的间距 */</span></span><br><span class="line"><span class="code">            border-radius: 50%; /* 圆形图像 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .card-header &#123;</span></span><br><span class="line"><span class="code">            font-weight: bold; /* 粗体 */</span></span><br><span class="line"><span class="code">            margin: 5px 0; /* 标题上下间距 */</span></span><br><span class="line"><span class="code">            transition: color 0.5s; /* 颜色变化过渡 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .card-header a &#123;</span></span><br><span class="line"><span class="code">            color: #2bbc8a; /* 标题颜色 */</span></span><br><span class="line"><span class="code">            text-decoration: none; /* 去掉下划线 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .card-header a:hover &#123;</span></span><br><span class="line"><span class="code">            animation: rainbow 1.5s infinite; /* 鼠标悬停时彩虹效果 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         .card .info &#123;</span></span><br><span class="line"><span class="code">            color: #a3a3a3; /* 描述颜色 */</span></span><br><span class="line"><span class="code">            font-size: 14px; /* 描述字体大小 */</span></span><br><span class="line"><span class="code">            margin-top: 20px; /* 增加标题与描述之间的距离 */</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">         @keyframes rainbow &#123;</span></span><br><span class="line"><span class="code">            0% &#123; color: red; &#125;</span></span><br><span class="line"><span class="code">            14% &#123; color: orange; &#125;</span></span><br><span class="line"><span class="code">            28% &#123; color: yellow; &#125;</span></span><br><span class="line"><span class="code">            42% &#123; color: green; &#125;</span></span><br><span class="line"><span class="code">            57% &#123; color: blue; &#125;</span></span><br><span class="line"><span class="code">            71% &#123; color: indigo; &#125;</span></span><br><span class="line"><span class="code">            85% &#123; color: violet; &#125;</span></span><br><span class="line"><span class="code">            100% &#123; color: red; &#125;</span></span><br><span class="line"><span class="code">         &#125;</span></span><br><span class="line"><span class="code">      &lt;/style&gt;</span></span><br><span class="line"><span class="code">      &lt;div class=&quot;links-content&quot;&gt;</span></span><br><span class="line"><span class="code">          		&lt;--在此处添加卡片信息--&gt;</span></span><br><span class="line"><span class="code">                 &lt;div class=&quot;card&quot;&gt;</span></span><br><span class="line"><span class="code">                    &lt;img class=&quot;ava&quot; src=https://zhycarge.github.io/images/1.gif&quot; /&gt;</span></span><br><span class="line"><span class="code">                    &lt;div class=&quot;card-header&quot;&gt;</span></span><br><span class="line"><span class="code">                       &lt;a href=&quot;https://zhycarge.github.io/&quot;&gt;ZHYCarge的个人博客&lt;/a&gt;</span></span><br><span class="line"><span class="code">                    &lt;/div&gt;</span></span><br><span class="line"><span class="code">                    &lt;div class=&quot;info&quot;&gt;总是要记录些什么……&lt;/div&gt;</span></span><br><span class="line"><span class="code">                 &lt;/div&gt;</span></span><br><span class="line"><span class="code">    &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="新人添加"><a href="#新人添加" class="headerlink" title="新人添加"></a>新人添加</h2><p>只需要在后面添加这段代码即可</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;card&quot;</span>&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;ava&quot;</span> <span class="attr">src</span>=<span class="string">https://zhycarge.github.io/images/1.gif</span>&quot; /&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;card-header&quot;</span>&gt;</span></span><br><span class="line">                      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://zhycarge.github.io/&quot;</span>&gt;</span>ZHYCarge的个人博客<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">                   <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;info&quot;</span>&gt;</span>总是要记录些什么……<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h2><ul>
+<li><a href="https://zhycarge.github.io/friends-links/">友人帐</a></li>
+</ul>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><p>后续可能会考虑更换方法，等待后续进一步学习NexT与Hexo对于传值内容及相关自定义页面的设立。。。</p>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>NexT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在博文中实现提示框</title>
+    <url>/2024/12/09/2024-12-09-%E5%9C%A8%E5%8D%9A%E6%96%87%E4%B8%AD%E5%AE%9E%E7%8E%B0%E6%8F%90%E7%A4%BA%E6%A1%86/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="转载说明"><a href="#转载说明" class="headerlink" title="转载说明"></a>转载说明</h1><p>该博文为转载博文，转载来源为：<a href="https://jinnsjj.github.io/uncategorized/hexo-next-note/">在hexo-NexT中插入note提示块</a></p>
+<span id="more"></span>
+
+<h1 id="原文摘要"><a href="#原文摘要" class="headerlink" title="原文摘要"></a>原文摘要</h1><h2 id="提示框实现"><a href="#提示框实现" class="headerlink" title="提示框实现"></a>提示框实现</h2><div class="note default"><p>default 提示块标签</p>
+</div>
+
+<div class="note primary"><p>primary 提示块标签</p>
+</div>
+
+<div class="note success"><p>success 提示块标签</p>
+</div>
+
+<div class="note info"><p>info 提示块标签</p>
+</div>
+
+<div class="note warning"><p>warning 提示块标签</p>
+</div>
+
+<div class="note danger"><p>danger 提示块标签</p>
+</div>
+
+<p>代码：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">&#123;% note default %&#125;</span><br><span class="line">default 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note primary %&#125;</span><br><span class="line">primary 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note success %&#125;</span><br><span class="line">success 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note info %&#125;</span><br><span class="line">info 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note warning %&#125;</span><br><span class="line">warning 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note danger %&#125;</span><br><span class="line">danger 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="选项卡实现"><a href="#选项卡实现" class="headerlink" title="选项卡实现"></a>选项卡实现</h2><div class="tabs" id="tab"><ul class="nav-tabs"><li class="tab active"><a href="#tab-1">tab 1</a></li><li class="tab"><a href="#tab-2">tab 2</a></li><li class="tab"><a href="#tab-3">A</a></li></ul><div class="tab-content"><div class="tab-pane active" id="tab-1"><p><strong>选项卡 1</strong> </p></div><div class="tab-pane" id="tab-2"><p><strong>选项卡 2</strong></p></div><div class="tab-pane" id="tab-3"><p><strong>选项卡 3</strong> 名字为A</p></div></div></div>
+
+<p>代码实现</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">&#123;% tabs tab,1 %&#125; 名字为tab，默认在第1个选项卡，如果是-1则隐藏</span><br><span class="line">&lt;!-- tab --&gt;</span><br><span class="line"><span class="strong">**选项卡 1**</span> </span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line">&lt;!-- tab --&gt;</span><br><span class="line"><span class="strong">**选项卡 2**</span></span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line">&lt;!-- tab A --&gt;</span><br><span class="line"><span class="strong">**选项卡 3**</span> 名字为A</span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line">&#123;% endtabs %&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="原文参考"><a href="#原文参考" class="headerlink" title="原文参考"></a>原文参考</h2><ul>
+<li><a href="https://reuixiy.github.io/technology/computer/computer-aided-art/2017/06/09/hexo-next-optimization.html">打造个性超赞博客Hexo+NexT+GithubPages的超深度优化</a></li>
+<li><a href="https://biueo.github.io/2018/01/11/Hexo-markdown%E4%BC%98%E9%9B%85%E5%86%99%E5%8D%9A%E5%AE%A2/">Hexo+markdown优雅写博客</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>Markdown</tag>
+        <tag>Hexo</tag>
+        <tag>转载</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo配置详解</title>
+    <url>/2024/12/09/Hexo%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下Hexo博客平台的相关配置信息，方便后续进行查找与自定义</p>
+<span id="more"></span> 
+
+<h1 id="前情摘要"><a href="#前情摘要" class="headerlink" title="前情摘要"></a>前情摘要</h1><p>所进行配置的Hexo平台版本为<code>7.3.0</code></p>
+<p>本篇文章说明内容大量节选于<a href="https://hexo.io/docs/configuration.html">官方文档教程</a>，但由于官方文档后面存在更新文档的要求，因此这里只做摘要，不保证能完全实现功能。</p>
+<h1 id="配置信息详解"><a href="#配置信息详解" class="headerlink" title="配置信息详解"></a>配置信息详解</h1><h2 id="文件中存在的"><a href="#文件中存在的" class="headerlink" title="文件中存在的"></a>文件中存在的</h2><h5 id="前缀"><a href="#前缀" class="headerlink" title="前缀"></a>前缀</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Hexo Configuration</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/configuration.html</span></span><br><span class="line"><span class="comment">## Source: https://github.com/hexojs/hexo/</span></span><br></pre></td></tr></table></figure>
+
+<p>官网配置文档信息，还有项目GitHub地址</p>
+<h5 id="网站标题等"><a href="#网站标题等" class="headerlink" title="网站标题等"></a>网站标题等</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">ZHYCarge的个人博客</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;&#x27;</span> </span><br><span class="line"><span class="attr">description:</span> <span class="string">&#x27;总是要留下些什么&#x27;</span>	</span><br><span class="line"><span class="attr">keywords:</span> </span><br><span class="line"><span class="attr">author:</span> <span class="string">ZHYCarge</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span></span><br><span class="line"><span class="attr">timezone:</span> <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>title</code></td>
+<td>网站主标题</td>
+</tr>
+<tr>
+<td align="center"><code>subtitle</code></td>
+<td>网站副标题，在主标题下面</td>
+</tr>
+<tr>
+<td align="center"><code>description</code></td>
+<td>个人描述，出现在博客作者下面</td>
+</tr>
+<tr>
+<td align="center"><code>keywords</code></td>
+<td>关键词，支持多个值进行输入。应该是搜索引擎索引使用（猜测）</td>
+</tr>
+<tr>
+<td align="center"><code>author</code></td>
+<td>博客平台作者（如果在博文中不指定作者名字，则默认为这个）</td>
+</tr>
+<tr>
+<td align="center"><code>language</code></td>
+<td>博客平台网站语言，使用<a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">2 个字母的 ISO-639-1 代码</a>或其<a href="https://hexo.io/docs/internationalization">变体</a>（可选）。默认<code>en</code>，由于是中文平台，修改为<code>zh-CN</code></td>
+</tr>
+<tr>
+<td align="center"><code>timezone</code></td>
+<td>平台时区信息，可以<a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">点我查到更多</a>，国内应为<code>Asia/Shanghai</code>代表北京时间</td>
+</tr>
+</tbody></table>
+<h5 id="博文URL配置"><a href="#博文URL配置" class="headerlink" title="博文URL配置"></a>博文URL配置</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://zhycarge.github.io/</span> </span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:title/</span></span><br><span class="line"><span class="attr">permalink_defaults:</span></span><br><span class="line"><span class="attr">pretty_urls:</span></span><br><span class="line">  <span class="attr">trailing_index:</span> <span class="literal">true</span> <span class="comment"># Set to false to remove trailing &#x27;index.html&#x27; from permalinks</span></span><br><span class="line">  <span class="attr">trailing_html:</span> <span class="literal">true</span> <span class="comment"># Set to false to remove trailing &#x27;.html&#x27; from permalinks</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>url</code></td>
+<td>博客站点的URL信息，后续文章索引链接都会编辑为这个</td>
+</tr>
+<tr>
+<td><code>permalink</code></td>
+<td>文章的永久链接地址。方便引用文章等。默认为<code>年/月/日/文章标题</code></td>
+</tr>
+<tr>
+<td><code>root</code>（未提及）</td>
+<td>网站的根目录信息。根据<a href="https://hexo.io/docs/configuration.html#:~:text=true-,%E5%AD%90%E7%9B%AE%E5%BD%95%E4%B8%AD%E7%9A%84%E7%BD%91%E7%AB%99,-%E5%A6%82%E6%9E%9C%E6%82%A8%E7%9A%84">官网所诉</a>：如果您的网站位于子目录中（例如<code>http://example.org/blog</code>），则设置<code>url</code>为<code>http://example.org/blog</code>并设置<code>root</code>为<code>/blog/</code>。</td>
+</tr>
+<tr>
+<td><code>permalink_defaults</code></td>
+<td>永久链接中每个段的默认值，若修改<code>permalink</code>生成格式，可能需要该参数</td>
+</tr>
+<tr>
+<td><code>pretty_urls.trailing_index</code></td>
+<td>美化URL格式，删除尾随的<code>index.html</code>URL显示内容。默认为<code>true</code>，对<code>index.html</code>内容进行显示。<a href="https://hexo.io/docs/configuration.html#:~:text=/blog/%E3%80%82-,%E4%BE%8B%E5%AD%90%EF%BC%9A,-%23%20%E4%BE%8B%E5%A6%82%20page.permalink">官网例子</a></td>
+</tr>
+<tr>
+<td><code>pretty_urls.trailing_html</code></td>
+<td>美化URL格式，显示后面尾随的<code>.html</code>显示内容，对<code>index.html</code>不适用。默认为<code>true</code></td>
+</tr>
+</tbody></table>
+<h5 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Directory</span></span><br><span class="line"><span class="attr">source_dir:</span> <span class="string">source</span></span><br><span class="line"><span class="attr">public_dir:</span> <span class="string">public</span></span><br><span class="line"><span class="attr">tag_dir:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">archive_dir:</span> <span class="string">archives</span></span><br><span class="line"><span class="attr">category_dir:</span> <span class="string">categories</span></span><br><span class="line"><span class="attr">code_dir:</span> <span class="string">downloads/code</span></span><br><span class="line"><span class="attr">i18n_dir:</span> <span class="string">:lang</span></span><br><span class="line"><span class="attr">skip_render:</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>source_dir</code></td>
+<td>源文件夹。内容存储的位置。文章存放文件夹一般为<code>_posts</code></td>
+</tr>
+<tr>
+<td><code>public_dir</code></td>
+<td>公共文件夹，在其中生成静态网站，文件夹中的内容可对外展示</td>
+</tr>
+<tr>
+<td><code>tag_dir</code></td>
+<td>标签目录。一般在<code>source</code>文件夹下创建<code>tags</code>文件夹并附一个<code>index.md</code>文件来进行标签目录渲染</td>
+</tr>
+<tr>
+<td><code>archive_dir</code></td>
+<td>文章存档目录。暂不知道有什么用处。初步想法是与<code>Hexo admin</code>进行配套使用</td>
+</tr>
+<tr>
+<td><code>category_dir</code></td>
+<td>分类目录。一般在<code>source</code>文件夹下创建<code>categories</code>文件夹并附一个<code>index.md</code>文件来进行分类目录渲染</td>
+</tr>
+<tr>
+<td><code>code_dir</code></td>
+<td>包含代码目录。暂不知道有何用处。</td>
+</tr>
+<tr>
+<td><code>i18n_dir</code></td>
+<td>i18n 目录。应该是用于国际化适配作用</td>
+</tr>
+<tr>
+<td><code>skip_render</code></td>
+<td>会将指定文件内容或者文件夹信息复制到<code>public</code>目录下，不进行渲染。可以使用<a href="https://github.com/micromatch/micromatch#extended-globbing">glob 表达式</a>进行路径匹配。<a href="https://hexo.io/docs/configuration.html#:~:text=%E8%BF%9B%E8%A1%8C%E8%B7%AF%E5%BE%84%E5%8C%B9%E9%85%8D%E3%80%82-,%E4%BE%8B%E5%AD%90%EF%BC%9A,-skip_render%3A%20%20%22mypage">官网示例</a></td>
+</tr>
+</tbody></table>
+<h5 id="写作部分"><a href="#写作部分" class="headerlink" title="写作部分"></a>写作部分</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into titlecase</span></span><br><span class="line"><span class="attr">external_link:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># Open external links in new tab</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">site</span> <span class="comment"># Apply to the whole site</span></span><br><span class="line">  <span class="attr">exclude:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="attr">filename_case:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">render_drafts:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">relative_link:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">future:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">syntax_highlighter:</span> <span class="string">highlight.js</span></span><br><span class="line"><span class="attr">highlight:</span></span><br><span class="line">  <span class="attr">line_number:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">auto_detect:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">tab_replace:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">  <span class="attr">wrap:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">hljs:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">prismjs:</span></span><br><span class="line">  <span class="attr">preprocess:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">line_number:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">tab_replace:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>new_post_name</code></td>
+<td>新博文提交的名字</td>
+</tr>
+<tr>
+<td><code>default_layout</code></td>
+<td>默认布局方式。暂不知道有何别的方式</td>
+</tr>
+<tr>
+<td><code>titlecase</code></td>
+<td>将标题转换为标题首字母大写？默认<code>false</code>，可能跟英文书写方式有关。。</td>
+</tr>
+<tr>
+<td><code>external_link.enable</code></td>
+<td>是否用新标签打开外部链接，默认为<code>true</code></td>
+</tr>
+<tr>
+<td><code>external_link.field</code></td>
+<td>适用于整个站点<code>site</code>还是仅适用于博文<code>post</code></td>
+</tr>
+<tr>
+<td><code>external_link.exclude</code></td>
+<td>排除哪几个网址。需要添加子域信息</td>
+</tr>
+<tr>
+<td><code>filename_case</code></td>
+<td>将文件名转换为大小写。禁用：<code>0</code>，<code>1</code>小写，<code>2</code>大写</td>
+</tr>
+<tr>
+<td><code>render_drafts</code></td>
+<td>是否显示草稿博文（感觉就是与<code>Hexo admin</code>使用）</td>
+</tr>
+<tr>
+<td><code>post_asset_folder</code></td>
+<td>启用<a href="https://hexo.io/docs/asset-folders">资产文件夹</a>。能够存放少量照片或文件，默认为 <code>false</code></td>
+</tr>
+<tr>
+<td><code>relative_link</code></td>
+<td>建立相对于根文件夹的链接（感觉像使用相对引用进行）未查证</td>
+</tr>
+<tr>
+<td><code>future</code></td>
+<td>是否显示未来的帖子（帖子上写的时间还在未来）默认为<code>true</code></td>
+</tr>
+<tr>
+<td><code>syntax_highlighter</code></td>
+<td>代码块语法高亮设置，使用指南见<a href="https://hexo.io/docs/syntax-highlight">语法高亮部分</a></td>
+</tr>
+<tr>
+<td><code>highlight</code></td>
+<td>代码块语法高亮设置，使用指南见<a href="https://hexo.io/docs/syntax-highlight#Highlight-js">Highlight.js部分</a></td>
+</tr>
+<tr>
+<td><code>prismjs</code></td>
+<td>代码块语法高亮设置，使用指南见<a href="https://hexo.io/docs/syntax-highlight#PrismJS">PrismJS部分</a></td>
+</tr>
+</tbody></table>
+<h5 id="主页设置"><a href="#主页设置" class="headerlink" title="主页设置"></a>主页设置</h5><p>生成帖子存档，由<a href="https://github.com/hexojs/hexo-generator-index">hexo-generator-index提供支持</a></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Home page setting</span></span><br><span class="line"><span class="comment"># path: Root path for your blogs index page. (default = &#x27;&#x27;)</span></span><br><span class="line"><span class="comment"># per_page: Posts displayed per page. (0 = disable pagination)</span></span><br><span class="line"><span class="comment"># order_by: Posts order. (Order by date descending by default)</span></span><br><span class="line"><span class="attr">index_generator:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">  <span class="attr">per_page:</span> <span class="number">10</span></span><br><span class="line">  <span class="attr">order_by:</span> <span class="string">-date</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>index_generator.path</code></td>
+<td>博客索引页的根路径</td>
+</tr>
+<tr>
+<td><code>index_generator.per_page</code></td>
+<td>每页显示的帖子数量</td>
+</tr>
+<tr>
+<td><code>index_generator.order_by</code></td>
+<td>帖子排序。默认按日期降序排列（从新到旧）</td>
+</tr>
+</tbody></table>
+<h5 id="分类和标签"><a href="#分类和标签" class="headerlink" title="分类和标签"></a>分类和标签</h5><p>不知道有什么别的用途emmm有待进一步学习</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Category &amp; Tag</span></span><br><span class="line"><span class="attr">default_category:</span> <span class="string">uncategorized</span></span><br><span class="line"><span class="attr">category_map:</span></span><br><span class="line"><span class="attr">tag_map:</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>default_category</code></td>
+<td>默认类别</td>
+</tr>
+<tr>
+<td><code>category_map</code></td>
+<td>覆盖类别 slug</td>
+</tr>
+<tr>
+<td><code>tag_map</code></td>
+<td>覆盖标签</td>
+</tr>
+</tbody></table>
+<h5 id="Metadata-数据信息"><a href="#Metadata-数据信息" class="headerlink" title="Metadata 数据信息"></a>Metadata 数据信息</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Metadata elements</span></span><br><span class="line"><span class="comment">## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta</span></span><br><span class="line"><span class="attr">meta_generator:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>在官方文档中并未进行提及有关内容，查看相关文档，默认将其打开吧，应该是关于网站渲染的内容，有待后续了解</p>
+<h5 id="日期与时间"><a href="#日期与时间" class="headerlink" title="日期与时间"></a>日期与时间</h5><p>Hexo 使用<a href="http://momentjs.com/">Moment.js</a>来处理日期</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Date / Time format</span></span><br><span class="line"><span class="comment">## Hexo uses Moment.js to parse and display date</span></span><br><span class="line"><span class="comment">## You can customize the date format as defined in</span></span><br><span class="line"><span class="comment">## http://momentjs.com/docs/#/displaying/format/</span></span><br><span class="line"><span class="attr">date_format:</span> <span class="string">YYYY-MM-DD</span></span><br><span class="line"><span class="attr">time_format:</span> <span class="string">HH:mm:ss</span></span><br><span class="line"><span class="comment">## updated_option supports &#x27;mtime&#x27;, &#x27;date&#x27;, &#x27;empty&#x27;</span></span><br><span class="line"><span class="attr">updated_option:</span> <span class="string">&#x27;mtime&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>date_format</code></td>
+<td>日期格式</td>
+</tr>
+<tr>
+<td><code>time_format</code></td>
+<td>时间格式</td>
+</tr>
+<tr>
+<td><code>updated_option</code></td>
+<td>更新时间格式。当文章中不存在<code>updated</code>值时使用的默认值</td>
+</tr>
+</tbody></table>
+<h5 id="文章分页"><a href="#文章分页" class="headerlink" title="文章分页"></a>文章分页</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Pagination</span></span><br><span class="line"><span class="comment">## Set per_page to 0 to disable pagination</span></span><br><span class="line"><span class="attr">per_page:</span> <span class="number">10</span></span><br><span class="line"><span class="attr">pagination_dir:</span> <span class="string">page</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>per_page</code></td>
+<td>每页能存放多少篇文章，为<code>0</code>代表禁用</td>
+</tr>
+<tr>
+<td><code>pagination_dir</code></td>
+<td>URL格式信息</td>
+</tr>
+</tbody></table>
+<h5 id="包括、排除文件"><a href="#包括、排除文件" class="headerlink" title="包括、排除文件"></a>包括、排除文件</h5><p>使用以下选项明确处理或忽略某些文件&#x2F;文件夹。支持使用<a href="https://github.com/micromatch/micromatch#extended-globbing">glob 表达式</a>进行路径匹配。</p>
+<p><code>include</code>与<code>exclude</code>选项仅适用于<code>source/</code>文件夹，而<code>ignore</code>选项适用于所有文件夹。</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Include / Exclude file(s)</span></span><br><span class="line"><span class="comment">## include:/exclude: options only apply to the &#x27;source/&#x27; folder</span></span><br><span class="line"><span class="attr">include:</span></span><br><span class="line"><span class="attr">exclude:</span></span><br><span class="line"><span class="attr">ignore:</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>include</code></td>
+<td>包括隐藏文件（包括名称以下划线开头的文件&#x2F;文件夹，但有例外*）</td>
+</tr>
+<tr>
+<td><code>exclude</code></td>
+<td>排除文件&#x2F;文件夹</td>
+</tr>
+<tr>
+<td><code>ignore</code></td>
+<td>忽略文件&#x2F;文件夹</td>
+</tr>
+</tbody></table>
+<p><a href="https://hexo.io/docs/configuration.html#:~:text=%E6%96%87%E4%BB%B6/%E6%96%87%E4%BB%B6%E5%A4%B9-,%E4%BE%8B%E5%AD%90%EF%BC%9A,-%23%20%E5%8C%85%E5%90%AB/%E6%8E%92%E9%99%A4%E6%96%87%E4%BB%B6">官网示例</a></p>
+<h5 id="插件和主题设置"><a href="#插件和主题设置" class="headerlink" title="插件和主题设置"></a>插件和主题设置</h5><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure>
+
+<p>设置主题内容或者插件信息</p>
+<h5 id="部署设置"><a href="#部署设置" class="headerlink" title="部署设置"></a>部署设置</h5><p><a href="https://hexo.io/docs/one-command-deployment#:~:text=more%20deployment%20plugins.-,Git,-Install%20hexo%2Ddeployer">参考这段</a>进行设置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">type:</span> <span class="string">&#x27;git&#x27;</span></span><br><span class="line">    <span class="attr">repo:</span> <span class="string">git@github.com:ZHYCarge/ZHYCarge.github.io.git</span></span><br><span class="line">    <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="其它内容"><a href="#其它内容" class="headerlink" title="其它内容"></a>其它内容</h1><h2 id="标签文件夹中index-md文件内容信息"><a href="#标签文件夹中index-md文件内容信息" class="headerlink" title="标签文件夹中index.md文件内容信息"></a>标签文件夹中<code>index.md</code>文件内容信息</h2><p>未配置其它内容，仅支持默认情况的话，应为：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2024-12-09 09:53:46</span><br><span class="line"><span class="section">type: &quot;tags&quot;</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></table></figure>
+
+<p>时间可修改为创建的时间</p>
+<h2 id="分类文件夹中index-md文件内容信息"><a href="#分类文件夹中index-md文件内容信息" class="headerlink" title="分类文件夹中index.md文件内容信息"></a>分类文件夹中<code>index.md</code>文件内容信息</h2><p>未配置其它内容，仅支持默认情况的话，应为：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2024-12-09 09:53:46</span><br><span class="line"><span class="section">type: &quot;categories&quot;</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></table></figure>
+
+<p>时间可修改为创建的时间</p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://hexo.io/docs/configuration.html">官方文档教程</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenSSL之创建中间证书</title>
+    <url>/2024/12/22/OpenSSL%E4%B9%8B%E5%88%9B%E5%BB%BA%E4%B8%AD%E9%97%B4%E8%AF%81%E4%B9%A6/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>OpenSSL系列的第二集。</p>
+<span id="more"></span>
+
+<p>创建完根证书之后，便可以继续创建中间证书信息了，这里以<code>MidCA</code>作为中间证书命名。</p>
+<h2 id="为什么要使用中间证书？"><a href="#为什么要使用中间证书？" class="headerlink" title="为什么要使用中间证书？"></a>为什么要使用中间证书？</h2><blockquote>
+<p>通过使用中间证书，<strong>可以减少根密钥的暴露风险，因为即使中间密钥被泄露，影响的范围也仅限于由该中间证书签发的证书</strong>。 密钥轮换：中间证书的密钥可以定期更换，而不需要更换根密钥。 这样可以保持根证书的长期稳定性，同时确保整个系统的安全性。</p>
+<p>–<a href="https://www.cnblogs.com/arnoldlu/p/18401403">根证书、中间证书、目标证书，以及签名和验签(基于openssl) </a></p>
+</blockquote>
+<h2 id="版本说明"><a href="#版本说明" class="headerlink" title="版本说明"></a>版本说明</h2><ul>
+<li>OpenSSL版本为3.0.13</li>
+</ul>
+<h2 id="专题跳转"><a href="#专题跳转" class="headerlink" title="专题跳转"></a>专题跳转</h2><ul>
+<li><a href="https://zhycarge.github.io/tags/OpenSSL/">OpenSSL系列文章</a></li>
+</ul>
+<h1 id="创建属于自己的根证书（快捷指令版）"><a href="#创建属于自己的根证书（快捷指令版）" class="headerlink" title="创建属于自己的根证书（快捷指令版）"></a>创建属于自己的根证书（快捷指令版）</h1><p>与创建根证书一致，这里记录着需要创建中间证书所需要的快捷指令方式，方便无脑CV，如需了解更多请前往 <a href="#%E5%88%9B%E5%BB%BA%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E4%B8%AD%E9%97%B4%E8%AF%81%E4%B9%A6%EF%BC%88%E4%B8%80%E6%AD%A5%E6%AD%A5%E6%93%8D%E4%BD%9C%E7%89%88%EF%BC%89">创建属于自己的中间证书（一步步操作版）</a></p>
+<h2 id="创建中间证书的文件夹及数据库"><a href="#创建中间证书的文件夹及数据库" class="headerlink" title="创建中间证书的文件夹及数据库"></a>创建中间证书的文件夹及数据库</h2><p>创建<code>2.sh</code>文件，并加入如下代码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># 创建中间证书所需要的全部文件信息</span></span><br><span class="line"><span class="comment"># 创建签发证书位置</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d MidCA/crt ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p MidCA/crt</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 创建根证书数据文件点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d MidCA/db ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p MidCA/db</span><br><span class="line">    <span class="built_in">touch</span> MidCA/db/index</span><br><span class="line">    openssl rand -hex 16 &gt; MidCA/db/serial</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 创建密钥存放点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d MidCA/key ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p MidCA/key</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 创建中间证书新证书记录存放点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d MidCA/newcerts ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p MidCA/newcerts</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>之后<code>./2.sh</code>进行运行配置文件</p>
+<p>创建中间证书配置文件<code>touch ./conf/MidCA.cnf</code>，并添加如下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#</span><br><span class="line"># OpenSSL example configuration file.</span><br><span class="line"># See doc/man5/config.pod for more info.</span><br><span class="line">#</span><br><span class="line"># 整个项目的根目录，默认为当下</span><br><span class="line">HOME			= .</span><br><span class="line"></span><br><span class="line">####################################################################</span><br><span class="line">[ ca ]</span><br><span class="line">default_ca	= CA_default		# The default ca section</span><br><span class="line"></span><br><span class="line">####################################################################</span><br><span class="line">[ CA_default ]</span><br><span class="line">dir = ./MidCA</span><br><span class="line">database	= $dir/db/index.txt	# 数据文件存放点(必要)</span><br><span class="line">new_certs_dir	= $dir/newcerts		# 存放新证书 （必要）</span><br><span class="line">private_key	= ./KEY/Mid_CA.key # 私钥地址 (必要)</span><br><span class="line">serial		= $dir/db/serial 		# 当前序列号(必要)</span><br><span class="line">certificate = RootCA/crt/Mid_CA.crt # 根证书签发文件位置</span><br><span class="line">name_opt 	= ca_default		# Subject Name options</span><br><span class="line">cert_opt 	= ca_default		# Certificate field options</span><br><span class="line">crl_extensions = crl_ext    # 添加撤销证书功能</span><br><span class="line">default_days	= 365			# 默认天数</span><br><span class="line">default_crl_days= 30			# 默认30天获取撤销证书信息</span><br><span class="line">default_md	= sha256		# 公钥默认加密方式</span><br><span class="line">preserve	= no			# keep passed DN ordering</span><br><span class="line">policy		= policy_match</span><br><span class="line"></span><br><span class="line"># For the CA policy</span><br><span class="line">[ policy_match ]</span><br><span class="line">countryName		= match</span><br><span class="line">stateOrProvinceName	= match</span><br><span class="line">organizationName	= match</span><br><span class="line">organizationalUnitName	= optional</span><br><span class="line">commonName		= supplied</span><br><span class="line">emailAddress		= optional</span><br><span class="line"></span><br><span class="line">####################################################################</span><br><span class="line">[ req ]</span><br><span class="line">default_bits		= 2048</span><br><span class="line">prompt = no</span><br><span class="line">distinguished_name	= req_distinguished_name</span><br><span class="line">string_mask = pkix</span><br><span class="line"></span><br><span class="line">[ req_distinguished_name ]</span><br><span class="line">C = CN</span><br><span class="line">ST   = TianJin</span><br><span class="line">L    = TJ</span><br><span class="line">O    = ZHYCarge</span><br><span class="line">OU   = ZHYCarge Mid CA</span><br><span class="line">CN   = ZHYCarge Mid CA</span><br><span class="line">emailAddress   = ZHYCarge@zhycarge.top</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[ crl_ext ]</span><br><span class="line">authorityKeyIdentifier=keyid:always</span><br><span class="line"></span><br><span class="line">[ web1_cert ]</span><br><span class="line"># www.zhycarge.top config</span><br><span class="line">basicConstraints = CA:FALSE</span><br><span class="line">subjectKeyIdentifier = hash</span><br><span class="line">authorityKeyIdentifier = keyid,issuer:always</span><br><span class="line">keyUsage = critical, digitalSignature, keyEncipherment</span><br><span class="line">extendedKeyUsage = serverAuth</span><br><span class="line">subjectAltName = DNS:www.zhycarge.top</span><br><span class="line">authorityInfoAccess=caIssuers;URI:http://ca.zhycarge.top/crt/Mid_CA.crt</span><br><span class="line">crlDistributionPoints = URI:http://ca.zhycarge.top/crl/crl-Mid.crl</span><br></pre></td></tr></table></figure>
+
+<p>生成中间证书私钥：</p>
+<p><code>openssl genrsa -aes256 -out KEY/Mid_CA.key 4096</code></p>
+<p>生成中间证书签名请求：</p>
+<p><code>openssl req -new -config ./conf/MidCA.cnf -sha256 -key /KEY/Mid_CA.key -out ./RootCA/csr/Mid_CA.csr</code></p>
+<p>签发证书：</p>
+<p><code>openssl ca -config ./conf/Root_CA.cnf -extensions v3_Web_ca -days 365 -notext -md sha256 -in ./RootCA/csr/Mid_CA.csr -out ./RootCA/crt/Web_CA.crt</code></p>
+<p>至此证书无脑化生成完毕。</p>
+<h1 id="创建属于自己的中间证书（一步步操作版）"><a href="#创建属于自己的中间证书（一步步操作版）" class="headerlink" title="创建属于自己的中间证书（一步步操作版）"></a>创建属于自己的中间证书（一步步操作版）</h1><p>此处记录详细讲解内容，由于创建证书命令与根证书那里基本相同，因此不过多赘述</p>
+<h2 id="创建数据库及相关存储文件夹"><a href="#创建数据库及相关存储文件夹" class="headerlink" title="创建数据库及相关存储文件夹"></a>创建数据库及相关存储文件夹</h2><p><a href="##%E5%88%9B%E5%BB%BA%E4%B8%AD%E9%97%B4%E8%AF%81%E4%B9%A6%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9%E5%8F%8A%E6%95%B0%E6%8D%AE%E5%BA%93">创建中间证书的文件夹及数据库</a></p>
+<h2 id="创建中间证书的配置文件"><a href="#创建中间证书的配置文件" class="headerlink" title="创建中间证书的配置文件"></a>创建中间证书的配置文件</h2><p>此处内容一步步复制即可，相关讲解已附</p>
+<p>创建中间证书配置文件<code>touch ./conf/MidCA.cnf</code>，并添加如下内容：</p>
+<h3 id="CA头"><a href="#CA头" class="headerlink" title="CA头"></a>CA头</h3><p>没什么可以讲解的，默认配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#</span><br><span class="line"># OpenSSL example configuration file.</span><br><span class="line"># See doc/man5/config.pod for more info.</span><br><span class="line">#</span><br><span class="line"># 整个项目的根目录，默认为当下</span><br><span class="line">HOME			= .</span><br><span class="line"></span><br><span class="line">####################################################################</span><br><span class="line">[ ca ]</span><br><span class="line">default_ca	= CA_default		# The default ca section</span><br><span class="line"></span><br><span class="line">####################################################################</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书配置"><a href="#证书配置" class="headerlink" title="证书配置"></a>证书配置</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ CA_default ]</span><br><span class="line">dir = ./MidCA # 与证书配套的配置文件夹</span><br><span class="line">database	= $dir/db/index.txt	# 证书签发记录数据库</span><br><span class="line">new_certs_dir	= $dir/newcerts		# 存放生成证书签名信息</span><br><span class="line">private_key	= ./KEY/Mid_CA.key # 当前证书私钥地址</span><br><span class="line">serial		= $dir/db/serial 		# 生成随机数，根据随机数进行索引记录</span><br><span class="line">certificate = ./RootCA/crt/Mid_CA.crt # 当前证书签发文件位置</span><br><span class="line">name_opt 	= ca_default		# 默认</span><br><span class="line">cert_opt 	= ca_default		# 默认</span><br><span class="line">crl_extensions = crl_ext    # 添加撤销证书功能，与后续功能块联动</span><br><span class="line">default_days	= 365			# 默认证书天数</span><br><span class="line">default_crl_days= 30			# 默认更新撤销证书实践</span><br><span class="line">default_md	= sha256		# 私钥默认加密方式</span><br><span class="line">preserve	= no			# 不知道，暂存</span><br><span class="line">policy		= policy_match  # 证书创建规则匹配，与后续功能块联动</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书规则匹配"><a href="#证书规则匹配" class="headerlink" title="证书规则匹配"></a>证书规则匹配</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># For the CA policy</span><br><span class="line"># 前三个match 要求签发证书与当前CA一致，optional为可选项，supplied会在创建时进行输入</span><br><span class="line">[ policy_match ]</span><br><span class="line">countryName		= match</span><br><span class="line">stateOrProvinceName	= match</span><br><span class="line">organizationName	= match</span><br><span class="line">organizationalUnitName	= optional</span><br><span class="line">commonName		= supplied</span><br><span class="line">emailAddress		= optional</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书生成参数"><a href="#证书生成参数" class="headerlink" title="证书生成参数"></a>证书生成参数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ req ]</span><br><span class="line">default_bits = 2048 # 证书加密位数</span><br><span class="line">prompt = no # 不需要显示提示信息，直接按照参数信息进行键入CN信息等</span><br><span class="line">distinguished_name	= req_distinguished_name # 参数信息，后面功能块联动</span><br><span class="line">string_mask = pkix	# 如果是utf8only，则键入英文可能会出现证书规则匹配错误，具体查看后面疑难杂症章节</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书参数信息"><a href="#证书参数信息" class="headerlink" title="证书参数信息"></a>证书参数信息</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ req_distinguished_name ]</span><br><span class="line">C = CN	# 国家代码，默认2位</span><br><span class="line">ST   = TianJin	# 所在州省</span><br><span class="line">L    = TJ	# 所在市 </span><br><span class="line">O    = ZHYCarge	# 组织名称</span><br><span class="line">OU   = ZHYCarge Mid CA	# 组织唯一名称</span><br><span class="line">CN   = ZHYCarge Mid CA	# 通用名称，要求唯一</span><br><span class="line">emailAddress   = ZHYCarge@zhycarge.top	# 邮箱地址</span><br></pre></td></tr></table></figure>
+
+<h3 id="用户证书签发参数"><a href="#用户证书签发参数" class="headerlink" title="用户证书签发参数"></a>用户证书签发参数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ web1_cert ]</span><br><span class="line"># www.zhycarge.top config # 自己做的备忘记录，记得这个参数对应的是哪个证书</span><br><span class="line">basicConstraints = CA:FALSE # 是终端证书，不可再次签发证书</span><br><span class="line">subjectKeyIdentifier = hash</span><br><span class="line">authorityKeyIdentifier = keyid,issuer:always</span><br><span class="line">keyUsage = critical, digitalSignature, keyEncipherment # 证书用途(在根证书讲解里有，查看之前博文)</span><br><span class="line">extendedKeyUsage = serverAuth	# 证书用途</span><br><span class="line">subjectAltName = DNS:www.zhycarge.top	# SAN信息</span><br><span class="line">authorityInfoAccess=caIssuers;URI:http://ca.zhycarge.top/crt/Mid_CA.crt # AIA信息(在根证书讲解里有，查看之前博文)</span><br><span class="line">crlDistributionPoints = URI:http://ca.zhycarge.top/crl/crl-Mid.crl # CRL信息(在根证书讲解里有，查看之前博文)</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书吊销列表参数"><a href="#证书吊销列表参数" class="headerlink" title="证书吊销列表参数"></a>证书吊销列表参数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ crl_ext ]</span><br><span class="line">authorityKeyIdentifier=keyid:always	# 与根证书同</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="subjectAltName讲解"><a href="#subjectAltName讲解" class="headerlink" title="subjectAltName讲解"></a><code>subjectAltName</code>讲解</h3><p>现已知如果证书不添加这个值，在局域网中IP地址使用Chrome访问时会出现报错：缺少SAN。因此增加此项。</p>
+<blockquote>
+<p><code>subjectAltName</code>（SAN），是一项对<a href="https://zh.wikipedia.org/wiki/X.509">X.509</a>的扩展，它允许在安全证书中使用<code>subjectAltName</code>字段将多种值与证书关联[<a href="https://zh.wikipedia.org/wiki/%E4%B8%BB%E9%A2%98%E5%A4%87%E7%94%A8%E5%90%8D%E7%A7%B0#cite_note-1">1]</a>，这些值被称为主题备用名称。名称可包括：[<a href="https://zh.wikipedia.org/wiki/%E4%B8%BB%E9%A2%98%E5%A4%87%E7%94%A8%E5%90%8D%E7%A7%B0#cite_note-2">2]</a></p>
+<ul>
+<li><a href="https://zh.wikipedia.org/w/index.php?title=EAI&action=edit&redlink=1">电子邮件地址</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/IP%E5%9C%B0%E5%9D%80">IP地址</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E7%B5%B1%E4%B8%80%E8%B3%87%E6%BA%90%E6%A8%99%E8%AA%8C%E7%AC%A6">统一资源标志符</a>（URI）</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%9F%9F%E5%90%8D%E7%B3%BB%E7%BB%9F">DNS名称</a>（通常也在主证书的主题字段中提供为公共名称<a href="https://zh.wikipedia.org/wiki/%E8%BD%BB%E5%9E%8B%E7%9B%AE%E5%BD%95%E8%AE%BF%E9%97%AE%E5%8D%8F%E8%AE%AE">RDN</a>。）</li>
+<li>目录名称（主题中<a href="https://zh.wikipedia.org/wiki/%E8%BD%BB%E5%9E%8B%E7%9B%AE%E5%BD%95%E8%AE%BF%E9%97%AE%E5%8D%8F%E8%AE%AE">唯一名称</a>的备用名称）</li>
+<li>其他通用名称，在已注册的[<a href="https://zh.wikipedia.org/wiki/%E4%B8%BB%E9%A2%98%E5%A4%87%E7%94%A8%E5%90%8D%E7%A7%B0#cite_note-3">3]</a><a href="https://zh.wikipedia.org/w/index.php?title=%E5%AF%B9%E8%B1%A1%E6%A0%87%E8%AF%86%E7%AC%A6&action=edit&redlink=1">对象标识符</a>后提供一个值。</li>
+</ul>
+<p>– <a href="https://zh.wikipedia.org/wiki/%E4%B8%BB%E9%A2%98%E5%A4%87%E7%94%A8%E5%90%8D%E7%A7%B0">subjectAltName wiki</a></p>
+</blockquote>
+<p>信息标注说明：</p>
+<p>可以添加多个，使用<code>,</code>分开，应该可以使用通配符，如<code>DNS:*.zhycarge.top</code></p>
+<ul>
+<li>IP地址标注：<code>IP:127.0.0.1</code></li>
+<li>电子邮件地址：<code>email:zhycarge@zhycarge.top</code></li>
+<li>域名信息：<code>DNS:www.zhycarge.top</code></li>
+</ul>
+<h2 id="生成中间证书密钥"><a href="#生成中间证书密钥" class="headerlink" title="生成中间证书密钥"></a>生成中间证书密钥</h2><p><code>openssl genrsa -aes256 -out ./KEY/Mid_CA.key 4096</code></p>
+<h2 id="生成CSR文件"><a href="#生成CSR文件" class="headerlink" title="生成CSR文件"></a>生成CSR文件</h2><p><code>openssl req -new -config ./conf/MidCA.cnf -sha256 -key ./KEY/Mid_CA.key -out ./RootCA/csr/Mid_CA.csr</code></p>
+<h2 id="生成中间证书"><a href="#生成中间证书" class="headerlink" title="生成中间证书"></a>生成中间证书</h2><p><code>openssl ca -config ./conf/Root_CA.cnf -extensions v3_Web_ca -days 365 -notext -md sha256 -in ./RootCA/csr/Mid_CA.csr -out ./RootCA/crt/Mid_CA.crt</code></p>
+<p>其中这里使用的配置文件便是根证书的配置文件，在使用根证书配置文件时同时也许访问根证书私钥与根证书文件，因此请确保根证书配置文件中根证书私钥和根证书文件路径有效。</p>
+<p>至此中间证书创建结束</p>
+<h1 id="其余操作"><a href="#其余操作" class="headerlink" title="其余操作"></a>其余操作</h1><h2 id="创建证书链"><a href="#创建证书链" class="headerlink" title="创建证书链"></a>创建证书链</h2><p>由于本教程搭建的证书链是通过AIA进行连接，因此在有网条件下签发证书时会自动连接好相关证书信息，但是如果是无网情况下需要签发证书链才能使用证书。（签发证书链过程可能会存在些许问题，暂由于使用AIA进行证书链生成，因此不再研究，若后续自身有需求或有人留言则会继续研究）</p>
+<p>命令如下，中间证书在上，根证书在下，生成证书链，生成证书链便可导入到局域网机器中进行安装验证书</p>
+<p><code>cat ./RootCA/crt/Mid_CA.crt ./RootCA/crt/RootCA.crt &gt; ./RootCA/crt/CA_Mid.crt</code></p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><p>暂无</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>OpenSSL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenSSL之创建根证书</title>
+    <url>/2024/12/18/OpenSSL%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%A0%B9%E8%AF%81%E4%B9%A6/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近想研究一下关于OpenSSL的相关知识，顺便想创建自己的一个根CA方便后续进行个人项目的各种证书签发工作。因此打算编写一份关于OpenSSL的专题，记录一下它的相关使用方法，为后续使用做准备。</p>
+<span id="more"></span>
+
+<p>所有操作均未考虑权限管理，如需引入权限管理，请移步<a href="(https://www.cnblogs.com/sparkdev/p/10369313.html)">^重点教程</a></p>
+<h2 id="什么是OpenSSL？"><a href="#什么是OpenSSL？" class="headerlink" title="什么是OpenSSL？"></a>什么是OpenSSL？</h2><blockquote>
+<p>在<a href="https://zh.wikipedia.org/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>上，<strong>OpenSSL</strong>是一个<a href="https://zh.wikipedia.org/wiki/%E9%96%8B%E6%94%BE%E5%8E%9F%E5%A7%8B%E7%A2%BC">开放源代码</a>的<a href="https://zh.wikipedia.org/wiki/%E8%BB%9F%E9%AB%94">软件</a><a href="https://zh.wikipedia.org/wiki/%E5%87%BD%E5%BC%8F%E5%BA%AB">函数库</a>包，应用程序可以使用这个包来进行安全通信，避免窃听，同时确认另一端连线者的身份。这个包广泛被应用在互联网的网页服务器上。</p>
+<p>–<a href="https://zh.wikipedia.org/wiki/OpenSSL">OpenSSL</a></p>
+</blockquote>
+<h2 id="版本说明"><a href="#版本说明" class="headerlink" title="版本说明"></a>版本说明</h2><ul>
+<li>OpenSSL版本为3.0.13</li>
+</ul>
+<h2 id="专题跳转"><a href="#专题跳转" class="headerlink" title="专题跳转"></a>专题跳转</h2><ul>
+<li><a href="https://zhycarge.github.io/tags/OpenSSL/">OpenSSL系列文章</a></li>
+</ul>
+<h1 id="创建属于自己的根证书（快捷指令版）"><a href="#创建属于自己的根证书（快捷指令版）" class="headerlink" title="创建属于自己的根证书（快捷指令版）"></a>创建属于自己的根证书（快捷指令版）</h1><p>这里记录着所有所需要的命令，如果想无脑用，则可以直接CV进行使用，如果想要了解更多有关的知识信息，那么请跳过该章节，跳转到<a href="#%E5%88%9B%E5%BB%BA%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E6%A0%B9%E8%AF%81%E4%B9%A6%EF%BC%88%E4%B8%80%E6%AD%A5%E6%AD%A5%E6%93%8D%E4%BD%9C%E7%89%88%EF%BC%89">创建属于自己的根证书（一步步操作版）</a></p>
+<p>以下操作默认证书存放为当前地址。</p>
+<p>创建<code>root.sh</code>文件，并在里面输入如下内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># 创建根证书所需要的全部文件信息</span></span><br><span class="line"><span class="comment"># 创建签发证书位置</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d RootCA/crt ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p RootCA/crt</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 创建根证书数据文件点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d RootCA/db ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p RootCA/db</span><br><span class="line">    <span class="built_in">touch</span> RootCA/db/index</span><br><span class="line">    openssl rand -hex 16 &gt; RootCA/db/serial</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 创建密钥存放点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d RootCA/key ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p RootCA/key</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 【总】创建过期证书生成点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d ./crl ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p ./crl</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 创建根证书新证书记录存放点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d RootCA/newcerts ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p RootCA/newcerts</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 【总】创建根证书、中间证书存放密钥点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d ./KEY ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p ./KEY</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 【总】创建根证书、中间证书配置点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d ./conf ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p ./conf</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>运行命令：<code>./root.sh</code></p>
+<p>创建根证书配置文件<code>touch ./conf/RootCA.cnf</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#</span><br><span class="line"># OpenSSL example configuration file.</span><br><span class="line"># See doc/man5/config.pod for more info.</span><br><span class="line">#</span><br><span class="line"># 整个项目的根目录，默认为当下</span><br><span class="line">HOME			= .</span><br><span class="line"></span><br><span class="line">####################################################################</span><br><span class="line">[ ca ]</span><br><span class="line">default_ca	= CA_default		# The default ca section</span><br><span class="line"></span><br><span class="line">####################################################################</span><br><span class="line">[ CA_default ]</span><br><span class="line">dir = ./RootCA</span><br><span class="line">database	= $dir/db/index.txt	# 数据文件存放点(必要)</span><br><span class="line">new_certs_dir	= $dir/newcerts		# 存放新证书 （必要）</span><br><span class="line">private_key	= ./KEY/RootCA.key # 私钥地址 (必要)</span><br><span class="line">serial		= $dir/db/serial 		# 当前序列号(必要)</span><br><span class="line">certificate = $dir/crt/RootCA.crt # 根证书签发文件位置</span><br><span class="line">name_opt 	= ca_default		# Subject Name options</span><br><span class="line">cert_opt 	= ca_default		# Certificate field options</span><br><span class="line">crl_extensions = crl_ext    # 添加撤销证书功能</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">default_days	= 365			# 默认天数</span><br><span class="line">default_crl_days= 30			# 默认30天获取撤销证书信息</span><br><span class="line">default_md	= sha256		# 公钥默认加密方式</span><br><span class="line">preserve	= no			# keep passed DN ordering</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">policy		= policy_match</span><br><span class="line"></span><br><span class="line"># For the CA policy</span><br><span class="line">[ policy_match ]</span><br><span class="line">countryName		= match</span><br><span class="line">stateOrProvinceName	= match</span><br><span class="line">organizationName	= match</span><br><span class="line">organizationalUnitName	= optional</span><br><span class="line">commonName		= supplied</span><br><span class="line">emailAddress		= optional</span><br><span class="line"></span><br><span class="line">[ policy_anything ]</span><br><span class="line">countryName		= optional</span><br><span class="line">stateOrProvinceName	= optional</span><br><span class="line">localityName		= optional</span><br><span class="line">organizationName	= optional</span><br><span class="line">organizationalUnitName	= optional</span><br><span class="line">commonName		= supplied</span><br><span class="line">emailAddress		= optional</span><br><span class="line"></span><br><span class="line">####################################################################</span><br><span class="line">[ req ]</span><br><span class="line">default_bits		= 2048</span><br><span class="line">prompt = no</span><br><span class="line">distinguished_name	= req_distinguished_name</span><br><span class="line">x509_extensions	= v3_ca	# The extensions to add to the self signed cert</span><br><span class="line">string_mask = pkix</span><br><span class="line"></span><br><span class="line">[ req_distinguished_name ]</span><br><span class="line">C = CN</span><br><span class="line">ST   = TianJin</span><br><span class="line">L    = TJ</span><br><span class="line">O    = ROOT</span><br><span class="line">OU   = Root CA</span><br><span class="line">CN   = Root CA</span><br><span class="line">emailAddress   = ZHYCarge@zhycarge.top</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[ v3_ca ]</span><br><span class="line">subjectKeyIdentifier=hash</span><br><span class="line">authorityKeyIdentifier=keyid:always,issuer</span><br><span class="line">basicConstraints = critical,CA:true</span><br><span class="line">keyUsage = critical, keyCertSign, cRLSign, digitalSignature</span><br><span class="line">crlDistributionPoints = URI:http://ca.zhycarge.top/crl/crl-Root.crl</span><br><span class="line"></span><br><span class="line">[ v3_Web_ca ]</span><br><span class="line">subjectKeyIdentifier = hash</span><br><span class="line">authorityKeyIdentifier = keyid:always,issuer</span><br><span class="line">basicConstraints = critical, CA:true, pathlen:0</span><br><span class="line">keyUsage = critical, digitalSignature, cRLSign, keyCertSign, keyEncipherment</span><br><span class="line">extendedKeyUsage = serverAuth</span><br><span class="line">authorityInfoAccess=caIssuers;URI:http://ca.zhycarge.top/crt/ZHYCargeRootCA.crt</span><br><span class="line">crlDistributionPoints = URI:http://ca.zhycarge.top/crl/crl-Root.crl</span><br><span class="line"></span><br><span class="line">[ crl_ext ]</span><br><span class="line">authorityKeyIdentifier=keyid:always</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>生成根证书私钥：</p>
+<p><code>openssl genrsa -aes256 -out KEY/RootCA.key 4096</code></p>
+<p>生成根证书签名请求：</p>
+<p><code>openssl req -new -config ./conf/RootCA.cnf -sha256 -key /KEY/RootCA.key -out ./RootCA/csr/RootCA.csr</code></p>
+<p>签发证书：</p>
+<p><code>openssl ca -selfsign -config ./conf/RootCA.cnf -in ./RootCA/csr/RootCA.csr -extensions v3_ca -days 365 -out ./RootCA/crt/RootCA.crt</code></p>
+<p>至此证书无脑化生成完毕。</p>
+<h1 id="创建属于自己的根证书（一步步操作版）"><a href="#创建属于自己的根证书（一步步操作版）" class="headerlink" title="创建属于自己的根证书（一步步操作版）"></a>创建属于自己的根证书（一步步操作版）</h1><p>此处记录着详细的生成操作，供了解学习。</p>
+<h2 id="生成目录文件"><a href="#生成目录文件" class="headerlink" title="生成目录文件"></a>生成目录文件</h2><p>参考上文<code>root.sh</code>文件的创建方式以及生成目录文件，这里不再进行赘述 <a href="#%E5%88%9B%E5%BB%BA%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E6%A0%B9%E8%AF%81%E4%B9%A6%EF%BC%88%E5%BF%AB%E6%8D%B7%E6%8C%87%E4%BB%A4%E7%89%88%EF%BC%89">创建属于自己的根证书（快捷指令版）</a></p>
+<h2 id="配置文件详解"><a href="#配置文件详解" class="headerlink" title="配置文件详解"></a>配置文件详解</h2><p>在<code>conf</code>文件夹中创建<code>RootCA.cnf</code>文件，并依次添加如下代码框中的内容：</p>
+<h3 id="CA头"><a href="#CA头" class="headerlink" title="CA头"></a>CA头</h3><p>没什么可以讲解的，默认配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#</span><br><span class="line"># OpenSSL example configuration file.</span><br><span class="line"># See doc/man5/config.pod for more info.</span><br><span class="line">#</span><br><span class="line"># 整个项目的根目录，默认为当下</span><br><span class="line">HOME			= .</span><br><span class="line">####################################################################</span><br><span class="line">[ ca ]</span><br><span class="line">default_ca	= CA_default		# The default ca section</span><br><span class="line">####################################################################</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书配置"><a href="#证书配置" class="headerlink" title="证书配置"></a>证书配置</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ CA_default ]</span><br><span class="line">dir = ./RootCA # 与证书配套的配置文件夹</span><br><span class="line">database	= $dir/db/index.txt	# 证书签发记录数据库</span><br><span class="line">new_certs_dir	= $dir/newcerts		# 存放生成证书签名信息</span><br><span class="line">private_key	= ./KEY/RootCA.key # 当前证书私钥地址</span><br><span class="line">serial		= $dir/db/serial 		# 生成随机数，根据随机数进行索引记录</span><br><span class="line">certificate = $dir/crt/RootCA.crt # 当前证书签发文件位置</span><br><span class="line">name_opt 	= ca_default		# 默认</span><br><span class="line">cert_opt 	= ca_default		# 默认</span><br><span class="line">crl_extensions = crl_ext    # 添加撤销证书功能，与后续功能块联动</span><br><span class="line">default_days	= 365			# 默认证书天数</span><br><span class="line">default_crl_days= 30			# 默认更新撤销证书实践</span><br><span class="line">default_md	= sha256		# 私钥默认加密方式</span><br><span class="line">preserve	= no			# 不知道，暂存</span><br><span class="line">policy		= policy_match  # 证书创建规则匹配，与后续功能块联动</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书规则匹配"><a href="#证书规则匹配" class="headerlink" title="证书规则匹配"></a>证书规则匹配</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># For the CA policy</span><br><span class="line"># 前三个match 要求签发证书与当前CA一致，optional为可选项，supplied会在创建时进行输入</span><br><span class="line">[ policy_match ]</span><br><span class="line">countryName		= match</span><br><span class="line">stateOrProvinceName	= match</span><br><span class="line">organizationName	= match</span><br><span class="line">organizationalUnitName	= optional</span><br><span class="line">commonName		= supplied</span><br><span class="line">emailAddress		= optional</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书生成参数"><a href="#证书生成参数" class="headerlink" title="证书生成参数"></a>证书生成参数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ req ]</span><br><span class="line">default_bits = 2048 # 证书加密位数</span><br><span class="line">prompt = no # 不需要显示提示信息，直接按照参数信息进行键入CN信息等</span><br><span class="line">distinguished_name	= req_distinguished_name # 参数信息，后面功能块联动</span><br><span class="line">x509_extensions	= v3_ca	# The extensions to add to the self signed cert # 签发证书参数，后面功能块联动</span><br><span class="line">string_mask = pkix	# 如果是utf8only，则键入英文可能会出现证书规则匹配错误，具体查看后面疑难杂症章节</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书参数信息"><a href="#证书参数信息" class="headerlink" title="证书参数信息"></a>证书参数信息</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ req_distinguished_name ]</span><br><span class="line">C = CN	# 国家代码，默认2位</span><br><span class="line">ST   = TianJin	# 所在州省</span><br><span class="line">L    = TJ	# 所在市 </span><br><span class="line">O    = ZHYCarge	# 组织名称</span><br><span class="line">OU   = ZHYCarge Root CA	# 组织唯一名称</span><br><span class="line">CN   = ZHYCarge Root CA	# 通用名称，要求唯一</span><br><span class="line">emailAddress   = ZHYCarge@zhycarge.top	# 邮箱地址</span><br></pre></td></tr></table></figure>
+
+<h3 id="根证书签发参数"><a href="#根证书签发参数" class="headerlink" title="根证书签发参数"></a>根证书签发参数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ v3_ca ]</span><br><span class="line">subjectKeyIdentifier=hash	# 加密方式</span><br><span class="line">authorityKeyIdentifier=keyid:always,issuer # 参数存储</span><br><span class="line">basicConstraints = critical,CA:true	# 是CA签发机构，能继续签发证书，若FALSE则为终端证书，不允许签发</span><br><span class="line">keyUsage = critical, keyCertSign, cRLSign, digitalSignature	# 证书用途，后续章节疑难解答详细说明</span><br><span class="line">crlDistributionPoints = URI:http://ca.zhycarge.top/crl/crl-Root.crl	# 证书吊销地址，后续疑难解答有详细说明</span><br></pre></td></tr></table></figure>
+
+<h3 id="中间证书配置文件"><a href="#中间证书配置文件" class="headerlink" title="中间证书配置文件"></a>中间证书配置文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ v3_Web_ca ] # 名称随意，后续创建中间证书会用上</span><br><span class="line">subjectKeyIdentifier = hash	# 与根证书同</span><br><span class="line">authorityKeyIdentifier = keyid:always,issuer # 与根证书同</span><br><span class="line">basicConstraints = critical, CA:true, pathlen:0	# pathlen代表签发证书无限制，默认就是0</span><br><span class="line">keyUsage = critical, digitalSignature, cRLSign, keyCertSign, keyEncipherment	# 与根证书同</span><br><span class="line">extendedKeyUsage = serverAuth	# 额外证书用途，后续有详细讲解</span><br><span class="line">authorityInfoAccess=caIssuers;URI:http://ca.zhycarge.top/crt/ZHYCargeRootCA.crt	# 指向根证书地址，后续详细讲解</span><br><span class="line">crlDistributionPoints = URI:http://ca.zhycarge.top/crl/crl-Root.crl	# 与根证书同</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书吊销列表参数"><a href="#证书吊销列表参数" class="headerlink" title="证书吊销列表参数"></a>证书吊销列表参数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ crl_ext ]</span><br><span class="line">authorityKeyIdentifier=keyid:always	# 与根证书同</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="keyUsage讲解"><a href="#keyUsage讲解" class="headerlink" title="keyUsage讲解"></a><code>keyUsage</code>讲解</h3><p>扩展用于指明证书的基本用途。可以包含多个值，常见的选项有：</p>
+<ul>
+<li><code>digitalSignature</code> 用于数字签名（如 SSL&#x2F;TLS 握手、代码签名等）</li>
+<li><code>nonRepudiation</code>用于非否认性（证明某个操作已被执行）</li>
+<li><code>keyEncipherment</code>用于密钥加密（例如，保护会话密钥）</li>
+<li><code>dataEncipherment</code>用于数据加密（加密实际数据）</li>
+<li><code>keyAgreement</code>用于密钥协商（如 Diffie-Hellman）</li>
+<li><code>keyCertSign</code>用于签署其他证书（CA 证书）</li>
+<li><code>cRLSign</code>用于签署证书撤销列表（CRL）</li>
+<li><code>encipherOnly</code>用于仅加密操作</li>
+<li><code>decipherOnly</code>用于仅解密操作</li>
+</ul>
+<h3 id="extendedKeyUsage讲解"><a href="#extendedKeyUsage讲解" class="headerlink" title="extendedKeyUsage讲解"></a><code>extendedKeyUsage</code>讲解</h3><p>扩展用于指明证书的扩展用途，可以包含多个值，常见的选项有：</p>
+<ul>
+<li><code>serverAuth</code>用于服务器身份验证</li>
+<li><code>clientAuth</code>用于客户端身份验证</li>
+<li><code>codeSigning</code>用于代码签名</li>
+<li><code>emailProtection</code>用于电子邮件保护（S&#x2F;MIME）</li>
+<li><code>timeStamping</code>用于时间戳服务</li>
+<li><code>OCSPSigning</code>用于在线证书状态协议（OCSP）签名</li>
+<li><code>ipsecEndSystem</code>用于 IPsec 终端</li>
+<li><code>ipsecTunnel</code>用于 IPsec 隧道</li>
+<li><code>ipsecUser</code>用于 IPsec 用户</li>
+<li><code>anyExtendedKeyUsage</code>表示可以用于任何扩展用途</li>
+</ul>
+<h3 id="authorityInfoAccess讲解"><a href="#authorityInfoAccess讲解" class="headerlink" title="authorityInfoAccess讲解"></a><code>authorityInfoAccess</code>讲解</h3><p><code>authorityInfoAccess</code>(AIA) 是 X.509 证书中的一个扩展，用于提供证书颁发机构（CA）信息的访问方法。这一扩展可以帮助用户或应用程序获取有关证书的更多信息，例如证书的撤销状态或颁发者的证书。</p>
+<p>通常配置文件:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">authorityInfoAccess = critical</span><br><span class="line">    CAIssuers;URI:http://ca.example.com/ca.crt,</span><br><span class="line">    OCSP;URI:http://ocsp.example.com</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>critical</code> ：表示该扩展是关键的，如果接收方不支持这一扩展，可能会拒绝该证书。</li>
+<li><code>CAIssuers</code>：指向 CA 证书的 URL，客户端可以通过该 URL 获取 CA 的证书。</li>
+<li><code>OCSP</code>：指向在线证书状态协议（OCSP）的 URL，客户端可以通过该 URL 查询证书的实时状态。</li>
+</ul>
+<p>这里由于OCSP需要搭建服务器等进行匹配，由于证书信息都在本地进行生成，因此不考虑，仅提供<code>CAIssuers</code>，通过配置<code>crlDistributionPoints</code>提供CRL文件进行证书的撤销状态提示。</p>
+<h2 id="创建根证书私钥"><a href="#创建根证书私钥" class="headerlink" title="创建根证书私钥"></a>创建根证书私钥</h2><p>参考文章<a href="https://docs.openssl.org/3.0/man1/openssl-genrsa/">^openssl-genrsa</a></p>
+<p>通过使用命令创建根证书私钥</p>
+<p><code>openssl genrsa -aes256 -out ./KEY/RootCA.key 4096</code></p>
+<p>其中参数说明：</p>
+<ul>
+<li><code>-out</code>：生成根证书私钥的名称及存储位置</li>
+<li><code>-aes256</code>：生成证书的加密方式</li>
+<li><code>4096</code>：证书私钥的大小，默认值为<code>2048</code></li>
+</ul>
+<h2 id="生成根证书的签名请求"><a href="#生成根证书的签名请求" class="headerlink" title="生成根证书的签名请求"></a>生成根证书的签名请求</h2><p>参考文章<a href="https://docs.openssl.org/3.0/man1/openssl-req/">^openssl-req</a>,使用命令创建签名请求。</p>
+<p><code>openssl req -new -config ./conf/RootCA.cnf -sha256 -key ./KEY/RootCA.key -out ./RootCA/csr/RootCA.csr</code></p>
+<h2 id="签发CA证书"><a href="#签发CA证书" class="headerlink" title="签发CA证书"></a>签发CA证书</h2><p>输入下列命令后通过输入密钥密码还有两个<code>y</code>之后便可生成根证书密钥。</p>
+<p><code>openssl ca -selfsign -config ./conf/RootCA.cnf -in ./RootCA/csr/RootCA.csr -extensions v3_ca -days 365 -out ./RootCA/crt/RootCA.crt</code></p>
+<p>至此，根证书创建完成，可以根据自身需要将根证书导入到指定环境或者进行分发，或者等待中间证书创建好后编写证书链进行分发。</p>
+<h1 id="其余操作介绍"><a href="#其余操作介绍" class="headerlink" title="其余操作介绍"></a>其余操作介绍</h1><h2 id="查看签发证书情况"><a href="#查看签发证书情况" class="headerlink" title="查看签发证书情况"></a>查看签发证书情况</h2><p>通过使用如下命令查看签发证书情况，能够看到大致的证书信息。</p>
+<p><code>openssl req -text -noout -in ./RootCA/csr/RootCA.csr</code></p>
+<h2 id="添加crl信息"><a href="#添加crl信息" class="headerlink" title="添加crl信息"></a>添加crl信息</h2><div class="note info"><p>以下内容在发稿前实验撤销证书暂无效果，撤销证书效果存疑，后续实验有新进展后会更新博文</p>
+</div>
+
+<p><strong>使用前提：要确保在证书中已经添加好CRL链接文件</strong></p>
+<h3 id="撤销证书"><a href="#撤销证书" class="headerlink" title="撤销证书"></a>撤销证书</h3><p>通过命令撤销<code>1.crt</code>证书</p>
+<p><code>openssl ca -revoke 1.crt -config ./conf/RootCA.cnf</code></p>
+<p>更新crl文件</p>
+<p><code> openssl ca -gencrl -out ./crl/ca-Root.crl -config ./conf/RootCA.cnf</code></p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="疑难杂症"><a href="#疑难杂症" class="headerlink" title="疑难杂症"></a>疑难杂症</h2><h3 id="The-mandatory-stateOrProvinceName-field-was-missing"><a href="#The-mandatory-stateOrProvinceName-field-was-missing" class="headerlink" title="The mandatory stateOrProvinceName field was missing"></a><code>The mandatory stateOrProvinceName field was missing</code></h3><p>报错内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Check that the request matches the signature</span><br><span class="line">Signature ok</span><br><span class="line">The mandatory stateOrProvinceName field was missing</span><br></pre></td></tr></table></figure>
+
+<p>根据<a href="https://www.cnblogs.com/loleina/p/8418111.html#:~:text=%E5%B0%8F%E6%8F%92%E6%9B%B2%EF%BC%9A%E7%94%A8CA%E6%A0%B9%E8%AF%81%E4%B9%A6%E7%AD%BE%E5%90%8D%E6%97%B6%E6%8A%A5%E9%94%99%EF%BC%8CThe%20mandatory%20stateOrProvinceName%20field%20was%20missing">^报错1</a>可知，配置文件中<code>[policy_match]</code>中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ policy_match ]</span><br><span class="line">countryName		= match</span><br><span class="line">stateOrProvinceName	= match</span><br><span class="line">organizationName	= match</span><br></pre></td></tr></table></figure>
+
+<p>有三个选项应该一致，但是并未保持一致，所以报错。</p>
+<p>修改方式是要么将 <code>match</code>改成 <code>optional</code>，要么参考<a href="https://stackoverflow.com/a/14382731">^报错2</a>将<code>string_mask</code>从<code>utf8only</code>更改为<code>pkix</code>。</p>
+<h3 id="无法创建有效的证书链"><a href="#无法创建有效的证书链" class="headerlink" title="无法创建有效的证书链"></a>无法创建有效的证书链</h3><p>添加<code>authorityInfoAccess</code>指向上级证书的信息时不能加HTTPS，要用HTTP进行引用，否则无法找到</p>
+<h3 id="存在疑问信息"><a href="#存在疑问信息" class="headerlink" title="存在疑问信息"></a>存在疑问信息</h3><p>手机端无法签发该证书，不知道哪一步存在问题，证书签发仅在电脑端能够实现</p>
+<h2 id="张贴自己的根证书"><a href="#张贴自己的根证书" class="headerlink" title="张贴自己的根证书"></a>张贴自己的根证书</h2><p>根证书及中间证书下载地址：请关注网站的<a href="https://zhycarge.github.io/about/">关于</a>部分进行查看。</p>
+<h2 id="更新说明"><a href="#更新说明" class="headerlink" title="更新说明"></a>更新说明</h2><h3 id="2024-12-20-13-41-34"><a href="#2024-12-20-13-41-34" class="headerlink" title="2024-12-20 13:41:34"></a><code>2024-12-20 13:41:34</code></h3><p>重新更换文章、刊错</p>
+<h3 id="2025-12-19-23-48-34"><a href="#2025-12-19-23-48-34" class="headerlink" title="2025-12-19 23:48:34"></a><code>2025-12-19 23:48:34</code></h3><p>删除并修改个人根证书信息</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://cloud.baidu.com/article/2697901">使用OpenSSL生成根证书CA及签发子证书</a></li>
+<li><a href="https://docs.openssl.org/">项目官方文档</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>OpenSSL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>WSL介绍与安装</title>
+    <url>/2024/12/18/WSL%E4%BB%8B%E7%BB%8D%E4%B8%8E%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>打算了解一下WSL的相关内容（双系统感觉来回切换过于麻烦，打算换成这个）</p>
+<span id="more"></span>
+
+<h1 id="前情摘要"><a href="#前情摘要" class="headerlink" title="前情摘要"></a>前情摘要</h1><h2 id="什么是WSL"><a href="#什么是WSL" class="headerlink" title="什么是WSL"></a>什么是WSL</h2><blockquote>
+<p>WSL全称为<code>Windows Subsystem for Linux</code>，可用于在 Windows 计算机上运行 Linux 环境，而无需单独的虚拟机或双引导。  WSL 旨在为希望同时使用 Windows 和 Linux 的开发人员提供无缝高效的体验。</p>
+<p>–<a href="https://learn.microsoft.com/zh-cn/windows/wsl/about">什么是适用于 Linux 的 Windows 子系统？</a></p>
+</blockquote>
+<p>因此，相较于双系统来讲，WSL能更加方便主用Windows的用户更加方便的使用Linux的相关内容，从而避免双系统的切换，同时，相较于虚拟机而言，WSL所需资源要远小于虚拟机使用，因此相较于主用Windows的用户来讲，更加方便快捷。</p>
+<h2 id="WSL面向哪些用户"><a href="#WSL面向哪些用户" class="headerlink" title="WSL面向哪些用户"></a>WSL面向哪些用户</h2><blockquote>
+<p>这主要是一种面向开发人员的工具，尤其是 Web 开发人员，他们从事开源项目，或者部署到 Linux 服务器环境。 WSL 适用于喜欢使用 Bash、常用 Linux 工具 (<code>sed</code> <code>awk</code>、 等) 和 Linux 优先框架 (Ruby、Python 等) 但也喜欢使用 Windows 生产力工具的任何人</p>
+<p>–<a href="https://learn.microsoft.com/zh-cn/windows/wsl/faq#wsl--------">WSL 面向哪些用户？</a></p>
+</blockquote>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="简易安装（有适用要求）"><a href="#简易安装（有适用要求）" class="headerlink" title="简易安装（有适用要求）"></a>简易安装（有适用要求）</h2><p>由于WSL是微软集成的一项程序功能，并且WSL已经更新到了第二个版本：<code>WSL2</code>，因此通常而言安装方式也极为简单：</p>
+<div class="note info"><p><strong>下述方式使用的先决条件：</strong></p>
+<p>必须运行 Windows 10 版本 2004 及更高版本（内部版本 19041 及更高版本）或 Windows 11 才能使用以下命令。 </p>
+<p>对于旧版本的Windows来讲，请参考 <a href="https://learn.microsoft.com/zh-cn/windows/wsl/install-manual">旧版 WSL 的手动安装步骤</a>进行安装，Windows专业版或者企业定制版可能不太会适用。具体原因暂不了解。</p>
+</div>
+
+<ul>
+<li>打开PowerShell</li>
+<li>输入命令<code>wsl --install</code></li>
+<li>等待第一步安装结束后重启</li>
+<li>继续输入命令<code>wsl --install</code></li>
+</ul>
+<p>等待进一步安装完成之后会需要输入Linux的账户密码，之后便可进行访问</p>
+<h2 id="相关操作方式"><a href="#相关操作方式" class="headerlink" title="相关操作方式"></a>相关操作方式</h2><ul>
+<li><code>wsl --list</code>：列出系统所有的Linux子系统</li>
+<li><code>wsl -d &lt;Distro&gt;</code>：使用指定Linux系统进行登录</li>
+<li><code>wsl --install</code>：安装适用于Windows的子系统发行版，默认是最新的Ubuntu<ul>
+<li><code>--no-launch, -n</code>：安装后不进行启动</li>
+<li><code> --web-download</code>：从Web中下载，并不使用微软商店进行下载</li>
+<li><code>[发行版名称]</code>：可以指定想要安装的Linux发行版</li>
+</ul>
+</li>
+</ul>
+<h2 id="将Linux发行版移到别的磁盘"><a href="#将Linux发行版移到别的磁盘" class="headerlink" title="将Linux发行版移到别的磁盘"></a>将Linux发行版移到别的磁盘</h2><p>由于Windows经典垃圾属性，WSL安装默认路径是系统盘下（通常是C盘），因此在后续使用过程中会逐渐占满C盘。为此可以进行系统迁移，参考博文：<a href="https://blog.csdn.net/m0_37605642/article/details/127812965">【WSL2教程】WSL迁移到非系统盘</a></p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://learn.microsoft.com/zh-cn/windows/wsl/">【官方】适用于 Linux 的 Windows 子系统文档</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>WSL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《心安即是归处》读书笔记</title>
+    <url>/2025/03/23/%E3%80%8A%E5%BF%83%E5%AE%89%E5%8D%B3%E6%98%AF%E5%BD%92%E5%A4%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码错误，若不知道密码则可向博主询问" data-whm="这篇文章hash错误, 不过您还是能看看解密后的内容.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="e8b4980ee4620faa999b4fc28e970768f55cbd14c537d8bc1e8b5c816566dee0">13c7560809ecd52bc62468b98a590fc1daea8caa1acf6e925ad39b783abc2d42db74df8e029a8c9dd1ecb00afa5f5d8eac7f96acbfbc1af56485965baa6118dae02e40301b722e1964cd61dec7f53196a342b0a989207d6a24296400d483be71438c29f74b866671372b3e6ce557e4cfcb2ab67590e0c6ef21a1d958fdbb9decbec2db7e2ca05583e45bb18670ec1b26203f50dfcfb6dd112abd1732419e23a94788b8786c52f67c5d80d78b3b74d2c547f9ab53252c0e65fc7969404f040af029ecb1bb6eea38312a7565894446a6bb407700e32f3cfd76d98962d4df47a6b1cf5539eadcb2e2d63a5c127064b56c30865e20167c6ffbc4de7c8755002fd7cdbc3cf78937d3b71dcc5d9191e80deccbf4630037c0f9a2812158b849d303f44a6484f2035052b08815ae23eeaaea8b8ef7f6515065b12ab660cf8baa5be5c926358984f1792314c6bb86f23d672c6a7b44683514eeaae2f15d34483731daa236dc11667e6d6b2d4ec493d782424efe2036e17961cd958c5db406ee73d8649e9224ff37015ccef21b070ed421bef808fed10d4337befe78e0afb7418dbcd33da390222e30f8271863e723b50cd0bc4138d16896c6e43634bf0f50b9902a75d891f447e55980f1ce34d0d32a9cc61c363c22d6b6ffd51994c4158259dd0fe6918eae7a4c17972c08924f4c505707a7a237b427f4b918e63f6353ab7908e93aebc18212284ee3a3fd25a9e1ff84de3d2211d4db310aa52e6902754326c3696884df85a3d640ba440699d710bf76e5d6ebcbbfcb23c307b55823b4d67304ed4b56b6144fd37e18749b08e31b0e9ec7d70ae23a95a56f5edd9393972f3ad162d1604a7761052a8a2f7f8e315753c60e4cdf4fb4c2f6616da803f170386453e7e00c007285ee563aca50ab645874c74a94100e3368efa2a1e2e8bdfa4dc8c9195dfa8f83b08152ddd744d5348e81ff1848c85bf43480d18367dc0846cf1e0ccf1a121ed83e4a05c2de228eedc9a20a51cb9cfbbad9ebedb2b047154afdd3b755ecd2e78e86eabfd0c542cf6932666b4675393279e68c52fa6f57a1b256b25cb409ad4b05821e693c628929b12b0c785a0c08098668b92fdfe071a6cd25dbfdb75938bc995715adb33e723a0fa8c92de2207a037e96b27ee02c98f2b10993788aac8ea02f10101c6d80ff972d25f361d6f77a1fe7381cd79209b13a62e24b25167f68e71f67e90602f0cadf5969691d6d709e5519ab2a39d9fcce4a080e689432cda9dab68c9e75f188978c25ef53a0f83989d9eada5d1254ca7b150637833fae57cb8649d5c4a50ed451cbd9bce2ca5577da6569871cccaca3619e34c58ece1039e298e5318d85b57be71f85cd50574a4041b5732947d6da080cb17bcc109907a4982854acffa8e5a9b8100e2479419d9a5ef273626b3fc84c18095445a15d6aeb2df86905a2c8fe6bc107305d4a95e4a97ebbec9f4317934cd3f0826692978af8b5f54844cb0f2dd82c1bdc3d9808fa8707b372a093c4ac54a8de79c661041a60625546e46c11ea65363ecee286283db2070e7d2bb96bf255509f815129da7e29a4e2f15a71bdc228fb818dea209059151ddbf0c1203e4dd04a3670100710528b0fd22a8d5c1fc1447807550229da588237b8e9aa52beed4a60fa34b2e35def84fd8da5c1af37dded77cf3fc327889afbaed6290df4b924b73fd2019430413b8d91e42210616a185250a6e83c039d6c0813a8bd29a5206260781b2b159fb527424f85f6a36ed4b4106a42080d165519a6426ffc48106615152904b6312e6f5eca43f9c6c7e9d81e7b1d9b5b8ea7edfe3f4a289c835ea4d5ca82e2cbdd73f9dec405396c7cd6579c17b81b14f355c6eba69629da0093061772e15c5e72b210768b0aa6796cd6a736cb3390f0f0c04bbee5a396f6359e1d7df83ff7de6cded56867fa4d208f29847559359079e25a07f9ca7794ef85f842020b1543eb5b6a867dffaf36ebe4e7a51febee90f65658263561a95dc2fc1d1c63932db63685614cd7baea0d36a1fe4948e77edee252aa74dc4d81ae621f98690f2983d43451d9da5b01fdc496bc0bb0b601552a91dc299e905ec76a4e127a7f66f65f9e89e340592d913df5449b0830bbd67c740d26550736765a9132b2cc04bd11ece9c40adac578d53636de9c2e6697ca61b5f1ce4d4ff5e70c73ea794448adfa79ffe5fea88d17fb312f90e1a80ce47f5d0a65148457f9372de232503f94eb23ce06727cbe5d67c74e888a9e6ca5c7e6291e35e49b1b97f9da60839aa4783fdd73fc1ddd095e7ebbadd3dd47c6928fbdeb53707505151aba8fc45aacadc1c1ac1be80753b2ca8a3ba9f31810cee5e37ba6f6ff3146b0583e58758e53d71bb9d200346f8de027a131fed42484d82b7ca730e9f6b5eb8ed048f57cac93cca1653214a26428e6dbc7c72ef7e1f511d853b1907ba4844df815c0877a941e5169a6429b1668a1f6f6951cca2c0c0f419f0c339a2ccfe95b5cd6b17b86a4d88828c0fa8959354514db6b3e35aa37f9f1e0248cb53ff0bb4cc70de3c2f96bcdc81e65ce9e6c323dc318bb5bdd2495be10652ec6c171fd4543a043f3343ce55bd58e447bec9d92e030f7950270f2631ba6abb5bde7c3d0a978005e8537c1aabd00f7a485946d1ea7d2ec308fe0ca6193e81b3c5173755e7b3f8bb6b808482a6436a04a87e2d559c6b358d0c6a36e7112477fd48e239e536f550a63e7ea31573069aa6d1082b6fce70433d5a105a948700f8753930f94b3168327ed3f8c0abec5413c97120d0064f6783d07a359b041d069f4a857c2bafd11cc0ee42fc12a090c0d25f3346bef613e34a5211c9653130d1e4e0dd22d4e1a20575826697b03f30dda384b7543defe28aa7fcd94ebd45d65fac0d4d248d094aba6ec21a10bc70ea8d8e408ef916d76429c14b347873ba0934d8918ad5271886b6b41fe3a52cfbccc5dc2fd04847e78620bca91bedb12fd9109d9fa5b11b2a0dbc47fb17762136ab475e494c2ef8b74fbd761de7f4b3224e2ddedd462e19555bf40f0f220366aba156a7dd67c9b98774da7b2c5f3ccd4bec56d2823622e66c4975bfc3bc60b53506c6618fb810fde90a242d09165a9999064a17c2f8a30b7af476c4ae870b75ce6e70e6941359edc54e6c4b75ab34e80d0e20f176569a941332bf3c03b99f3f78cc2f1043a0f388dca7964670380c0aa1b1e9aaedddcb80ee1b3bf9c9f393d0b4fc6bf78f3a3f237fce84200ad03eae61a54bb53588ccd75589a7541ae2c3f6606618963bfcbd690035a5f406e75096d20ef153e1bd21a56940d2fc09769fd553fffef807f513a0f9257c78bf515fa58395b5b8625845b99e9b5da832e7e07fdd657e8680b9076f173c24c343a93587a043aa1fc40747bd1a1298d4e89cc2e1adc9b37d705109d2ca07d9c59684c9d987d34743d35ecb7aabdd75e1855c6ab4ec946ef72f197bb063bcfa8522cdf719c89d662f279cc15ae8c30a41f69618d478960eed8252269f3f3a55d3881e1b8c88c68d4ea8a9f191da49a0f8c98e40ef2b2c5a79270f0e48a2a39a8b6ff4bbd8ed9a5faeba23b267c0a5f8e3cfd77ffcee08207f9f18890286dfb8d9fabdca5f35550420b9e6dc92f523b59995ae68a69ad075471a23cdd6c83deae94db54a97dd3c17f61b4c1c3e0f745cf4ef288c65b24382f773d60102f6261ff9f91dd4c624838cb91102106857b5efcedd2af32d2a97bb1d91fad7d0f2258c1c2dfa2fa57273951761ea55177aaad4739e9f4d168bf4420e14fffe1662e30c47935712c437f029a8eefb60c969c898da0c76000cb1df7e4e3e2d4f0f8ae263b4a8de1e67319588bb316c7dab01d78fc7eed8ad62f14770a147f29efaccd470d4dd0e3c7802986debf88feea23d6238432b871fb97c05272502fdeae2bf6daa417ef48153d87a4cefbd308803f2973d339d7fbef80a42a125c89cd576ad87b0aa053a00efa60e5ecc3d956d5e80ea69c44ace07d3ca494adbb07b66072262ac262be736934b21a4059aba378ef7ba47ba5f46801cb3fe4cd7b08567ff14354f116d0e2fc13e62769f0be1ec6f05244196f914771910f789c42f7c944e6d709587f2825f1bf907e485609278cf7a52029258eed106344bb3d40064b746b603392c58c717121aa32f49c2018a8e61f306fe51e5438fb3d471f78ddbd0fd45b02f8629865a8bb1bb28e41de62fb6a6913a89ba092e2066d095c7407f28b585a0ebcccbced721f00d0eae97b08dc9c85abacc02557cc4f45a0ffcde880e97755a0dfa4bbba82691bab85faf783c384b9beae769572597b8a9ddc259b2c15375608f83445d972fa90a976960f761d84ff3fa4ca8dde2353ec4c9b10c39532ca6d391c119dc417b4d6adb6be8c3d55bbfc6e30e9eabe757e35e22573a8e499e646f53ec82b507e6cd5dffa05123f1c84f6e4f6f29e0d04783fcadcf21e87c0aca1cd6afd5559737295b4a19ada66a279ae106abdeb075d6ed69f09cb6945f7e2db5c7618c0ff8137ce918b3ac16ce1d80ea7fc91f42e964f3dce091df1c09814bd59e3e98c895a1ccd700e94e556dad655d6ac8809fbaebe2ede3f4d48c6b3e007824a065421471ee9dc87105641f6a1482d81496c848a58531ea8b31d1d2aa04b589d4f0e8c9b8178738690305b026b219833735b1679abe52edeaa3da3048b9880d543859ff7745c794163f8c1ca9baae27f2283b6e30984a62d316ff16af1e202a13884a51ec4a7401362a1b745cb73fdda0b45dae1929501d407805f35e635761be66d5318e5ca94c58f7161ce5df2f52ff96e72efd5d3e889d02a9717c29d37e4034eabe0bd98a5be6c60c519c3a37c88ac0fe33fb8a1ae39ad1cabbc4925bdca98fa0918353568fabb3e03d6a5a430e4504c034a63c1742f1213a74f2b92947ac977257dc4dc098227b60737562c059ad2704eed0cf11490dd3364fbae53d5fb919c273630565334a1ba281695270a83152b56552204b826eb8d5e6cecfb787c8edd6555fbdf2c25e44c6205ed5c0cabfc4393f5923191ffce2e6bab06b46966fb2100c0149f1c2316315b4f12eaff793888fe7fbb31c2e763f53dc72ec6d906d20992b04806a6adc6b3fbcf43c22b9485eec2ccbf968957002ae28bff7604ecffc606d17e60613a34c544f8bcbed7e7b999c30bb140c7fd34f98bf04a43b3f6138f57e3bd29337531078dd6a52d067ea1d5cd2be9406c7a1c257ecbe7043502580af11d763cba7d46fcd0ef0af1597c8fc9f4e498fc73e73520ef99208077ad78bd25b13c1fd8d14b55013fd470ac88634af4d4e5e46ef80d257d2da01d2013b457de6a8a5f5179788d2dd80190339f652ba11d73b1c03864b21b02260997b8fdb1900f20ae797fe814bfd6cb7386850e666c89718ef9c7e62e087df6b2c0aa1d8eee26e3ffecfade119df6aa50d74cacdb81dc79e49e4867926d0702c6dc92a996874567ebca686b3cd72066298e7512cc699b6fb3b496bf03b70f6f6bdf0088eacdd00646f16ac5f71c05d66477412e564f2fc0ad73ac1a648ba61ed3e5a1906cb220eb614b81c496e7c4e10ed4da41da21065604b167f40422aadeab19f0871cb3ccd9fb2a37796adc7592429657cfdb531065e56659ebd467080d570cbf1ec1d45f50f25a14c83c01a8a9b6f443e0dfabaaf818429952ccce8944a5156a228d8d05c2ae646de76007bdfd3f7bc2efd28f40b209c3fb795faee4a582e8a2f37c2a1ac1d549daccefb5fee85ba9a2a16ac1cdfb31d16a655050385f81e9d5ec2b4b1659f0f866ba133b10b095b08b69bb525c2207e263ab5cc4bf34216bd2233e3dc1b1a323edfb4f2d86643deeac6eb7bc7df971c958a7cc4d78608ede66a2b024d5ae8715b91bda9577f464ae6f936e2fbdec35465cc20b889fcdf7fe9398b6cdacc7e508651e302a1e674beee34b16465bb1fae0b4d66253fc21f408c4d77fb8ec603e5179539a6f8a041a8c86e688fa1b1836d0e51509c5a3d7fe0dd07c3fad1a5d7f9fb4354144020faee5230e2f24a173003a0328d7bc8fa67b49e6b672e772dea7ea8ca2b27c94800ebf1a54cc7c0e092678874e73a73671f14a0c930039a004fa277c69675f842d01dd297097abfcbb04a2b4f90ea7d2706d869eeaa578a286577885b9872c4f70a9fdbba47f861886f476046762f4ccdae25c5dbcbcde77529f9b4577ab98950387a134ca7311ed3e558f01d325a7177ff7cbc7aa7feebc76a5a653ef9dfed7f11b58aa86c70f08d288a5161f41c52f75dcf94c69494100a80470fc761964400e1fdedc5ecede3360b7df561679171d5dade47150c36b7dd2c2f2e0936e8ecf30082d2e07f4b40dfdddcbf24fe9fef7cec9938a3d43262e0e4ff3a6a023926873f97bea620b0046c8b8fa25b20ce1b9875f2da68889bddee40e8987fb67a3b5dd37bb3b34273572555fdee13de585c81c575c32e3b83e15dd210f10391665f9d5376574249ad0ecdea8f695a23a681d028b68ffd76a9628ded6414e165cfaed0f4e5eef5dac43a5fe30fc9d952eac73eedbdd4d37d402d27c2d6a910a502a4ab8859ba667349b31d48dc6e002a278bc05709217e6715d7163e1f29205739a31e73108c7eb2ce65ee522137139560190e20c3d9f05f052fd4e3f7cce12b1deae75ddeeacdf86a30c159cf28d8d9e22097253c56a8b5bcad10fceacf04e143043d55be1513b96407b1fa97c708d8d1edb2c6287552a21b032dbbb6d4ee18a257ff5430dfe816d741d6896428ccf9823a10a94416271461740729885a76de4cf5417a85c2a8ba9ac8d16fa2140354a78df2fa5c887a34ed46276aecb1873bcd03354dc4eda0bc30b565939b11cc0c6098096c0bf56d790fbf40bc9debf0602bb9d3bc33a30ce85624302dc405f0759d62f9e862e7780aeae988923815361a75e123ee4bf013600636ed82f97d3ba02221cd0d6945b6133903901e38b8608b86a822979a31b6be71fe31f3a4181942b463d8ca54312508aa0e410a1d77324d08241cd4cccf7043b67c953e826db7523736977dac47a34cf4c7c1733abf12f8b2180deb7bfb2852ead318d7d54f3567f2237c97b94a433ac58bdf0473f181a5941b01fedd0c3d3b084da4d55fe432dfc2ac864c892e841438228c951542bfab8f6d9b8f51c954c3c4e1410de90d20f3fa7f3efce2bfaf9322f347d51a283cbc361e78c32bf314ef0f5b6a954510133354c8c02792fe63530194428d461a724cad3d0551b33a1f95f4503c3bb3935ec02461f825293b1d3e7e43ecb289fde512741103049d9e4194695ac3649af2266662af314c2c60d9443f32a958ae56118e097ee49efd551021c5709fc29da479bd2e4a7e68cd7d9908bc4d3f2f95de10dcc3f93c85c1d2ecf9cbbb57d761e452189640ef3d82ea2634260d074bfc79a21705e5c08f14fa1ee4b8def44fe10f1cc322106670f9367e9a826271f22cb07f6cfc4e31513bc4d902023dab61572d6714d83f6a372c941c669833e3b08a33e6177086c28d23ccf36fa1db38253e7bc85b12ee1deda634d11f23564428a93f742a76b9e329adb48931eccdbb866e09f2c9bdbf14e394582e551016093a20173caced52dad52b886bee8ab78d1ea6923671ff3b3c8b00f4d3df963b07191adabab69fe83e2286cee6d5d2836f349cae57b7d0fc7bef2453a6facbec5c48f3be966565ee2bef5444c5621bbae36e992bcf88c389ff09275477f9f642dcd6479d5714c3086d0503136d6128a65d6cf16a5552e49bba6a063c082d4a420e9d2098f49eef7582bc8eb87a8123fae16f8ab4d12ddac81245d649a1db609e07508cc155222657a70d74400b7b1958799681c2c3057ae96dcc7238a3912518a7a7e03e043ef86399f0acda380be87974a1a4dc62018198cb860872b17525bdfc5ea8c4d5d4a9dfe3f77979884d8090674ee10994ea8a4265ceb9777787ab4b77d3c96e24d59de73a7bd61d72849866368d7173db160a41029ed9b9efb25ee1be7695b88d7f71454e8cf5ed6843c314b1d66fc670787168df40687f92aa8c628f6f9a43b6cb617e286f2a8cca7efcbbbd79b906ae961da464744435dae8bc6d23cf6cb5509ae8000cf182ef3fa222b46d96d028af0964ceb50021906b3adc248eeccc020b047286e33a05cea533addd4fe7909a28284532912129f6f8c1e15368a973d2fbdf99abee8fd5bc566d09817200d4b4f388328fc7328b61cd70f3b5f187f23e8bb8a62b59419293b338a68c8898af562f4288dab6b88c5b5dce46b2677a5dd4a5c084e48bc0d02964fbbe054782be327da820000baaf0d9bf5113661d52b8a70f28dc6a788c14faa5cd9250d9c3643990e173b249b038d10c0b0c6e69be4a20e32fa1d16a2f32ec4531c324b3b858d582b6f89ad22fc8fc1d4b21354d4f2c4130520190f894e90ac37ceba8024a1c511e81e154d3616102cabbdf7e81fdc83e8864d310605e8296177bae276d7647484c7d01f77ab45a1c58d7b11dc26a8be590f56ffbe74ea490bce2da9808621bb9c16de5015e61e6fd8cffa505178992badbe0ca1faca82648d56d1d4e636cad34de29c14ed74d60a0f61248d3a2c55e26aaff9e3d8b768e1f72378d16386a7113100172472f29a3aa90346c539912e46a76ed76b14133e90d7b40d2d47ad9a3acf38e09848e8cbd55db4a4bf227d6a9209fcffa77612aca99461a3326e31116a4d651cf91c69e55af024301d9f08939314280203e7139694353bdb7a84a359b6b06b727dca8b905e31b67e5764d36f512f1565ba6108da8a900e7fd7b5f445bd31d3ce50cd72184ff71663ad13f94727045515dfdc54b6a43de29a8c5e2857cdc3b77fbad650e9660efc5141c16a2f8e3eadb294f359d748cfe4c47337fa5801fe90df0971652f0be6a9dfeb3cb0b5463fdf21acfdd5796a0b7c3ee96895e98ceab3386cde0058bea9230f0ed48732912de502e4ef465e92e64fab5a5d145dbfe87a95df7adc618cdd99c108d2f88c95cc5991f82cbe8d505ffb8472a451082467c6962fca15d431bddee3830cb0b48e532b2ddcc6fba08bad17af0305033d6fb6e0e9490deb6b45af2b0746c474fe75b0010a277dab9daf0fe7acbfba17d52352ec1d54420e8a29c0b6be5e4a68f251712ec58333290a66d3deb97fbe309d8d18b96bc034c5165b4544fc69c4afee82fdf05b68de3a39482df9a09e7d0562c03a3889cd88362e849550a66fef09bed7e8c783fec1c6bf6f3df576676d3881d16f85fbf424ab077eca5f0407a00179940fb3c0152eca0e6e75909a0ba28e1d1c21b7b085d9a70354e96e91cb976669534442d10dd705fd15b2fc33a208da75f18d964909c947a344c37fa0414c764faf3f40a7e8d42a10df94077dc5a9a9844358e739043f9e89a3edd118d0bfb47ade485761a93e37d91bb1436e73baf7df499ef2bab4039359ba475f91e7336fbdd8574e00acec2f1f2fbd5c1c0865121cbd1a85decef7995ace5dfc0bcddfa54bb4a76085201ec2b3792f6e128398b095e1ad41fde6db47f660b3557a460b7ea9b1e264ab600fd5b5db29f2c9b5238c5f578016472b32429e04450f956ba0b7ad3649de49ba390ddff2a68216a46d0ff3736981a0d5335fa1ccefc377a739823a4a44382726b0f0b03c8128ee07424f061a81e5609cbccd3f0db4820e6206efbb844916b466cf3451265bf6c24f92374427070df2396365ce63f446e8bcd4e4a32bcec88c75a9e1a126cd335e3babd40c9960a099bbbc8f1b5432399c96ae6297664e7ddbb8424383e224c52697db0f1fb3c2935cb114545715412c35347dc140d920cbbf33f4c3f54ed786a05a518f537a725752b4a7d825bcf2f6a5afa48605cd95d01881d2eadff551ed322df7b725f690fd93735de444b8e0903950ee8429323e20d986c439a1ce10b05f6d950c49074aec9b8aa6b42bfc9d3019561a8b0e80d888acdda246988a28c25060028a10404d3fa5c55836543b3c9f064cb3495445d81707217f1f25561155b039e5adbce990cd1e06451a689147217b45eeea6a5341cdea53b3bfda974965b7456bee36609c7edfae37ea2f91f784983042f9cc7425566f9f82c44d6bb53c68b542dd85fd9a585cdb3b7b3db1ab561d341c11f5376164b9d43698c571b2f24059ffdf76b28dfd603740872b1d44c00341f54d253385235b28e8c2d4b0bbbe5e0c7b7813fdf9d5a843453a81933af448dbef8b058164c09c13f0f8e53bdea5f32fead96292bf28915885c682dcf5e6113160c729e079e80c2b326ddd9c19768a7d9269c60af47ef69d8950c3cef26070ae45c690cd950803446653eb7c637753d9a5add569a0cc8f6c28ebdd06e8b27f6a99c998c681280c2f5b1808bb16f6eff97ab0186be91f70a82f726b0698c98195765806367f1b84d12169f425ba7b6e95eab3c94a334d08d0424b561bdffb210f542b4ed2bd5648218477f868b6448f520ad7d25a8fbd9f55542944410122978b25e66729bb23302bee72fce6f1b2a1a4c50cba002127f7d3f4a9f31ab3dee477773962aca156cb9246f86dd3a258635ad412992ddd2e5645154a99b58dc2cae94a1728f1d43e195b674b3b50d24fa35f32e61556c720001d178c50387e73f8656a634166ff70e6fbd15551cda4a3c69b38f3d9912bb1c90edba9738f6a6c573d31e2aefb291a0283cb5ba7d3bc9f137c00c7687e021d8f2799cf7529dd104d0dccb78ff6f27ba733e47e4bb147919b63615e717201e49bb95dd2e2630cd884b562fcec506591d6e2d21e2378d93fe58edee8c2c896de9cc9303d86baea5a370d6beeb6e246ae3303c094dab10415ac4dbbcdb702b9e888d9de51ed19de4def9ba1f7037cf5a5e42e0d8a50436078c0e2707843e281466d29dec28ab8e62adc3d8325b07d684b5fd7f748ee599b1616e6a5e6a94eb90049780898e28f7cb5eb342573fb26e3f27eb0925194fefc69dad7baf90f32b6a55015dc3f4979cd098455c6ff68e5b9106d23e1d50da9ffbb6c7b632bf881096a88a1db28d81067bb05207ed4887e6f74f96a14e3051e47cdb1389cebe2c646d2b6bc28908c0a5440c0478dce7a52c293b125dfbd1a52efe97fcafd8e2346fbc6154485dcd87e8ac7cddc72ee76dffd985e587f314514a75b27c44dfee093724359718c43a5aa2031e83da069b55fa9eb55c8f39f31acdefd0f12d309bdca51176346b4442727caf802661f635f0ea087625766582ffc1d2d7d3d61476eff356f50908d0fd192c4bee464c4ed4f0559f8fc06dfb65471305dd21e83d05f151e5856c516f83c41beed2e406c30ce6c2b51a579a0fc69335b6531635db977020c1e7c9949b2a88d34ad5f4881b63b980aecb4c95580b40c6f50b9b6bbdbf26bcd3df23380db1131b1c02a5b1d046fe94a4901b5e05046bb91944dd52744ad0e2c930f0af0a1500b1558ec4b3b20dc936a82b521ba8425c885a0898431cfb517f5ef602012a6fa0e332c8a21187e3ad2f3db54552176cfff22d886c5b6975a68ffea6c5f2b07f5620dde106f95119d40cdf87294d3323f35737488793a3716720eb859798f8a67615ea0a5fe5b01ea3239668de42e14f9a6ced4de5a8a09e5fdf67014d5bb829c5ac907d9e627583f87751f6f347b5f5d480e6ed953b23fcd90217fe296671b6224cd01225a331c614f973f8b5f021bcf10b36b1428240351be37d3f62cd6d4d4b2370b415a2aa54e58a2910ce4e1ed5cb8d61d54bef2ce17d538f13ae4d7acdf7549c6f2159be071ab218529e0bdbc6a4635cd17d66d4da58e5fe083e4688095b1edbea684d757767727c784b1c5e40305e98bd2aeeb8384da645bd4e647b449f428a97e13603f5e18c0dca05d7c3414e5474fe25dd14c7ec0c3945a278cdd00a35ea8d234b110c81bc22e3ccd5fc25deecee9ff826dfc77fb55e65d9be446ec28e9797a6623a133c86d901edbbc004a35de188ce04429ae3c22beb55c0e790f555f8ee7f3b3ccfc4e4203720e1eea687033191bfde93f664eb4d7ff1b5413797294f9d927ba9969ab400f4f6c4c8af0157f1eeb922e2ca0c0cca72c670dd374a18e5909f3bdb9f41f11a3f5a5135f62e53cb37d276670198eed9e6415be944e86d378baba5f4ca9822f839deba453bca886ddad9795bb510bc44533b8c49a1d7c160c946ecd9774a1abee7ed0907aa197370cf9a0f223742d07b6cabfa7ed8289948dd315bc21d7cb1e70031502444885330a792a988434db3034be38d48f76474f76e528a6828a5372987a628460651ea4f62b96dfdf08a2370e311bfc193f40b6096f2593a1f5653602066b0bcc46f832f20468530b3dc37d2bb0b1bddd4f9361a007c13e97a2518c8b47ec74d48545f461e62e8815566eab87a72e907ff3d0c6e7b401f465edb935fd2c40dc2342504e7e1642bec853e3cf5cbd4f7cfd475722fb9cab7f62210673c139e3f0f48dcb1340bb64b00de0b839085cda93dc5bf844acdeb7fbb99254a6076cfa74ea30cf9fb3e69e69eab238d688aead9f668217a4589e7442de391d7e8ecba533425d9842101f1751e981ac1f9da02d695518aef6a5959fc9ffcc57e2c03d3ba6851f3554230a69265c0be354c36b6f4b68f10cd4a7cac484e3adc7a96599ace580378620c7bb5120f5dd2845aee4a5db30285919218166d9f449d1c38b79ef9d3bffe849ff9f8f1ec39e56937d0b7a02c6be481275b22d8d6ca2913c1c7518380d4865bfb6ae02bb28ee65b7280b95572be0fc4d185aae9761e3c6146c7013d626c1cfc25f4417931b61c05119064b8454a9ba141d65c747da0a43b58f3ae1d25fc8d06bbb242fed65c8a4e5232876bb34c34dbc72b446506687cd7eec6c1d38b03734ec1f2af5c4e4d31b0b317d7f46494d11948eaf7f077c5873ac0ac11586e3b8586f3efac3c9bcd789972793554ea492a5917881cdf2943cdeb0a917722167aa1256e35a9b2675742fe072912f413dadc05a14ab61905a7417e40a2a4dceb068b17e5da615a775db0dab4434b672bb11e3c2fb2c84f3c4bf8621296371d73c8a1c250d2a7ec5d2e10f36375391191456a63da8538c62e4e3e398a11f002b42bc5a901b55a5e3a629fca08d24777a7732927cff7fc0a4406cb3eb4b924c192f34673d685b60e743714b1f50a6ce3ddc16615a1dcf710ec23c8144187ec1e3a2099ef5b7359540fccc294e9919fd0f6f6337634e68f66198a9c5878218468af5ab8ac0c8253137592b5bfb51d698b181531062307612fcb413893ee262d1731699209266154ca67b4ed7e35726f32f2f4e8046e8635e1a65e1d95122e601772bc9e1f91b81b609c4c30f32b4ebb72346f8225a20681a6fce77a69b8568ac0b8d21567ca918d2a5bb1783e6bea2da1cdf53253fd3b10163fdd852823068137b26a4f864ecf64d77512cd17836e93683625d26ad39611f0c75701c6f981e9017192f5581341aea1a8c3fec2b5ee2119fc39d351464c55c57dff7f74a5a09af89554f9311b33d21fe764dc4b9d9b03f4bef5d57d093c66524a00ff4a106807550fdd20d595b5554221331a89aa664230b6ea6d76bcdf8f497433635f34589a7a2a1f562db599bfcc081f7fff2e8b4ec8b89385b4f38156cc91c70d7b37323522947358780882c7a0ddeceb31d0330db2dfff17c20911e44bc343ce185dc5d72df0daa16deba8ce01772a02774c415829b10f1748a7363b53af442cbd96ff49ef847f799cb75d711536c33aef42fb59973a8aa48f00b4849ca66c4e6190193b08a80714b07046d29f6ffa1303b24007a55df33378251d03c19e6bafae42eaf3ca5e3515ab0c97cf8e94bbebe0dec29fd243828b6407cf7b0963dce8f1d6aa430d8609e6b286394f41b00e151fb11873bda313163cef4ff42aa38199ed9783b0c6eb0e4a64bbb9245838640b4cc02cf7bc5f3287dbe0557d0d5cc18d6eae205839325612fa774cb9e17e1fcec4ce5864614cb14bb049f6a11436ca7740f362399eabef79280d95e89afb62bd76cec6bff3f634c2272bbc9b55d07bca4caba658321ffce01d61d883132022dca399bf109a2a56e72837bcce793f4b4134aff6494accb908e59a87709057923212ab3379d531c941ab8c02adadd82a22b7814c468c11ec42bd879334fc3d324811c8733783c1515bc60e9096234cc8e5ad2f406bf33267476128a9e1780fe5cda61f670732618563dee03ed4ecddc1ad24dfcafeebc14188ce2cb26a984fc8aaa735a0f40a90c6536c2f7285a2f237214e266ecf46cf17bfa61c0653acc219226090fe15c37f21f98ffa450f06b1956ae083ff2847ac2c2ec7a14ae5b3a0e63cde5904379e584696f12acc39ce5d8bccd43493fe7ecd72be78891d2b35f5ac52f3607dae0bdac5c55c4747f288809b902bee428249fc857c097ead9bc6dbd8db09a3c3abb060d80047a0e266b2e2f5ab3fb943956bb8e80c94f5b2cce5b4f5995c70b719e44adcfc1395bfb61ecc7866b0a565880ba791a61a6ff6992482519f8c271b5bb5a2ceaae729844c50d4090d39db5cd14ff738082f9705e278303bab168b795ae544fe73d474a48e1f1afbd1a7c0d8e09c61b1eef8ee56d02c0afa04cd6baef4770146a3a2cb431117f3bf8677793df9c88cfa05dad515bb2a3ca5dfde003367ef0ef373b6c32bf77a5198463aabcce1899c39f1bf84d5e71803d5f7f64f7c1e6d56020731db7c89d2f98e670229d7c79567ceab04765b984b65298aac8f8bff477df37cae41770591e8030488524e975ec4d53b1413ce057bc357f2e26271d1fa6d6aa985817f05e462aafc61548237b7ff34ab914e92edf27ebc2e1fda314042ade00e5d5a89a6c75df80b12de1802dbd7ee913759b4ad2ac8a259a9c2ca4246d128f9923a58213154d74badb701f655fffbcb6556c6276c05b8bf26ac01512290ae74a1a128ee4f7e9daad089dce7d4605073c81007288816877611162c72b33f2831e7f785dd4c1284e919da0ee66b7f856601936c86cf609162371c3fc97fa2e18626c10d8eff5bb58ecc4132c336a6214e9ab4c36402eaf4390430f7b554cc9b9d7e95d9cc93d139f58e42ea97712dbb34c6c29ff8e38d4d023d4d3249594440b8a6ca774bbbcbad35043e5bc6699cb8268fb1b0bc2a4797df8583c1874cb515a61318090675905855866cca34e0687f2d34badcf9c5a030d90cdf745ef95b854257e7c9b5361dedfa32b0f8d419e7025618e2238d9cfd49a26ab1e5682795b007c62442a45e211cca68f08d250b392cbf06e4166ba30ea06272e1f2a4cf8847841c14d0029bda1cbabd342dfd003120b76db4a92bf639ab035f1ffdc28e2f4e3f9d37aa95c2841bcb89fab5b5c7658d0361294094e76d540ccacf22449ec3331dcbad52c16cf543c1ef0f134860985abd15d397f189117430019df4e3f70241c7511525d7e029a7a767dceb02103217396a5af4ebff65f3aaf4b34ce9e839efa80d32798db88e05d3939abca3183fed10917829215116a8d9460d8dd99e3e5d0c3c3f8cb234cba997bb74fd7dce38a50935a89032735858c9903becd42793e65c686fddd2719e9a7d94ee822791449e93ad7cbdd270f3472eab2b5990206aed9935ca41048f97e8ecaf6335b48311b3d14ef8ff8cf6178c5c8b9926d2b6fb802494560baf8057778f66820125d3b7dd309650a8e73706cd3c2f279b04f6d94b4ffd0da4f1d5721395c43f28b96000780d8d4ec9a9b933a6c44e1d961c9e64b0a13827416b85a9ca26b426ebb33e9ff842d4551d23abef963af8d9fffaa9afcac94c0aae73cafbffcacf7b4558be2512a38fcf6cc7f8c9f52a3a1d3f78b2196948d97621a153ca79195debe17977f5ba28e39790d02b207a44c79857462bf60e88e35d4ab0a490799424c17fb8d60b47fedcef3375e1ac5f68efb9ba30194aa5711d05c37f7423d71b8b7b66f2d1bd141cfdf8262d114ef6939af53ee1ad41b555d4078c2e9b26702fee3d9d9b7fd841afabdb708cdaf9e26f6dbb8be18d46ae53480540c2651139906c5a6c0b109efae1d3bd4555f4a1aa310a209ed9d4d16bd8701d74b0ac94a0ab9546b336e9dc6c1aecaba4b43e24ae57b6601f59e2bd42084ed0a5f608b0daf3326fe7eaa397c9b470549b4bf2269b1792e4cd29b63974a4241ba2312e1c046252aa5e2ab2a6a69222c4e61f62017788fcbd7b696a217f7af8fc43210cdaf50a51d631ceb74539579a362d4242c344fd70763267a9250b7a79fbb09b443797f786a5824068fe86ce4f0c2d533943cdaf55cf8f19fbfa6533cba5f7c438085bf8c9cf5ccf4ceb046c11d646dfd3f1c201269e0ba511bc06eebccca4f0a86a9b982cd778340d50ba9cc5f58c6c9f8323fd2a53ef056a4a334788c65a25dc51f52a86f2cdd24a04622ccc00f746f93c95b0a2d1e948281ca185a3dff36b80ecd75ec73a27910d5d64d4b48c985f402afcd1da81a80700e0bd014ff5f9ce1559931a6c81b0f5030ce6387ab0f7cb46077b9f31cd447536c966c74477636c06d9e3300436763d387431b46ac09b5f319e94fbe5775bc8811583ed0eb72edbf0efcc0cb1dd07a991098c7e92600e416e2532eb6d9959b481019ba01ba062df2e1006352e81c85a3a88fa2675e007487f706a2a141a71d6701fa2ee8f1abc7d8d1b5abde2cff532b5564ea5a419ec1adce6a8a33ac64753ce2febc91e4adc9ec5d486ac395bd6d832f007459a277e7490651b83cce86b07882165c21bfabff746b6c7b029dbc1fb3c155da51c5840af6b6b9173792497903746022e1dae48600aa732b26451c3fd533369c0a8762a6f7bdaef813641ba0e29d1c9c710e561cd4bf5b6d4b362ec563f29269bfb4a45d9cc35db3a8a67bddd268b5f000bd8d781dda44dec154cccd745e2917146838802fc3de05e8e3d7a851b865fc4564ee7cf0df8d39a6de28ab5c1b3071d8749f3a0b9d232087833664de9b5c87ab9d9e01e77a385c1f727bfdaa5d5c70a3188e8fa670fc2ff654dbc2427109ceaecba433d7bde3f7d7c2f5ee2d607fa3780af11af5ebbcb6007a0054cb9c7ad2cdd8bbaf3f7c2e7deb622c23f9fdcbc283c8e4910208bcb5775e2b5a01e3df63db6dcad5833f4342b0e2c8ed86ff2eca1c06e0d02a93a4f09b690a239b849b7f379078ac120e75738df8dc326f1c236d57431333ea3139ab1ed0de5603c2c9f0b276e089b280375327aa8d515044f703871054ecdff6f579708ddc921dde259e49d546e7178121314a7adec4b0253c7a9d88a2b99b6cbba48147f5e0e8bdaf26da75858fda660e12fdf1259f806dcafe8d821f7e1ba78342459b4bd947bbf6211b8502916c6287b6c7bb5131040a3954462d60a03d2bcc257d1de19b4d69b5dc4a0ab2e5b2aaa26317127c5e0cdf68be8425479ebc4d99ef7c349df4d8d43b9d8d0b484ac0bfd2f387ad2c5b4dd4e4153e6bef85dca2012e7286d7004038651a917bc5f42872ec5abe9c0d6fe5463796d8821bab75625317bcd9d963e3186863b34871bba0be7d91c4ba741507cf1c64aee25c7bfbb844f504e37c492c52d9bf0910bfdf8fb6ca68605231ffcc75804b9aac040e2a604cf30ca2e116f7dffb9ccc769af42a1270644f2e60a90e6d19540c3a403b5a714f5ec23d987a568b85377030796c5bae10fe40d29c4ef4d08a56ddc85bbb695566e188c3ed5e188d8915d11a24d7bdd137b7c41de6636f6a551d48fe3f1877be8c021968c34107739011b1155f5de1591b63d910fafdd03f3e4f78acc73bc90dd70e6e1eab6640b289215348da81ca2b789a4d11f9671d118f1afc411fcdc03b13bdd0c3332c86caae325e4d3c26d2e465bc3b4717523e993a15e32f96096ecf17ff0747409f13fe4d7f966095b1f156fa56b49e144383c390b9f17ba0c68bbfb59d368a17df355d2cc7db28cc64b261d3727d8f952277a02207523e91b3a1ae8dcc4bbcacca39b04242978b0c4d15e2e72225a23eb007071e701bcc142a42028fb7d6007017848019e8dfcb5963abc18ddbfa2c73f2520d15d70815cb7c3bd61268ac5b9575aa9ce1abfad33fe9e08ceb53b2ce4f10faa594ad016508f0e0b61b3be97ecafff8309731371c5710f4a4522290cc60036859819efb7564ebde7d141a1c40491125dbd7d39c475d2edb132b3225fb20eb5c087f00fd39bd65c57f88f6b8e7858a318ea6347a51d3889e2548c258e0f9bb58b31b2b39773eb0e8a7ddc754fde30a41b6895c4c78c82477b385</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-wave">
+      <input class="hbe hbe-input-field hbe-input-field-wave" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-wave" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-wave">请输入密码</span>
+      </label>
+      <svg class="hbe hbe-graphic hbe-graphic-wave" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+        <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>
+      </svg>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>ReadBook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《显微镜下的大明》读书笔记</title>
+    <url>/2025/12/19/%E3%80%8A%E6%98%BE%E5%BE%AE%E9%95%9C%E4%B8%8B%E7%9A%84%E5%A4%A7%E6%98%8E%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码错误，若不知道密码则可向博主询问" data-whm="这篇文章hash错误, 不过您还是能看看解密后的内容.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="619b2cc036c2d72febca152708ef7ed220c39f22f2b197cbd69694f944d96965">038d355d523cacdf72ef5280b81428908627cc321ded250232b6386f1ff1a263810a806fb6d94d254226447b00bc632fbe4acb333b7e89400b53a1edb1b94bfcc307164b66b3287150d593f3bc0b873a9f070f53e1fb720594a53afc543bfa630a301199d8d98913c7ab00d06dea3977b485e84d6ea224f11ab9c14b600810f18918a2da08dff7e6c2f0d420f958f19f4b8700b7a3dcea38bbc89caf5d92b0373beacccdff48d0d190077feea4c9225f5e8e25fdeaa134994b6c4c59a0d5bbe49ff34b483322841d7a95d3ce04054b00e3c8fa70021ecfe6fb75973f1ec663408321235d53bb731e49a8ea934e65b0d782f126812a4359409bf75d07d8f2e3606d1ed06f6d8f61cc72a666a143b89312c0ec6f673c3fbda86bc7490bf27bd1859aa247835a354b1b38fd56e0f8e29fa3044fd207e00dd4edb53894cc8668fdc33fdb7deccc0ef2ffdc1804e20dc74c8944dee5b4788075e6d1272c1cac0a02c3c2f0b300dae4d5bc7a4c5d08d98ec9d2bc9793379ddda14738afc2a81d32872c5219e6c9173abec43b0c7f4001f85fc16b7787d7f738efde1c9f6dd8cc285fde4c6b303b58198b837997f636bec38337e0e566b3a53f020144259814325f79f95a427c04b0ba12abf787ac05c294a671b049b5ebc6135b5b4bc0a6f7799b02560e0501d45555a3ae3a080715d99b9ce2c15b557b1afc0d4455ed00855b7212d8a6a8268954b0b7c2f511ff5bed43eee9991f2ecda32aefe1b8d33e440c1e6f69dbdc959cf0580e7aa04160da8e01082d74f0fc2210c191c122e2b5935f662604ceadcc96de631dc6927e62a2224151119e5356a8f29881b936f00896af08cd83b677b853173286e4601562a9bf6af997bc2de185f6d2225cc21c83c9cf1bbcf666f0246bc6e8e90f124c18b6a5f1698709cf461b2f5d8168b17ff2452e442f7f8e79d0c38d454c439f2cd1214f60f079027844710414137b94cbec41988d6446a200efa528f424d6e63096b3af82bf6bb4d4a3b7b9fd0df1f4e82c4dc33151e2b12b548538273f9c93828f05a2008c1b2f797fbd972c7d051d0bb82f8d60fd8e340d101168ebe946953bcf01a37a0b798344b790821492105abb1bc686cff09a2fbd7daa0237eb9de1a719eae58fb26c904eb223a7fc2f0774a63a8e6111755c4c7bb1de987eab0b315254d13daeaa1cd3df769042d180bd33d4c29e8391493a888a43fe5a0ba2f5bdee4f586d3011bc227196e4183b7583bd19468a7c4be622715b8ea06448aee9cf1d195981fd75e5b26b33d0d068bba24521c90c3b6923fa8bddcf54b46e9097b9b35469c2f5c869bbe147427c00c520d28804027a477dee70f06c7fcdbfada7af27d662ae9121b0bbfb9dda1b61076b57ca21ff1cf3c55651e347ad8b21b0cc52c4bec6376205b243c95cb07122741f40325122f0834ca8eb5a247821e8b42c03f2dba3a7cc61fa644776ec89a1e85fc9fdcd4798634d065cd9ce2a6e6fd422a0f54e304e1eca4deae34d425f1671f4f42e0a3835568c3be9d6560721b80f405d09df5eaffeced561a39118da08c0b9f36c9cd443468ebd0f9ffdbe86956dadc6804cee55256fbbbd10bcb6cc74d00745042693ba282020f66a2b9b68dfe8aae64509812a793385f2e257ccb8b67ebaf9c3f03eaf36cc885ec2fc5f836851a485bcefe337caee31292c41351a0d99bb7190c7887fd4764862348a409d8705cbff0abac9742ed409d2213ca82681e853324f9e478545c3678bbe5eda991c0a94b87832e97a511aca3c429f4835eebf39c22947b1d3632b9c9591d0b9528a36e87cc356d9f2bf2d3ac0adaad4c87b066d2308fdbb1f7cde2d02708605efcc0f3675e995a0359b58865300c3b6bd7a02259f716fd48dad5ba22bdb3da5177948c2500374bbc8a6f0847e6494301b2b3caf6bdcbde6d4b8906eff65025ee62194b9fc95fe542f5281d6db37139b4d753ee8dbe235c151525c855705a70a15cd17dc1171cb509ef7db5abe78df0c5e03250d73a5a5074c2ff1b74e29000088ca876e9332e006997eda0fe9342e40603d27793c574365e76768b314bac1accd6b5078251f5007764b2618930fb2099a46991a49a3dd0900c172f63531a64a2ed2b647b971546d83090ea376ad883fd8741258d389a1cf271ca5edb5dcb31af5e3ccf289d95e6b597376d195cc71273e4a65da09b4ea8170b2e775d23a767af75ac0c7066b394d67c7b939db419f5fdd506fc5e014245cf65b953b9edf1764d31a6ca8cda79b6aaa43a7cf4f18de81428b4684d2fef88339578f412a68307feaf62ef88d78f3b4508136e6759455a99444e5ac4f669b7a823e1837eab472c4fbd6d3768af60f688dd89361555191e756019dfeea2298860c7c53234b73082c32cee3f470b2d11bb58fe8f5d49bfd4012b944289b99b0f6a271a821ecfda909a2f8a99028c64923a000466233a71fe8f357f4dd94df8326716c857ee9afd21dd1201c19484bccd661eb371a3e0a5a18b9b8edb26f34d8b38d5d222ca69d19423cf5a5e9711a374c39baba5eee054be3788b50fe84d40ebd6bd06a6dde1193a85a575d9c685c3427f068938b2c4b8c6fc9fd7bd87a0165962af215a500f61f8b44ca945203df2ee2e678cf23870d559c8860e03790f3a3b3fb45b43c0dd8c13d6cdc95c9a37beb6ab1b5a422d8d2cbe532be31dacc36adff5d4b6fad8acfc8929939722de279bc9eeacc9bf094b08323e14e4642668a3972f1c783d6cf7fdb692f6f01e6be3e4b8245adb8bba2ccd262fa1c0ee2b9da29632dee90d3951b3d860ee9dcd558b50e6a25ac975f24d235d176a0d10415c23a5e5125cdef83b29e0f559279900261504af44af3e49b6fad2e9e3fccada4669aa450a8820c96c7625fc4c14bfb3fc5f1c307b67c64ed5dadf6b4ea9f1f75041eb9b576f3d318268cefc946182e3f6c7dbff4c4afd4cf19ebd89df019755b907c6f7f506724e2ba4f6f867f294f059439f5ccb1cb70df2177a60aa62e8900a56f7046a7e6ba646a124486e414ad3e5cb66506f6c800907e12c604151aef37cfd5a1e2df767e888d9c5222ae342de8e66274524d2ea5754522cb9cfbd9efb3d75f5f47183f1bc60b367c6a3416af29a6c3737c204f31934a26ddce6505b7a3ce909cbadac2f433289e0c32587b6172821b284f396ccf44b0910ff3e958566020c61b1a08d3fe78695130d36223d86ad14b68b1f816981c044c303048738872d713b47bd4c0ec78b8946c10f6f6e0333b1c56d6d4eab60827ee399bc45f40607642bd8688f9b0f70b14ae178502b9b43afc98f9448907e7d282748802b2c6cddadffa3484a8c2391e8653badecefb7be4bd573a0283292ccf6ae210933d1d0f26bad88fd9bda9b5c7694d0f6988631b4485ddc17868a13f0f7281c586f351737615d86aac91f078beb2f1dc309cd240b7e7dbb866abd4e3cac3ee99f3619012acdf7cb50e7dc7dbe426c3432ba7d1ccea5fcdd13b2089e0146b6a4ca7f18c0aa629ef181f1c2d4a3823a93a5d9d8608895573734bde92ffbe79102e7e659901adbcb3e16e4e2b5e4cca0f3921d5813f14b1deccaa12d13ee349e98544ed2e16c0ce4dbe5e9f0628731137309ddcbb4f4120dbf53201b3b481cacdd417c885e65d7c69e84d04daef75d4ea16678cf2235a425221be8c57619150dc602f662793b7d1b755b6b3663968abd9540a6a8864125821272df7f1fe10c7a036f5852d4f16a7d4c3190c005f2d0074dbd94a1c8bdb3f57a305cfda953ac4e9265aecf79c6d48a4ce5d881ca1a786b9ab1f295cfce2a45360db85a744c51cde0b73ed39a6dd1db078444bca6af7985de8e87fd9411d097baca225f6ddfa6178f4a05849c3f7df1a9362882e0aea24f84c975e1692baba4ddf7d793b3cde02cb4005ae819821a1aec8c97396d0d488d818fd18999b20aea6e4e1c0c3d7782ebf9363fa3c23ddb09329404c058b73a3356da1fb48c635209d9943eb5ffd03c81193fb3119215aff43599e2dcf81efc4e6e31216adaa60aecbb57c147cfeb0294c0bc76b3a186334ca589fca041fb18dc480be63e13dae3e70654008a40cc87128218dbb6958901cd72298e617ede9634cace5182e358831a11d9a1045294013a0ff63b2e0d7eb30cf095602255dac60ac20957a699406e9707e680a774e0e096d55fb71430f78553bfe453af88b40b673fbce7900a80ae0bd79396f95dfcdf84deb08a02a73f8c5cfa1f1550ef3bb47f45f0c5a3e477129477bd6f8c055052dfe3b285ec406847a0fbe02de9aaba507568aca4c4b55792939a2bd1d662be8414c6e176bd2e14b1de8f812c16c9b77745c80a16c950cd04080cf557faf687500c0b18a3afad083b8e55f043247a619743e872e3fa9c3180a910e561839dd84585fe9b0bb395a8d3a6f7a63638b1673a1eb805f253332e4d72adea779ab6a1bdf772078b0eaf94a747b14d5bb67dce804e508f3f615a12a76067ea5578a5b4d36a81ca20c4df9743ec566adafc1dfc5ec8598da66ac8a0a6cae87faa8ea6bd199962f35a9bffbb1a6eed4753edb839103b2d9bf3765e8e2f5863d97c6ab2861ba3d0a0d90dfa1d22db42820092d9db6daa169f485255bc975dbbd2858081144157ad79c9301b8ac4118cac47d530a1611ed31bffa2e48a397e80adc2f5fe4cf039dbab86aded85f225fd394432abf0003d2c6c665bde98a5e5375583cbf2680f821d7c3729857c6bde5c1e007e9cf4b0db37f8fbd9018d84096b2be169060b18a91f0811bb379384dfb2dbaaa38574fd8fc835654e2bf96d06c29bca88aeeab60e5b53eff618b80983ad332a83633493547068424b530d5f8d136a4eb1aea5c286c249deb2bffab04e09f867b5f9ed2c0926c1a099df6594dfe1fbaf0bd45b62aa834bd3d91991c34c4989e321c365181c6b608699ac6d5b61c98ab0bda0bda6659b86d4776f2451d2ac4717d8da892da54067edd5f34bf68810b0e0ddfca7f67152fb2d009be3340906dc3f7a1844ad086ff6c5f6c71eabf1e3f3a25a92171aa79ab48a18cdfcb4b5f947193ac7d8d0e9104267101072f6e9a79f72fb460834f1e3ea0c6b56cc3c9fd2dc5621bce7651aaf1d4dffcb4fbb4aa215c9e6af8c69e90fbd803217284377599e93695d413e78812c4d816dd1fc9222a05b5a38202d92229926f132e497386535f6719c053ca043fa9d78085c3c622e517369ae337790e64593024c9a620cad6860a74ee03fedcbc2584fa182fa69d6a43617283fe41812f463804a45863ed2527f71bc652cb394bdba92344fcd3aa7bfd332a607ca26144d321179169803d7462eda44c9599798a5bb4e3b3b98ef88558b6debfc5d18d42bbbf00592388c700d8e3d426554548f5d8c053900b40f284324dce4bb500137c0326f614b66dab6306dc258a0adb99932d0d53ac2c5f9c8385d2e62972c359783ac1e138dab814bee2300e373fa4a3f652e6ba862dc88d44020988884a38d1e84fb89e84de98dd2ad6d990d73c474ff4c66c48bd4252960e436dd7a1407b4b246bd54396a90b04c741e392c9d59eaedfd8f31726e75976bc1d5135a1f5c87ef7eca63b1c4869feb6a0f93c578252196f476eefdf99f87e73174134d78290c706b1ca1e71f14a0056bf0356f01ba2c899a66c67a4df0a9e7a28aeed82a2ccb548906beeaf0aebed1fa5b6472594022353d6b1dc0f429f2c3d4be781b50936ac5e3453697d38781717f0ec729b028366d550a75b1eae087d711faa0872bc54563f923a3a23be124a27285091288d3ea95ea6f600c3f69f9b852765d4544d33edda26cde629dc30aa787172d7370b3c0f256ffc89052540550701b51aaf8de77cd075d941beccf5e1120abcad82f4f62767b03653354ddae25f82b71130980d0031a905a19b861c569b4424476d3d4585e70bf13f63dd17705f6b3f1561612e1de632b5075612decb98825cfa557b495ab211733cad87bccae4dc19ba81d37b696a214c8a4c507c0500898fd2ddf3cbf1e38a0558217890f1eb248affff98b715957235d5364b0b5e434f531327f72ccbd41a3519527d0397b22e236e8f734f0b20279daf5ca7601deb6c29d03c03da50e6c699778103e67931a3005540ba64d62200e80ebd4282de0744d4143f379175f036db23670d1e97db5fcc1e5286b80ed7c95d1e4f5f8b7a891e869c67e6f032a392131251abbe35748f8bb38e075997883069d964c9c6b07b826d134dc13139dfd12eb49070a6e59620a0238a3994eb85391a68a992dca279c08787a7782aee68b48f84c3040201fd11a76535e299ba05e751ae480452b88d950c6c7c062e058128f6a385a98128f223c7ac90274439b30ac8348944b50373cf3422f190d6c77c45de374747330fe702189746caf794deff5f710d1f56a8bfd52257a03594083e4b8564e0e0a50bf6472c842e17b41b37583c30314d2eaaed552d67484e7ebdbbfcceb1ca3173e504fb8c51f5cac732cea5e651c3e66694512d033f87e2e4f480a889e29ac38c761bd3771be237f4d057c9c422e974463c1d2bec2ba44b999c5090ab456d1f1c2a0cb6a0a092f61f776bc7a588649b466150b10c18ce5540e52719adade8c14ee428e194d97fdecac3be30887feda112a058133aac26ed78336297ad834eae6b367cc3c1c55be757996925fe198d2a0d5353aa6f42d98cf063575c9e3e384547e2f144807853ac33fece7b31b2621f6ea92a834184b619a61ed6032515aa5ca98f95f70e6f7a1a318ab73730138844bf240ac2f8b0ed3caa42664dc4b496184b6384a19f2a268dd3346e6fba0e2443523cb16cb386aed8b0409a0ae927d76d02992949322cf436d4837580cf379224a0c9939d16205735bcf3628382e02cedb7d68d7f2e862ef614ea8e5f54e206cab9a864850686ec98e1f0d036d6146f493d2f76f3fa1aec7069db1841b9b5e57e117acec8fe023b32ba0a01da2036c63c478528a6839daeafac5fb423101c9589674e436c4177126b197b3affb4ff420cfe0d91d0d956cb23622b11efae9f8a693ce0530b67a2942c419bbe996edc15dd9bf7a009e7b2e968b1015215b6ac6c2e422d99e472d78a92724d111da38dd902d8c9d90867813f688d60c315654f675669ac3203e74f1b66d6789e0143d47d24377918cb49f6cfc324cb9a3fd056926f83c49879bca6a3b0db1c777883e8433ffe81f7b03afb6e6392d663a7d421b6ee82089faa6f4c2184031443d5f5f1cc77b5382bd85fe5713efb1142a77b6b0a9f1656b666b74a2bff1e4d450c35a403950d367badf66b9705eb7283d314865f20b28ceab4ab83715c290e46b33b4c750afd20efd8c421e77f5ef06f60341a898b01b86948feb8f240f35ad7739e43b550292e4cc3e1f233878a05bbe602958c9d2d7cd83b3c11bde550f5ded8b092531a02eda80609382400e4cf456c1f3a132faa8691f120bf25187a61db2d4c6a8311e927b8c497f0b4fedf8516f18ccc90524eec814b6ccf58fce423d006a28ea10cfc9c24abab4c321e1eded55c31b2c21b2d0d1b0cfd709c3cfeadae2e4c7b2247c8be301e17b4641383354eba98dbd2d959e23d89de4d65ec4723cf3540e1d891aaf9776cc552c27ac8905ad97f7ca2085015b6be81d8344289140bf9db04e9e35724af21b31bad413756287934ba3d584c4a7e41645b64e584c5bdaad79c8547738ddc0945df181206ac4c28484b0f550d90374c957f3d7080315ff2fa37b85d8501bd2336ec27e6db569772cca7c2972041d69526e8d8cae9334ac15b887f38a57649d4e18371d50f1c3e104129e067bbe1ba383d39df1120295ca545e0292fd91bfed752e0b872a5d092bc2e8f699c7f67b6c89449f375c1020f524c8b17782b7a3faf7d2f97f7c8b9774c0d0325b264418795046787f9772df4fc2c7f8f6b1cb3663a84d863ca0b678c573b86f7ca374266893422f52062b34871897c5ba02ad4a6769914c8957e677a574c0e6383b10dae6e4b332ed628c60e4b5bbd3f856e9b91210f52b52e2133b6e513c7fea348f8a3d70c3412ce41d9f5a9cd1c537a9e9d2309f974519a2f592d7cd0e551f8b4bab2ee23ee5ffe32b0fb8ecdfda2e968016eb1d2ccdfb86607efd315087d9b6d706330f2a9c6ca0d394f056c17f6169b14848e8b00bceea06d4b8c5ba1e694687a7d4b4b007918c42996c33dc65082499c3620a33b8bbb61e07a457f4650e2646acb5c98c1867c4c136e8c08eb3b217592834ec459aacfbb8619061cf96acadac946d684eb5f2bfc6ede9c3cba28f7e13d28769e5735e3391f2968d7e7e97e580a74d110c969b3bd348074a83e37c2bcbf277c606a6cc2262339f2f2702f0915a34e4c1c13a17fb556a5ab774740dfbee764d00371b1a2093cbac5887414e0bfd9f1afb0a3ab70585d9acae623c6e6ecbe745554999d8e9a7622520800b00b4851306710f378e3b06ae69703033bcf16b3ebe088ea2d77f534fce0981d13424dac6bb17016e1e415d42f6e1a97443a652dae8583dd23c4e1b27d03a6e5a0ff6763a58bbe23cb3574ae2248e660fcd6df28775146f4d9954777a5b61237b5ba4d6b9cda5c36d4c1c38f4cb8fd3a678586fddabc6b6644f0721a25a0a56c360c2cc2d630d2d36b678a62308228a1b9efbb7dff6ecdadb66fa98cb7b27ec6e1f096cfa0b618793f3ed6027e51f4c93f01ed06eda4b79bded92573a3e8a03ed0be16aa703264dc9f97d69c52ab07007cba58f17d58fae633ad277fd8251e18959914a46a211c37083e3bc2f4c3f90ac34d4fa018f607e2d38e5f45a2c38fe111528cca5238fc5c73b77d463a792c158b8da61597b0395cebf527960a2cce252cfd031b004a6666a00b74474045b3188f9d3bc3ee3a662c09e18b265755eb44244bc13adb51be223edf3b11bcd106cd1953d46765916e2465bff3a37d07088219f0c7f41d763dbb7895c9d5cfee887650f8729e2c21afddb4544eea6050d8b75dd6f43c429d523622c3f2ff791017a83b08d24311193f12cf5a7c94ccca2747b5be1134ff4974cb94cc25281015397b9b36772798221f9d130ae09bc407588a7c4760f2b316a5fde3804d6b29b13dfc7ca5ea754fe1f4d95cdac87e08d51fcfbc81b278ae416fc481a18d88fa4f91bf0452a068a160065d800f3e681582e2c01f3a5a88e630b7e58350f92799cf2ae2551c1ea24f6adb6c54130b34c2af6d1bfd597baa6aa85861004a91075f0520ae17b16ce4fe80928072e30a452e9656161919ef8f0ea6852ca2d3cba7ab2de05919048ba53666bcd306252326bc02bd33450128acd69f79b7dbb353ce8f9e72d15a7813dd220e69b5e01cd5c9b26249632d31f7ffe911405ddf02f09917eee8fa9e4958756cd8205103e658ccf6174367629126b01e54274bd5330235f928f5e0e438e51a11eead25818e83cd9bc5f5b715a21d0452d858b97e7d6ea29bc0161affb5c0cebf191e34c200c544a80e193dc3612e0db86d3a3981de0469a683cc5bbd85095182399cd97f516a302ae2ab34765c068b258794828ea3b0ca75df0844e328bf935bc9f4778e17601443eed18a8b5ce26f347f91a5d1ff4ced92ce6ba5ba0f2a49c282eeecb55b8ce7a66cfaed802e6e7cdbc296d5204b485a4edf5ae3db2430d2695ca8cd3150728deb3aa0c66880b7a2cacc6992ce22170eb827ebfa6c91789576da3542bfa4e0a7778df0ffc19487a4784d624b41a3bebbc423ab5759fc849954d16a4af7252804e0796abfc841c4c10ffaf9d2f415f5994f0f24ced4a8be466d081395f3642bb08e6d7dbcb985deb9341028f4ad61ed874fa984f96da1960d446129d5887537a073df226d7a8908a40a1e3de0a32267209979f3f9bc53ec1cef91d4e8d9ccdb06f44c20ab10b6da74dfdc156f45170e181d9842ce42c65346f9dc47a17593844659f09ce61a234b79162aa0d1a3c73078173f2660580b6e4f937fc61ef8603f6819e1244911916d3f0f22ceb89a77fdd9a7df6b0537f0c96b29989dfc9d4f19bd22333e569f594b848a8070fe3b2a5fbb55d1023626ef29843ecc4ef5743d4221c34ddf2e7f361003ae39952c15915fbedc2e369a8aca0165610fd799f091fe12eda95db40ad60b07e308250b394cbfb4522d21cc9a7f9b8c0cb64e6a7654d070519b15b460434fd65aa58b9390ba5eec64ccc28cac6e8f3e51c5c866344f7e428dae847d161a994128216b44cc0d2323b7a1f1675b331f068063705e022c4db6b1d5a7d3e2e474b82cbce9c6a56c28108baf308183a0f2ed461772546e23cc6c6da6bf3ad31dfabb49a6d1ed3565e373af6af126f245199ae6f4dfefb5332a634ce57b4030f1d326ebfd65c0be7a93e13e3378014b647df150b8b70ea1ce0e829294002277df829d1ecbbf02cc4b57a74a25dcd60bbc823ff61ff1c3ce7a3655c2eb008608e1c6462104858584208b2090ec452fc816579abc1dfa14fabd92c6d3933226daf4bea227807f5f7931512842ad9bfad3a0a9f2252e3cffd90b23bd2b8d5a77acb7bbcace322e4e534c7dbccb00e65e2d83ca1b66577740186172d7b35a66bd6bedcd0ce7aa33cfabeb3e830af28dec1ebec246e7acf2ee232d6417ed6a61393bd069b0dc70c8c1d95c530c470d53ab522dae788f3cbc07e54c3e512025d423cd5ec7b39cbb7134309c9fe3399f75d652400e42029b50729a31160da092dfd999c4e96298372db6bdff2f6c30e96b727a7bed9faa3b8e21ccbd56db57969a1de72aee11f686ea4a7a12a4d334dbead297bfc7083750d3d4a544c6afbe48384066c3d8b6dc3843a0205c1574149c3cc2e757514d4e75afc54cbeee3b5b17c3f8016294e43b65452b1492deecd35e89a537f80f1138898a44be26fe18d23b0280a7224c82b3a61163a6a7320ebf3692c7d2ce45a80fa60d0845fb37f25e0b03417d26a17596190309106bdd419c90a212cfe7221bcacc977e7e51e7d35ec2b86078a1240910e34285b76e4764493933686cf261cfcdea0469d2b129456e3c665093133818f3372fb50f35068d5d4bbb63d0fe1aeee22cdcc5f47428c3fe7685b9ed04c667bf46c17192370b4e7ddd612b12c8011d4060e761e19b90966f9d9314d919eaaa7e151f6daf187f9564d07546d017cd18a41f36ff92b16eff5d4dd4dea9879cab69dd9e748145fe029bd7998649943089eb1cb67926793090e8fc4a237a0c0f412e389f65906c6d41a33655d9a5dbe6118c33f4295ae22b4301cb97f92027e3418302d3e640b78c84982ad25283393abe5a7fdc5808a564c75bb056c9be7587a4fd95854f90a830b2231dffc86136d78781f3a662b04cdc3a51dd7b4a8a3e70cd00e6eb47671b9f3c6806038cc51c8f9478cd5ba46827ac74bcff92a4524be14c36aff188ee0fe9c3d89f086f82c8031e8c2022eed2c9c650ed2e7255d27512113b2bde94adf0715a27ec31d30d7c21bb71cd2e42edb400a366c40e0e39ed4319fd1773bbc356c71f07fcb57309fd88c63204f59d3214eee4bc500aa9d224d21aa164c5283d30243039765b6bd6509d59f4add87c3f808879f4625762fdabe5aec3729ca3dbfd0af4083c9db12f40d281c65b48f0c711bf8ca9e4f99c5c6d57c8d4ef20fb095089bfacc98a62ad543310bb973f71bf103fc84bde84e61c453666c9bb05e420ce7554cee51acade3ae6a6f71fec8ae163b0a8a3ee3bd9ac37503457b6954479705d7ba46affaa7aa8bedadc975475917497f2c4718b88fb42b24747cac70fb6f0f63f62f317f808dc363ea170f6b9baa7011aaa7efacaa914d4f937d6db4e9b901edfe92bec7f214ad621e6da4a0987cd288e6b58a71271c6e76d3fe8af91d9abaf7d708ea520a861c7582ff540688e30b01e2c547da9546fa013711549b960490669bc9e273ba9f608544268989bd360261430208a2ad82ef6c7d0323efbcf916050030b3899b0cf082d76386b6a1aaee22be5f3681964e57e4598592d09073a4825a47267df5f2b9300636a7de7146f9647dd3d2047909d2678ca15fdd6501278cdcc6a51e3d01ed3880053d199fe6ff2bd87553ccabca8b3c9884a6406b2defa620f33ec6bed96399267165f32914f5431ea9b0ef9801be257fa9f7e3b329fe71e47fe0316e6726d00f4c698d3ecc147c7756b96c515ccd940ee3dd0f798cd4dd5ca3d43e157c17e13749b7859b1b6132a58d5fffa6501fbfa648bc492e9b19350bd0e63415109e1cbda1fa5170de19afa23d387cb70338e4980a4dd33d2ad7bbee9f1921a90a08205e161483b568934b58003c4cd4eced399e56141657d50ad3fbdea48f0dd9e3a259c2a0e54c956279538ccbcedfcde0251a50e03af3b042c1d7e04fe8081b03cd90f799e15e26822f884ab0cfcada0974db80851fd342e6742b338c329ac6e46aa76da10a60d7f5907b460c3cae0a459b46f4db4b08b87a556db5034fe353dff7941504112e443425ca9f8c6085d2e082435e30bf9223d5f95a4371dadec338fb6dba484d4c71eb88e56bfd8e441020724f1cfaf835a69058cf5b79a4f1c0dc88ee477b1198fcf8e33dbee09163c3292479df76acf66f5671ed028898228ab8cdbb83f0b51a8c3259c5baf28b464b43208fdcc69018fa404c0cad34f0ec13305f0514fc76b1fbe92160cd5bd51e8a13de8db143fc49953365b8ef33034b725b36df626a38585a84b12d8d9638c9497c19e03a912839b6baf45e06b29964c8f4034f9a37328ddbb571272dff076e76be45e9c980e41fad73d7196e524d1f31306a8e725db78422d45d0e1239f4bf1021dd7c509a242dbb194bf2c76c5d7120335af21976afc115150bb016140ca972561c793d03112147c7e1388dda69de4ccb4412f3f909c521348d46e0777b8f78fc73ec3a65bdb2de64ac68d564ec2e0a94d94c5e4a4008c072573609f46dd05799100a6416a71762707c6a029eb7fe2907bb4a3352d00470973288382a1925cae960e425babcc6d2bfc85f3137be41e186104327f7ad101dd1fde18bbb99eb776158edcf6c1c3326d25d9f32f0899a67d51215e9aa9dd78d3da42d11fe6fca85eccfd2ab4ac4a4ad9e9dd18c8ed9681694a78fc4b4c7bbeb21f911b0ae58af037f3134a0e239991f96d8a977e6a677dc5fdf1142ac0196519c9a2a3cbe5408f06a1bbdcc11caccc91e394f61ae5ca44f1609d83e58f5fd7aa0f9363e0021de9e9426669e7bd14d2eaaab13ab29a373dc0ef8853a101b7066b1cc37021503bd4c496376166721ac2a165acb858fab521854e1ed36b4b461601821625a7c9a72e933c1f3c33b15e32038b679d878a2ed6e776fd1d75ea41c5ef02db37b119a6ee436522cafe8e51064f066ee8268d2c42116f9e4a94c19f7ba1d3f54cad8bce86f7a26b26abf7076eeef189d64f5ccf85d7ba18d3735dc5e7b87d3a7fd63fcec2ba93bf4af9a43ef89ef1f20cd4b980dc80878010151aa50cefaea5f031f9843bfda0f4992bbbd5afd2b89a3481680d790d680f8fef3b9821bfba4a291f9e90718b4f271f64f14cf277212b5b05e72d04a2b76247208258229c9ff61356dc059a06fdda828a1c3e7009ed3361d40fa213939d65d612fc889352c9b3bd9bbaa2068ef8edaf52da9aebf56200bb57a087d7d882927f7d2fce7a2a0b5b0be2788a56496b3d9f7e9ec938777bfdba7dd2fdc18b4fda1f1e1541a6e2ad0b48c2376376d65b42b02412a0296f5d22068f21c1aebe175c7f5703a52b31744ed2fa35eac29e9bd374108e0c2dd9c5f29333de3e8039c929ae53ce177455a76bc1625678297b9280fe89e18266a8e7df11eca0c6366b806f0e61f8be27842ea78aa0a3580e4face501e6ae4e6b60ec22a1f92c79505b9537d2bf92a7cee9fda5e0a0f849cb59bd28b540b396872d83ff4a3f0061dec600f20562b73d7e47d687b829f3f74b94b38ff2dc092f61f209afcd74d5f2f6e306e7bc07f0b0ea9c630fc01bf1b54c89a2ea2da9538491b5e5d227da21514f2c0219dea9872ff23179b32447065b710c695c1b6353b57db79099ee4e9625bf6dcb061eb1a6f5dc1f28722679e311d7b56fac4e3701c41c68b0bb517c9503f1b069047774703a70bc34b6ad94cedd3d60015775ceb0679342032cbf6b369da140fddcb872d694d82f06cd5084c549e7f742faddaef1c9213f1080464435d98a76f5df414a2ccda82125f5c66caab31c1cac75a5bd29d6e51aeac50d9059648583cd4240065d55c1b3c0abb138ba081f80b93bb238cc7f49d76f3248384c0f9bcbb952cade72afbc56b7a20402c3db3777b6a6df6813d08e43d1f382810438ef69aa3ec2658766a6dfe54c76ee60d37f6902f4d3bc9995158c46a10009c324e35a4bde9e6f5c34b146f4c57263fbebce35bba6c69ecceac774d8c68ab59e067a46addc6915c2fc2bfdca8c20b0ebba3ca3a806ab70638c9e2dabb937702ec9d7fe9eae38ef93640c3f021fa829815e58ddb5a43a3667590c2c2a8ec47cba8c01b983556be7186bfeb571e616d77d647ef240e3e7fa826d02b6132a2fd8f4235b95317c5b9ce560e0e64606d7170045ceac79305058737e61065060ef2c79cba66fd85ace809641f5e1d874166bb42eff68493dde607458253aa711ade58f41896898e003fcf00b5b793454e6a9b19473bdcd0d168b0eb92841752714c2030b416bafd0c08a853c9fd95254b290c39c380d14c46f672d0053412b902df94419e8783cb49dab72bd04133830c0ad4d3f13f59d7ba9dc4cefea247f64dffbf25c8666a497d21a8fa0384686aebeddae8b92494b5b7bfbda7edb6bd3e796bb7b57ccaac2e9d6816892d1cad3da8858cce059909a31dc688c7b21c69059aad7a4fdccdc59b993bd71ed65339527166153b3fe30088fb6f1f8884b364cea7cb29374b5986cabb06e99f20c1e738a4a21dea429b19fdc302604b316ee5417737938c99bedface56666e4ea7e9b526d7bb3c88a658770b1b307bfa46f5d1466987268edc4e04f1cfbdf448af83d96f8868966bca0805da2c928d3d9f47eeb5c2959171ad17bef85890b56cbefc32637f83be3926cb8c4c023e2505d59ee86f683e2b6f685600a290881676f1a18e8379d3c5a525545a7266ae94dfb9255de3540dc1f1fa99149703ff899c3758e2e5e8bf44551ef599ca692336cf9913699bb982a1197e29d3a6700f3380c66e7bcf72985461e90a6d7ba574c21231c267b2795146472fafcd6033aa4f6d879c5e5543a023df58da5fa2e210b638c3dfd085bb1c8461ca83eb2a70da4a32a49f18dd05038b5c409ff9ade2747f7a55574c254db781932d8b198b9eae2924b1a9426104d8a9e9e9c390ca5d95def8e23a23a41156f1afff88419173aafb10abdacd72a3ceba7b0b16f297720153a6e0f216b513278b2a891dfa7a3231ced7438fdb4b1f7a1c75fefb7d10a8b926c7e5a9ea3fdc21859ac5d51df98dfce823d4211372155523804595c9a92b3841d41d45c8bdf17043b911a12a457e3378b809262afccbaefe507b35dafc0b798a13da7a760f44381f665605a4d5c1718e5439711bec48f5c95bc7b4b1e0d89de1e3db1634ce8d49f18247f0e15b8da6ad4e2adb12d409a9f9a0283402ec8214e0bbbe199a68a306a031a3a54b0dddb31df51336c2b906adf41205a345c3c59d2e3096224c8294f47b94de994dcdc32adcf7d80d4809ce06ec9953b32b6549a8ad9d770f3c67bf9e632d442e8f62f9c977c00235ee5e1b270bc484def764665596731a6e241eb77ec3c582527da7fe46e2cb7ba37258578d08df5611bb49eeb97a87fef813510d72325290b388d595b03e5f95861c68fec93f2053c922e902199ebc913582ff3ac7aa32e870135a9dea9445f1ca86c820a7fa41ac540f71581dad492a2952b042e46182098e21c0bda08ab90d64e001d59c0a1c57f6dfb70b166fa4e3d8db908a1401fc3e15a109cf656dc03d6019559da97dccb2d332e96f86b73e78bffd6ef77bfa5bf653fd68c6477dafd816d76fd1572b705126a597fa872b8f52b85a20bf81098aba1fba5b2ab0645b5f67002a2906e9c2784837966184aba3a3af20b052fe4510644bef4ce3e07d60037b5bfabf30935ba767cd9e7bc219a17cdaf9664dc23b84ee1d7c2cd32ea2bcce2a691ac6c32c6078a69b10998bc0a025f63ea6a2d9207c20d1d1375f51e8aba6c8a7eb4dc4d7592361398067056dc8e8969200008c525bbc0020df387418f59999d69b095728bf0a17b04e99bc83831f804377fa5433e01be2ef366972ac8462e6cca070c6745fe3790a2c9a785229d32af39ba788bad3f979802ff07e3ab0c5191e58f330db29213ae90155bc555ab04952164bdee6ed72cbe9e3a898a9aaf2708a9fa6f22894e7454a2f400c2807d16f4e1721f3b1fd651d94b66cf897880f2afe4aa3db03bd49add71427a658543ddb889023eaf486a035c9d09aee098552b14d6905606bdc94f6693dc2acc8dc1524cd69739834fca8d64b1d2b327ef7412618f27bbd5343948d746cd4cd716836b17f6d99a681f7b7f5303d050eaf3cebbe4f030605b4ce87e99b61b44ccffa0cbb4bf4da39a52c3dc8f3632476f3f585054f21dd1ae535c07d91c1ea774a133702255122f93c469d76de7fff060a63f14bdf03da81f58ef8d3ecff16e7c9df00892ecbb681b1593b82beb9bd4c007802ed8e26d30f08aa1207106992bdbd76a709dcd949fcf61006950b110ad4fd0c39d6f7c0abb10f75384851ec75b19423eb8a7b503e8e344197ce1300efc47afe857083870bd3dbdeb1f3ed6f038ce921c858cb4c4ba6f781c6ab6bf5619f8255086eaddacae2cbfc3f5f7cb1377511b3b0ff0b0cb4484b09bca3af1da9e47adeefe334de220597ee71d217b2b404890557674a16ebb503c9f8e8c5a99f8ec3edf9a22a2e67c3d0356b45f32575134586c9c62743f03b64c5b7e4654ff82217d4c865ccd0466bf7dd9f2fab6636c2d9622d9cc0012f0e12a30b030a132beca5e20763f49fdf4cb8b18262e5384de632995aa4162ca4b043838a615d0c918164ba23445906a6f5101d78f8bb84c626de7871265dd5677ec282e48fcc88e761b6066caff62fed8ab5c811b55ad2c02b370e00a932c5c5078452a2c2eef62da3e9ec39d1d8c2258a8c26d8f046a571744e75396a07e505fb1ddf1e00a44fbf31b543afa4fcf1d7a230dbc4bd592dd3da0bcdf906daaea452028bdde1d62515e5436122f973aa6807a3989962c73f9b3e7e6fab3deb57e90493d8a8d08ec09e67dbefc4d033969fc0a2f6a4f211f7d22506c1498ff27c7661c2be67d003db43e2da7b69c935ce1d0bf8f584abc96db136119f1ce428b2d20233a0036de63030ee3b36e1b903430b06f000a7658709b0a9ba0a64f330f0557f8630f1a6d15509cef6b03322c39d5434da519c18efbd457aeecd909bd24d622712026274221fca2fc5596a1218ea7ad5d28880908dd2a9f308c299da6214f712d1e7bf93f831414645821c50632c40b621550e5ecbcab324ef6a8275bf69870ff0d9b7aeea77bd8fc8d575f1e3f597d74c8b67465d1add74d126e99d9ab6c77b78535b05e3fe17fbedf56f913c2766eaf3d6f84904d9d9d7a2811870f60750b186ee0f5df92dc36c3db67478fa270cbaa957606c8bc114a8614c2e878e97f5ced761b43dbc5ada3011367410d3062ea55956a66d10d6ee1d666fd936e4e2a135033e275d630f5cd9f994d007ed265fc824f7d7694a3f478154a1ee1180e3960c3c28d45dd1183730ac82b99637efe50801561c368bcbd1ce544cbf07666c037eb19b76796b183444d33ffa08428bef18f6093dffac61417c63f2cfdb48cb4299286ca274d08cc23a6b440e144662a69d92897ffd26449dd4afff571e0349cb7b299d9a8c3dd5f33d983ae516bc4cc087fdfea9586dd68a524873d6441cf08de5fe9cd1b1d1e8374763d4d652cac82bb3a332f601ac5deff3aa841954e2149502449ef3c199912292edccc12327cbf4298c9e2b682fb43dab9bef957cfbe65f7620398cb305110d74efdaf91e71aa83654fd77218e4f37ee6c5a18cf9532fd97b175823684ccb28478cb18fc6ae9dcdcc1894ad584f989476c2a20cf3147e5793d23ba0a5e85c2d8199e442f3c5decb464e4058e007359f7cf0106307984b8aad8704213e02ab79aac17e32c5d0babe1ac5700fe344dd4f9fd742fb359c2da21948fff20b261b68f4ab8e30079087a23818ad5396eedad0c67e52483b601a3f56461fa15a3d47ef932148c315ac7e9c9f4af573a2139c46308ad33bf919113061ce0b67c66300459bef4aeb9bcf8d76d2a4354476231ca0c2b91f7c65aa8c48a2ddfea95810e48f9ba2b0eb30405d21d66c7912f36cd6d9cc9220e3fc87af6e586cb7972fe2e211b1a268b0c268ae3b2f7768363d2b6a2398e89726a5b9a3aa13e3117c39de303384d2dd7f7772c357bed155dec27c688c075f35d5a244962d42d6ef649f07bcd22dc955fc3f56ac1c55866653682639c43d5972aeb0bc1e94094a43e8f48f5fd06354761bbd9100cdd6c598d63037b15542b9cd149ba5bc13f4a9348a9cd291e3cab5e1a83f81ca0256779a02439f6f566716605470f693e5934d8c996ff1e2eb0449aa8fb485cf0f65d2e6a141762a63e61dda2278a5b834a1d33fa9be50b95625d4f1dd83076dee5f5424895de4cf94cb6dba5217f82167fc973452a8eb7666464c69c831c2c70ef5a5ebb96b617ad6381734c8beffb0955b3b54c33e32dd2b06e0b771cc0ec411f33c4f4008a965c662b0d2803543fa4e27d12d31ac9f39fcecbbc2ede400b6ae53a5aa3e39293fa7b51e63d92133b830044f6b60629fb94c219006e0642e99c313698a986419892ccf70886f595b51e54eb680588bbea665c1bd26b57108a66231974ae0ad053511f62527ab11919a6e7be469f216cb822eba0a14d1d6f4314e138e2765d7990e273c46b43ed4360a7b60e35b2956ab0946dcd5b72ac6451bcaa75f1dc9d80f2ba40167c049f8bfadc2f3c424f4b6e50ff63f2f6419a26bc7864d365698df973fe9eae3e97bac069df55ba1082ceb545b3f16b098754f0fd6e08de889e7d51203f9dc9d8bd346b34c7b90cf33efad978cc2ad83681b7eb680fb6751c9992e6a6d65be90c58eb55f0ef1a65116ba51f491d0eaf9254a740852ce0463946dfde2ccfa71c2f0f56caa06d3eafd31b6c93319ac9d26ede3f1924627159248fb67b75f9d3d44d76d8f6c8f71e8774712f3785c772df47c4fcc586909507b8afd4997dae3fc8362ff249ea5a9b244fc382dd22aca4e3b8ec6a7214f366eaa64152949ca0aed9bf2f7d92dc9f71fb6e70a0fced87e413415cf74e41e334a6bf0668f94337ffab00ad9da6b63452bd0d8a41c4f6fc9c3df6d897e19a63286a234b61008cefe9b263f718add5c2e77cf1ed59f15643cfad892923d8ea4a52491db6b89f4163c12e418b85e9b1c2c679163af48825952c60d829b5db960e0bcd39a39878a0c0c939e7a5229313277f439a0149fc7d22435469c43ef54c1cf417e148e6bc85a307ddb81bf4b3e1e74bee2ea2a987bf2ee283beb286d99912e45d0664143e57427c20959437f3394774f717aa74646e8ce7b43c7e3d1c5d1c44253b9c04878fd84b7f6cef95f7f392de718f4de74c9538505e6830b348963d2744d269a8042c1aea3f0c5cd4a8b67ce824dd1e73fe1138e6e06ceea286720722c8a151355ddcecddd39b34214ad58920e1205ae1ee53bb6c225bb30ab09bd9bd8395b58817a12afc3141d174f077d1e3816de2d35fa2107bfc80b7e0a768990c044dfb934bdc9ac8c21bb9b68ebf8ca9ef1c0f18e20dc7b41a545c7bdd105efbb48385743f1e40b71fc41e3e2a3cfd6c4383eef1329261997e1caecc818117ed72dd0960501ae67b03e066e40edaf2ef356d3ea9ac6e4460bfeb239b33bda5b36ef3ca50570c0c0e9f3fd3fac32bded9b432d200078301acff67f1714383ef67eba3895b7d4a32af69f83a45d9244c9ecf1d67ae352dcc3016c469f2fd3d08d711c5c6ba3dd21e82bedefdbb734532c9ada5926bc777c8539b320284284b235a5c338cc11e8a6f8a842a7813f68141e86c2617e2debd780ca488f70ba9f1b95e5d9471bd277106a048b6405b0aab54897d4617118e6705a41deccdd6b2feac40edabdb56e4fbf23b44c325c9a64f90ea412cf016ee5a3d4bbec1780cc18afcd5dd91816ec5ff46e07b2c86e16fb95c913bdff9830897b094aacaf28d86e3fb3f08cccd6261e047da2da333dc3e4bf261ca88a29b53da13f38077259e7928b33ec88810ed4654de324a35ad31b514871690d69dc70b3c08ee3e5e11f50ea07a0e71bc0d33276efa78b3d1bdbce59a2a95ac47320d4a0ac21d1adc54b8dfbf0f4d57742337439b4032759f8c091afa27a306f09c98b84e0421ba2dfcd99180020e87adfdfde2a4540352f8d529a330db82fefe9c6af6d5e339fae9fb5275a2a77ed88f750096d0b9043dcfdfe3f09fb638ef33457158cdf8ec405ad46c3f58c3dd6c4d279399c81867a0526929bee2d8566ac3cd7adbfdbc0baa10f16e44c43d07a49cb4553a16cd8d156f9ca6b2b3449b448881e996365cc44392fca4b502aa482aa3412ffa1352f9a83673ee855b204d05017288c9d894ecdca3ecd2ff4a901bb665e2ca5a1c49328baa5d5c336878d83727cd976a625167ce7137d0b56e3ab077396f726bf221d3499ca201d07c9bcf581cd6aae45d6eb35e5caba333904e87ae587260950395e83893cd385e83c76245d77977400c5634c3def2f126cf648b3c83454f8bfa6039ff478acd201c286b472d9f1bdbd02007b181bcd76f378d27de5f01317eae04578fcc22584a0990cc204ab6d2932b14d6e8b6387419cf393604aee0a0be3af845cf5f44e4dae044efde2af9f245c5e68886b3df0fc88e04366cc57c20ba6d26e2a42bf4dcf50a50158e5e54cfd3f8f5eb9221a094b1f6c920e32286037f6e3c44d80d61a23e8980ef852e48fa8e9c1d781916c26102f4738893ff9f6bacb5c22320e3accc068e1d2c207d26330084b9100d666ab2adfa9ab2b89c4e9f149d371c29cbba6c82f6b0fa9c2ff48e8cd50ff4a8ca43bef94c26851d3d9f386369421fdde271cfc4aa92e1c88253e51a2f4c33102e02a1cff74947c870734078cc22a7c00409d9760fd02d78636214927b6c13153431d797ed59ba081f7fa8cc19b6a732c0ff2ef0104c6f0542e6b5112d64ab89423e24ff2e73045e027c6890289c86dd65e9c1f593a494963eca432ab8e5413aa653ba9a18e1be16cce8d04c8ff29ecc77808f03463a251f3212122d7910b6288f15d5d821e16842bc4f12cd561392ff773f5bb24d3f4d6355d777555fca48da80fb26540cb30859d8225fa15ba8993ea3beec30c550017cfaeec3a089c2a3454a5151825f098c7ee435e3b60b12dbd5cd2fad7b69b8b1092889ff766967a79dd83992c9479135844e09ad73ccf8b8d9709b9dbf025a54228dbc60a6b58ebff292f985ae8e0be0ea8a7c11177058ad52ab5c94e1ad7f1309a86a363b362741ba522ed48c8d5eb536c0d43b9de26b4e6950c08b84af983b1defba449b83c519dcbe5f150839e3335f01e4f2dd0ad41ba517bcc9ccc0c04498a7ac271bda7242e025714bce17019c15761485f00b715570908832d5a12cf2c2a2fe3c3550a6d9b96e58eb36745967fdf7cc924786bade237f00fb26c80607028845c779a95d0d146d40d4bb6e4ea53d89492f21aec73dd90207f1998ed94527fce5071eef5f67b02189b6b943559c305c0d67623059d7ca144e7b90ef92f53837b532e8931976d73beebe280717c66ab652bdc2c6e5b8db765439a052a9daf824e954429db69a65f924e5b7bffe0a1c40ff568405f20351d2fa50a860267daea46a098f3a749699561d62bb1272f249ccded0be577d6fe1a1404d22335d91e0c213509576092a9516b5bd3a7a24d24e9b618a52f9758238e54dd36a81e2c62fb7fe2db9fba3fe37ec71679c8f587c2a979e8e121a2c25a6ade</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-wave">
+      <input class="hbe hbe-input-field hbe-input-field-wave" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-wave" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-wave">请输入密码</span>
+      </label>
+      <svg class="hbe hbe-graphic hbe-graphic-wave" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+        <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>
+      </svg>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>ReadBook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《献给阿尔吉侬的花束》读书笔记</title>
+    <url>/2025/12/19/%E3%80%8A%E7%8C%AE%E7%BB%99%E9%98%BF%E5%B0%94%E5%90%89%E4%BE%AC%E7%9A%84%E8%8A%B1%E6%9D%9F%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h2 id="为什么要选择这本书，这本书是从什么地方吸引的你"><a href="#为什么要选择这本书，这本书是从什么地方吸引的你" class="headerlink" title="为什么要选择这本书，这本书是从什么地方吸引的你"></a>为什么要选择这本书，这本书是从什么地方吸引的你</h2><p>当时是为什么想要选择这本书的呢？大抵是想要读一本科幻书，然后，这本书走进了我的视野。</p>
+<span id="more"></span>
+
+<p>本篇读书笔记借助DeepSeek进行辅助思考</p>
+<h1 id="整体总结介绍"><a href="#整体总结介绍" class="headerlink" title="整体总结介绍"></a>整体总结介绍</h1><h2 id="标题“千”问"><a href="#标题“千”问" class="headerlink" title="标题“千”问"></a>标题“千”问</h2><p>起初，我以为阿尔吉侬是一个人，在后续阅读过程中发现其是一只和查理·高登一样接触了智商手术的一只老鼠，通过献花给它，也算是献给自己，既表明了对实验品的哀悼，将一组组实验记录数据转换成一个更有温度的生命消逝；同时，也是一种跨越物种之间的情感连结。表明小鼠也是和他一样，在智力上平等交流、在命运上感同身受的，只有阿尔吉侬。这束花象征着在孤绝境遇中，两个被造物之间超越物种的理解与羁绊；最后，也代表着对人类尊严的肯定：无论智力高低，每一个认真活过的生命都值得被尊重。这束花，最终升华为献给所有在局限中努力生存、追寻意义的生命的敬意。</p>
+<p>这本书看似是科幻，其实又不像是科幻，与宏大的战争科技叙事不同的是，通过一场贴近生活的“智力手术”进行科幻切入，在虚拟世界中讲述科技与人性的发展变化。</p>
+<h1 id="亮点信息"><a href="#亮点信息" class="headerlink" title="亮点信息"></a>亮点信息</h1><h2 id="哪一部分是你最喜欢的，为什么？"><a href="#哪一部分是你最喜欢的，为什么？" class="headerlink" title="哪一部分是你最喜欢的，为什么？"></a>哪一部分是你最喜欢的，为什么？</h2><p>我最喜欢的是他那种不顾一切，能够克服一切想要变聪明的那段人生态度，这种“不畏艰险”的人生态度，算是一把三刃剑：<br>第一刃，朝向外界：一份纯粹的、近乎天真的社会契约<br>在查理最初的认知里，“变聪明”是解决一切人生难题的万能钥匙。他相信，只要自己够聪明，就能拥有朋友、获得喜爱、融入人群。他的“不畏艰险”，根植于一种对世界的信任——他相信世界是公平的，只要他努力达到“聪明”的标准，世界就会回馈他以爱和接纳。这份信念是他勇气的源泉，却也让他成了最容易被伤害的人。</p>
+<p>第二刃，朝向自我：一种对“被爱资格”的绝望追寻<br>当我们深入一层会发现，查理的渴望背后，是童年被母亲羞辱、被家庭遗弃的深刻创伤。他将“不被爱”归咎于自己的“笨”。因此，“变聪明”对他而言，不是一种自我实现，而是一种自我救赎，是换取“被爱资格”的入场券。他的“不畏艰险”，带着一种沉重的、悲壮的味道——他在用整个生命，去修补那个被至亲判定为“不合格”的自我。当手术后他智力超群，却依然无法获得童年渴望的母爱时，这种追寻的悲剧性达到了顶峰。</p>
+<p>第三刃，朝向本质：一个关于“存在”的终极疑问<br>查理的故事逼迫我们追问：剥离了社会认同与情感慰藉，“聪明”本身到底是什么？它真的能定义一个人的价值吗？<br>当查理成为天才后，他解开了复杂的数学难题，掌握了多门语言，看透了人性的虚伪。然而，他并没有因此获得幸福，反而陷入了更深的孤独与痛苦。他失去了过去那个因无知而快乐的自己，也未能通过智慧获得新的情感归属。这时我们才恍然，他最初不畏艰险追寻的，并非智慧本身，而是智慧背后所代表的“联结”与“认可”。而当智慧与这些彻底剥离，它便成了一种冰冷的能力，甚至是一种诅咒。</p>
+<p>那个“想要变聪明”的查理，他代表的不仅仅是不畏艰险的勇气，更是每一个在人生中渴望变得更好、渴望被看见、渴望找到自身位置的我们自己。他的故事以一种极端的方式告诉我们：向上的路径固然重要，但更重要的是，明确我们所要抵达的，究竟是外界设定的灯塔，还是自己内心真正需要的光明。他的旅程虽以失去告终，但他那份最初的渴望与勇气，永远值得被献上一束花。</p>
+<h2 id="哪一段论证是你最喜欢的，为什么？"><a href="#哪一段论证是你最喜欢的，为什么？" class="headerlink" title="哪一段论证是你最喜欢的，为什么？"></a>哪一段论证是你最喜欢的，为什么？</h2><p>在《进步报告-16》中有提到这一句话：</p>
+<blockquote>
+<p>如果没有人性情感的调和，智慧与教育根本毫无价值。</p>
+</blockquote>
+<p>在此时，查理的智力正不可逆转地衰退，过往如星河般璀璨的知识正在离他而去。然而，正是在这失去的过程中，他反而抵达了最澄明的领悟。<br>它的沉重与深刻，在于以下三点：</p>
+<ol>
+<li><p>这是“双重经历者”的证言：查理是全世界唯一一个既深度体验过绝对的无知（智力障碍），又抵达过绝对的智慧（天才），并正在经历失去全过程的人。他的结论，不是哲学家的思辨推演，而是一个灵魂在两个极端世界间完整穿行后，用生命本身书写的实验报告。这份报告的数据，就是他的痛苦、孤独与最终的平静。</p>
+</li>
+<li><p>它解构了社会对“智慧”的崇拜：我们生活的世界，本质上崇拜“智慧”的工具性价值：更高的智商意味着更好的学校、工作、社会地位。查理的故事残酷地揭示：当智慧剥离了人性情感，它带来的不是福祉，而是异化。<br>天才查理能用公式解析情感，却无法感受爱。<br>他能洞悉他人的虚伪与动机，却因此陷入更深的孤立。<br>他拥有了知识，却失去了与世界的联结。<br>这时，“智慧”不再是让人生活得更丰盈的能力，而变成了一台冰冷、精确、最终指向虚无的解析机器。</p>
+</li>
+<li><p>“调和”一词的精髓：智慧不是情感的敌人，而是需要被“驯化”的伙伴。查理没有说“要情感不要智慧”。他用的是 “调和” 。这意味着：智慧是火：可以取暖照明，也能焚毁一切。人性情感是水：可以滋养生命，也能泛滥成灾。<br>只有当水与火在适当的比例与容器中相遇，才能烹煮出滋养生命的食物，而不是相互湮灭。教育的最高目的，不是把火越烧越旺，而是教会人如何掌控这团火，并用它来温暖彼此，而不是灼伤自己和他人。</p>
+</li>
+</ol>
+<h2 id="哪一些金句是你想要摘抄记录的，为什么？"><a href="#哪一些金句是你想要摘抄记录的，为什么？" class="headerlink" title="哪一些金句是你想要摘抄记录的，为什么？"></a>哪一些金句是你想要摘抄记录的，为什么？</h2><blockquote>
+<p>现在我知道上大学和接受教育的最重要理由之一，是去了解你以前一直相信的事情并非真实，而且任何东西都不能只靠外表来决定。</p>
+</blockquote>
+<p>这句话发生在查理做完智力手术之后，通过与大学生之间的交流，以及自己进行观察，得知人不是生来就是无所不能的，也不是要只看外表便决定他是什么样的人，要辩证的去看待问题。对于查理而言，接受教育，表明剥开了自己之前的精神家园，同时，只靠外表表明查理之前也是一个因为智力“外表”被定义、被嘲弄、被遗弃。而真正的智慧，是穿透所有社会标签与表象，直抵事物内核的能力。同时表明教育的真正力量，首先不是填充，而是清空——清空那些未经审视的、天真的甚至错误的信念。</p>
+<blockquote>
+<p>他和其他人犯下同样的错误，他们嘲笑弱者，因为他们不了解对方也是人类。他不能体会，我来这里之前就已经是个人。</p>
+</blockquote>
+<p>尼姆在宣传会议上将查理与阿尔吉侬进行并列，并简单的归列为一个实验品，而非独立的生物。直指人类社会中一种普遍而不自知的暴力：基于能力、地位、外表等标准，将他人“去人性化”的倾向。嘲笑弱者，本质上是否认对方拥有与自己同等丰富的内心世界和情感深度。查理的人性先于且独立于他的智力而存在。他的喜悦、恐惧、对爱的渴望、被嘲弄的痛苦，所有这些情感体验都是客观存在的，是属于并构成了他作为“人”的完整证据。这句话是对所有功利主义和社会达尔文主义观点的最有力反驳。</p>
+<blockquote>
+<p>整个会场没有人把我当作独立的个人来看待。他们经常把“查理与阿尔吉侬”或“阿尔吉侬和查理”并陈，更清楚地说明他们把我和阿尔吉侬当作一对实验动物，在实验室之外根本不存在。</p>
+</blockquote>
+<p>在科学发表会中即使查理已然做好了被当作展示品、陈列物需要进行展示，但是仍没有预料到其他人在进行交流时对于其与阿尔吉侬的冷血与物化。表明科研人员的存天理，灭人欲：<br>“天理”即科学的客观性神话，而“人欲”是人性的全部温度。<br>在这里，“天理”是绝对的研究至上主义：实验高于个体，数据高于体验，可观察的行为高于不可量化的内心世界。为了维护这种“客观性”的神话，整个科学会场必须集体执行一种 “情感隔离” 。查理的紧张、羞耻、希望被当作人看待的渴望（即“人欲”），在会场中被视为需要被严格排除的干扰变量。科学家们并非简单的“冷血”，而是在忠实地扮演“理性人”这一角色——他们眼中只有“实验体查理”，而没有“查理”。这种系统性、制度性的无视，比个人的恶意更令人窒息，因为它戴着“真理追求”这项无可指摘的王冠。</p>
+<p>查理与阿尔吉侬的“并陈”：符号化的终极完成。<br>将查理与阿尔吉侬的名字并置（“查理与阿尔吉侬”），是完成物化的最后一道符号学手续。这不仅是比喻，更是一种认知上的定性：<br>阿尔吉侬 &#x3D; 纯实验动物，无社会身份，无历史，完全的工具。<br>“查理与阿尔吉侬” &#x3D; 将查理从人类社会的符号体系中剥离，归入“实验动物”这一新的分类范畴。<br>这个短语如同一枚标签，宣告了查理在此时此地的唯一合法身份。它意味着，他在实验室之外的家庭、情感、记忆（即他作为人的历史）被当场宣判为“不存在”或“不相关”。他的整个生命被压缩并限定在了实验参数之中。</p>
+<p>查理的“预料之外”：对科学共同体最后幻想的破灭。<br>此时的查理，智力上已是天才。他或许能预料到被展示，但他未预料到的是整个学术共同体对此毫无异议、习以为常的氛围。他原以为，在智慧的巅峰，他能以“同行”甚至“杰作”的身份获得某种最低限度的尊重。然而，他发现自己即使拥有超越他们的智力，也依然无法撼动自己作为“客体”的根本地位。这粉碎了他对“智慧世界”的最后一丝幻想——原来，在这里，衡量人的标准并非智慧的高低，而是“主体”与“客体”的绝对分野。科学家是主体，而他，永远是客体。</p>
+<p>同时，讲明任何伟大的“天理”（无论是科学真理、社会进步还是技术效率），如果在追求过程中系统地“灭”掉了对个体生命感受、尊严与故事的“人欲”，那么这条道路最终通往的，很可能不是光明，而是人性的荒原。</p>
+<blockquote>
+<p>如果没有人性情感的调和，智慧与教育根本毫无价值。</p>
+</blockquote>
+<p>这是查理历尽知识巅峰与存在深渊后，用生命验证的终极真理。它将前三句的领悟推向了一个综合性的结论：认知的觉醒、尊严的确认、对异化的批判，最终都必须服务于一个更高的目的——<strong>丰富我们共同的人性</strong>。<br>“调和”不是让情感取代智慧，而是指智慧必须被置于人性的脉络之中，被同情、善良、爱和伦理所引导和温暖。没有方向的智慧是危险的（如制造核武器），没有温度的智慧是虚无的（如无法获得幸福的天才）。教育的价值，不在于生产出多少聪明的头脑，而在于培育出多少完整的人——能用其智慧去理解、去关怀、去减轻他人痛苦的人。</p>
+<p>这四句话，构成了一部完整的个人觉醒史诗：</p>
+<ul>
+<li>破妄（第一句）：通过教育，打破旧有幻象。</li>
+<li>立我（第二句）：在废墟上，确立自己不可剥夺的人之尊严。</li>
+<li>抗异（第三句）：在外部系统中，抵抗被物化、被工具化的命运。</li>
+<li>归一（第四句）：最终领悟，一切智慧与奋斗的价值，必须根植于对人性的深切关怀与情感联结之中。</li>
+</ul>
+<p>这些句子之所以震撼人心，正是因为它们不是来自哲人的思辨，而是来自一个灵魂在灼烧与冷却中的亲身体证。它们提醒我们：在追求任何形式的“进步”时，都不要忘记我们最初和最终的目的——成为更有温度、更能共情、更尊重每一个生命的人。这，或许就是查理和阿尔吉侬献给这个世界最珍贵的一束花。</p>
+<h1 id="对自己的联系"><a href="#对自己的联系" class="headerlink" title="对自己的联系"></a>对自己的联系</h1><h2 id="读完这本书，你的启发是什么？"><a href="#读完这本书，你的启发是什么？" class="headerlink" title="读完这本书，你的启发是什么？"></a>读完这本书，你的启发是什么？</h2><p>智商与情感同样重要。对知识的追求，绝不能以异化情感和人性为代价。在追求外在认知提升的同时，必须同等关照内心的情感世界，修复过往创伤，培育爱与共情的能力。<strong>真正的成长，是心智与心灵的同步成熟。</strong></p>
+<h2 id="你同意作者所论述的观点吗，为什么？"><a href="#你同意作者所论述的观点吗，为什么？" class="headerlink" title="你同意作者所论述的观点吗，为什么？"></a>你同意作者所论述的观点吗，为什么？</h2><p>通过查理的故事，并非反对智慧与科学，而是反对脱离人性根基的、傲慢的理性。实验科学家们将查理和阿尔吉侬视为可贵的“实验体”而非独立的生命，这种态度正是这种工具理性的体现。作者赞同的是查理最终领悟的观点：智慧的价值，必须由爱与道德来引导和定义。在如今科技迅猛发展的今天，我们必须不断追问：科技的发展，是让人更温暖、更紧密，还是更冷漠、更隔绝？</p>
+<h2 id="你是否喜欢这本书，为什么？"><a href="#你是否喜欢这本书，为什么？" class="headerlink" title="你是否喜欢这本书，为什么？"></a>你是否喜欢这本书，为什么？</h2><p>通过查理所编写的“近步抱告”，让我们能够通过文字亲自“经历”查理的蜕变与崩塌，代入感极强。同时，它没有止笔在展示悲剧，而是在悲剧的尽头开掘出了人性的尊严与光辉。查理在明知结局的情况下，依然坚持记录直至思维涣散，为科学留下数据，并平静地安排后事。这种向死而生的勇气，让整本书的基调超越了悲伤，升华为一种崇高的悲悯。</p>
+<h2 id="书中主人公你是否喜欢，为什么？"><a href="#书中主人公你是否喜欢，为什么？" class="headerlink" title="书中主人公你是否喜欢，为什么？"></a>书中主人公你是否喜欢，为什么？</h2><p>查理的身上有一种贯穿始终的品质：无论处于何种智力状态，他都保有一种向善的、努力的生命力。笨拙时，他努力学习，渴望被爱；聪慧时，他追寻真理，直面伤痛；衰退时，他坦然接受，心怀感恩。他不是一个被动的受害者，而是在每一个阶段都尽力做出选择的“人”。尤其是最后，面对自己智商的退化，他主动前往沃伦之家，并宽恕了一切，这个选择彰显了人性在领悟后所能达到的高度。</p>
+<h2 id="面对现实场景，你如何运用书中观点？"><a href="#面对现实场景，你如何运用书中观点？" class="headerlink" title="面对现实场景，你如何运用书中观点？"></a>面对现实场景，你如何运用书中观点？</h2><p>在学习过程中：学习的终极目标不是为了胜过他人，而是为了理解世界与自我，培育健全的人格；在日常的人际交往中：警惕自己内心可能存在的、基于智力或能力的优越感，以更平等、真诚的态度对待他人，尤其是那些看似“不如”自己的人。理解到每个人都有其独特的生命轨迹与内在价值；在面对挫折时：重要的不是执着于已失去的“太阳”，而是珍视现有的一切，并像查理一样，在力所能及的范围内，保持尊严与善良，完成属于自己的“进步报告”。</p>
+]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>ReadBook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《芯片简史》读书笔记</title>
+    <url>/2025/04/27/%E3%80%8A%E8%8A%AF%E7%89%87%E7%AE%80%E5%8F%B2%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h2 id="为什么要选择这本书，这本书是从什么地方吸引的你"><a href="#为什么要选择这本书，这本书是从什么地方吸引的你" class="headerlink" title="为什么要选择这本书，这本书是从什么地方吸引的你"></a>为什么要选择这本书，这本书是从什么地方吸引的你</h2><p>想着通过这本书能够了解到芯片的起源史，了解到芯片是如何出现并且如何去改变世界的</p>
+<span id="more"></span>
+<p>实际在阅读过程中发现自身其实并不太适合这本书，不算是这本书的目标群体，可能是自身对于史书有着不感兴趣的话题，或许是芯片的历史过于二院化，太过于硬核，在部分CPU介绍中仍会饶有兴趣，但是对于其余芯片的产生以及发展并未过多了解，因此会出现后续的乏味以及为了读而去读。</p>
+<p><strong>开头叠甲：一千个读者便有一千个哈姆雷特，读书笔记为读者在阅读过程中产生的种种思考，因此以下观点可能由于自身理解水平原因，会存在错误的可能，因此仅供探讨</strong></p>
+<h1 id="整体总结介绍"><a href="#整体总结介绍" class="headerlink" title="整体总结介绍"></a>整体总结介绍</h1><p>本书为浙江教育出版社出版的2023年4月第一版图书<br><img data-src="https://ph.917580.xyz/file/4a061807e5f3e212f96b8-dac1557f74f88461da.png" alt="芯片简史" title="芯片简史">（图源豆瓣，侵删）</p>
+<p>这本书从时间的角度以及芯片的发展历程上进行讲述，通过讲述固定某个芯片从无到有，按照时间线来进行描述，为读者大众讲述了芯片的发展历史以及发展过程，了解到了其中的光辉事迹及光辉人物，对整体的芯片发展简史有着较深刻的了解。</p>
+<h1 id="亮点信息"><a href="#亮点信息" class="headerlink" title="亮点信息"></a>亮点信息</h1><h2 id="哪一段对你来讲最意外，为什么？"><a href="#哪一段对你来讲最意外，为什么？" class="headerlink" title="哪一段对你来讲最意外，为什么？"></a>哪一段对你来讲最意外，为什么？</h2><p>了解到硅谷的诞生是由龙头企业中，那些敢于创新，敢于实现研发的一线工作人员，他们为了实现自己心中的想法，离开贝尔或者仙童公司，为了心中的创新开创新的企业，从而带动硅谷地带的高新技术产业繁荣发展。</p>
+<h2 id="哪一些金句是你想要摘抄记录的，为什么？"><a href="#哪一些金句是你想要摘抄记录的，为什么？" class="headerlink" title="哪一些金句是你想要摘抄记录的，为什么？"></a>哪一些金句是你想要摘抄记录的，为什么？</h2><blockquote>
+<p>创新是对主流的偏离、对现有规则的破坏，它刚开始可能非常蹩脚、很难融入主流。几乎没有一项重大创新一出现就广受欢迎。<br>——《芯片简史》 Ⅷ</p>
+</blockquote>
+<p>通过阅读后续故事以及常识可知，往往新事物的诞生总是会遭到旧事物的打压及不看好，但往往便是那些新事物的诞生，创新性的点子，通过破坏现有秩序以及现有工序，从而实现技术飞跃，实现技术跃迁。因此面对新型事物的出现，应当怀揣着一个好奇心去接近去了解，保持探索欲。</p>
+<blockquote>
+<p>个人的失败并不是对自己能力的贬低，而应当将失败看作通往进步的垫脚石，才能激发出更好的创意。对否定的否定，也是一种创新。<br>——《芯片简史》 P51</p>
+<blockquote>
+<p>传统认知将失败视为终点，这句话通过”否定之否定”的哲学框架重构了失败的意义。正如爱因斯坦在改进光电效应实验时的189次失败记录，每个”否定”都在逼近量子理论的突破。这种思维转换本身就是创新方法论的核心——设计思维中的”失败早、失败快”原则正源于此。<br>黑格尔辩证法在创新领域的具象化体现。3M公司发明便利贴的过程完美诠释了这种双重否定：最初失败的弱胶水配方（第一次否定），通过对”失败粘性”的再否定（第二次否定），最终催生出革命性办公产品。这种螺旋上升的认知过程，本质上是在解构既有认知框架的过程中创造新的可能性空间。<br>——DeepSeek评价</p>
+</blockquote>
+</blockquote>
+<p>因此，通往成功的道路上并不总是一番风顺的，难免会遇到挫折，遇到困阻，因此要乐观的面对失败，在失败中寻求通往成功的道路，要相信，每一次失败都是在成功路上迈出的一小步。</p>
+<blockquote>
+<p>创新者总是会遇到窘境，而那些本来最有实力引领未来的企业却往往会因保守而错失良机。<br>——《芯片简史》 P138</p>
+</blockquote>
+<p>在面对一样新型事物，新发现的人往往会因为缺乏外界足够的支持从而短期内陷入无法进一步探究的困境。行业头牌企业，往往汇聚着这个行业的精英人才，他们往往会发现会创新出一件件新兴事物，但是由于公司的规模限制，或要考虑股东董事会的决议，或要考虑新型事物是否会影响公司的基本盘，因此并不会给予新兴事物过大的研发空间，从而使一项突破性的创新从手边溜走。不过由于头牌企业的人数众多，要不论计较的对每个创新项目施加援手，总会由于资源倾斜导致自身基本盘慢慢被他人超越，这对于企业而言（特别是董事会等需要靠公司基本盘营收从而实现分红的一些人），往往会否决新的树枝，仅会在树的主干中寻求突破，寻求发展。（感觉还是得看领导者是否具有独具慧眼，能从千万“马匹”中找出那匹“千里马”。</p>
+<h1 id="对自己的联系"><a href="#对自己的联系" class="headerlink" title="对自己的联系"></a>对自己的联系</h1><h2 id="读完这本书，你的启发是什么？"><a href="#读完这本书，你的启发是什么？" class="headerlink" title="读完这本书，你的启发是什么？"></a>读完这本书，你的启发是什么？</h2><p>通过阅读这本书，了解到了贝尔实验室由于对下属所研究探讨的新型事物没有给予足够的关注，导致没有把握好时代的风口，因此虽然贝尔实验室所研究的内容往往引领时代，但是由于缺乏后续资金的支持，导致逐渐落后于他人。但是实际细想，作为世界前茅的科研实验室，往往会接到各大场所的合作邀请，面对属下的突发奇想，难免会顾此失彼，回顾到整体发展，这似乎是无解的，这会又绕到实验室的管理决策上来，不能因为下属的一个突发奇想，就能倾斜资源与资金过去，这会导致突发奇想的人太多，又会导致其他情况的出现。因此面对一家公司，尤为是一家行业巨头，一个优秀的船长能否在时代巨浪中把好整艘船的舵，就显得尤为重要。</p>
+<p>在P99讲解了随着晶体管的尺寸缩小，漏电变得严重，沿用的平面晶体管结构越来越无法满足需求，出现瓶颈，这时候便需要理论知识的突破，研究创新理论结构，使得工艺更新。因此理论知识与实际操作缺一不可，就犹如专硕与学硕的关系，既要有学硕面向高新技术发起冲锋，研究更加新颖的理论知识，有需要专硕对高新技术加以利用，将理论转化为实践。</p>
+<h2 id="你是否喜欢这本书，为什么？"><a href="#你是否喜欢这本书，为什么？" class="headerlink" title="你是否喜欢这本书，为什么？"></a>你是否喜欢这本书，为什么？</h2><p>还算喜欢，虽然本书并不能算是受众之一，但是仍通过这本书了解到了一定的知识以及一定的有关芯片开发的相关历史。</p>
+<h2 id="与之前的联系"><a href="#与之前的联系" class="headerlink" title="与之前的联系"></a>与之前的联系</h2><p>在本书P87描述的肖克利由于自身管理的不善遭到了队友的抛弃，心灰意冷，这与《心安即是归处》中“知足知不足”观点一致。在这里肖克利完全可以在雇一个专门管理人员的工作人员，一个负责人事工作，其自身负责专门的研发，通过合理的分配自身的优势，从而能更好的带动整个团队向好向善。</p>
+]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>ReadBook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何撰写一篇比较好的读书笔记</title>
+    <url>/2025/03/09/%E5%A6%82%E4%BD%95%E6%92%B0%E5%86%99%E4%B8%80%E7%AF%87%E6%AF%94%E8%BE%83%E5%A5%BD%E7%9A%84%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>想寻找到一个适合自己的读书笔记记录环节，将自己读的书能够有存档一样的记录下来，供日后参考</p>
+<span id="more"></span>
+<p>本次尝试于<a href="https://www.bilibili.com/video/BV1mF41137EC/">B站UP主大罗小罗自习室</a>，通过理解她们所传授的读书笔记撰写方法，去完善自己的知识体系架构，因此在接下来的时间过程中，笔者所看书籍会采用该方式进行实验，观察是否是满足于自身的阅读方式。</p>
+<h1 id="读书笔记的架构"><a href="#读书笔记的架构" class="headerlink" title="读书笔记的架构"></a>读书笔记的架构</h1><h2 id="（个人想法）为什么要选择这本书，这本书是从什么地方吸引的你"><a href="#（个人想法）为什么要选择这本书，这本书是从什么地方吸引的你" class="headerlink" title="（个人想法）为什么要选择这本书，这本书是从什么地方吸引的你"></a>（个人想法）为什么要选择这本书，这本书是从什么地方吸引的你</h2><p>简要几句话进行概括</p>
+<h2 id="整体总结介绍"><a href="#整体总结介绍" class="headerlink" title="整体总结介绍"></a>整体总结介绍</h2><p>简要的几句话，概况这本书讲了什么（从图书标题进行解读、对每一章信息进行总结概括）</p>
+<ul>
+<li>从标题入手</li>
+<li>从各个段落入手<br>总结提炼书中的逻辑</li>
+</ul>
+<h2 id="提取书中的亮点信息"><a href="#提取书中的亮点信息" class="headerlink" title="提取书中的亮点信息"></a>提取书中的亮点信息</h2><ul>
+<li>提取书中的亮点信息<ul>
+<li>问之最（看看最喜欢的情节、最喜欢的任务、最精彩的论证、最意外的事实）<br>  摘抄内容要标注好为什么要摘抄这个，凭据是什么</li>
+</ul>
+</li>
+</ul>
+<h2 id="对自己的联系（找出几个特别的问题）"><a href="#对自己的联系（找出几个特别的问题）" class="headerlink" title="对自己的联系（找出几个特别的问题）"></a>对自己的联系（找出几个特别的问题）</h2><ul>
+<li>对自己的启发<ul>
+<li>同意作者观点吗？为什么</li>
+<li>是否喜欢这本书，为什么</li>
+<li>书中主人公你是否喜欢，为什么</li>
+<li>如何运用书中观点，有何启发</li>
+</ul>
+</li>
+</ul>
+<h2 id="联系之前的书"><a href="#联系之前的书" class="headerlink" title="联系之前的书"></a>联系之前的书</h2><ul>
+<li>联系之前的书</li>
+</ul>
+<h1 id="撰写读书笔记的步骤"><a href="#撰写读书笔记的步骤" class="headerlink" title="撰写读书笔记的步骤"></a>撰写读书笔记的步骤</h1><p>至少在阅读过程中需要有两遍及以上的过程，这里以两遍阅读为例</p>
+<h2 id="第一遍读书：收集素材——“把书读薄”（可以放松标准）"><a href="#第一遍读书：收集素材——“把书读薄”（可以放松标准）" class="headerlink" title="第一遍读书：收集素材——“把书读薄”（可以放松标准）"></a>第一遍读书：收集素材——“把书读薄”（可以放松标准）</h2><ol>
+<li>可用于回答关键问题，例如解释标题的句子</li>
+<li>打动你的“之最”语句<br> 推荐方法：<em>通过贴标签</em> 个人习惯直接打字2333<br> 长标签用于章总结，在页数上面；小标签用于好句子，贴在书侧<br> 主要观点、之最句子、金句积累</li>
+</ol>
+<h2 id="第二遍读书：筛选素材"><a href="#第二遍读书：筛选素材" class="headerlink" title="第二遍读书：筛选素材"></a>第二遍读书：筛选素材</h2><p>根据关键问题再次筛选，找出关键问题与关键词信息</p>
+<h2 id="按照需求进行书写"><a href="#按照需求进行书写" class="headerlink" title="按照需求进行书写"></a>按照需求进行书写</h2>]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>ReadBook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>存放信息</title>
+    <url>/2025/03/11/%E5%AD%98%E6%94%BE%E4%BF%A1%E6%81%AF/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码错误，若不知道密码则可向博主询问" data-whm="这篇文章hash错误, 不过您还是能看看解密后的内容.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="1e147ec65704b086cffcc21c91b556effafc6d997c745f0004da43a1a8c3a5b2">161e74c3aaf9e230c70eebc75f6598e1bfc2ca0cabe0f6bf6e12a37439a0034d16b213598e385c007fd6fd4a10ce622a41210c5a62efe97df9f9ef56bf0a683831ff609de60e9346338efaeac9df02fafa4a00f2a2481ea617100c2b5e5bf648c71e47858bcc280052705f4d3ed90fb2de8e2f96c22756dc9a0ab5e810251bd40e76a472e3673aef0e428652b39a82985e9fa8bfe89aacfabb73d155c385e5ff5eb7c32f13b00ec517f9340930115d5c6044a5c691aac48ea612a50ee1fb13ef361a2506fac4d8362010d04c7e10abe8fe688e4ddef61525710d45bf1bc4f55073f64dd458e7aeeab247a9f58a7635f7b67e6194945a46b1857bd0bef30f3e8b88e99670b13145eb168fdea859a5c101dd551caf95c565b94bb5b95af684361b269c7094904ffeede8bcaa3f1248192256176ede0877baa9c868a364df04ce22e4513c86aad36a727f4127c523f9d9340f031a1c81a05ad86fb3035b671b62bd9831c60dc99e6119a53dff5e942e9351def8ed82ccba105622a82a39d71573c1934b3d5c8004a41caf8743dbae7fae996ddc0affd1dddd3a4cd9f319ffc02aed954f5e2ea37cb9c43b0a00c41ce30c4b100301a4c4afe0740a603f79bc187048ce78eeae07b6d79eb7f35d8739d0c9fce4545554e32cea7c787c015d5cf2b441f8baeb73e4544d74c21aeb816b1ca2c6971c821ee7d7485241b8e51e3a1fa6954d75965234d8f85451d9bc9d0a299ef7570f80fc78e428b16967879aa14dcfa4a988d2447436a570d88dda98d1b51d2252d03adff70e721c0c2cd77746551334d77d5494def943277b18f2bce82c118e7a3664d6ab876b716bbda36e6a5835a49de0cd914de0b7d94f35a0867b9a7c9a6cb17b89326e0001e6942c21c43b2d54d6ff1614018edfd8846ad8598f7fd862f3dafcbfba3c71fb983b250f5fe01e1a84c7d2015af5796a61dcc63de684949796c2a9522c897d38bef13f3cd07111dd6b34bc924a7a2fb5e639d0dbd6fd6b9eafd0de8c180ae8722240bf112da39faa6c55a7c99f4d7a761712ba5a8818d285cf0df6f8f7214527c5065a085a59afa7397c680238683ab07e4b09b9d0a3516473b60531e0d4ba3faba75ce34209dd6a8864ace41a2311308e67c7f9bdfd1456a6594d68e4bf02b5dfa2bce8bad3ce8d97a16a4ac16329ed443c6e6d5a9e1a5b0539becd34eea57d55d2ac9ca0c11d733085e8bc041bdd828a96b05111c5369b759e72adbfbaaa809491ade5731740c4c6079a4503cb7781ec71daac38cff931ff913cb266a6c458572929d5ebe2ee7efeb14840d52e241d65404c1b45b853cd86f9e9aafb5af08a8ae86dfb8adc91d340ccb66f2e3ff4d51f79561795949c7717c6cbf6b2add783531695240ac7e33e</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-wave">
+      <input class="hbe hbe-input-field hbe-input-field-wave" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-wave" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-wave">请输入密码</span>
+      </label>
+      <svg class="hbe hbe-graphic hbe-graphic-wave" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+        <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>
+      </svg>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>Store_info</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搭建Hexo博客平台</title>
+    <url>/2024/12/09/%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这里浅浅记录一下博客平台的创建步骤</p>
+<span id="more"></span>
+
+<h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><ul>
+<li>系统：Windows10家庭版</li>
+<li>Node.js： 22.12.0</li>
+<li>npm：10.9.2</li>
+<li>Hexo-cli：4.3.2</li>
+<li>hexo-theme-next：8.21.1</li>
+</ul>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
+<li><a href="https://hexo.io/zh-cn/docs/">Hexo</a></li>
+<li><a href="https://nodejs.org/zh-cn">Node.js</a></li>
+<li><a href="https://github.com/next-theme/hexo-theme-next">hexo-theme-next</a></li>
+</ul>
+<h1 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h1><h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><ol>
+<li>安装<code>hexo-cli</code>（全局）：<code>npm install -g hexo-cli</code></li>
+<li>创建一个新的文件夹，并确保里面没有任何文件</li>
+<li>初始化<code>hexo</code>。在新文件夹中输入命令：<code>hexo init</code></li>
+<li>安装别的依赖文件：<code>npm install</code></li>
+</ol>
+<h2 id="配置Hexo"><a href="#配置Hexo" class="headerlink" title="配置Hexo"></a>配置Hexo</h2><h3 id="主题安装"><a href="#主题安装" class="headerlink" title="主题安装"></a>主题安装</h3><p>由于之前的博客平台使用的是Next主题，因此进行继承，安装Next主题。</p>
+<p>安装命令：<code>npm install hexo-theme-next</code></p>
+<p>在Hexo的<code>_config.yml</code>文件中找到<code>theme</code>，将其修改为<code>next</code></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure>
+
+<p><em>与通过GitHub下载安装主题包不同的是，通过这个方法安装的主题包，会存储在<code>node_modules</code>这一文件夹下，名字为<code>hexo-theme-next</code>，并不是简单存储在<code>theme/next</code>中</em></p>
+<h3 id="主题配置"><a href="#主题配置" class="headerlink" title="主题配置"></a>主题配置</h3><p>根据之前的博客内容进行整合，同时引入Waline作为评论平台。这里为了篇幅方便不再进行赘述，若想查看详细的配置文件说明移步：<a href="">Next主题配置说明(这是张饼，应该没人想看，没人想看就不更了)</a></p>
+<h3 id="Hexo配置"><a href="#Hexo配置" class="headerlink" title="Hexo配置"></a>Hexo配置</h3><p>同理，根据之前的博客平台信息进行整合，详细配置文件说明移步：<a href="">Hexo配置说明</a></p>
+<h3 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h3><h4 id="搜索插件安装"><a href="#搜索插件安装" class="headerlink" title="搜索插件安装"></a>搜索插件安装</h4><p><a href="https://theme-next.js.org/docs/third-party-services/search-services#Local-Search">教程链接</a></p>
+<p><code>npm install hexo-generator-searchdb</code>安装</p>
+<p>在Hexo配置文件中添加</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">content:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br></pre></td></tr></table></figure>
+
+<p>在Next主题配置文件中添加</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/next-theme/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Show top n results per article, show all results by setting to -1</span></span><br><span class="line">  <span class="attr">top_n_per_article:</span> <span class="number">1</span></span><br><span class="line">  <span class="comment"># Unescape html strings to the readable one.</span></span><br><span class="line">  <span class="attr">unescape:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Preload the search data when the page loads.</span></span><br><span class="line">  <span class="attr">preload:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="博文加密插件安装"><a href="#博文加密插件安装" class="headerlink" title="博文加密插件安装"></a>博文加密插件安装</h4><p><a href="https://github.com/D0n9X1n/hexo-blog-encrypt/blob/master/ReadMe.zh.md">官方教程</a></p>
+<p><code>npm install --save hexo-blog-encrypt</code>输入命令安装</p>
+<p>在Hexo配置文件中添加配置信息：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Security</span></span><br><span class="line"><span class="attr">encrypt:</span> <span class="comment"># hexo-blog-encrypt</span></span><br><span class="line">  <span class="attr">abstract:</span> <span class="string">有东西被加密了,</span> <span class="string">请输入密码查看.</span></span><br><span class="line">  <span class="attr">message:</span> <span class="string">您好,</span> <span class="string">这里需要密码.</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">name:</span> <span class="string">tagName</span>, <span class="attr">password:</span> <span class="string">密码A</span>&#125;</span><br><span class="line">  <span class="bullet">-</span> &#123;<span class="attr">name:</span> <span class="string">tagName</span>, <span class="attr">password:</span> <span class="string">密码B</span>&#125;</span><br><span class="line">  <span class="attr">wrong_pass_message:</span> <span class="string">抱歉,</span> <span class="string">这个密码看着不太对,</span> <span class="string">请再试试.</span></span><br><span class="line">  <span class="attr">wrong_hash_message:</span> <span class="string">抱歉,</span> <span class="string">这个文章不能被校验,</span> <span class="string">不过您还是能看看解密后的内容.</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="npm-warn-deprecated-cuid-2-1-8"><a href="#npm-warn-deprecated-cuid-2-1-8" class="headerlink" title="npm warn deprecated cuid@2.1.8"></a><code>npm warn deprecated cuid@2.1.8</code></h2><p>在更新Hexo版本的时候发现有如下提示：</p>
+<p><code>npm warn deprecated cuid@2.1.8: Cuid and other k-sortable and non-cryptographic ids (Ulid, ObjectId, KSUID, all UUIDs) are all insecure. Use @paralleldrive/cuid2 instead.</code></p>
+<p>经检查后发现是Hexo所使用的<code>cuid</code>模块过时了，通过询问了下GPT，GPT给出的答复是<code>cuid</code>与<code>cuid2</code>相似，但后者更改了有些实现方式，同时查看<a href="https://github.com/paralleldrive/cuid#:~:text=Status%3A%20Deprecated%20due%20to%20security.%20Use%20Cuid2%2C%20instead.">为什么将cuid置于过时</a>，发现原因是可能会造成隐私泄露。但作为一个个人博客系统，没有隐私防护需求😂并且为防止Hexo未进行相关更改，盲目更换依赖包容易导致程序报错为保证Hexo的正常运行emmm，因此决定不管他 </p>
+<h2 id="Next主题的两个仓库问题"><a href="#Next主题的两个仓库问题" class="headerlink" title="Next主题的两个仓库问题"></a>Next主题的两个仓库问题</h2><blockquote>
+<p>简单来说，问题就是 theme-next 团队的 owner - Ivan Nginx 始终拒绝向其它任何团队成员提供足够的权限，且 owner 本人自 2019 年 10 月起已连续半年不在线，导致其它活跃的团队成员无法管理仓库，也无法邀请新的成员。<br>由于对 theme-next 团队的未来不抱有期望，我作为 theme-next 的主要贡献者，自 2020 年 4 月起停止为旧的仓库贡献代码，并创建了新的组织，以确保维护工作正常进行。</p>
+<p><a href="https://github.com/next-theme/hexo-theme-next/issues/4#issuecomment-626205848">https://github.com/next-theme/hexo-theme-next/issues/4#issuecomment-626205848</a></p>
+</blockquote>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2>]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决代码冲突小记</title>
+    <url>/2025/06/30/%E8%A7%A3%E5%86%B3%E4%BB%A3%E7%A0%81%E5%86%B2%E7%AA%81%E5%B0%8F%E8%AE%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前情摘要"><a href="#前情摘要" class="headerlink" title="前情摘要"></a>前情摘要</h1><p>最近在编写工作用偷懒小代码，仓库项目存在两个分支， <code>dev</code> 与 <code>master</code> 分支，由于无聊且想要熟悉下Git的使用技巧，因此对 <code>master</code> 分支设置了分支保护，至此，本篇<del>水文</del>出现。</p>
+<span id="more"></span>
+
+
+<h1 id="详细描述……"><a href="#详细描述……" class="headerlink" title="详细描述……"></a>详细描述……</h1><h2 id="分支保护的愁与泪"><a href="#分支保护的愁与泪" class="headerlink" title="分支保护的愁与泪"></a>分支保护的愁与泪</h2><p>由于开启了分支保护，所以通过使用Git命令无法直接push到 <code>master</code> 分支，因此，所有的更改都需要通过先推送到 <code>dev</code> 分支，由 <code>dev</code> 分支发起PR请求后才能将代码合并到 <code>master</code> 分支，但是常规PR解决都是最终要推送master分支上的，（可能是我孤陋寡闻，或者Gitee是这么推荐的。。。），由于分支保护，因此此条路径不通，遂问DeepSeek。</p>
+<h2 id="DeepSeek问询语"><a href="#DeepSeek问询语" class="headerlink" title="DeepSeek问询语"></a>DeepSeek问询语</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">现在存在问题：dev分支代码是最新的，master分支代码是老代码，现在dev分支代码PR推送master分支存在冲突，并且master分支有分支保护（不能通过直接push推送到该分支，只能通过PR进行合并），如何进行解决如何进行更新解决该冲突。</span><br></pre></td></tr></table></figure>
+
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><ol>
+<li>拉取最新代码到本地 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 切换到master分支并拉取最新代码</span></span><br><span class="line">git checkout master</span><br><span class="line">git pull origin master</span><br><span class="line"><span class="comment"># 切换回dev分支</span></span><br><span class="line">git checkout dev</span><br></pre></td></tr></table></figure></li>
+<li>将master合并到dev分支（<strong>解决冲突的核心步骤</strong>） <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在dev分支合并master的更新</span></span><br><span class="line">git merge master</span><br></pre></td></tr></table></figure>
+ 此时会出现冲突提示（类似 <code>CONFLICT (content): Merge conflict in &lt;文件名&gt;</code>）</li>
+<li>解决冲突<br> 选择保留需要的代码（或合并两者），删除 <code> &lt;&lt;&lt;&lt;&lt;&lt;&lt;/=======/&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> 标记<br> 对每个冲突文件重复此操作</li>
+<li>提交合并结果并推送远端分支 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 标记冲突已解决</span></span><br><span class="line">git add &lt;解决后的文件&gt;  <span class="comment"># 或 git add . 添加所有</span></span><br><span class="line"><span class="comment"># 提交合并结果（不要修改默认信息）</span></span><br><span class="line">git commit -m <span class="string">&quot;Merge master into dev to resolve PR conflicts&quot;</span></span><br><span class="line">git push origin dev</span><br></pre></td></tr></table></figure>
+ 这会自动更新已有的PR（PR会实时跟踪dev分支的新提交）</li>
+<li>完成PR合并请求<br> 之后便可在平台上对已有PR进行后续操作</li>
+</ol>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="继续问询"><a href="#继续问询" class="headerlink" title="继续问询"></a>继续问询</h2><p>由于Gitee的教学是本地解决master分支代码冲突问题，因此又好奇问了一下DS，DS讲述如下：</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>你提到的命令序列</th>
+<th>推荐的解决方案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>目标</strong></td>
+<td>直接修改master分支</td>
+<td>通过PR合规更新</td>
+</tr>
+<tr>
+<td><strong>操作位置</strong></td>
+<td>在master分支操作</td>
+<td>在dev分支操作</td>
+</tr>
+<tr>
+<td><strong>合规性</strong></td>
+<td>❌ 违反分支保护策略</td>
+<td>✅ 符合分支保护策略</td>
+</tr>
+<tr>
+<td><strong>冲突解决</strong></td>
+<td>在本地master解决</td>
+<td>在dev分支解决</td>
+</tr>
+<tr>
+<td><strong>推送目标</strong></td>
+<td>直接推master</td>
+<td>推dev分支更新PR</td>
+</tr>
+<tr>
+<td><strong>团队协作</strong></td>
+<td>破坏协作流程</td>
+<td>保持完整PR流程</td>
+</tr>
+<tr>
+<td><strong>审计历史</strong></td>
+<td>绕过代码审查</td>
+<td>保留PR审查记录</td>
+</tr>
+</tbody></table>
+<p>Gitee …… 6</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>鸣谢DeepSeek</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>魔改Editor.md</title>
+    <url>/2025/03/09/%E9%AD%94%E6%94%B9Editor.md/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于想要使用Editor.md作为自己博客和日常写作的markdown编写工具（主要是可以实时网页端打开真的很好）</p>
+<p>所以编写该教程，记录自己的魔改过程</p>
+<span id="more"></span>
+
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.debuggerx.com/2020/11/08/an-awesome-markdown-editor-for-hexo/">为博客加入一个好用的在线MD编辑工具</a></p>
+<h1 id="魔改阶段"><a href="#魔改阶段" class="headerlink" title="魔改阶段"></a>魔改阶段</h1><h2 id="涉及方向"><a href="#涉及方向" class="headerlink" title="涉及方向"></a>涉及方向</h2><p>本次魔改主要涉及如下几个方面：</p>
+<ul>
+<li>通过使用<code>LocalStorage</code>实现自动保存功能  </li>
+<li>通过使用<code>HTML5</code>上的<code>File System Access API</code>功能实现对本地文件的打开与保存</li>
+<li>实现模板化文档编写，简化编写特定文档的繁琐流程</li>
+</ul>
+<h2 id="实现内容"><a href="#实现内容" class="headerlink" title="实现内容"></a>实现内容</h2><p>通过对项目目录下的<code>index.html</code>文件进行相关修改，最终实现所需要功能。由于对JS编写着实小白，因此不便描述具体信息，详情代码可参考：<a href="https://github.com/ZHYCarge/mdw">https://github.com/ZHYCarge/mdw</a></p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="后续进展"><a href="#后续进展" class="headerlink" title="后续进展"></a>后续进展</h2><p>根据后续要求，尝试实现对复制图片或上传图片自动上传图床（但是怕被薅羊毛，因此在斟酌是否实现）</p>
+<h2 id="鸣谢"><a href="#鸣谢" class="headerlink" title="鸣谢"></a>鸣谢</h2><p>由于本人对前端JS的不甚了解，因此鸣谢在二次修改过程中的遇到的各种笔记以及各种辅助</p>
+<ul>
+<li><a href="https://github.com/pandao/editor.md/">原项目</a></li>
+<li><a href="https://www.debuggerx.com/2020/11/08/an-awesome-markdown-editor-for-hexo/">为博客加入一个好用的在线MD编辑工具</a></li>
+<li><a href="https://www.deepseek.com/">DeepSeek</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>Editor.md</tag>
+      </tags>
+  </entry>
+</search>

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhycarge.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言最近想研究一下关于OpenSSL的相关知识，顺便想创建自己的一个根CA方便后续进行个人项目的各种证书签发工作。因此打算编写一份关于OpenSSL的专题，记录一下它的相关使用方法，为后续使用做准备。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenSSL之创建根证书">
+<meta property="og:url" content="https://zhycarge.github.io/2024/12/18/OpenSSL%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%A0%B9%E8%AF%81%E4%B9%A6/index.html">
+<meta property="og:site_name" content="ZHYCarge的个人博客">
+<meta property="og:description" content="前言最近想研究一下关于OpenSSL的相关知识，顺便想创建自己的一个根CA方便后续进行个人项目的各种证书签发工作。因此打算编写一份关于OpenSSL的专题，记录一下它的相关使用方法，为后续使用做准备。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-12-18T16:12:49.000Z">
+<meta property="article:modified_time" content="2025-12-19T15:55:39.000Z">
+<meta property="article:author" content="ZHYCarge">
+<meta property="article:tag" content="OpenSSL">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhycarge.github.io/2024/12/18/OpenSSL%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%A0%B9%E8%AF%81%E4%B9%A6/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhycarge.github.io/2024/12/18/OpenSSL%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%A0%B9%E8%AF%81%E4%B9%A6/","path":"2024/12/18/OpenSSL之创建根证书/","title":"OpenSSL之创建根证书"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OpenSSL之创建根证书 | ZHYCarge的个人博客</title>
+  
+
+
+
+
+
+
+
+<link rel="dns-prefetch" href="commit.waline.zhycarge.top">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ZHYCarge的个人博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-bings"><a href="/bings/" rel="section"><i class="fa  fa-search fa-fw"></i>必应一下</a></li><li class="menu-item menu-item-friends_links"><a href="/friends-links/" rel="section"><i class="fa fa-scroll-torah fa-fw"></i>友人帐</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFOpenSSL%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">什么是OpenSSL？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E"><span class="nav-number">1.2.</span> <span class="nav-text">版本说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%93%E9%A2%98%E8%B7%B3%E8%BD%AC"><span class="nav-number">1.3.</span> <span class="nav-text">专题跳转</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E6%A0%B9%E8%AF%81%E4%B9%A6%EF%BC%88%E5%BF%AB%E6%8D%B7%E6%8C%87%E4%BB%A4%E7%89%88%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">创建属于自己的根证书（快捷指令版）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E6%A0%B9%E8%AF%81%E4%B9%A6%EF%BC%88%E4%B8%80%E6%AD%A5%E6%AD%A5%E6%93%8D%E4%BD%9C%E7%89%88%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">创建属于自己的根证书（一步步操作版）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E7%9B%AE%E5%BD%95%E6%96%87%E4%BB%B6"><span class="nav-number">3.1.</span> <span class="nav-text">生成目录文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3"><span class="nav-number">3.2.</span> <span class="nav-text">配置文件详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CA%E5%A4%B4"><span class="nav-number">3.2.1.</span> <span class="nav-text">CA头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%81%E4%B9%A6%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.2.</span> <span class="nav-text">证书配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%81%E4%B9%A6%E8%A7%84%E5%88%99%E5%8C%B9%E9%85%8D"><span class="nav-number">3.2.3.</span> <span class="nav-text">证书规则匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%81%E4%B9%A6%E7%94%9F%E6%88%90%E5%8F%82%E6%95%B0"><span class="nav-number">3.2.4.</span> <span class="nav-text">证书生成参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%81%E4%B9%A6%E5%8F%82%E6%95%B0%E4%BF%A1%E6%81%AF"><span class="nav-number">3.2.5.</span> <span class="nav-text">证书参数信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E8%AF%81%E4%B9%A6%E7%AD%BE%E5%8F%91%E5%8F%82%E6%95%B0"><span class="nav-number">3.2.6.</span> <span class="nav-text">根证书签发参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E8%AF%81%E4%B9%A6%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">3.2.7.</span> <span class="nav-text">中间证书配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%81%E4%B9%A6%E5%90%8A%E9%94%80%E5%88%97%E8%A1%A8%E5%8F%82%E6%95%B0"><span class="nav-number">3.2.8.</span> <span class="nav-text">证书吊销列表参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#keyUsage%E8%AE%B2%E8%A7%A3"><span class="nav-number">3.2.9.</span> <span class="nav-text">keyUsage讲解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#extendedKeyUsage%E8%AE%B2%E8%A7%A3"><span class="nav-number">3.2.10.</span> <span class="nav-text">extendedKeyUsage讲解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#authorityInfoAccess%E8%AE%B2%E8%A7%A3"><span class="nav-number">3.2.11.</span> <span class="nav-text">authorityInfoAccess讲解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%A0%B9%E8%AF%81%E4%B9%A6%E7%A7%81%E9%92%A5"><span class="nav-number">3.3.</span> <span class="nav-text">创建根证书私钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%A0%B9%E8%AF%81%E4%B9%A6%E7%9A%84%E7%AD%BE%E5%90%8D%E8%AF%B7%E6%B1%82"><span class="nav-number">3.4.</span> <span class="nav-text">生成根证书的签名请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%BE%E5%8F%91CA%E8%AF%81%E4%B9%A6"><span class="nav-number">3.5.</span> <span class="nav-text">签发CA证书</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BD%99%E6%93%8D%E4%BD%9C%E4%BB%8B%E7%BB%8D"><span class="nav-number">4.</span> <span class="nav-text">其余操作介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%AD%BE%E5%8F%91%E8%AF%81%E4%B9%A6%E6%83%85%E5%86%B5"><span class="nav-number">4.1.</span> <span class="nav-text">查看签发证书情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0crl%E4%BF%A1%E6%81%AF"><span class="nav-number">4.2.</span> <span class="nav-text">添加crl信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%92%A4%E9%94%80%E8%AF%81%E4%B9%A6"><span class="nav-number">4.2.1.</span> <span class="nav-text">撤销证书</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%BE%E8%A8%80"><span class="nav-number">5.</span> <span class="nav-text">尾言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%96%91%E9%9A%BE%E6%9D%82%E7%97%87"><span class="nav-number">5.1.</span> <span class="nav-text">疑难杂症</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-mandatory-stateOrProvinceName-field-was-missing"><span class="nav-number">5.1.1.</span> <span class="nav-text">The mandatory stateOrProvinceName field was missing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E6%B3%95%E5%88%9B%E5%BB%BA%E6%9C%89%E6%95%88%E7%9A%84%E8%AF%81%E4%B9%A6%E9%93%BE"><span class="nav-number">5.1.2.</span> <span class="nav-text">无法创建有效的证书链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%9C%A8%E7%96%91%E9%97%AE%E4%BF%A1%E6%81%AF"><span class="nav-number">5.1.3.</span> <span class="nav-text">存在疑问信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%A0%E8%B4%B4%E8%87%AA%E5%B7%B1%E7%9A%84%E6%A0%B9%E8%AF%81%E4%B9%A6"><span class="nav-number">5.2.</span> <span class="nav-text">张贴自己的根证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E"><span class="nav-number">5.3.</span> <span class="nav-text">更新说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2024-12-20-13-41-34"><span class="nav-number">5.3.1.</span> <span class="nav-text">2024-12-20 13:41:34</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2025-12-19-23-48-34"><span class="nav-number">5.3.2.</span> <span class="nav-text">2025-12-19 23:48:34</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">5.4.</span> <span class="nav-text">参考链接</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZHYCarge"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">ZHYCarge</p>
+  <div class="site-description" itemprop="description">总是要留下些什么</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZHYCarge" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="ZHYCarge:ZHYCarge@zhycarge.top" title="E-Mail → ZHYCarge:ZHYCarge@zhycarge.top" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://github.com/ZHYCarge/BLOG_BACKEND/new/master/source/_posts" title="https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge&#x2F;BLOG_BACKEND&#x2F;new&#x2F;master&#x2F;source&#x2F;_posts" rel="noopener" target="_blank">新建一篇文章</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhycarge.github.io/2024/12/18/OpenSSL%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%A0%B9%E8%AF%81%E4%B9%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ZHYCarge">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZHYCarge的个人博客">
+      <meta itemprop="description" content="总是要留下些什么">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OpenSSL之创建根证书 | ZHYCarge的个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenSSL之创建根证书<a href="https://github.com/ZHYCarge/BLOG_BACKEND/blob/master/source/_posts/OpenSSL%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%A0%B9%E8%AF%81%E4%B9%A6.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-12-19 00:12:49" itemprop="dateCreated datePublished" datetime="2024-12-19T00:12:49+08:00">2024-12-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-12-19 23:55:39" itemprop="dateModified" datetime="2025-12-19T23:55:39+08:00">2025-12-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2024/12/18/OpenSSL%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%A0%B9%E8%AF%81%E4%B9%A6/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2024/12/18/OpenSSL%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%A0%B9%E8%AF%81%E4%B9%A6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>11 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近想研究一下关于OpenSSL的相关知识，顺便想创建自己的一个根CA方便后续进行个人项目的各种证书签发工作。因此打算编写一份关于OpenSSL的专题，记录一下它的相关使用方法，为后续使用做准备。</p>
+<span id="more"></span>
+
+<p>所有操作均未考虑权限管理，如需引入权限管理，请移步<a href="(https://www.cnblogs.com/sparkdev/p/10369313.html)">^重点教程</a></p>
+<h2 id="什么是OpenSSL？"><a href="#什么是OpenSSL？" class="headerlink" title="什么是OpenSSL？"></a>什么是OpenSSL？</h2><blockquote>
+<p>在<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">计算机网络</a>上，<strong>OpenSSL</strong>是一个<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%96%8B%E6%94%BE%E5%8E%9F%E5%A7%8B%E7%A2%BC">开放源代码</a>的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%BB%9F%E9%AB%94">软件</a><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%87%BD%E5%BC%8F%E5%BA%AB">函数库</a>包，应用程序可以使用这个包来进行安全通信，避免窃听，同时确认另一端连线者的身份。这个包广泛被应用在互联网的网页服务器上。</p>
+<p>–<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/OpenSSL">OpenSSL</a></p>
+</blockquote>
+<h2 id="版本说明"><a href="#版本说明" class="headerlink" title="版本说明"></a>版本说明</h2><ul>
+<li>OpenSSL版本为3.0.13</li>
+</ul>
+<h2 id="专题跳转"><a href="#专题跳转" class="headerlink" title="专题跳转"></a>专题跳转</h2><ul>
+<li><a href="https://zhycarge.github.io/tags/OpenSSL/">OpenSSL系列文章</a></li>
+</ul>
+<h1 id="创建属于自己的根证书（快捷指令版）"><a href="#创建属于自己的根证书（快捷指令版）" class="headerlink" title="创建属于自己的根证书（快捷指令版）"></a>创建属于自己的根证书（快捷指令版）</h1><p>这里记录着所有所需要的命令，如果想无脑用，则可以直接CV进行使用，如果想要了解更多有关的知识信息，那么请跳过该章节，跳转到<a href="#%E5%88%9B%E5%BB%BA%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E6%A0%B9%E8%AF%81%E4%B9%A6%EF%BC%88%E4%B8%80%E6%AD%A5%E6%AD%A5%E6%93%8D%E4%BD%9C%E7%89%88%EF%BC%89">创建属于自己的根证书（一步步操作版）</a></p>
+<p>以下操作默认证书存放为当前地址。</p>
+<p>创建<code>root.sh</code>文件，并在里面输入如下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># 创建根证书所需要的全部文件信息</span></span><br><span class="line"><span class="comment"># 创建签发证书位置</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d RootCA/crt ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p RootCA/crt</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 创建根证书数据文件点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d RootCA/db ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p RootCA/db</span><br><span class="line">    <span class="built_in">touch</span> RootCA/db/index</span><br><span class="line">    openssl rand -hex 16 &gt; RootCA/db/serial</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 创建密钥存放点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d RootCA/key ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p RootCA/key</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 【总】创建过期证书生成点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d ./crl ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p ./crl</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 创建根证书新证书记录存放点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d RootCA/newcerts ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p RootCA/newcerts</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 【总】创建根证书、中间证书存放密钥点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d ./KEY ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p ./KEY</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 【总】创建根证书、中间证书配置点</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d ./conf ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">mkdir</span> -p ./conf</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>运行命令：<code>./root.sh</code></p>
+<p>创建根证书配置文件<code>touch ./conf/RootCA.cnf</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line"># OpenSSL example configuration file.</span><br><span class="line"># See doc/man5/config.pod for more info.</span><br><span class="line">#</span><br><span class="line"># 整个项目的根目录，默认为当下</span><br><span class="line">HOME			= .</span><br><span class="line"></span><br><span class="line">####################################################################</span><br><span class="line">[ ca ]</span><br><span class="line">default_ca	= CA_default		# The default ca section</span><br><span class="line"></span><br><span class="line">####################################################################</span><br><span class="line">[ CA_default ]</span><br><span class="line">dir = ./RootCA</span><br><span class="line">database	= $dir/db/index.txt	# 数据文件存放点(必要)</span><br><span class="line">new_certs_dir	= $dir/newcerts		# 存放新证书 （必要）</span><br><span class="line">private_key	= ./KEY/RootCA.key # 私钥地址 (必要)</span><br><span class="line">serial		= $dir/db/serial 		# 当前序列号(必要)</span><br><span class="line">certificate = $dir/crt/RootCA.crt # 根证书签发文件位置</span><br><span class="line">name_opt 	= ca_default		# Subject Name options</span><br><span class="line">cert_opt 	= ca_default		# Certificate field options</span><br><span class="line">crl_extensions = crl_ext    # 添加撤销证书功能</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">default_days	= 365			# 默认天数</span><br><span class="line">default_crl_days= 30			# 默认30天获取撤销证书信息</span><br><span class="line">default_md	= sha256		# 公钥默认加密方式</span><br><span class="line">preserve	= no			# keep passed DN ordering</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">policy		= policy_match</span><br><span class="line"></span><br><span class="line"># For the CA policy</span><br><span class="line">[ policy_match ]</span><br><span class="line">countryName		= match</span><br><span class="line">stateOrProvinceName	= match</span><br><span class="line">organizationName	= match</span><br><span class="line">organizationalUnitName	= optional</span><br><span class="line">commonName		= supplied</span><br><span class="line">emailAddress		= optional</span><br><span class="line"></span><br><span class="line">[ policy_anything ]</span><br><span class="line">countryName		= optional</span><br><span class="line">stateOrProvinceName	= optional</span><br><span class="line">localityName		= optional</span><br><span class="line">organizationName	= optional</span><br><span class="line">organizationalUnitName	= optional</span><br><span class="line">commonName		= supplied</span><br><span class="line">emailAddress		= optional</span><br><span class="line"></span><br><span class="line">####################################################################</span><br><span class="line">[ req ]</span><br><span class="line">default_bits		= 2048</span><br><span class="line">prompt = no</span><br><span class="line">distinguished_name	= req_distinguished_name</span><br><span class="line">x509_extensions	= v3_ca	# The extensions to add to the self signed cert</span><br><span class="line">string_mask = pkix</span><br><span class="line"></span><br><span class="line">[ req_distinguished_name ]</span><br><span class="line">C = CN</span><br><span class="line">ST   = TianJin</span><br><span class="line">L    = TJ</span><br><span class="line">O    = ROOT</span><br><span class="line">OU   = Root CA</span><br><span class="line">CN   = Root CA</span><br><span class="line">emailAddress   = ZHYCarge@zhycarge.top</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[ v3_ca ]</span><br><span class="line">subjectKeyIdentifier=hash</span><br><span class="line">authorityKeyIdentifier=keyid:always,issuer</span><br><span class="line">basicConstraints = critical,CA:true</span><br><span class="line">keyUsage = critical, keyCertSign, cRLSign, digitalSignature</span><br><span class="line">crlDistributionPoints = URI:http://ca.zhycarge.top/crl/crl-Root.crl</span><br><span class="line"></span><br><span class="line">[ v3_Web_ca ]</span><br><span class="line">subjectKeyIdentifier = hash</span><br><span class="line">authorityKeyIdentifier = keyid:always,issuer</span><br><span class="line">basicConstraints = critical, CA:true, pathlen:0</span><br><span class="line">keyUsage = critical, digitalSignature, cRLSign, keyCertSign, keyEncipherment</span><br><span class="line">extendedKeyUsage = serverAuth</span><br><span class="line">authorityInfoAccess=caIssuers;URI:http://ca.zhycarge.top/crt/ZHYCargeRootCA.crt</span><br><span class="line">crlDistributionPoints = URI:http://ca.zhycarge.top/crl/crl-Root.crl</span><br><span class="line"></span><br><span class="line">[ crl_ext ]</span><br><span class="line">authorityKeyIdentifier=keyid:always</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>生成根证书私钥：</p>
+<p><code>openssl genrsa -aes256 -out KEY/RootCA.key 4096</code></p>
+<p>生成根证书签名请求：</p>
+<p><code>openssl req -new -config ./conf/RootCA.cnf -sha256 -key /KEY/RootCA.key -out ./RootCA/csr/RootCA.csr</code></p>
+<p>签发证书：</p>
+<p><code>openssl ca -selfsign -config ./conf/RootCA.cnf -in ./RootCA/csr/RootCA.csr -extensions v3_ca -days 365 -out ./RootCA/crt/RootCA.crt</code></p>
+<p>至此证书无脑化生成完毕。</p>
+<h1 id="创建属于自己的根证书（一步步操作版）"><a href="#创建属于自己的根证书（一步步操作版）" class="headerlink" title="创建属于自己的根证书（一步步操作版）"></a>创建属于自己的根证书（一步步操作版）</h1><p>此处记录着详细的生成操作，供了解学习。</p>
+<h2 id="生成目录文件"><a href="#生成目录文件" class="headerlink" title="生成目录文件"></a>生成目录文件</h2><p>参考上文<code>root.sh</code>文件的创建方式以及生成目录文件，这里不再进行赘述 <a href="#%E5%88%9B%E5%BB%BA%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E6%A0%B9%E8%AF%81%E4%B9%A6%EF%BC%88%E5%BF%AB%E6%8D%B7%E6%8C%87%E4%BB%A4%E7%89%88%EF%BC%89">创建属于自己的根证书（快捷指令版）</a></p>
+<h2 id="配置文件详解"><a href="#配置文件详解" class="headerlink" title="配置文件详解"></a>配置文件详解</h2><p>在<code>conf</code>文件夹中创建<code>RootCA.cnf</code>文件，并依次添加如下代码框中的内容：</p>
+<h3 id="CA头"><a href="#CA头" class="headerlink" title="CA头"></a>CA头</h3><p>没什么可以讲解的，默认配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line"># OpenSSL example configuration file.</span><br><span class="line"># See doc/man5/config.pod for more info.</span><br><span class="line">#</span><br><span class="line"># 整个项目的根目录，默认为当下</span><br><span class="line">HOME			= .</span><br><span class="line">####################################################################</span><br><span class="line">[ ca ]</span><br><span class="line">default_ca	= CA_default		# The default ca section</span><br><span class="line">####################################################################</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书配置"><a href="#证书配置" class="headerlink" title="证书配置"></a>证书配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[ CA_default ]</span><br><span class="line">dir = ./RootCA # 与证书配套的配置文件夹</span><br><span class="line">database	= $dir/db/index.txt	# 证书签发记录数据库</span><br><span class="line">new_certs_dir	= $dir/newcerts		# 存放生成证书签名信息</span><br><span class="line">private_key	= ./KEY/RootCA.key # 当前证书私钥地址</span><br><span class="line">serial		= $dir/db/serial 		# 生成随机数，根据随机数进行索引记录</span><br><span class="line">certificate = $dir/crt/RootCA.crt # 当前证书签发文件位置</span><br><span class="line">name_opt 	= ca_default		# 默认</span><br><span class="line">cert_opt 	= ca_default		# 默认</span><br><span class="line">crl_extensions = crl_ext    # 添加撤销证书功能，与后续功能块联动</span><br><span class="line">default_days	= 365			# 默认证书天数</span><br><span class="line">default_crl_days= 30			# 默认更新撤销证书实践</span><br><span class="line">default_md	= sha256		# 私钥默认加密方式</span><br><span class="line">preserve	= no			# 不知道，暂存</span><br><span class="line">policy		= policy_match  # 证书创建规则匹配，与后续功能块联动</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书规则匹配"><a href="#证书规则匹配" class="headerlink" title="证书规则匹配"></a>证书规则匹配</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># For the CA policy</span><br><span class="line"># 前三个match 要求签发证书与当前CA一致，optional为可选项，supplied会在创建时进行输入</span><br><span class="line">[ policy_match ]</span><br><span class="line">countryName		= match</span><br><span class="line">stateOrProvinceName	= match</span><br><span class="line">organizationName	= match</span><br><span class="line">organizationalUnitName	= optional</span><br><span class="line">commonName		= supplied</span><br><span class="line">emailAddress		= optional</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书生成参数"><a href="#证书生成参数" class="headerlink" title="证书生成参数"></a>证书生成参数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[ req ]</span><br><span class="line">default_bits = 2048 # 证书加密位数</span><br><span class="line">prompt = no # 不需要显示提示信息，直接按照参数信息进行键入CN信息等</span><br><span class="line">distinguished_name	= req_distinguished_name # 参数信息，后面功能块联动</span><br><span class="line">x509_extensions	= v3_ca	# The extensions to add to the self signed cert # 签发证书参数，后面功能块联动</span><br><span class="line">string_mask = pkix	# 如果是utf8only，则键入英文可能会出现证书规则匹配错误，具体查看后面疑难杂症章节</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书参数信息"><a href="#证书参数信息" class="headerlink" title="证书参数信息"></a>证书参数信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[ req_distinguished_name ]</span><br><span class="line">C = CN	# 国家代码，默认2位</span><br><span class="line">ST   = TianJin	# 所在州省</span><br><span class="line">L    = TJ	# 所在市 </span><br><span class="line">O    = ZHYCarge	# 组织名称</span><br><span class="line">OU   = ZHYCarge Root CA	# 组织唯一名称</span><br><span class="line">CN   = ZHYCarge Root CA	# 通用名称，要求唯一</span><br><span class="line">emailAddress   = ZHYCarge@zhycarge.top	# 邮箱地址</span><br></pre></td></tr></table></figure>
+
+<h3 id="根证书签发参数"><a href="#根证书签发参数" class="headerlink" title="根证书签发参数"></a>根证书签发参数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[ v3_ca ]</span><br><span class="line">subjectKeyIdentifier=hash	# 加密方式</span><br><span class="line">authorityKeyIdentifier=keyid:always,issuer # 参数存储</span><br><span class="line">basicConstraints = critical,CA:true	# 是CA签发机构，能继续签发证书，若FALSE则为终端证书，不允许签发</span><br><span class="line">keyUsage = critical, keyCertSign, cRLSign, digitalSignature	# 证书用途，后续章节疑难解答详细说明</span><br><span class="line">crlDistributionPoints = URI:http://ca.zhycarge.top/crl/crl-Root.crl	# 证书吊销地址，后续疑难解答有详细说明</span><br></pre></td></tr></table></figure>
+
+<h3 id="中间证书配置文件"><a href="#中间证书配置文件" class="headerlink" title="中间证书配置文件"></a>中间证书配置文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[ v3_Web_ca ] # 名称随意，后续创建中间证书会用上</span><br><span class="line">subjectKeyIdentifier = hash	# 与根证书同</span><br><span class="line">authorityKeyIdentifier = keyid:always,issuer # 与根证书同</span><br><span class="line">basicConstraints = critical, CA:true, pathlen:0	# pathlen代表签发证书无限制，默认就是0</span><br><span class="line">keyUsage = critical, digitalSignature, cRLSign, keyCertSign, keyEncipherment	# 与根证书同</span><br><span class="line">extendedKeyUsage = serverAuth	# 额外证书用途，后续有详细讲解</span><br><span class="line">authorityInfoAccess=caIssuers;URI:http://ca.zhycarge.top/crt/ZHYCargeRootCA.crt	# 指向根证书地址，后续详细讲解</span><br><span class="line">crlDistributionPoints = URI:http://ca.zhycarge.top/crl/crl-Root.crl	# 与根证书同</span><br></pre></td></tr></table></figure>
+
+<h3 id="证书吊销列表参数"><a href="#证书吊销列表参数" class="headerlink" title="证书吊销列表参数"></a>证书吊销列表参数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[ crl_ext ]</span><br><span class="line">authorityKeyIdentifier=keyid:always	# 与根证书同</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="keyUsage讲解"><a href="#keyUsage讲解" class="headerlink" title="keyUsage讲解"></a><code>keyUsage</code>讲解</h3><p>扩展用于指明证书的基本用途。可以包含多个值，常见的选项有：</p>
+<ul>
+<li><code>digitalSignature</code> 用于数字签名（如 SSL&#x2F;TLS 握手、代码签名等）</li>
+<li><code>nonRepudiation</code>用于非否认性（证明某个操作已被执行）</li>
+<li><code>keyEncipherment</code>用于密钥加密（例如，保护会话密钥）</li>
+<li><code>dataEncipherment</code>用于数据加密（加密实际数据）</li>
+<li><code>keyAgreement</code>用于密钥协商（如 Diffie-Hellman）</li>
+<li><code>keyCertSign</code>用于签署其他证书（CA 证书）</li>
+<li><code>cRLSign</code>用于签署证书撤销列表（CRL）</li>
+<li><code>encipherOnly</code>用于仅加密操作</li>
+<li><code>decipherOnly</code>用于仅解密操作</li>
+</ul>
+<h3 id="extendedKeyUsage讲解"><a href="#extendedKeyUsage讲解" class="headerlink" title="extendedKeyUsage讲解"></a><code>extendedKeyUsage</code>讲解</h3><p>扩展用于指明证书的扩展用途，可以包含多个值，常见的选项有：</p>
+<ul>
+<li><code>serverAuth</code>用于服务器身份验证</li>
+<li><code>clientAuth</code>用于客户端身份验证</li>
+<li><code>codeSigning</code>用于代码签名</li>
+<li><code>emailProtection</code>用于电子邮件保护（S&#x2F;MIME）</li>
+<li><code>timeStamping</code>用于时间戳服务</li>
+<li><code>OCSPSigning</code>用于在线证书状态协议（OCSP）签名</li>
+<li><code>ipsecEndSystem</code>用于 IPsec 终端</li>
+<li><code>ipsecTunnel</code>用于 IPsec 隧道</li>
+<li><code>ipsecUser</code>用于 IPsec 用户</li>
+<li><code>anyExtendedKeyUsage</code>表示可以用于任何扩展用途</li>
+</ul>
+<h3 id="authorityInfoAccess讲解"><a href="#authorityInfoAccess讲解" class="headerlink" title="authorityInfoAccess讲解"></a><code>authorityInfoAccess</code>讲解</h3><p><code>authorityInfoAccess</code>(AIA) 是 X.509 证书中的一个扩展，用于提供证书颁发机构（CA）信息的访问方法。这一扩展可以帮助用户或应用程序获取有关证书的更多信息，例如证书的撤销状态或颁发者的证书。</p>
+<p>通常配置文件:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">authorityInfoAccess = critical</span><br><span class="line">    CAIssuers;URI:http://ca.example.com/ca.crt,</span><br><span class="line">    OCSP;URI:http://ocsp.example.com</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>critical</code> ：表示该扩展是关键的，如果接收方不支持这一扩展，可能会拒绝该证书。</li>
+<li><code>CAIssuers</code>：指向 CA 证书的 URL，客户端可以通过该 URL 获取 CA 的证书。</li>
+<li><code>OCSP</code>：指向在线证书状态协议（OCSP）的 URL，客户端可以通过该 URL 查询证书的实时状态。</li>
+</ul>
+<p>这里由于OCSP需要搭建服务器等进行匹配，由于证书信息都在本地进行生成，因此不考虑，仅提供<code>CAIssuers</code>，通过配置<code>crlDistributionPoints</code>提供CRL文件进行证书的撤销状态提示。</p>
+<h2 id="创建根证书私钥"><a href="#创建根证书私钥" class="headerlink" title="创建根证书私钥"></a>创建根证书私钥</h2><p>参考文章<a target="_blank" rel="noopener" href="https://docs.openssl.org/3.0/man1/openssl-genrsa/">^openssl-genrsa</a></p>
+<p>通过使用命令创建根证书私钥</p>
+<p><code>openssl genrsa -aes256 -out ./KEY/RootCA.key 4096</code></p>
+<p>其中参数说明：</p>
+<ul>
+<li><code>-out</code>：生成根证书私钥的名称及存储位置</li>
+<li><code>-aes256</code>：生成证书的加密方式</li>
+<li><code>4096</code>：证书私钥的大小，默认值为<code>2048</code></li>
+</ul>
+<h2 id="生成根证书的签名请求"><a href="#生成根证书的签名请求" class="headerlink" title="生成根证书的签名请求"></a>生成根证书的签名请求</h2><p>参考文章<a target="_blank" rel="noopener" href="https://docs.openssl.org/3.0/man1/openssl-req/">^openssl-req</a>,使用命令创建签名请求。</p>
+<p><code>openssl req -new -config ./conf/RootCA.cnf -sha256 -key ./KEY/RootCA.key -out ./RootCA/csr/RootCA.csr</code></p>
+<h2 id="签发CA证书"><a href="#签发CA证书" class="headerlink" title="签发CA证书"></a>签发CA证书</h2><p>输入下列命令后通过输入密钥密码还有两个<code>y</code>之后便可生成根证书密钥。</p>
+<p><code>openssl ca -selfsign -config ./conf/RootCA.cnf -in ./RootCA/csr/RootCA.csr -extensions v3_ca -days 365 -out ./RootCA/crt/RootCA.crt</code></p>
+<p>至此，根证书创建完成，可以根据自身需要将根证书导入到指定环境或者进行分发，或者等待中间证书创建好后编写证书链进行分发。</p>
+<h1 id="其余操作介绍"><a href="#其余操作介绍" class="headerlink" title="其余操作介绍"></a>其余操作介绍</h1><h2 id="查看签发证书情况"><a href="#查看签发证书情况" class="headerlink" title="查看签发证书情况"></a>查看签发证书情况</h2><p>通过使用如下命令查看签发证书情况，能够看到大致的证书信息。</p>
+<p><code>openssl req -text -noout -in ./RootCA/csr/RootCA.csr</code></p>
+<h2 id="添加crl信息"><a href="#添加crl信息" class="headerlink" title="添加crl信息"></a>添加crl信息</h2><div class="note info"><p>以下内容在发稿前实验撤销证书暂无效果，撤销证书效果存疑，后续实验有新进展后会更新博文</p>
+</div>
+
+<p><strong>使用前提：要确保在证书中已经添加好CRL链接文件</strong></p>
+<h3 id="撤销证书"><a href="#撤销证书" class="headerlink" title="撤销证书"></a>撤销证书</h3><p>通过命令撤销<code>1.crt</code>证书</p>
+<p><code>openssl ca -revoke 1.crt -config ./conf/RootCA.cnf</code></p>
+<p>更新crl文件</p>
+<p><code> openssl ca -gencrl -out ./crl/ca-Root.crl -config ./conf/RootCA.cnf</code></p>
+<h1 id="尾言"><a href="#尾言" class="headerlink" title="尾言"></a>尾言</h1><h2 id="疑难杂症"><a href="#疑难杂症" class="headerlink" title="疑难杂症"></a>疑难杂症</h2><h3 id="The-mandatory-stateOrProvinceName-field-was-missing"><a href="#The-mandatory-stateOrProvinceName-field-was-missing" class="headerlink" title="The mandatory stateOrProvinceName field was missing"></a><code>The mandatory stateOrProvinceName field was missing</code></h3><p>报错内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Check that the request matches the signature</span><br><span class="line">Signature ok</span><br><span class="line">The mandatory stateOrProvinceName field was missing</span><br></pre></td></tr></table></figure>
+
+<p>根据<a target="_blank" rel="noopener" href="https://www.cnblogs.com/loleina/p/8418111.html#:~:text=%E5%B0%8F%E6%8F%92%E6%9B%B2%EF%BC%9A%E7%94%A8CA%E6%A0%B9%E8%AF%81%E4%B9%A6%E7%AD%BE%E5%90%8D%E6%97%B6%E6%8A%A5%E9%94%99%EF%BC%8CThe%20mandatory%20stateOrProvinceName%20field%20was%20missing">^报错1</a>可知，配置文件中<code>[policy_match]</code>中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[ policy_match ]</span><br><span class="line">countryName		= match</span><br><span class="line">stateOrProvinceName	= match</span><br><span class="line">organizationName	= match</span><br></pre></td></tr></table></figure>
+
+<p>有三个选项应该一致，但是并未保持一致，所以报错。</p>
+<p>修改方式是要么将 <code>match</code>改成 <code>optional</code>，要么参考<a target="_blank" rel="noopener" href="https://stackoverflow.com/a/14382731">^报错2</a>将<code>string_mask</code>从<code>utf8only</code>更改为<code>pkix</code>。</p>
+<h3 id="无法创建有效的证书链"><a href="#无法创建有效的证书链" class="headerlink" title="无法创建有效的证书链"></a>无法创建有效的证书链</h3><p>添加<code>authorityInfoAccess</code>指向上级证书的信息时不能加HTTPS，要用HTTP进行引用，否则无法找到</p>
+<h3 id="存在疑问信息"><a href="#存在疑问信息" class="headerlink" title="存在疑问信息"></a>存在疑问信息</h3><p>手机端无法签发该证书，不知道哪一步存在问题，证书签发仅在电脑端能够实现</p>
+<h2 id="张贴自己的根证书"><a href="#张贴自己的根证书" class="headerlink" title="张贴自己的根证书"></a>张贴自己的根证书</h2><p>根证书及中间证书下载地址：请关注网站的<a href="https://zhycarge.github.io/about/">关于</a>部分进行查看。</p>
+<h2 id="更新说明"><a href="#更新说明" class="headerlink" title="更新说明"></a>更新说明</h2><h3 id="2024-12-20-13-41-34"><a href="#2024-12-20-13-41-34" class="headerlink" title="2024-12-20 13:41:34"></a><code>2024-12-20 13:41:34</code></h3><p>重新更换文章、刊错</p>
+<h3 id="2025-12-19-23-48-34"><a href="#2025-12-19-23-48-34" class="headerlink" title="2025-12-19 23:48:34"></a><code>2025-12-19 23:48:34</code></h3><p>删除并修改个人根证书信息</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://cloud.baidu.com/article/2697901">使用OpenSSL生成根证书CA及签发子证书</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.openssl.org/">项目官方文档</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>欢迎打赏~</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wx_donate.png" alt="ZHYCarge 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>ZHYCarge
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://zhycarge.github.io/2024/12/18/OpenSSL%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%A0%B9%E8%AF%81%E4%B9%A6/" title="OpenSSL之创建根证书">https://zhycarge.github.io/2024/12/18/OpenSSL之创建根证书/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/OpenSSL/" rel="tag"><i class="fa fa-tag"></i> OpenSSL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/12/18/WSL%E4%BB%8B%E7%BB%8D%E4%B8%8E%E5%AE%89%E8%A3%85/" rel="prev" title="WSL介绍与安装">
+                  <i class="fa fa-angle-left"></i> WSL介绍与安装
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/12/22/OpenSSL%E4%B9%8B%E5%88%9B%E5%BB%BA%E4%B8%AD%E9%97%B4%E8%AF%81%E4%B9%A6/" rel="next" title="OpenSSL之创建中间证书">
+                  OpenSSL之创建中间证书 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2024 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">ZHYCarge</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">25k</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-CN","enable":true,"serverURL":"commit.waline.zhycarge.top","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"locale":{"placeholder":"为保证能正常的收到评论提醒，在评论时请填写邮箱信息"},"avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"visitor":true,"comment_count":true,"requiredMeta":["mail"],"el":"#waline","comment":true,"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","path":"/2024/12/18/OpenSSL%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%A0%B9%E8%AF%81%E4%B9%A6/"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

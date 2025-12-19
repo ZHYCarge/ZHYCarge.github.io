@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhycarge.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言为什么要选择这本书，这本书是从什么地方吸引的你想着通过这本书能够了解到芯片的起源史，了解到芯片是如何出现并且如何去改变世界的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《芯片简史》读书笔记">
+<meta property="og:url" content="https://zhycarge.github.io/2025/04/27/%E3%80%8A%E8%8A%AF%E7%89%87%E7%AE%80%E5%8F%B2%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="ZHYCarge的个人博客">
+<meta property="og:description" content="前言为什么要选择这本书，这本书是从什么地方吸引的你想着通过这本书能够了解到芯片的起源史，了解到芯片是如何出现并且如何去改变世界的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ph.917580.xyz/file/4a061807e5f3e212f96b8-dac1557f74f88461da.png">
+<meta property="article:published_time" content="2025-04-27T02:35:47.000Z">
+<meta property="article:modified_time" content="2025-04-27T02:44:01.000Z">
+<meta property="article:author" content="ZHYCarge">
+<meta property="article:tag" content="ReadBook">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ph.917580.xyz/file/4a061807e5f3e212f96b8-dac1557f74f88461da.png">
+
+
+<link rel="canonical" href="https://zhycarge.github.io/2025/04/27/%E3%80%8A%E8%8A%AF%E7%89%87%E7%AE%80%E5%8F%B2%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhycarge.github.io/2025/04/27/%E3%80%8A%E8%8A%AF%E7%89%87%E7%AE%80%E5%8F%B2%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/","path":"2025/04/27/《芯片简史》读书笔记/","title":"《芯片简史》读书笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《芯片简史》读书笔记 | ZHYCarge的个人博客</title>
+  
+
+
+
+
+
+
+
+<link rel="dns-prefetch" href="commit.waline.zhycarge.top">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ZHYCarge的个人博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-bings"><a href="/bings/" rel="section"><i class="fa  fa-search fa-fw"></i>必应一下</a></li><li class="menu-item menu-item-friends_links"><a href="/friends-links/" rel="section"><i class="fa fa-scroll-torah fa-fw"></i>友人帐</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%80%89%E6%8B%A9%E8%BF%99%E6%9C%AC%E4%B9%A6%EF%BC%8C%E8%BF%99%E6%9C%AC%E4%B9%A6%E6%98%AF%E4%BB%8E%E4%BB%80%E4%B9%88%E5%9C%B0%E6%96%B9%E5%90%B8%E5%BC%95%E7%9A%84%E4%BD%A0"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要选择这本书，这本书是从什么地方吸引的你</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E6%80%BB%E7%BB%93%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">整体总结介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%AE%E7%82%B9%E4%BF%A1%E6%81%AF"><span class="nav-number">3.</span> <span class="nav-text">亮点信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%93%AA%E4%B8%80%E6%AE%B5%E5%AF%B9%E4%BD%A0%E6%9D%A5%E8%AE%B2%E6%9C%80%E6%84%8F%E5%A4%96%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">3.1.</span> <span class="nav-text">哪一段对你来讲最意外，为什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%93%AA%E4%B8%80%E4%BA%9B%E9%87%91%E5%8F%A5%E6%98%AF%E4%BD%A0%E6%83%B3%E8%A6%81%E6%91%98%E6%8A%84%E8%AE%B0%E5%BD%95%E7%9A%84%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">3.2.</span> <span class="nav-text">哪一些金句是你想要摘抄记录的，为什么？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E8%87%AA%E5%B7%B1%E7%9A%84%E8%81%94%E7%B3%BB"><span class="nav-number">4.</span> <span class="nav-text">对自己的联系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%AE%8C%E8%BF%99%E6%9C%AC%E4%B9%A6%EF%BC%8C%E4%BD%A0%E7%9A%84%E5%90%AF%E5%8F%91%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">4.1.</span> <span class="nav-text">读完这本书，你的启发是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%A0%E6%98%AF%E5%90%A6%E5%96%9C%E6%AC%A2%E8%BF%99%E6%9C%AC%E4%B9%A6%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">4.2.</span> <span class="nav-text">你是否喜欢这本书，为什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8E%E4%B9%8B%E5%89%8D%E7%9A%84%E8%81%94%E7%B3%BB"><span class="nav-number">4.3.</span> <span class="nav-text">与之前的联系</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZHYCarge"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">ZHYCarge</p>
+  <div class="site-description" itemprop="description">总是要留下些什么</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZHYCarge" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="ZHYCarge:ZHYCarge@zhycarge.top" title="E-Mail → ZHYCarge:ZHYCarge@zhycarge.top" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://github.com/ZHYCarge/BLOG_BACKEND/new/master/source/_posts" title="https:&#x2F;&#x2F;github.com&#x2F;ZHYCarge&#x2F;BLOG_BACKEND&#x2F;new&#x2F;master&#x2F;source&#x2F;_posts" rel="noopener" target="_blank">新建一篇文章</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhycarge.github.io/2025/04/27/%E3%80%8A%E8%8A%AF%E7%89%87%E7%AE%80%E5%8F%B2%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ZHYCarge">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZHYCarge的个人博客">
+      <meta itemprop="description" content="总是要留下些什么">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《芯片简史》读书笔记 | ZHYCarge的个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《芯片简史》读书笔记<a href="https://github.com/ZHYCarge/BLOG_BACKEND/blob/master/source/_posts/%E3%80%8A%E8%8A%AF%E7%89%87%E7%AE%80%E5%8F%B2%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-04-27 10:35:47 / 修改时间：10:44:01" itemprop="dateCreated datePublished" datetime="2025-04-27T10:35:47+08:00">2025-04-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2025/04/27/%E3%80%8A%E8%8A%AF%E7%89%87%E7%AE%80%E5%8F%B2%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2025/04/27/%E3%80%8A%E8%8A%AF%E7%89%87%E7%AE%80%E5%8F%B2%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h2 id="为什么要选择这本书，这本书是从什么地方吸引的你"><a href="#为什么要选择这本书，这本书是从什么地方吸引的你" class="headerlink" title="为什么要选择这本书，这本书是从什么地方吸引的你"></a>为什么要选择这本书，这本书是从什么地方吸引的你</h2><p>想着通过这本书能够了解到芯片的起源史，了解到芯片是如何出现并且如何去改变世界的</p>
+<span id="more"></span>
+<p>实际在阅读过程中发现自身其实并不太适合这本书，不算是这本书的目标群体，可能是自身对于史书有着不感兴趣的话题，或许是芯片的历史过于二院化，太过于硬核，在部分CPU介绍中仍会饶有兴趣，但是对于其余芯片的产生以及发展并未过多了解，因此会出现后续的乏味以及为了读而去读。</p>
+<p><strong>开头叠甲：一千个读者便有一千个哈姆雷特，读书笔记为读者在阅读过程中产生的种种思考，因此以下观点可能由于自身理解水平原因，会存在错误的可能，因此仅供探讨</strong></p>
+<h1 id="整体总结介绍"><a href="#整体总结介绍" class="headerlink" title="整体总结介绍"></a>整体总结介绍</h1><p>本书为浙江教育出版社出版的2023年4月第一版图书<br><img data-src="https://ph.917580.xyz/file/4a061807e5f3e212f96b8-dac1557f74f88461da.png" alt="芯片简史" title="芯片简史">（图源豆瓣，侵删）</p>
+<p>这本书从时间的角度以及芯片的发展历程上进行讲述，通过讲述固定某个芯片从无到有，按照时间线来进行描述，为读者大众讲述了芯片的发展历史以及发展过程，了解到了其中的光辉事迹及光辉人物，对整体的芯片发展简史有着较深刻的了解。</p>
+<h1 id="亮点信息"><a href="#亮点信息" class="headerlink" title="亮点信息"></a>亮点信息</h1><h2 id="哪一段对你来讲最意外，为什么？"><a href="#哪一段对你来讲最意外，为什么？" class="headerlink" title="哪一段对你来讲最意外，为什么？"></a>哪一段对你来讲最意外，为什么？</h2><p>了解到硅谷的诞生是由龙头企业中，那些敢于创新，敢于实现研发的一线工作人员，他们为了实现自己心中的想法，离开贝尔或者仙童公司，为了心中的创新开创新的企业，从而带动硅谷地带的高新技术产业繁荣发展。</p>
+<h2 id="哪一些金句是你想要摘抄记录的，为什么？"><a href="#哪一些金句是你想要摘抄记录的，为什么？" class="headerlink" title="哪一些金句是你想要摘抄记录的，为什么？"></a>哪一些金句是你想要摘抄记录的，为什么？</h2><blockquote>
+<p>创新是对主流的偏离、对现有规则的破坏，它刚开始可能非常蹩脚、很难融入主流。几乎没有一项重大创新一出现就广受欢迎。<br>——《芯片简史》 Ⅷ</p>
+</blockquote>
+<p>通过阅读后续故事以及常识可知，往往新事物的诞生总是会遭到旧事物的打压及不看好，但往往便是那些新事物的诞生，创新性的点子，通过破坏现有秩序以及现有工序，从而实现技术飞跃，实现技术跃迁。因此面对新型事物的出现，应当怀揣着一个好奇心去接近去了解，保持探索欲。</p>
+<blockquote>
+<p>个人的失败并不是对自己能力的贬低，而应当将失败看作通往进步的垫脚石，才能激发出更好的创意。对否定的否定，也是一种创新。<br>——《芯片简史》 P51</p>
+<blockquote>
+<p>传统认知将失败视为终点，这句话通过”否定之否定”的哲学框架重构了失败的意义。正如爱因斯坦在改进光电效应实验时的189次失败记录，每个”否定”都在逼近量子理论的突破。这种思维转换本身就是创新方法论的核心——设计思维中的”失败早、失败快”原则正源于此。<br>黑格尔辩证法在创新领域的具象化体现。3M公司发明便利贴的过程完美诠释了这种双重否定：最初失败的弱胶水配方（第一次否定），通过对”失败粘性”的再否定（第二次否定），最终催生出革命性办公产品。这种螺旋上升的认知过程，本质上是在解构既有认知框架的过程中创造新的可能性空间。<br>——DeepSeek评价</p>
+</blockquote>
+</blockquote>
+<p>因此，通往成功的道路上并不总是一番风顺的，难免会遇到挫折，遇到困阻，因此要乐观的面对失败，在失败中寻求通往成功的道路，要相信，每一次失败都是在成功路上迈出的一小步。</p>
+<blockquote>
+<p>创新者总是会遇到窘境，而那些本来最有实力引领未来的企业却往往会因保守而错失良机。<br>——《芯片简史》 P138</p>
+</blockquote>
+<p>在面对一样新型事物，新发现的人往往会因为缺乏外界足够的支持从而短期内陷入无法进一步探究的困境。行业头牌企业，往往汇聚着这个行业的精英人才，他们往往会发现会创新出一件件新兴事物，但是由于公司的规模限制，或要考虑股东董事会的决议，或要考虑新型事物是否会影响公司的基本盘，因此并不会给予新兴事物过大的研发空间，从而使一项突破性的创新从手边溜走。不过由于头牌企业的人数众多，要不论计较的对每个创新项目施加援手，总会由于资源倾斜导致自身基本盘慢慢被他人超越，这对于企业而言（特别是董事会等需要靠公司基本盘营收从而实现分红的一些人），往往会否决新的树枝，仅会在树的主干中寻求突破，寻求发展。（感觉还是得看领导者是否具有独具慧眼，能从千万“马匹”中找出那匹“千里马”。</p>
+<h1 id="对自己的联系"><a href="#对自己的联系" class="headerlink" title="对自己的联系"></a>对自己的联系</h1><h2 id="读完这本书，你的启发是什么？"><a href="#读完这本书，你的启发是什么？" class="headerlink" title="读完这本书，你的启发是什么？"></a>读完这本书，你的启发是什么？</h2><p>通过阅读这本书，了解到了贝尔实验室由于对下属所研究探讨的新型事物没有给予足够的关注，导致没有把握好时代的风口，因此虽然贝尔实验室所研究的内容往往引领时代，但是由于缺乏后续资金的支持，导致逐渐落后于他人。但是实际细想，作为世界前茅的科研实验室，往往会接到各大场所的合作邀请，面对属下的突发奇想，难免会顾此失彼，回顾到整体发展，这似乎是无解的，这会又绕到实验室的管理决策上来，不能因为下属的一个突发奇想，就能倾斜资源与资金过去，这会导致突发奇想的人太多，又会导致其他情况的出现。因此面对一家公司，尤为是一家行业巨头，一个优秀的船长能否在时代巨浪中把好整艘船的舵，就显得尤为重要。</p>
+<p>在P99讲解了随着晶体管的尺寸缩小，漏电变得严重，沿用的平面晶体管结构越来越无法满足需求，出现瓶颈，这时候便需要理论知识的突破，研究创新理论结构，使得工艺更新。因此理论知识与实际操作缺一不可，就犹如专硕与学硕的关系，既要有学硕面向高新技术发起冲锋，研究更加新颖的理论知识，有需要专硕对高新技术加以利用，将理论转化为实践。</p>
+<h2 id="你是否喜欢这本书，为什么？"><a href="#你是否喜欢这本书，为什么？" class="headerlink" title="你是否喜欢这本书，为什么？"></a>你是否喜欢这本书，为什么？</h2><p>还算喜欢，虽然本书并不能算是受众之一，但是仍通过这本书了解到了一定的知识以及一定的有关芯片开发的相关历史。</p>
+<h2 id="与之前的联系"><a href="#与之前的联系" class="headerlink" title="与之前的联系"></a>与之前的联系</h2><p>在本书P87描述的肖克利由于自身管理的不善遭到了队友的抛弃，心灰意冷，这与《心安即是归处》中“知足知不足”观点一致。在这里肖克利完全可以在雇一个专门管理人员的工作人员，一个负责人事工作，其自身负责专门的研发，通过合理的分配自身的优势，从而能更好的带动整个团队向好向善。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>欢迎打赏~</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wx_donate.png" alt="ZHYCarge 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>ZHYCarge
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://zhycarge.github.io/2025/04/27/%E3%80%8A%E8%8A%AF%E7%89%87%E7%AE%80%E5%8F%B2%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" title="《芯片简史》读书笔记">https://zhycarge.github.io/2025/04/27/《芯片简史》读书笔记/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/ReadBook/" rel="tag"><i class="fa fa-tag"></i> ReadBook</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/03/23/%E3%80%8A%E5%BF%83%E5%AE%89%E5%8D%B3%E6%98%AF%E5%BD%92%E5%A4%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="prev" title="《心安即是归处》读书笔记">
+                  <i class="fa fa-angle-left"></i> 《心安即是归处》读书笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/06/30/%E8%A7%A3%E5%86%B3%E4%BB%A3%E7%A0%81%E5%86%B2%E7%AA%81%E5%B0%8F%E8%AE%B0/" rel="next" title="解决代码冲突小记">
+                  解决代码冲突小记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2024 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">ZHYCarge</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">25k</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-CN","enable":true,"serverURL":"commit.waline.zhycarge.top","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"locale":{"placeholder":"为保证能正常的收到评论提醒，在评论时请填写邮箱信息"},"avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"visitor":true,"comment_count":true,"requiredMeta":["mail"],"el":"#waline","comment":true,"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","path":"/2025/04/27/%E3%80%8A%E8%8A%AF%E7%89%87%E7%AE%80%E5%8F%B2%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>
